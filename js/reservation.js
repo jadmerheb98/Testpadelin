@@ -22,9 +22,14 @@
   // Load taken slots from storage
   const taken = loadTakenSet();
 
-  // Selection: allow multiple 30-min slots but must be consecutive same court
-  // We'll store as a Set of keys: `${time}|${court}`
-  const selected = new Set();
+  // Keep your original Set for UI highlighting (we rebuild it from the new selection engine)
+  const selected = new Set(); // `${timeRange}|${court}`
+
+  // New, reliable selection engine:
+  // - One court at a time
+  // - Selection must stay consecutive
+  let selectedCourt = null;        // "court1" | "court2" | null
+  let selectedStarts = [];         // array of start minutes, consecutive
 
   function loadTakenSet() {
     try {
@@ -41,28 +46,48 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(taken)));
   }
 
+  // Accepts: "08:30" OR "08:30 AM" OR "8:30 PM"
   function parseTimeToMinutes(t) {
-    // "HH:MM" -> minutes from 00:00
-    const [hh, mm] = t.split(":").map(Number);
+    const str = String(t).trim();
+
+    // AM/PM: "h:mm AM"
+    const match = str.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (match) {
+      let hh = Number(match[1]);
+      const mm = Number(match[2]);
+      const period = match[3].toUpperCase();
+
+      if (period === "PM" && hh !== 12) hh += 12;
+      if (period === "AM" && hh === 12) hh = 0;
+
+      return hh * 60 + mm;
+    }
+
+    // 24h fallback: "HH:MM"
+    const parts = str.split(":");
+    const hh = Number(parts[0]);
+    const mm = Number(parts[1]);
+
     return hh * 60 + mm;
   }
 
+  // Minutes -> "hh:mm AM/PM"
   function minutesToTime(mins) {
-  const hours24 = Math.floor(mins / 60);
-  const minutes = mins % 60;
+    const hours24 = Math.floor(mins / 60);
+    const minutes = mins % 60;
 
-  const period = hours24 >= 12 ? "PM" : "AM";
-  const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+    const period = hours24 >= 12 ? "PM" : "AM";
+    const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
 
-  const hh = String(hours12).padStart(2, "0");
-  const mm = String(minutes).padStart(2, "0");
+    const hh = String(hours12).padStart(2, "0");
+    const mm = String(minutes).padStart(2, "0");
 
-  return `${hh}:${mm} ${period}`;
-}
+    return `${hh}:${mm} ${period}`;
+  }
 
   function buildSlots(startHHMM, endHHMM, step) {
-    const start = parseTimeToMinutes(startHHMM);
-    const end = parseTimeToMinutes(endHHMM);
+    const start = parseTimeToMinutes(startHHMM); // 24h input OK
+    const end = parseTimeToMinutes(endHHMM);     // 24h input OK
     const list = [];
     for (let m = start; m < end; m += step) {
       const a = minutesToTime(m);
@@ -78,93 +103,119 @@
     return `${timeRange}|${court}`;
   }
 
+  function startMinutesToRange(startM) {
+    const a = minutesToTime(startM);
+    const b = minutesToTime(startM + STEP_MINUTES);
+    return `${a} - ${b}`;
+  }
+
+  function timeRangeToStartMinutes(timeRange) {
+    const startStr = timeRange.split(" - ")[0].trim();
+    return parseTimeToMinutes(startStr);
+  }
+
+  function isTakenBlock(startM, court) {
+    const range = startMinutesToRange(startM);
+    return taken.has(keyOf(range, court));
+  }
+
+  function rebuildSelectedSetForUI() {
+    selected.clear();
+    if (!selectedCourt || selectedStarts.length === 0) return;
+    selectedStarts.forEach((startM) => {
+      selected.add(keyOf(startMinutesToRange(startM), selectedCourt));
+    });
+  }
+
   function clearSelection() {
+    selectedCourt = null;
+    selectedStarts = [];
     selected.clear();
     syncUI();
   }
 
+  // Reliable consecutive selection behavior
   function toggleSelect(timeRange, court) {
-    const k = keyOf(timeRange, court);
-    if (taken.has(k)) return; // cannot select taken
+    const startM = timeRangeToStartMinutes(timeRange);
+    if (isTakenBlock(startM, court)) return;
 
-    // If selecting on a different court than current selection, reset selection
-    const currentCourt = getSelectedCourt();
-    if (currentCourt && currentCourt !== court) {
-      selected.clear();
+    // Switch court -> reset to that one block
+    if (selectedCourt && selectedCourt !== court) {
+      selectedCourt = court;
+      selectedStarts = [startM];
+      rebuildSelectedSetForUI();
+      syncUI();
+      return;
     }
 
-    if (selected.has(k)) selected.delete(k);
-    else selected.add(k);
-
-    // Keep selection "clean": enforce consecutive blocks only
-    normalizeSelectionConsecutive();
-    syncUI();
-  }
-
-  function getSelectedCourt() {
-    for (const k of selected) {
-      const court = k.split("|")[1];
-      return court;
+    // First selection
+    if (!selectedCourt) {
+      selectedCourt = court;
+      selectedStarts = [startM];
+      rebuildSelectedSetForUI();
+      syncUI();
+      return;
     }
-    return null;
-  }
 
-  function getSelectedTimeRangesSorted() {
-    const ranges = Array.from(selected).map((k) => k.split("|")[0]);
-    ranges.sort((r1, r2) => {
-      const start1 = parseTimeToMinutes(r1.split(" - ")[0]);
-      const start2 = parseTimeToMinutes(r2.split(" - ")[0]);
-      return start1 - start2;
-    });
-    return ranges;
-  }
+    // If tapped already-selected -> remove it, then keep consecutive chain from min upward
+    if (selectedStarts.includes(startM)) {
+      selectedStarts = selectedStarts.filter((m) => m !== startM);
 
-  function normalizeSelectionConsecutive() {
-    if (selected.size <= 1) return;
-
-    const court = getSelectedCourt();
-    const ranges = getSelectedTimeRangesSorted();
-
-    // Convert to start minutes for each block
-    const starts = ranges.map((r) => parseTimeToMinutes(r.split(" - ")[0]));
-    // Find longest consecutive chain based on STEP_MINUTES
-    // Strategy: keep a chain that includes the most recently clicked block
-    // Simpler: keep only the smallest-to-largest consecutive run
-    let bestRun = [starts[0]];
-    let currentRun = [starts[0]];
-
-    for (let i = 1; i < starts.length; i++) {
-      if (starts[i] === starts[i - 1] + STEP_MINUTES) {
-        currentRun.push(starts[i]);
+      if (selectedStarts.length === 0) {
+        selectedCourt = null;
       } else {
-        if (currentRun.length > bestRun.length) bestRun = currentRun;
-        currentRun = [starts[i]];
+        selectedStarts.sort((a, b) => a - b);
+        const chain = [selectedStarts[0]];
+        for (let i = 1; i < selectedStarts.length; i++) {
+          if (selectedStarts[i] === chain[chain.length - 1] + STEP_MINUTES) {
+            chain.push(selectedStarts[i]);
+          } else {
+            break; // stop at first gap to keep it clean + consecutive
+          }
+        }
+        selectedStarts = chain;
       }
-    }
-    if (currentRun.length > bestRun.length) bestRun = currentRun;
 
-    // Rebuild selected set using bestRun
-    selected.clear();
-    bestRun.forEach((startM) => {
-      const a = minutesToTime(startM);
-      const b = minutesToTime(startM + STEP_MINUTES);
-      selected.add(keyOf(`${a} - ${b}`, court));
-    });
+      rebuildSelectedSetForUI();
+      syncUI();
+      return;
+    }
+
+    // Must be adjacent to extend; otherwise reset to the new block (clean UX)
+    selectedStarts.sort((a, b) => a - b);
+    const min = selectedStarts[0];
+    const max = selectedStarts[selectedStarts.length - 1];
+
+    const canExtendBefore = startM === min - STEP_MINUTES;
+    const canExtendAfter = startM === max + STEP_MINUTES;
+
+    if (!canExtendBefore && !canExtendAfter) {
+      selectedStarts = [startM];
+      rebuildSelectedSetForUI();
+      syncUI();
+      return;
+    }
+
+    selectedStarts.push(startM);
+    selectedStarts.sort((a, b) => a - b);
+
+    rebuildSelectedSetForUI();
+    syncUI();
   }
 
   function selectedDurationMinutes() {
-    return selected.size * STEP_MINUTES;
+    return selectedStarts.length * STEP_MINUTES;
   }
 
   function selectionSummary() {
-    if (selected.size === 0) return null;
+    if (!selectedCourt || selectedStarts.length === 0) return null;
 
-    const court = getSelectedCourt();
-    const ranges = getSelectedTimeRangesSorted();
-    const start = ranges[0].split(" - ")[0];
-    const end = ranges[ranges.length - 1].split(" - ")[1];
-    const courtLabel = court === "court1" ? "Court 1" : "Court 2";
-    return { court, courtLabel, start, end, blocks: ranges.length };
+    selectedStarts.sort((a, b) => a - b);
+    const start = minutesToTime(selectedStarts[0]);
+    const end = minutesToTime(selectedStarts[selectedStarts.length - 1] + STEP_MINUTES);
+
+    const courtLabel = selectedCourt === "court1" ? "Court 1" : "Court 2";
+    return { court: selectedCourt, courtLabel, start, end };
   }
 
   function makeSlotEl(timeRange, court) {
@@ -184,14 +235,14 @@
       div.textContent = "Available";
     }
 
-    // Admin: click toggles taken/available
+    // Admin: click toggles taken/available (kept exactly as your logic)
     if (isAdmin) {
       div.addEventListener("click", () => {
         if (taken.has(k)) taken.delete(k);
         else taken.add(k);
         saveTakenSet();
         clearSelection();
-        render(); // re-render so statuses update
+        render();
       });
       div.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -245,7 +296,7 @@
     // clear selected classes
     document.querySelectorAll(".slot.selected").forEach((el) => el.classList.remove("selected"));
 
-    // admin confirm button can stay disabled (admin doesn't confirm bookings here)
+    // admin confirm button stays disabled (admin doesn't confirm bookings here)
     if (isAdmin) {
       confirmBtn.disabled = true;
       selectedText.textContent = "Admin Mode: Tap slots to toggle status";
@@ -273,37 +324,39 @@
     if (!summary) return;
 
     const mins = selectedDurationMinutes();
-   selectedText.innerHTML = `
-  <div>${summary.start} → ${summary.end}</div>
-  <div style="margin-top:4px; font-weight:600;">${summary.courtLabel}</div>
-`;
+
+    // Your requested box layout:
+    // Line 1: 08:00 AM → 09:00 AM (same line)
+    // Line 2: Court 1
+    // No minutes displayed
+    selectedText.innerHTML = `
+      <div style="white-space:nowrap;">${summary.start} → ${summary.end}</div>
+      <div style="margin-top:6px; font-weight:700;">${summary.courtLabel}</div>
+    `;
 
     // enable confirm only if >= 60 mins
     if (mins >= MIN_BOOK_MINUTES) confirmBtn.disabled = false;
   }
 
   function buildWhatsAppMessage(summary) {
-  // Get today's date (you can later replace with date picker)
-  const today = new Date();
+    const today = new Date();
+    const options = { weekday: "short", month: "short", day: "numeric", year: "numeric" };
+    const formattedDate = today.toLocaleDateString("en-US", options);
 
-  const options = { weekday: "short", month: "short", day: "numeric", year: "numeric" };
-  const formattedDate = today.toLocaleDateString("en-US", options);
+    const courtNumber = summary.courtLabel.includes("1") ? "1" : "2";
 
-  // Extract court number only (1 or 2)
-  const courtNumber = summary.courtLabel.includes("1") ? "1" : "2";
-
-  return [
-    "Hello 👋",
-    "",
-    "I would like to reserve a court:",
-    "",
-    `📅 Date: ${formattedDate}`,
-    `🎾 Court: ${courtNumber}`,
-    `⏰ Time: ${summary.start} - ${summary.end}`,
-    "",
-    "Thank you!"
-  ].join("\n");
-}
+    return [
+      "Hello 👋",
+      "",
+      "I would like to reserve a court:",
+      "",
+      `📅 Date: ${formattedDate}`,
+      `🎾 Court: ${courtNumber}`,
+      `⏰ Time: ${summary.start} - ${summary.end}`,
+      "",
+      "Thank you!"
+    ].join("\n");
+  }
 
   confirmBtn.addEventListener("click", () => {
     if (isAdmin) return;
