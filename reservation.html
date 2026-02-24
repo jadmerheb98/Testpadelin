@@ -44,21 +44,29 @@
 
   <main class="booking-wrap">
     <div class="container">
-      <div class="booking-head">
-        <div>
-          <h2>Reservations</h2>
-          <p>
-  Pick your court, lock your time, and step on court ready to win. 🎾🔥
-  <br />
-  <strong>Point System:</strong> Every confirmed booking earns you <strong>PADELIN Points</strong>.
-  Stack points to unlock <strong>priority slots</strong>, <strong>training perks</strong>, and <strong>member-only surprises</strong>.
-  The more you play, the higher you climb. 🏆
-</p>
-          <p id="adminBadge" style="display:none; margin:6px 0 0; font-size:13px; color: rgba(11,18,32,0.70);">
+      <div class="booking-top">
+  <div>
+    <h2>Reservations</h2>
+    <p>
+      Pick your court, lock your time, and step on court ready to win. 🎾🔥
+      <br />
+      <strong>Point System:</strong> Every confirmed booking earns you <strong>PADELIN Points</strong>.
+      Stack points to unlock <strong>priority slots</strong>, <strong>training perks</strong>, and <strong>member-only surprises</strong>.
+      The more you play, the higher you climb. 🏆
+    </p>
+
+    <p id="adminBadge" style="display:none; margin:6px 0 0; font-size:13px; color: rgba(11,18,32,0.70);">
       Admin Mode: Tap slots to toggle Taken/Available.
     </p>
-        </div>
-      </div>
+  </div>
+
+  <!-- NEW: Day navigation -->
+  <div class="day-nav" aria-label="Day navigation">
+    <button class="day-btn" type="button" data-day-prev aria-label="Previous day">←</button>
+    <div class="day-label" data-day-label>Today</div>
+    <button class="day-btn" type="button" data-day-next aria-label="Next day">→</button>
+  </div>
+</div>
 
       <div class="table-card">
         <table class="table" aria-label="Booking table">
