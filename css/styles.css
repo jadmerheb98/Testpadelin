@@ -549,12 +549,6 @@ header .brand img {
 }
 
 /* Center all home section titles */
-.padelin-hero h1,
-.section-title {
-  text-align: center;
-}
-
-/* Center hero lines */
 .hero-lines {
   text-align: center;
 }
