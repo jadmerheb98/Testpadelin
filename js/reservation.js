@@ -70,42 +70,62 @@
     return slots;
   }
 
-  function autoSelect60(start, court, taken) {
-  selectedCourt = court;
+ function toggleSelect(start, court, taken) {
+  const key = `${start}|${court}`;
+  if (taken.has(key)) return;
 
-  // Always start fresh (prevents 3-slot weirdness)
-  selectedStarts = [start];
-
-  const next = start + STEP;
-  const prev = start - STEP;
-
-  const nextKey = `${next}|${court}`;
-  const prevKey = `${prev}|${court}`;
-
-  // Prefer forward: start + next
-  if (!taken.has(nextKey) && next < 24 * 60) {
-    selectedStarts.push(next);
+  // switching court -> reset
+  if (selectedCourt && selectedCourt !== court) {
+    selectedCourt = court;
+    selectedStarts = [start];
     return;
   }
 
-  // Otherwise try backward: prev + start
-  if (!taken.has(prevKey) && prev >= 8 * 60) {
-    selectedStarts = [prev, start];
+  // first selection
+  if (!selectedCourt) {
+    selectedCourt = court;
+    selectedStarts = [start];
     return;
   }
 
-  // Else keep only 1 slot (confirm will stay disabled)
-    
+  // tap an already selected slot -> remove it and keep consecutive chain
+  if (selectedStarts.includes(start)) {
+    selectedStarts = selectedStarts.filter((m) => m !== start);
+
+    if (selectedStarts.length === 0) {
+      selectedCourt = null;
+      return;
+    }
+
+    selectedStarts.sort((a, b) => a - b);
+
+    // keep consecutive from the smallest upward
+    const chain = [selectedStarts[0]];
+    for (let i = 1; i < selectedStarts.length; i++) {
+      if (selectedStarts[i] === chain[chain.length - 1] + STEP) chain.push(selectedStarts[i]);
+      else break;
+    }
+    selectedStarts = chain;
+    return;
   }
 
-  function calculatePricing(startMin, duration) {
-    const hour = startMin / 60;
+  // must be adjacent to extend; otherwise reset to single slot
+  selectedStarts.sort((a, b) => a - b);
+  const min = selectedStarts[0];
+  const max = selectedStarts[selectedStarts.length - 1];
 
-    let price = 0;
-    let points = 0;
+  const adjacentBefore = start === min - STEP;
+  const adjacentAfter = start === max + STEP;
 
-    const isHappy = hour >= 10 && hour < 16;
+  if (!adjacentBefore && !adjacentAfter) {
+    selectedStarts = [start];
+    return;
+  }
 
+  // extend selection
+  selectedStarts.push(start);
+  selectedStarts.sort((a, b) => a - b);
+}
     if (isHappy) {
       if (duration === 60) price = 14;
       if (duration === 90) price = 20;
@@ -148,9 +168,9 @@
         } else {
           div.textContent = "Available";
           div.addEventListener("click", () => {
-            autoSelect60(start, court, taken);
-            syncUI();
-          });
+  toggleSelect(start, court, taken);
+  syncUI();
+});
         }
 
         td.appendChild(div);
@@ -177,7 +197,7 @@
     confirmBtn.disabled = true;
     selectedText.textContent = "Select your time to see your booking summary here.";
 
-    if (!selectedCourt || selectedStarts.length < 2) return;
+    if (!selectedCourt || selectedStarts.length === 0) return;
 
    const rows = [...tableBody.querySelectorAll("tr")];
 
@@ -203,11 +223,13 @@ selectedStarts.forEach((slotStart) => {
       <div class="sub">Court ${selectedCourt === "court1" ? "1" : "2"}</div>
     `;
 
-    confirmBtn.disabled = false;
+    confirmBtn.disabled = (selectedStarts.length * STEP) < MIN_BOOK_MINUTES;
   }
 
   confirmBtn.addEventListener("click", () => {
-
+    
+ selectedStarts.sort((a, b) => a - b);
+    
     const start = selectedStarts[0];
     const end = selectedStarts[selectedStarts.length - 1] + STEP;
     const duration = selectedStarts.length * STEP;
