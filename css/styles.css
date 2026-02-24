@@ -533,3 +533,9 @@ input:focus {
   .hamburger { display: inline-flex; }
   .brand { min-width: auto; }
 }
+
+.side-links a:first-child {
+  background: rgba(63, 102, 150, 0.25);
+  border-color: rgba(63, 102, 150, 0.55);
+  color: #ffffff;
+}
