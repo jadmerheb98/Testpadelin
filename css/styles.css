@@ -386,12 +386,14 @@ header .brand img {
 }
 
 /* Responsive for the new grids */
-@media (max-width: 920px) {
-  .community-grid { grid-template-columns: 1fr; }
-}
+@media (max-width: 760px) {
+  .nav { display: none; }
+  .hamburger { display: inline-flex; }
+  .brand { min-width: auto; }
 
-header .brand img { height: 44px; }
-.header-inner { height: 74px; }
+  header .brand img { height: 44px; }
+  .header-inner { height: 74px; }
+}
 
 /* Right hero card */
 .hero-card {
