@@ -575,20 +575,50 @@ button, input { font: inherit; }
   margin-bottom: 28px;
 }
 
-.section-tag {
-  display: inline-block;
-  font-size: 12px;
-  letter-spacing: 2px;
-  font-weight: 800;
-  color: var(--accent);
-  margin-bottom: 8px;
+.section-intro {
+  text-align: center;
+  margin-bottom: 24px;
 }
 
+/* BIGGER section marker */
+.section-tag {
+  display: inline-block;
+  font-size: 14px;            /* was 12px */
+  letter-spacing: 3px;        /* stronger */
+  font-weight: 900;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+/* Slightly SMALLER big headline */
 .section-headline {
-  font-size: 32px;
+  font-size: 28px;            /* was ~32px */
   font-weight: 900;
   margin: 0;
-}F
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 34px 0 6px;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  height: 1px;
+  width: 90px;
+  background: rgba(15, 23, 42, 0.12);
+}
+
+.section-divider span {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: rgba(15, 23, 42, 0.55);
+}
 
 /* ===========================
    Sections
