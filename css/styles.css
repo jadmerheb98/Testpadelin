@@ -671,6 +671,53 @@ header .brand img {
   font-size: 14px;
 }
 
+/* HERO PHOTO TEST (image already contains the text) */
+.padelin-hero.hero-photo{
+  position: relative;
+  min-height: 85vh;                 /* same “big hero” feel as your gradient */
+  display: flex;
+  align-items: flex-end;            /* button sits lower */
+  padding: 0 0 72px;                /* space from bottom */
+  background: url("../assets/img/hero.png") center / cover no-repeat;
+}
+
+/* subtle overlay to keep button readable without ruining photo text */
+.padelin-hero.hero-photo::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    to top,
+    rgba(15,23,42,0.55),
+    rgba(15,23,42,0.10) 55%,
+    rgba(15,23,42,0.00)
+  );
+  pointer-events:none;
+}
+
+.hero-cta{
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* button looks premium on top of image */
+.hero-btn{
+  padding: 14px 26px;
+  border-radius: 14px;
+  box-shadow: 0 14px 30px rgba(15,23,42,0.28);
+}
+
+/* mobile tweak: keep button visible and not too low */
+@media (max-width: 760px){
+  .padelin-hero.hero-photo{
+    padding-bottom: 54px;
+    background-position: center 35%;
+  }
+}
+
 /* ===========================
    Sections
    =========================== */
