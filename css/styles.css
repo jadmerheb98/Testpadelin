@@ -71,14 +71,14 @@ button, input { font: inherit; }
 }
 
 .brand img {
-  width: 30px;
-  height: 30px;
+  height: 38px;   
+  width: auto;
 }
 
 .brand span {
-  color: var(--white);
-  font-weight: 700;
-  letter-spacing: 0.4px;
+  font-size: 20px;   /* slightly bigger brand text */
+  font-weight: 900;
+  letter-spacing: 0.5px;
 }
 
 .nav {
