@@ -11,8 +11,8 @@
 
   // --- Config ---
   const CLUB_PHONE = "96171884882"; // WhatsApp target (no +)
-  const START_TIME = "08:00";
-  const END_TIME = "21:00";
+  const START_TIME = "10:00";
+  const END_TIME = "24:00";   // 12:00 AM
   const STEP_MINUTES = 30;          // table divided every 30 mins
   const MIN_BOOK_MINUTES = 60;      // minimum selection 60 mins
 
@@ -73,18 +73,17 @@
 
   // Minutes -> "hh:mm AM/PM"
   function minutesToTime(mins) {
-    const hours24 = Math.floor(mins / 60);
-    const minutes = mins % 60;
+  const hours24 = (Math.floor(mins / 60) % 24 + 24) % 24; // wrap 24 → 0
+  const minutes = mins % 60;
 
-    const period = hours24 >= 12 ? "PM" : "AM";
-    const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+  const period = hours24 >= 12 ? "PM" : "AM";
+  const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
 
-    const hh = String(hours12).padStart(2, "0");
-    const mm = String(minutes).padStart(2, "0");
+  const hh = String(hours12).padStart(2, "0");
+  const mm = String(minutes).padStart(2, "0");
 
-    return `${hh}:${mm} ${period}`;
-  }
-
+  return `${hh}:${mm} ${period}`;
+}
   function buildSlots(startHHMM, endHHMM, step) {
     const start = parseTimeToMinutes(startHHMM); // 24h input OK
     const end = parseTimeToMinutes(endHHMM);     // 24h input OK
