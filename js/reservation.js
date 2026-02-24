@@ -48,10 +48,17 @@
   }
 
   function minutesToTime(mins) {
-    const hh = String(Math.floor(mins / 60)).padStart(2, "0");
-    const mm = String(mins % 60).padStart(2, "0");
-    return `${hh}:${mm}`;
-  }
+  const hours24 = Math.floor(mins / 60);
+  const minutes = mins % 60;
+
+  const period = hours24 >= 12 ? "PM" : "AM";
+  const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+
+  const hh = String(hours12).padStart(2, "0");
+  const mm = String(minutes).padStart(2, "0");
+
+  return `${hh}:${mm} ${period}`;
+}
 
   function buildSlots(startHHMM, endHHMM, step) {
     const start = parseTimeToMinutes(startHHMM);
@@ -266,25 +273,37 @@
     if (!summary) return;
 
     const mins = selectedDurationMinutes();
-    selectedText.textContent = `${summary.start} → ${summary.end} • ${summary.courtLabel} • ${mins} min`;
+   selectedText.innerHTML = `
+  <div>${summary.start} → ${summary.end}</div>
+  <div style="margin-top:4px; font-weight:600;">${summary.courtLabel}</div>
+`;
 
     // enable confirm only if >= 60 mins
     if (mins >= MIN_BOOK_MINUTES) confirmBtn.disabled = false;
   }
 
   function buildWhatsAppMessage(summary) {
-    // Short, creative, sporty message with all info
-    return [
-      "🏓 PADELIN Reservation Request",
-      "Game on! 💪🔥",
-      "",
-      `📍 Byblos`,
-      `🎾 ${summary.courtLabel}`,
-      `⏱️ ${summary.start} - ${summary.end} (${selectedDurationMinutes()} min)`,
-      "",
-      "Please confirm availability and mark it as taken ✅"
-    ].join("\n");
-  }
+  // Get today's date (you can later replace with date picker)
+  const today = new Date();
+
+  const options = { weekday: "short", month: "short", day: "numeric", year: "numeric" };
+  const formattedDate = today.toLocaleDateString("en-US", options);
+
+  // Extract court number only (1 or 2)
+  const courtNumber = summary.courtLabel.includes("1") ? "1" : "2";
+
+  return [
+    "Hello 👋",
+    "",
+    "I would like to reserve a court:",
+    "",
+    `📅 Date: ${formattedDate}`,
+    `🎾 Court: ${courtNumber}`,
+    `⏰ Time: ${summary.start} - ${summary.end}`,
+    "",
+    "Thank you!"
+  ].join("\n");
+}
 
   confirmBtn.addEventListener("click", () => {
     if (isAdmin) return;
