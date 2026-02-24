@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login | PADELIN</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+
+  <!-- Same header as other pages -->
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html" aria-label="PADELIN Home">
+        <img src="./assets/img/logo.svg" alt="PADELIN Logo" />
+        <span>PADELIN</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="./index.html">Home</a>
+        <a href="./reservation.html">Reserve</a>
+        <a href="./login.html">Login</a>
+      </nav>
+
+      <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+        <div class="hamburger-lines" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+    </div>
+  </header>
+
+  <div class="overlay" data-overlay></div>
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+    </div>
+    <div class="side-links">
+      <a href="./membership.html">Membership</a>
+      <a href="./training.html">Training</a>
+      <a href="./tournaments.html">Tournaments</a>
+    </div>
+  </aside>
+
+  <main class="center-wrap">
+    <div class="panel">
+      <h2>Admin Login</h2>
+      <p style="margin:0 0 12px; color: rgba(11, 18, 32, 0.72); font-size: 14px;">
+        Frontend-only demo. This will be replaced by real auth later.
+      </p>
+
+      <form id="adminForm">
+        <div class="field">
+          <label for="adminEmail">Email</label>
+          <input id="adminEmail" type="email" required placeholder="admin@padelin.com" />
+        </div>
+
+        <div class="field">
+          <label for="adminPass">Password</label>
+          <input id="adminPass" type="password" required placeholder="••••••••" />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Enter Admin Mode</button>
+        <button class="btn btn-ghost" id="adminLogout" type="button" style="margin-left:10px;">Logout</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+  </footer>
+
+  <script src="./js/main.js"></script>
+  <script>
+    const form = document.getElementById("adminForm");
+    const logout = document.getElementById("adminLogout");
+
+    // Demo credentials (change later)
+    const ADMIN_EMAIL = "admin@padelin.com";
+    const ADMIN_PASS = "padelin2026";
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("adminEmail").value.trim();
+      const pass = document.getElementById("adminPass").value;
+
+      if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+        localStorage.setItem("isAdmin", "true");
+        alert("Admin mode enabled. You can now manage availability on the Reservation page.");
+        window.location.href = "./reservation.html";
+      } else {
+        alert("Wrong admin credentials.");
+      }
+    });
+
+    logout.addEventListener("click", () => {
+      localStorage.removeItem("isAdmin");
+      alert("Admin mode disabled.");
+    });
+  </script>
+</body>
+</html>
