@@ -427,10 +427,11 @@ button, input { font: inherit; }
 /* Leaderboard header row */
 .split-head {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 14px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  margin-bottom: 18px;
 }
 
 .split-actions {
@@ -531,6 +532,34 @@ button, input { font: inherit; }
   .split-head { flex-direction: column; align-items: stretch; }
   .pillars { grid-template-columns: 1fr; }
   .final-cta-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* Center all home section titles */
+.padelin-hero h1,
+.section-title {
+  text-align: center;
+}
+
+/* Center hero lines */
+.hero-lines {
+  text-align: center;
+}
+
+/* Center button containers */
+.hero-actions,
+.cta-row,
+.split-actions,
+.final-actions {
+  justify-content: center;
+}
+
+/* Center single buttons */
+.hero-actions a,
+.cta-row a,
+.split-actions a,
+.final-actions a {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ===========================
