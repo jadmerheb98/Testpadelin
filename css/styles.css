@@ -620,6 +620,55 @@ button, input { font: inherit; }
   color: rgba(15, 23, 42, 0.55);
 }
 
+.community-flow {
+  margin-top: 10px;
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flow-step:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.flow-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: #0f172a;
+  border: 1px solid rgba(63, 102, 150, 0.28);
+  background: rgba(63, 102, 150, 0.10);
+}
+
+.flow-title {
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+.flow-text {
+  color: rgba(15, 23, 42, 0.70);
+  font-size: 14px;
+}
+
 /* ===========================
    Sections
    =========================== */
