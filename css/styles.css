@@ -1092,3 +1092,18 @@ input:focus {
   border-color: rgba(63, 102, 150, 0.55);
   color: #ffffff;
 }
+/* HERO: move Play Now button higher (annotated area) */
+.padelin-hero {
+  position: relative;
+}
+
+.padelin-hero .hero-cta {
+  position: absolute;
+  left: 50%;
+  top: 58%;                 /* move up/down here */
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
