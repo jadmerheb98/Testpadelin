@@ -507,6 +507,29 @@ input:focus {
   margin-top: 14px;
 }
 
+/* Selected summary (below table) */
+.selected-summary {
+  margin: 14px auto 0;
+  max-width: 520px;
+  text-align: center;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(15, 23, 42, 0.04);
+  font-weight: 700;
+}
+
+.selected-summary .sub {
+  margin-top: 6px;
+  font-weight: 600;
+  color: rgba(11, 18, 32, 0.72);
+}
+
+/* Center confirm button */
+.booking-actions-centered {
+  justify-content: center;
+}
+
 /* ===========================
    Footer
    =========================== */
