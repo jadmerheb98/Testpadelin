@@ -362,6 +362,77 @@ button, input { font: inherit; }
   font-size: 14px;
 }
 
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.pricing-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.pricing-card.highlight {
+  background: rgba(63, 102, 150, 0.08);
+  border-color: rgba(63, 102, 150, 0.28);
+}
+
+.pricing-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.pricing-head h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.pricing-head span {
+  font-size: 12px;
+  color: rgba(11, 18, 32, 0.65);
+  font-weight: 650;
+}
+
+.pricing-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.pricing-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: rgba(15, 23, 42, 0.03);
+}
+
+.pricing-points {
+  font-size: 13px;
+  color: rgba(11, 18, 32, 0.75);
+}
+
+.pricing-note {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: rgba(11, 18, 32, 0.78);
+}
+
+@media (max-width: 920px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+}
+
 /* ===========================
    Forms (Login)
    =========================== */
