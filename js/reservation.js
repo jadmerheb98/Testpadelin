@@ -71,15 +71,31 @@
   }
 
   function autoSelect60(start, court, taken) {
-    selectedCourt = court;
-    selectedStarts = [start];
+  selectedCourt = court;
 
-    const next = start + STEP;
-    const nextKey = `${next}|${court}`;
+  // Always start fresh (prevents 3-slot weirdness)
+  selectedStarts = [start];
 
-    if (!taken.has(nextKey)) {
-      selectedStarts.push(next);
-    }
+  const next = start + STEP;
+  const prev = start - STEP;
+
+  const nextKey = `${next}|${court}`;
+  const prevKey = `${prev}|${court}`;
+
+  // Prefer forward: start + next
+  if (!taken.has(nextKey) && next < 24 * 60) {
+    selectedStarts.push(next);
+    return;
+  }
+
+  // Otherwise try backward: prev + start
+  if (!taken.has(prevKey) && prev >= 8 * 60) {
+    selectedStarts = [prev, start];
+    return;
+  }
+
+  // Else keep only 1 slot (confirm will stay disabled)
+    
   }
 
   function calculatePricing(startMin, duration) {
@@ -163,15 +179,18 @@
 
     if (!selectedCourt || selectedStarts.length < 2) return;
 
-    selectedStarts.forEach(start => {
-      const rows = [...tableBody.querySelectorAll("tr")];
-      rows.forEach(row => {
-        if (row.firstChild.textContent.includes(minutesToTime(start))) {
-          const index = selectedCourt === "court1" ? 1 : 2;
-          row.children[index].querySelector(".slot").classList.add("selected");
-        }
-      });
-    });
+   const rows = [...tableBody.querySelectorAll("tr")];
+
+selectedStarts.forEach((slotStart) => {
+  const label = `${minutesToTime(slotStart)} - ${minutesToTime(slotStart + STEP)}`;
+
+  const row = rows.find((r) => r.firstChild && r.firstChild.textContent.trim() === label);
+  if (!row) return;
+
+  const index = selectedCourt === "court1" ? 1 : 2;
+  const slotEl = row.children[index]?.querySelector(".slot");
+  if (slotEl) slotEl.classList.add("selected");
+});
 
     const start = selectedStarts[0];
     const end = selectedStarts[selectedStarts.length - 1] + STEP;
