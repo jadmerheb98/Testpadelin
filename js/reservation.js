@@ -55,13 +55,13 @@
   }
 
   function minutesToTime(mins) {
-    const h24 = Math.floor(mins / 60);
-    const m = mins % 60;
-    const period = h24 >= 12 ? "PM" : "AM";
-    const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
-    return `${String(h12).padStart(2,"0")}:${String(m).padStart(2,"0")} ${period}`;
-  }
-
+  const h24 = (Math.floor(mins / 60) % 24 + 24) % 24; // safe + wraps 24:00 to 00:00
+  const m = mins % 60;
+  const period = h24 >= 12 ? "PM" : "AM";
+  const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
+  return `${String(h12).padStart(2,"0")}:${String(m).padStart(2,"0")} ${period}`;
+}
+  
   function buildSlots() {
     const slots = [];
     for (let m = 8 * 60; m < 24 * 60; m += STEP) {
@@ -126,18 +126,27 @@
   selectedStarts.push(start);
   selectedStarts.sort((a, b) => a - b);
 }
-    if (isHappy) {
-      if (duration === 60) price = 14;
-      if (duration === 90) price = 20;
-      points = 3 * (duration / 60);
-    } else {
-      if (duration === 60) price = 24;
-      if (duration === 90) price = 34;
-      points = 6 * (duration / 60);
-    }
+   function calculatePricing(startMinutes, duration) {
+  // Happy Hour: 10:00 AM – 4:00 PM (start time decides)
+  const isHappy = startMinutes >= 10 * 60 && startMinutes < 16 * 60;
 
-    return { price, points };
+  let price = 0;
+  let points = 0;
+
+  if (isHappy) {
+    if (duration === 60) price = 14;
+    else if (duration === 90) price = 20;
+    else price = Math.round((duration / 60) * 14); // fallback
+    points = 3 * (duration / 60);
+  } else {
+    if (duration === 60) price = 24;
+    else if (duration === 90) price = 34;
+    else price = Math.round((duration / 60) * 24); // fallback
+    points = 6 * (duration / 60);
   }
+
+  return { price, points };
+}
 
   function render() {
 
@@ -212,6 +221,7 @@ selectedStarts.forEach((slotStart) => {
   if (slotEl) slotEl.classList.add("selected");
 });
 
+    selectedStarts.sort((a, b) => a - b);
     const start = selectedStarts[0];
     const end = selectedStarts[selectedStarts.length - 1] + STEP;
     const duration = selectedStarts.length * STEP;
