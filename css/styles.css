@@ -674,11 +674,19 @@ header .brand img {
 /* HERO PHOTO TEST (image already contains the text) */
 .padelin-hero.hero-photo{
   position: relative;
-  min-height: 85vh;                 /* same “big hero” feel as your gradient */
+  height: 62vh;              /* ✅ smaller like your gradient */
+  min-height: 460px;         /* ✅ keeps it strong on small phones */
+  max-height: 640px;         /* ✅ stops it from being too tall */
   display: flex;
-  align-items: flex-end;            /* button sits lower */
-  padding: 0 0 72px;                /* space from bottom */
-  background: url("../assets/img/hero.png") center / cover no-repeat;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 26px;
+
+  background: url("../assets/img/hero.jpg") center 35% / cover no-repeat;
+}
+.hero-cta{
+  position: relative;
+  z-index: 2;
 }
 
 /* subtle overlay to keep button readable without ruining photo text */
@@ -713,9 +721,9 @@ header .brand img {
 /* mobile tweak: keep button visible and not too low */
 @media (max-width: 760px){
   .padelin-hero.hero-photo{
-    padding-bottom: 54px;
-    background-position: center 35%;
-  }
+  height: 56vh;
+  min-height: 420px;
+  background-position: center 30%;
 }
 
 /* ===========================
