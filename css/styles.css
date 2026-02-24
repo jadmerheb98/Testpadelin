@@ -581,20 +581,22 @@ button, input { font: inherit; }
 }
 
 /* BIGGER section marker */
+/* Big Section Marker */
 .section-tag {
   display: inline-block;
-  font-size: 14px;            /* was 12px */
-  letter-spacing: 3px;        /* stronger */
+  font-size: 28px;      /* bigger now */
+  letter-spacing: 3px;
   font-weight: 900;
   color: var(--accent);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
-/* Slightly SMALLER big headline */
+/* Smaller supporting headline */
 .section-headline {
-  font-size: 28px;            /* was ~32px */
-  font-weight: 900;
+  font-size: 18px;      /* smaller now */
+  font-weight: 700;
   margin: 0;
+  opacity: 0.85;
 }
 
 .section-divider {
