@@ -303,10 +303,10 @@
       return;
     }
 
-    confirmBtn.disabled = true;
-    selectedText.textContent = "No slot selected";
+   confirmBtn.disabled = true;
+selectedText.textContent = "Select your time to see your booking summary here.";
 
-    if (selected.size === 0) return;
+if (selected.size === 0) return;
 
     // Mark selected blocks in UI
     for (const k of selected) {
@@ -330,9 +330,9 @@
     // Line 2: Court 1
     // No minutes displayed
     selectedText.innerHTML = `
-      <div style="white-space:nowrap;">${summary.start} → ${summary.end}</div>
-      <div style="margin-top:6px; font-weight:700;">${summary.courtLabel}</div>
-    `;
+  <div>${summary.start} → ${summary.end}</div>
+  <div class="sub">${summary.courtLabel}</div>
+`;
 
     // enable confirm only if >= 60 mins
     if (mins >= MIN_BOOK_MINUTES) confirmBtn.disabled = false;
