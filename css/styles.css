@@ -1221,3 +1221,17 @@ input:focus {
   padding: 0 14px;
 }
 .auth-hint{ color: rgba(255,255,255,.65); font-size: 13px; margin-top: 8px; }
+
+/* FINAL header logo size override */
+.header .brand img{
+  height: 64px;
+  width: auto;
+  display: block;
+  transform: scale(1.25);
+  transform-origin: left center;
+}
+
+.header-left .brand{
+  min-width: 0;
+  padding: 0;
+}   
