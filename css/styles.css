@@ -223,6 +223,25 @@ header .brand img {
   transform: translateY(-1px);
 }
 
+/* Bottom Sign in button inside side menu */
+.side-signin{
+  margin-top: auto;                 /* pushes it to the bottom */
+  display: block;
+  text-align: center;
+
+  background: rgba(63, 102, 150, 0.25);
+  border: 1px solid rgba(63, 102, 150, 0.55);
+  color: #fff;
+
+  padding: 14px 12px;
+  border-radius: 14px;
+  font-weight: 800;
+}
+.side-signin:hover{
+  background: rgba(63, 102, 150, 0.35);
+  transform: translateY(-1px);
+}
+
 /* ===========================
    Buttons / UI
    =========================== */
@@ -1090,11 +1109,6 @@ input:focus {
   .brand { min-width: auto; }
 }
 
-.side-links a:first-child {
-  background: rgba(63, 102, 150, 0.25);
-  border-color: rgba(63, 102, 150, 0.55);
-  color: #ffffff;
-}
 /* HERO: move Play Now button higher (annotated area) */
 .padelin-hero {
   position: relative;
