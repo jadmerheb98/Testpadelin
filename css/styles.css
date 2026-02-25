@@ -76,11 +76,7 @@ header .brand img {
   display: block;
 }
 
-.brand span {
-  color: var(--white);
-  font-weight: 700;
-  letter-spacing: 0.4px;
-}
+.brand span { display: none; }
 
 .nav {
   display: flex;
@@ -163,13 +159,15 @@ header .brand img {
 .side-menu {
   position: fixed;
   top: 0;
-  right: 0;
-  height: 100%;
+  left: 0;                      /* 👈 changed from right to left */
+  height: 100vh;                /* better than 100% */
   width: min(320px, 86vw);
   background: var(--navy);
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  transform: translateX(100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08); /* 👈 border moved */
+  
+  transform: translateX(-100%); /* 👈 slide from LEFT */
   transition: transform 240ms ease;
+  
   z-index: 70;
   padding: 18px;
   display: flex;
@@ -177,8 +175,9 @@ header .brand img {
   gap: 12px;
 }
 
-.side-menu.open { transform: translateX(0); }
-
+.side-menu.open { 
+  transform: translateX(0); 
+}
 .side-menu-header {
   display: flex;
   align-items: center;
