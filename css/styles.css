@@ -1142,9 +1142,11 @@ input:focus {
 .header-right { display:flex; align-items:center; gap:10px; }
 
 /* Make logo bigger WITHOUT increasing header height */
-.brand img { height: 42px; width:auto; display:block; }
-.brand span { letter-spacing: 2px; font-weight: 800; }
-
+.brand img {
+  height: 64px;   /* try 64 or 68 */
+  width: auto;
+  display: block;
+}
 /* Right side icon buttons */
 .icon-btn{
   width:44px; height:44px;
