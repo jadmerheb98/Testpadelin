@@ -1137,3 +1137,92 @@ input:focus {
   opacity: 0.35;
   margin: 0 8px;
 }
+/* ===== Header (GoDaddy-style layout) ===== */
+.header-gd { display:flex; align-items:center; justify-content:space-between; }
+.header-left { display:flex; align-items:center; gap:12px; }
+.header-right { display:flex; align-items:center; gap:10px; }
+
+/* Make logo bigger WITHOUT increasing header height */
+.brand img { height: 42px; width:auto; display:block; }
+.brand span { letter-spacing: 2px; font-weight: 800; }
+
+/* Right side icon buttons */
+.icon-btn{
+  width:44px; height:44px;
+  display:grid; place-items:center;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color:#fff;
+}
+.icon-btn:active{ transform: scale(.98); }
+
+/* Hide old top nav if it still exists in any page */
+.nav { display:none !important; }
+
+/* ===== Auth Panel ===== */
+.auth-overlay{
+  position:fixed; inset:0;
+  background: rgba(0,0,0,.45);
+  opacity:0; pointer-events:none;
+  transition: .2s ease;
+  z-index: 9998;
+}
+.auth-overlay.is-open{ opacity:1; pointer-events:auto; }
+
+.auth-panel{
+  position:fixed; top:0; right:0;
+  width:min(420px, 92vw);
+  height:100vh;
+  background: #0f172a;
+  border-left: 1px solid rgba(255,255,255,.10);
+  transform: translateX(105%);
+  transition: .25s ease;
+  z-index: 9999;
+  padding: 18px;
+  display:flex; flex-direction:column;
+}
+.auth-panel.is-open{ transform: translateX(0); }
+
+.auth-head{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 14px;
+}
+.auth-title{ color:#fff; font-size: 22px; font-weight: 900; }
+.auth-close{
+  width:42px; height:42px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color:#fff; font-size: 22px;
+}
+
+.auth-tabs{ display:flex; gap:10px; margin-bottom: 14px; }
+.auth-tab{
+  flex:1;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.85);
+  font-weight:800;
+}
+.auth-tab.is-active{
+  background: rgba(255,255,255,.12);
+  color:#fff;
+}
+
+.auth-body{ flex:1; overflow:auto; padding-bottom: 16px; }
+.auth-form{ display:none; gap:10px; }
+.auth-form.is-active{ display:grid; }
+
+.auth-form label{ color: rgba(255,255,255,.80); font-weight:700; }
+.auth-form input{
+  height:46px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color:#fff;
+  padding: 0 14px;
+}
+.auth-hint{ color: rgba(255,255,255,.65); font-size: 13px; margin-top: 8px; }
