@@ -1025,7 +1025,9 @@ input:focus {
 .day-nav {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  margin: 0 auto:
 }
 
 .day-btn {
