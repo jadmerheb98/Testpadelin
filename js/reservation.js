@@ -4,6 +4,12 @@
   const selectedText = document.querySelector("[data-selected-text]");
   const adminBadge = document.getElementById("adminBadge");
 
+  // Day navigation elements (NEW)
+  const dayPrevBtn = document.querySelector("[data-day-prev]");
+  const dayNextBtn = document.querySelector("[data-day-next]");
+  const dayLabelBtn = document.querySelector("[data-day-label]");
+  const dayPicker = document.querySelector("[data-day-picker]");
+
   if (!tableBody || !confirmBtn || !selectedText) return;
 
   const isAdmin = localStorage.getItem("isAdmin") === "true";
@@ -11,46 +17,79 @@
 
   // --- Config ---
   const CLUB_PHONE = "96171884882"; // WhatsApp target (no +)
+
+  // ✅ 10 AM -> 12 AM (midnight)
   const START_TIME = "10:00";
-  const END_TIME = "24:00";   // 12:00 AM
-  const STEP_MINUTES = 30;          // table divided every 30 mins
-  const MIN_BOOK_MINUTES = 60;      // minimum selection 60 mins
+  const END_TIME = "24:00";
 
-  // LocalStorage key for taken slots
-  const STORAGE_KEY = "padelin_taken_v1";
+  const STEP_MINUTES = 30; // table divided every 30 mins
+  const MIN_BOOK_MINUTES = 60; // minimum selection 60 mins
 
-  // Load taken slots from storage
-  const taken = loadTakenSet();
+  // ✅ Taken slots stored per-day (so arrows actually matter)
+  const STORAGE_KEY = "padelin_taken_by_date_v1";
 
-  // Keep your original Set for UI highlighting (we rebuild it from the new selection engine)
-  const selected = new Set(); // `${timeRange}|${court}`
+  // ---- Date state (NEW) ----
+  let currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
 
-  // New, reliable selection engine:
-  // - One court at a time
-  // - Selection must stay consecutive
-  let selectedCourt = null;        // "court1" | "court2" | null
-  let selectedStarts = [];         // array of start minutes, consecutive
+  function addDays(date, days) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
 
-  function loadTakenSet() {
+  function getLocalISO(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+
+  function formatDateLabel(d) {
+    return d.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
+  function syncDayUI() {
+    if (dayLabelBtn) dayLabelBtn.textContent = formatDateLabel(currentDate);
+    if (dayPicker) dayPicker.value = getLocalISO(currentDate);
+  }
+
+  // ---- Taken slots (per date) ----
+  function loadTakenByDate() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return new Set();
-      const arr = JSON.parse(raw);
-      return new Set(Array.isArray(arr) ? arr : []);
+      if (!raw) return {};
+      const obj = JSON.parse(raw);
+      return obj && typeof obj === "object" ? obj : {};
     } catch {
-      return new Set();
+      return {};
     }
   }
 
-  function saveTakenSet() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(taken)));
+  function saveTakenByDate() {
+    takenByDate[currentISO] = Array.from(taken);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(takenByDate));
   }
+
+  let takenByDate = loadTakenByDate();
+  let currentISO = getLocalISO(currentDate);
+  let taken = new Set(Array.isArray(takenByDate[currentISO]) ? takenByDate[currentISO] : []);
+
+  // ---- Your existing selection engine (kept) ----
+  const selected = new Set(); // `${timeRange}|${court}`
+  let selectedCourt = null; // "court1" | "court2" | null
+  let selectedStarts = []; // array of start minutes, consecutive
 
   // Accepts: "08:30" OR "08:30 AM" OR "8:30 PM"
   function parseTimeToMinutes(t) {
     const str = String(t).trim();
 
-    // AM/PM: "h:mm AM"
     const match = str.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
     if (match) {
       let hh = Number(match[1]);
@@ -63,30 +102,30 @@
       return hh * 60 + mm;
     }
 
-    // 24h fallback: "HH:MM"
     const parts = str.split(":");
     const hh = Number(parts[0]);
     const mm = Number(parts[1]);
-
     return hh * 60 + mm;
   }
 
-  // Minutes -> "hh:mm AM/PM"
+  // ✅ Fix midnight: 24:00 -> 12:00 AM
   function minutesToTime(mins) {
-  const hours24 = (Math.floor(mins / 60) % 24 + 24) % 24; // wrap 24 → 0
-  const minutes = mins % 60;
+    const normalized = ((mins % 1440) + 1440) % 1440; // 1440 -> 0
+    const hours24 = Math.floor(normalized / 60);
+    const minutes = normalized % 60;
 
-  const period = hours24 >= 12 ? "PM" : "AM";
-  const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+    const period = hours24 >= 12 ? "PM" : "AM";
+    const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
 
-  const hh = String(hours12).padStart(2, "0");
-  const mm = String(minutes).padStart(2, "0");
+    const hh = String(hours12).padStart(2, "0");
+    const mm = String(minutes).padStart(2, "0");
+    return `${hh}:${mm} ${period}`;
+  }
 
-  return `${hh}:${mm} ${period}`;
-}
   function buildSlots(startHHMM, endHHMM, step) {
-    const start = parseTimeToMinutes(startHHMM); // 24h input OK
-    const end = parseTimeToMinutes(endHHMM);     // 24h input OK
+    const start = parseTimeToMinutes(startHHMM);
+    const end = parseTimeToMinutes(endHHMM);
+
     const list = [];
     for (let m = start; m < end; m += step) {
       const a = minutesToTime(m);
@@ -133,12 +172,10 @@
     syncUI();
   }
 
-  // Reliable consecutive selection behavior
   function toggleSelect(timeRange, court) {
     const startM = timeRangeToStartMinutes(timeRange);
     if (isTakenBlock(startM, court)) return;
 
-    // Switch court -> reset to that one block
     if (selectedCourt && selectedCourt !== court) {
       selectedCourt = court;
       selectedStarts = [startM];
@@ -147,7 +184,6 @@
       return;
     }
 
-    // First selection
     if (!selectedCourt) {
       selectedCourt = court;
       selectedStarts = [startM];
@@ -156,7 +192,6 @@
       return;
     }
 
-    // If tapped already-selected -> remove it, then keep consecutive chain from min upward
     if (selectedStarts.includes(startM)) {
       selectedStarts = selectedStarts.filter((m) => m !== startM);
 
@@ -166,11 +201,8 @@
         selectedStarts.sort((a, b) => a - b);
         const chain = [selectedStarts[0]];
         for (let i = 1; i < selectedStarts.length; i++) {
-          if (selectedStarts[i] === chain[chain.length - 1] + STEP_MINUTES) {
-            chain.push(selectedStarts[i]);
-          } else {
-            break; // stop at first gap to keep it clean + consecutive
-          }
+          if (selectedStarts[i] === chain[chain.length - 1] + STEP_MINUTES) chain.push(selectedStarts[i]);
+          else break;
         }
         selectedStarts = chain;
       }
@@ -180,7 +212,6 @@
       return;
     }
 
-    // Must be adjacent to extend; otherwise reset to the new block (clean UX)
     selectedStarts.sort((a, b) => a - b);
     const min = selectedStarts[0];
     const max = selectedStarts[selectedStarts.length - 1];
@@ -234,12 +265,11 @@
       div.textContent = "Available";
     }
 
-    // Admin: click toggles taken/available (kept exactly as your logic)
     if (isAdmin) {
       div.addEventListener("click", () => {
         if (taken.has(k)) taken.delete(k);
         else taken.add(k);
-        saveTakenSet();
+        saveTakenByDate();
         clearSelection();
         render();
       });
@@ -247,7 +277,7 @@
         if (e.key === "Enter" || e.key === " ") {
           if (taken.has(k)) taken.delete(k);
           else taken.add(k);
-          saveTakenSet();
+          saveTakenByDate();
           clearSelection();
           render();
         }
@@ -255,7 +285,6 @@
       return div;
     }
 
-    // User: click selects blocks
     if (!isTaken) {
       div.addEventListener("click", () => toggleSelect(timeRange, court));
       div.addEventListener("keydown", (e) => {
@@ -292,10 +321,8 @@
   }
 
   function syncUI() {
-    // clear selected classes
     document.querySelectorAll(".slot.selected").forEach((el) => el.classList.remove("selected"));
 
-    // admin confirm button stays disabled (admin doesn't confirm bookings here)
     if (isAdmin) {
       confirmBtn.disabled = true;
       selectedText.textContent = "Admin Mode: Tap slots to toggle status";
@@ -307,7 +334,6 @@
 
     if (selected.size === 0) return;
 
-    // Mark selected blocks in UI
     for (const k of selected) {
       const [timeRange, court] = k.split("|");
       const rows = Array.from(tableBody.querySelectorAll("tr"));
@@ -324,24 +350,17 @@
 
     const mins = selectedDurationMinutes();
 
-    // Your requested box layout:
-    // Line 1: 08:00 AM → 09:00 AM (same line)
-    // Line 2: Court 1
-    // No minutes displayed
     selectedText.innerHTML = `
       <div style="white-space:nowrap;">${summary.start} → ${summary.end}</div>
       <div style="margin-top:6px; font-weight:700;">${summary.courtLabel}</div>
     `;
 
-    // enable confirm only if >= 60 mins
     if (mins >= MIN_BOOK_MINUTES) confirmBtn.disabled = false;
   }
 
+  // ---- WhatsApp message uses CURRENT selected date ----
   function buildWhatsAppMessage(summary) {
-    const today = new Date();
-    const options = { weekday: "short", month: "short", day: "numeric", year: "numeric" };
-    const formattedDate = today.toLocaleDateString("en-US", options);
-
+    const formattedDate = formatDateLabel(currentDate);
     const courtNumber = summary.courtLabel.includes("1") ? "1" : "2";
 
     return [
@@ -353,7 +372,7 @@
       `🎾 Court: ${courtNumber}`,
       `⏰ Time: ${summary.start} - ${summary.end}`,
       "",
-      "Thank you!"
+      "Thank you!",
     ].join("\n");
   }
 
@@ -374,5 +393,42 @@
     window.location.href = url;
   });
 
+  // ---- Day navigation wiring (NEW) ----
+  function changeDateTo(newDate) {
+    currentDate = newDate;
+    currentISO = getLocalISO(currentDate);
+    taken = new Set(Array.isArray(takenByDate[currentISO]) ? takenByDate[currentISO] : []);
+    clearSelection();
+    syncDayUI();
+    render();
+  }
+
+  if (dayPrevBtn) dayPrevBtn.addEventListener("click", () => changeDateTo(addDays(currentDate, -1)));
+  if (dayNextBtn) dayNextBtn.addEventListener("click", () => changeDateTo(addDays(currentDate, 1)));
+
+  // Clicking the label opens the calendar picker
+  if (dayLabelBtn && dayPicker) {
+    dayLabelBtn.addEventListener("click", () => {
+      // modern browsers
+      if (typeof dayPicker.showPicker === "function") dayPicker.showPicker();
+      else {
+        dayPicker.focus();
+        dayPicker.click();
+      }
+    });
+  }
+
+  if (dayPicker) {
+    dayPicker.addEventListener("change", () => {
+      if (!dayPicker.value) return;
+      const [y, m, d] = dayPicker.value.split("-").map(Number);
+      const picked = new Date(y, m - 1, d);
+      picked.setHours(0, 0, 0, 0);
+      changeDateTo(picked);
+    });
+  }
+
+  // Init
+  syncDayUI();
   render();
 })();
