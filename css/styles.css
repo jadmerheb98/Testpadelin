@@ -56,7 +56,7 @@ button, input { font: inherit; }
 }
 
 .header-inner {
-  height: 84px;
+  height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,12 +68,6 @@ button, input { font: inherit; }
   align-items: center;
   gap: 10px;
   min-width: 160px;
-}
-
-header .brand img {
-  height: 70px;
-  width: auto;
-  display: block;
 }
 
 .brand span { display: none; }
@@ -1143,7 +1137,7 @@ input:focus {
 
 /* Make logo bigger WITHOUT increasing header height */
 .brand img {
-  height: 64px;   /* try 64 or 68 */
+  height: 72px;   /* strong but not touching edges */
   width: auto;
   display: block;
 }
