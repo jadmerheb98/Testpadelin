@@ -193,6 +193,43 @@
     <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
   </footer>
 
+  <!-- AUTH OVERLAY + PANEL -->
+<div class="auth-overlay" data-auth-overlay></div>
+
+<div class="auth-panel" data-auth-panel aria-hidden="true">
+  <div class="auth-head">
+    <div class="auth-title">Account</div>
+    <button class="auth-close" type="button" aria-label="Close" data-auth-close>×</button>
+  </div>
+
+  <div class="auth-tabs">
+    <button class="auth-tab is-active" type="button" data-auth-tab="signin">Sign in</button>
+    <button class="auth-tab" type="button" data-auth-tab="signup">Sign up</button>
+  </div>
+
+  <div class="auth-body">
+    <!-- SIGN IN -->
+    <form class="auth-form is-active" data-auth-form="signin" action="login.html">
+      <label>Email</label>
+      <input type="email" required placeholder="you@email.com" />
+      <label>Password</label>
+      <input type="password" required placeholder="••••••••" />
+      <button class="btn primary" type="submit">Sign in</button>
+      <p class="auth-hint">You’ll continue on the login page.</p>
+    </form>
+
+    <!-- SIGN UP -->
+    <form class="auth-form" data-auth-form="signup" action="login.html">
+      <label>Email</label>
+      <input type="email" required placeholder="you@email.com" />
+      <label>Password</label>
+      <input type="password" required placeholder="Create a password" />
+      <button class="btn primary" type="submit">Create account</button>
+      <p class="auth-hint">You’ll continue on the login page.</p>
+    </form>
+  </div>
+</div>
+
   <script src="js/main.js"></script>
 </body>
 </html>
