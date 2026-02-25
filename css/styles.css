@@ -160,7 +160,7 @@ header .brand img {
   pointer-events: auto;
 }
 
--menu {
+.side-menu {
   position: fixed;
   top: 0;
   right: 0;
@@ -177,22 +177,22 @@ header .brand img {
   gap: 12px;
 }
 
--menu.open { transform: translateX(0); }
+.side-menu.open { transform: translateX(0); }
 
--menu-header {
+.side-menu-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 6px;
 }
 
--menu-title {
+.side-menu-title {
   color: var(--white);
   font-weight: 800;
   letter-spacing: 0.4px;
 }
 
--menu-close {
+.side-menu-close {
   width: 40px;
   height: 40px;
   border-radius: 12px;
@@ -202,37 +202,10 @@ header .brand img {
   cursor: pointer;
 }
 
-.side-links{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 8px;
-  height: 100%;              /* important */
-}
-
-.side-links-top{
+.side-links {
   display: grid;
   gap: 10px;
-}
-
-.side-links-bottom{
-  margin-top: auto;          /* pushes Sign in to bottom */
-  padding-top: 10px;
-  border-top: 1px solid rgba(255,255,255,0.10);
-}
-
-.side-signin{
-  background: rgba(63, 102, 150, 0.28);
-  border: 1px solid rgba(63, 102, 150, 0.55);
-  color: #fff;
-  font-weight: 800;
-  text-align: center;
-  padding: 14px 12px;
-  border-radius: 14px;
-}
-.side-signin:hover{
-  background: rgba(63, 102, 150, 0.38);
-  transform: translateY(-1px);
+  margin-top: 8px;
 }
 
 .side-links a {
