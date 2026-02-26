@@ -404,8 +404,8 @@ button, input { font: inherit; }
   .hamburger { display: inline-flex; }
   .brand { min-width: auto; }
 
-  header .brand img { height: 35px; }
-  .header-inner { height: 74px; }
+  header .brand img { height: 44px; }
+  .header-inner { height: 64px; }
 }
 
 /* Right hero card */
@@ -1137,7 +1137,7 @@ input:focus {
 
 /* Make logo bigger WITHOUT increasing header height */
 .brand img {
-  height: 52px;   /* strong but not touching edges */
+  height: 44px;   /* strong but not touching edges */
   width: auto;
   display: block;
 }
@@ -1224,11 +1224,11 @@ input:focus {
 
 /* FINAL header logo size override */
 .header .brand img{
-  height: 64px;
+  height: 44px;
   width: auto;
   display: block;
-  transform: scale(1.25);
-  transform-origin: left center;
+  transform: none;
+  
 }
 
 .header-left .brand{
