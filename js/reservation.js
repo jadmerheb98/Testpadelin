@@ -376,22 +376,82 @@
     ].join("\n");
   }
 
-  confirmBtn.addEventListener("click", () => {
-    if (isAdmin) return;
+  // EmailJS (same account as contact)
+const EMAILJS_PUBLIC_KEY = "k9HV58mqbfn62K1Ft";
+const EMAILJS_SERVICE_ID = "service_8o62mir";
+// Create a new template in EmailJS for reservations and paste its ID here:
+const EMAILJS_TEMPLATE_ID = "REPLACE_WITH_RESERVATION_TEMPLATE_ID";
 
-    const mins = selectedDurationMinutes();
-    if (mins < MIN_BOOK_MINUTES) {
-      alert("Please select at least 60 minutes (2 consecutive 30-min slots).");
+const reserveStatus = document.getElementById("reserveStatus");
+
+// Store reservations for admin inbox
+const RES_KEY = "padelinReservations";
+
+function loadRes() {
+  try { return JSON.parse(localStorage.getItem(RES_KEY) || "[]"); }
+  catch { return []; }
+}
+function saveRes(list) {
+  localStorage.setItem(RES_KEY, JSON.stringify(list));
+}
+
+function setStatus(text, type) {
+  if (!reserveStatus) return;
+  reserveStatus.classList.remove("is-error", "is-success");
+  if (type === "success") reserveStatus.classList.add("is-success");
+  if (type === "error") reserveStatus.classList.add("is-error");
+  reserveStatus.textContent = text;
+}
+
+if (window.emailjs) {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+}
+
+confirmBtn.addEventListener("click", async () => {
+  if (isAdmin) return;
+
+  const mins = selectedDurationMinutes();
+  if (mins < MIN_BOOK_MINUTES) {
+    setStatus("Please select at least 60 minutes (2 consecutive 30-min slots).", "error");
+    return;
+  }
+
+  const summary = selectionSummary();
+  if (!summary) return;
+
+  // Build reservation data
+  const payload = {
+    date: formatDateLabel(currentDate),
+    court: summary.courtLabel,
+    start: summary.start,
+    end: summary.end,
+    duration: mins + " minutes",
+    created_at: new Date().toISOString()
+  };
+
+  // Save locally (admin inbox later)
+  const item = { id: "r_" + Date.now(), ...payload };
+  const list = loadRes();
+  list.push(item);
+  saveRes(list);
+
+  // Notify you (EmailJS)
+  try {
+    if (!window.emailjs || EMAILJS_TEMPLATE_ID.includes("REPLACE")) {
+      setStatus("Reservation request saved. Email notification not configured yet.", "success");
       return;
     }
 
-    const summary = selectionSummary();
-    if (!summary) return;
+    setStatus("Sending reservation request…", "");
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, payload);
 
-    const message = buildWhatsAppMessage(summary);
-    const url = `https://wa.me/${CLUB_PHONE}?text=${encodeURIComponent(message)}`;
-    window.location.href = url;
-  });
+    setStatus("Reservation request sent. We will confirm shortly.", "success");
+    clearSelection();
+  } catch (err) {
+    const msg = (err && (err.text || err.message)) ? (err.text || err.message) : "Unknown error";
+    setStatus("Could not send reservation request. Error: " + msg, "error");
+  }
+});
 
   // ---- Day navigation wiring (NEW) ----
   function changeDateTo(newDate) {
