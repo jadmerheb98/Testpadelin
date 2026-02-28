@@ -192,29 +192,45 @@
     <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
   </footer>
 
-  <!-- ACCOUNT MODAL (GoDaddy style, PADELIN theme) -->
+  <!-- ACCOUNT DRAWER (same feel as side menu) -->
 <div class="account-overlay" data-account-overlay></div>
 
-<section class="account-modal" data-account-modal aria-hidden="true" role="dialog" aria-label="Account">
-  <div class="account-modal-head">
-    <h3>Account</h3>
-    <button class="account-close" type="button" aria-label="Close" data-account-close>✕</button>
+<aside class="account-drawer" data-account-drawer aria-hidden="true" aria-label="Account drawer">
+  <div class="account-drawer-header">
+    <div class="account-drawer-title">Account</div>
+    <button class="account-drawer-close" type="button" aria-label="Close" data-account-close>✕</button>
   </div>
 
-  <div class="account-block">
-    <div class="account-title">Registered Users</div>
-    <div class="account-text">Have an account? Sign in now.</div>
-    <a class="account-link" href="login.html">Sign In</a>
-  </div>
+  <div class="account-drawer-body">
+    <div class="account-block">
+      <div class="account-label">Registered Users</div>
+      <div class="account-sub">Have an account? Sign in now.</div>
+      <a class="account-btn primary" href="login.html">
+        <span class="ico">👤</span>
+        <span>Sign In</span>
+      </a>
+    </div>
 
-  <div class="account-divider"></div>
+    <div class="account-divider"></div>
 
-  <div class="account-block">
-    <div class="account-title">New Customer</div>
-    <div class="account-text">New to PADELIN? Create an account to get started.</div>
-    <a class="account-link" href="membership.html">Create an Account</a>
+    <div class="account-block">
+      <div class="account-label">New Customer</div>
+      <div class="account-sub">New to PADELIN? Create an account to get started.</div>
+      <a class="account-btn" href="signup.html">
+        <span class="ico">✨</span>
+        <span>Create an Account</span>
+      </a>
+    </div>
+
+    <div class="account-tip">
+      <span class="ico">🏓</span>
+      <div>
+        <div class="tip-title">Faster bookings</div>
+        <div class="tip-sub">Save your info and reserve courts in seconds.</div>
+      </div>
+    </div>
   </div>
-</section>
+</aside>
   
     <!-- SIGN IN -->
     <form class="auth-form is-active" data-auth-form="signin" action="login.html">
