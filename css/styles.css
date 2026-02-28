@@ -1236,3 +1236,118 @@ input:focus {
   min-width: 0;
   padding: 0;
 }   
+
+/* ===== Auth Drawer (login panel) ===== */
+.auth-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+  z-index: 90;
+}
+
+.auth-backdrop.open{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.auth-drawer{
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(420px, 92vw);
+  background: #ffffff;
+  transform: translateX(100%);
+  transition: transform 220ms ease;
+  z-index: 100;
+  border-left: 1px solid rgba(0,0,0,0.08);
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  overflow: auto;
+}
+
+.auth-drawer.open{ transform: translateX(0); }
+
+.auth-close{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.auth-header{
+  padding: 22px 18px 10px;
+}
+
+.auth-header h3{
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+.auth-header p{
+  margin: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+.auth-tabs{
+  display:flex;
+  gap:10px;
+  padding: 0 18px 12px;
+}
+
+.auth-tab{
+  flex:1;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #f6f7fb;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-tab.active{
+  background: #0f1a2e;
+  color: #fff;
+  border-color: rgba(15,26,46,0.2);
+}
+
+.auth-content{
+  padding: 0 18px 20px;
+}
+
+.auth-panel{ display:none; }
+.auth-panel.active{ display:block; }
+
+.auth-actions{
+  display:flex;
+  flex-direction: column;
+  gap:12px;
+  margin-top: 14px;
+}
+
+.auth-action{
+  display:block;
+  text-align:center;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  font-weight: 800;
+  text-decoration:none;
+  color: #0f1a2e;
+}
+
+.auth-action.primary{
+  background: #2f4f78;
+  border-color: rgba(47,79,120,0.25);
+  color: #fff;
+}
