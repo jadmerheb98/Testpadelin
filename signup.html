@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign Up | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="PADELIN Home">
+        <img src="assets/img/logo.svg" alt="PADELIN Logo" />
+        <span>PADELIN</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="auth-page">
+    <div class="container">
+      <div class="auth-hero">
+        <div class="auth-badge">✨ Create your PADELIN account</div>
+        <h1>Join the crew.</h1>
+        <p>Save your details, book faster, and get updates about tournaments and community games.</p>
+      </div>
+
+      <div class="auth-card">
+        <div class="auth-card-head">
+          <div class="auth-card-title">Sign Up</div>
+          <div class="auth-card-sub">Takes less than a minute.</div>
+        </div>
+
+        <form class="auth-form-grid">
+          <div class="auth-row">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name" required />
+          </div>
+
+          <div class="auth-row">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required />
+          </div>
+
+          <div class="auth-row">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Create a strong password" autocomplete="new-password" required />
+            <div class="auth-help">Use 8+ characters. Mix letters + numbers for better security.</div>
+          </div>
+
+          <button class="btn btn-primary auth-submit" type="submit">✨ Create Account</button>
+
+          <div class="auth-footer">
+            Already have an account?
+            <a class="auth-link" href="login.html">Sign in</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
