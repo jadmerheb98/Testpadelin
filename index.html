@@ -192,180 +192,51 @@
     <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
   </footer>
 
-  <!-- AUTH OVERLAY + PANEL -->
-<div class="auth-overlay" data-auth-overlay></div>
+  <!-- ACCOUNT DRAWER (same feel as side menu) -->
+<div class="account-overlay" data-account-overlay></div>
 
-<aside class="auth-panel" data-auth-panel aria-hidden="true" aria-label="Account panel">
-  <div class="auth-head">
-    <div class="auth-title">Account</div>
-    <button class="auth-close" type="button" aria-label="Close" data-auth-close>×</button>
+<aside class="account-drawer" data-account-drawer aria-hidden="true" aria-label="Account drawer">
+  <div class="account-drawer-header">
+    <div class="account-drawer-title">Account</div>
+    <button class="account-drawer-close" type="button" aria-label="Close" data-account-close>✕</button>
   </div>
 
-  <!-- SIGNED OUT VIEW -->
-  <section class="auth-view is-active" data-auth-view="signedOut">
-    <div class="auth-tabs">
-      <button class="auth-tab is-active" type="button" data-auth-tab="signin">Sign in</button>
-      <button class="auth-tab" type="button" data-auth-tab="signup">Sign up</button>
-    </div>
+  <div class="account-drawer-body">
+    
+    <div class="account-block">
+  <div class="account-label">Registered Users</div>
+  <div class="account-sub">Have an account? Sign in now.</div>
 
-    <div class="auth-body">
-      <!-- SIGN IN -->
-      <form class="auth-form is-active" data-auth-form="signin" autocomplete="on">
-        <div class="auth-field">
-          <label for="authEmail">Email</label>
-          <input id="authEmail" name="email" type="email" required placeholder="you@email.com" autocomplete="email" />
-        </div>
+  <a class="account-btn primary" href="login.html">
+    <svg class="btn-ico" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor"
+        d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+    </svg>
+    <span>Sign In</span>
+  </a>
+</div>
 
-        <div class="auth-field">
-          <label for="authPassword">Password</label>
-          <input id="authPassword" name="password" type="password" required placeholder="••••••••" autocomplete="current-password" />
-        </div>
+<div class="account-divider"></div>
 
-        <button class="btn btn-primary auth-btn" type="submit">Sign in</button>
-        <p class="auth-hint">Demo mode: any email + password signs you in.</p>
-      </form>
+<div class="account-block">
+  <div class="account-label">New Customer</div>
+  <div class="account-sub">
+    Create an account to reserve faster and manage your bookings.
+  </div>
 
-      <!-- SIGN UP -->
-      <form class="auth-form" data-auth-form="signup" autocomplete="on">
-        <div class="auth-field">
-          <label for="authName">Full name</label>
-          <input id="authName" name="name" type="text" required placeholder="Your name" autocomplete="name" />
-        </div>
+  <a class="account-btn" href="signup.html">
+    <svg class="btn-ico" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor"
+        d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
+    </svg>
+    <span>Create Account</span>
+  </a>
+</div>
 
-        <div class="auth-field">
-          <label for="authEmail2">Email</label>
-          <input id="authEmail2" name="email" type="email" required placeholder="you@email.com" autocomplete="email" />
-        </div>
-
-        <div class="auth-field">
-          <label for="authPassword2">Password</label>
-          <input id="authPassword2" name="password" type="password" required placeholder="Create a password" autocomplete="new-password" />
-        </div>
-
-        <button class="btn btn-primary auth-btn" type="submit">Create account</button>
-        <p class="auth-hint">Creates a local profile on this device.</p>
-      </form>
-    </div>
-  </section>
-
-  <!-- SIGNED IN VIEW -->
-  <section class="auth-view" data-auth-view="signedIn" hidden>
-    <div class="acct-head">
-      <div class="acct-avatar" aria-hidden="true"></div>
-      <div class="acct-meta">
-        <div class="acct-name" data-acct-name>Member</div>
-        <div class="acct-sub" data-acct-sub>Membership: Core</div>
-      </div>
-    </div>
-
-    <div class="acct-grid" role="list">
-      <a class="acct-card" href="points.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l2.2 6.6H21l-5.4 3.9L17.8 20 12 15.9 6.2 20l2.2-7.5L3 8.6h6.8L12 2z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">My Points</span>
-          <span class="acct-desc">Track rewards and credits</span>
-        </span>
-      </a>
-
-      <a class="acct-card" href="reservation.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm13 8H6v10h14V10z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">My Reservations</span>
-          <span class="acct-desc">Upcoming court bookings</span>
-        </span>
-      </a>
-
-      <a class="acct-card" href="membership.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l8 4v6c0 5-3.4 9.4-8 10-4.6-.6-8-5-8-10V6l8-4zm0 4.2L6 8.9v3.2c0 3.7 2.4 6.8 6 7.7 3.6-.9 6-4 6-7.7V8.9l-6-2.7z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">My Membership</span>
-          <span class="acct-desc">Tier, benefits, renewal</span>
-        </span>
-      </a>
-
-      <a class="acct-card" href="training.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M6 3h12v2H6V3zm2 4h8v2H8V7zm-2 4h12v10H6V11zm2 2v6h8v-6H8z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">My Training</span>
-          <span class="acct-desc">Sessions, coaches, progress</span>
-        </span>
-      </a>
-
-      <a class="acct-card" href="tournaments.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M7 3h10v3h4v3c0 3.3-2.7 6-6 6h-1c-1 1.2-2.5 2-4 2s-3-.8-4-2H5C1.7 15  -1 12.3 -1 9V6h4V3zm12 5v1c0 2.2-1.8 4-4 4h-1V8h5zM5 8v5H4c-2.2 0-4-1.8-4-4V8h5z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">My Tournaments</span>
-          <span class="acct-desc">Registrations and results</span>
-        </span>
-      </a>
-
-      <a class="acct-card" href="profile.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">My Profile</span>
-          <span class="acct-desc">Account settings</span>
-        </span>
-      </a>
-
-      <a class="acct-card" href="notifications.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6V11c0-3.1-1.6-5.7-4.5-6.4V4a1.5 1.5 0 0 0-3 0v.6C7.6 5.3 6 7.9 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">Notifications</span>
-          <span class="acct-desc">Alerts and updates</span>
-        </span>
-      </a>
-
-      <a class="acct-card" href="support.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2a10 10 0 0 0-10 10v3a3 3 0 0 0 3 3h1v-8H5a7 7 0 0 1 14 0h-1v8h1a3 3 0 0 0 3-3v-3A10 10 0 0 0 12 2z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">Support / Contact</span>
-          <span class="acct-desc">Concierge assistance</span>
-        </span>
-      </a>
-
-      <!-- Creative premium items -->
-      <a class="acct-card" href="events.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 7a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0-5C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18a8 8 0 0 1-6.8-3.8c1.9-1.7 4.2-2.6 6.8-2.6s4.9.9 6.8 2.6A8 8 0 0 1 12 20z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">Club Events</span>
-          <span class="acct-desc">Socials, ladders, drop-ins</span>
-        </span>
-      </a>
-
-      <a class="acct-card" href="matchmaking.html" role="listitem">
-        <span class="acct-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M16 3h5v5h-2V6.4l-5.2 5.2-1.4-1.4L17.6 5H16V3zM8 21H3v-5h2v1.6l5.2-5.2 1.4 1.4L6.4 19H8v2z"/></svg>
-        </span>
-        <span class="acct-txt">
-          <span class="acct-label">Matchmaking</span>
-          <span class="acct-desc">Find players at your level</span>
-        </span>
-      </a>
-    </div>
-
-    <div class="acct-bottom">
-      <button class="btn btn-primary acct-signout" type="button" data-auth-signout>Sign out</button>
-      <p class="auth-hint">Signing out clears local session on this device.</p>
-    </div>
-  </section>
+<div class="account-micro">
+  Secure sign-in • No spam • Cancel anytime
+</div>
+  </div>
 </aside>
 
   <script src="js/main.js"></script>
