@@ -695,7 +695,7 @@ button, input { font: inherit; }
   justify-content: center;
   padding-bottom: 26px;
 
-  background: url("../assets/img/hero.PNG") center 35% / cover no-repeat;
+  background: url("../assets/img/hero.png") center 35% / cover no-repeat;
 }
 .hero-cta{
   position: relative;
