@@ -2280,3 +2280,180 @@ input:focus {
   border-color: rgba(180,35,24,0.25);
   background: rgba(180,35,24,0.08);
 }
+/* ===========================
+   AUTH — Premium Drawer (Final Override)
+   Paste at end of styles.css
+   =========================== */
+
+:root{
+  --auth-bg: rgba(15, 23, 42, 0.98);
+  --auth-card: rgba(255,255,255,0.06);
+  --auth-card2: rgba(255,255,255,0.08);
+  --auth-border: rgba(255,255,255,0.12);
+  --auth-text: rgba(255,255,255,0.92);
+  --auth-muted: rgba(255,255,255,0.70);
+}
+
+/* Ensure drawer stays dark + premium */
+.auth-panel[data-auth-panel]{
+  background: var(--auth-bg) !important;
+  color: var(--auth-text) !important;
+  border-left: 1px solid var(--auth-border) !important;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.40);
+}
+
+/* Overlay */
+.auth-overlay[data-auth-overlay]{
+  background: rgba(0,0,0,0.52);
+  backdrop-filter: blur(2px);
+}
+
+/* Head */
+.auth-title{ color: #fff; letter-spacing: .2px; }
+.auth-close{
+  border: 1px solid var(--auth-border);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+/* Tabs */
+.auth-tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom: 14px;
+}
+.auth-tab{
+  flex:1;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--auth-border);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.84);
+  font-weight: 850;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+.auth-tab:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.08); }
+.auth-tab.is-active{
+  background: rgba(63, 102, 150, 0.25);
+  border-color: rgba(63, 102, 150, 0.55);
+  color: #fff;
+}
+
+/* Forms */
+.auth-body{ flex: 1; overflow: auto; padding-bottom: 12px; }
+.auth-form{ display:none; gap: 12px; }
+.auth-form.is-active{ display:grid; }
+
+.auth-field{ display:grid; gap:8px; }
+.auth-form label{
+  color: rgba(255,255,255,0.80);
+  font-weight: 750;
+  font-size: 13px;
+}
+
+.auth-form input{
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid var(--auth-border);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  padding: 0 14px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.auth-form input:focus{
+  border-color: rgba(63, 102, 150, 0.75);
+  box-shadow: 0 0 0 3px rgba(63, 102, 150, 0.18);
+  background: rgba(255,255,255,0.08);
+}
+
+.auth-btn{ width: 100%; justify-content: center; border-radius: 14px; }
+.auth-hint{
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.4;
+}
+
+/* Views */
+.auth-view{ display:none; }
+.auth-view.is-active{ display:block; }
+.auth-view[hidden]{ display:none !important; }
+
+/* Account header */
+.acct-head{
+  display:flex;
+  gap: 12px;
+  align-items:center;
+  padding: 10px 0 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  margin-bottom: 14px;
+}
+.acct-avatar{
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  border: 1px solid rgba(63,102,150,0.45);
+  background: linear-gradient(135deg, rgba(63,102,150,0.26), rgba(255,255,255,0.04));
+  box-shadow: 0 12px 26px rgba(0,0,0,0.25);
+}
+.acct-name{
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+.acct-sub{
+  font-size: 13px;
+  color: rgba(255,255,255,0.70);
+  margin-top: 2px;
+}
+
+/* Account grid */
+.acct-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding-bottom: 14px;
+}
+.acct-card{
+  display:flex;
+  gap: 12px;
+  align-items:center;
+  padding: 12px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+.acct-card:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(63,102,150,0.40);
+}
+.acct-ic{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  border: 1px solid rgba(63,102,150,0.35);
+  background: rgba(63,102,150,0.16);
+  color: rgba(255,255,255,0.92);
+}
+.acct-label{ display:block; font-weight: 900; color:#fff; }
+.acct-desc{ display:block; font-size: 13px; color: rgba(255,255,255,0.70); margin-top: 2px; }
+
+.acct-bottom{
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+.acct-signout{ width: 100%; }
+
+/* Make sure buttons look like buttons inside the drawer */
+.auth-panel .btn{
+  border-radius: 14px;
+}
