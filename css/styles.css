@@ -2091,3 +2091,142 @@ input:focus {
     top: 88px; /* below sticky header */
   }
 }
+/* Admin inbox additions */
+
+.inbox-toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.inbox-search{
+  flex:1;
+  min-width: 220px;
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 0 14px;
+  outline: none;
+  background:#fff;
+}
+
+.inbox-search:focus{
+  border-color: rgba(63, 102, 150, 0.65);
+  box-shadow: 0 0 0 3px rgba(63, 102, 150, 0.14);
+}
+
+.inbox-list{
+  display:grid;
+  gap:10px;
+}
+
+.inbox-item{
+  width:100%;
+  text-align:left;
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(15,23,42,0.02);
+  padding: 12px;
+  box-shadow: none;
+  cursor:pointer;
+  transition: transform 160ms ease, border 160ms ease, background 160ms ease;
+}
+
+.inbox-item:hover{
+  transform: translateY(-1px);
+  background: rgba(63,102,150,0.08);
+  border-color: rgba(63,102,150,0.22);
+}
+
+.inbox-item.is-active{
+  background: rgba(63,102,150,0.10);
+  border-color: rgba(63,102,150,0.30);
+}
+
+.inbox-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.inbox-name{
+  font-weight: 900;
+  color: var(--navy);
+}
+
+.inbox-date{
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.55);
+  white-space: nowrap;
+}
+
+.inbox-meta{
+  margin-top: 6px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.70);
+}
+
+.inbox-preview{
+  margin-top: 8px;
+  font-size: 13px;
+  color: rgba(11,18,32,0.70);
+}
+
+.msg-card{
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(15,23,42,0.02);
+  padding: 14px;
+}
+
+.msg-row{
+  display:grid;
+  grid-template-columns: 110px 1fr;
+  gap:12px;
+  padding: 8px 0;
+}
+
+.msg-k{
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(11,18,32,0.55);
+}
+
+.msg-v{
+  font-weight: 850;
+  color: rgba(11,18,32,0.85);
+}
+
+.msg-divider{
+  height:1px;
+  background: rgba(15,23,42,0.10);
+  margin: 10px 0 12px;
+}
+
+.msg-message{
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(11,18,32,0.80);
+}
+
+.msg-actions{
+  margin-top: 14px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.muted{
+  color: rgba(11,18,32,0.55);
+  font-weight: 800;
+}
