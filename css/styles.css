@@ -1678,3 +1678,28 @@ input:focus {
   color: var(--accent);
   text-decoration: underline;
 }
+
+/* icons only inside buttons */
+.account-btn .btn-ico{
+  width: 18px;
+  height: 18px;
+  opacity: .92;
+}
+
+/* make buttons more premium */
+.account-btn{
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.account-btn.primary{
+  background: rgba(63,102,150,0.22);
+  border-color: rgba(63,102,150,0.38);
+}
+
+/* replace the “tip card” with a micro line */
+.account-micro{
+  margin-top: 6px;
+  color: rgba(255,255,255,0.58);
+  font-size: 12px;
+  letter-spacing: .2px;
+}
