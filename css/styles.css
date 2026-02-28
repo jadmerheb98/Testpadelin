@@ -1581,17 +1581,26 @@ input:focus {
 .auth-hero{
   margin: 10px 0 14px;
 }
-.auth-badge{
-  display:inline-flex;
-  gap: 8px;
-  align-items:center;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(15,23,42,0.10);
-  background: rgba(255,255,255,0.72);
+.auth-eyebrow{
+  font-size: 12px;
   font-weight: 900;
-  color: rgba(15,23,42,0.88);
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: rgba(11,18,32,0.55);
   margin-bottom: 10px;
+  position: relative;
+  padding-left: 12px;
+}
+.auth-eyebrow::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(63,102,150,0.75);
 }
 .auth-hero h1{
   margin: 0 0 6px;
