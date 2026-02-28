@@ -273,34 +273,29 @@
     const status = document.getElementById("contactStatus");
     if (!form || !status) return;
 
-    // ===========================
-    // 1) Save to "inbox" locally
-    // ===========================
-    const KEY = "padelinMessages";
-    function loadMessages(){ try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { return []; } }
-    function saveMessages(list){ localStorage.setItem(KEY, JSON.stringify(list)); }
-
-    // ===========================
-    // 2) Email notification (EmailJS)
-    // ===========================
-    // IMPORTANT: You must create an EmailJS account and fill these 3 values:
+    // --- EmailJS config (your values) ---
     const EMAILJS_PUBLIC_KEY = "k9HV58mqbfn62K1Ft";
     const EMAILJS_SERVICE_ID = "service_8o62mir";
     const EMAILJS_TEMPLATE_ID = "template_dxrxk78";
 
-    if (window.emailjs) {
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    // Make sure EmailJS library is loaded
+    if (!window.emailjs) {
+      status.textContent = "Email system not loaded. Please refresh.";
+      status.classList.add("is-error");
+      return;
     }
+
+    // Initialize
+    emailjs.init(EMAILJS_PUBLIC_KEY);
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const name  = form.querySelector("#cName").value.trim();
-      const email = form.querySelector("#cEmail").value.trim(); // optional
-      const phone = form.querySelector("#cPhone").value.trim(); // mandatory
-      const msg   = form.querySelector("#cMsg").value.trim();
+      const name  = document.querySelector("#cName")?.value.trim();
+      const email = document.querySelector("#cEmail")?.value.trim(); // optional
+      const phone = document.querySelector("#cPhone")?.value.trim(); // mandatory
+      const msg   = document.querySelector("#cMsg")?.value.trim();
 
-      // Phone mandatory, email optional
       if (!name || !phone || !msg) {
         status.textContent = "Please complete full name, phone, and message.";
         status.classList.add("is-error");
@@ -308,39 +303,29 @@
       }
 
       status.classList.remove("is-error");
-      status.textContent = "Thank you. We will get back to you soon.";
+      status.textContent = "Sending...";
 
-      // Save locally for admin inbox
-      const item = {
-        id: "m_" + Date.now(),
-        createdAt: new Date().toISOString(),
-        name, email, phone, message: msg
+      const payload = {
+        name,
+        phone,
+        email: email || "(not provided)",
+        message: msg,
+        created_at: new Date().toISOString()
       };
-      const list = loadMessages();
-      list.push(item);
-      saveMessages(list);
 
-      // Send email notification
       try {
-        if (!window.emailjs || EMAILJS_PUBLIC_KEY.includes("REPLACE_")) {
-          // If EmailJS not configured yet, still works locally
-          form.reset();
-          return;
-        }
+        const res = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, payload);
+        console.log("EmailJS success:", res);
 
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          name: name,
-          phone: phone,
-          email: email || "(not provided)",
-          message: msg,
-          created_at: item.createdAt
-        });
-
+        status.textContent = "Thank you. We will get back to you soon.";
         form.reset();
       } catch (err) {
-        // Still saved to inbox; show a subtle message
-        status.textContent = "Saved. Email notification setup is not complete yet.";
-        form.reset();
+        console.error("EmailJS error:", err);
+
+        // Show a useful message
+        const msg = (err && (err.text || err.message)) ? (err.text || err.message) : "Unknown error";
+        status.textContent = "Could not send email. Error: " + msg;
+        status.classList.add("is-error");
       }
     });
   })();
