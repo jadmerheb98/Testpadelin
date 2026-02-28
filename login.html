@@ -42,25 +42,44 @@
     </div>
   </aside>
 
-  <main class="center-wrap">
-    <div class="panel">
-      <h2>Login</h2>
+  <main class="auth-page">
+  <div class="container">
+    <div class="auth-hero">
+      <div class="auth-badge">👤 Welcome back</div>
+      <h1>Sign in and reserve faster.</h1>
+      <p>Access bookings, manage your profile, and stay on top of matches.</p>
+    </div>
 
-      <form>
-        <div class="field">
+    <div class="auth-card">
+      <div class="auth-card-head">
+        <div class="auth-card-title">Sign In</div>
+        <div class="auth-card-sub">Let’s get you on court.</div>
+      </div>
+
+      <form class="auth-form-grid">
+        <div class="auth-row">
           <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+          <input id="email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required />
         </div>
 
-        <div class="field">
+        <div class="auth-row">
           <label for="password">Password</label>
           <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+          <div class="auth-actions-row">
+            <a class="auth-link" href="#">Forgot password?</a>
+          </div>
         </div>
 
-        <button class="btn btn-primary" type="submit">Login</button>
+        <button class="btn btn-primary auth-submit" type="submit">Sign In</button>
+
+        <div class="auth-footer">
+          New here?
+          <a class="auth-link" href="signup.html">Create an account</a>
+        </div>
       </form>
     </div>
-  </main>
+  </div>
+</main>
 
   <footer class="footer">
     <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
