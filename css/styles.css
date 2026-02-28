@@ -2230,3 +2230,29 @@ input:focus {
   color: rgba(11,18,32,0.55);
   font-weight: 800;
 }
+/* Contact form status message */
+
+.form-note {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  font-weight: 600;
+  text-align: center;
+  transition: all 200ms ease;
+}
+
+/* Success state */
+.form-note.is-success {
+  background: rgba(16, 185, 129, 0.10);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #059669;
+}
+
+/* Error state */
+.form-note.is-error {
+  background: rgba(239, 68, 68, 0.10);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #dc2626;
+}
