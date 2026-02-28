@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inbox | PADELIN Admin</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-ghost" type="button" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="contact-page">
+    <div class="container">
+
+      <section class="contact-hero" aria-label="Inbox hero">
+        <div class="contact-eyebrow">Admin</div>
+        <h1>Messages Inbox</h1>
+        <p>New contact requests from the website. Saved locally for now (until backend is added).</p>
+      </section>
+
+      <section class="contact-grid" aria-label="Inbox layout">
+        <article class="contact-card">
+          <header class="contact-card-head">
+            <div class="contact-card-title">All Messages</div>
+            <div class="contact-card-sub" id="countLine">0 messages</div>
+          </header>
+
+          <div class="contact-card-body">
+            <div class="inbox-toolbar">
+              <input class="inbox-search" id="searchInput" type="search" placeholder="Search by name, phone, email…" />
+              <button class="btn btn-ghost" type="button" id="clearBtn">Clear All</button>
+            </div>
+
+            <div class="inbox-list" id="inboxList"></div>
+
+            <div class="form-note" id="emptyState" style="display:none;">
+              No messages yet.
+            </div>
+          </div>
+        </article>
+
+        <article class="contact-card contact-form-card">
+          <header class="contact-card-head">
+            <div class="contact-card-title">Message Details</div>
+            <div class="contact-card-sub">Select a message to view full information.</div>
+          </header>
+
+          <div class="contact-card-body">
+            <div class="msg-detail" id="detailPane">
+              <div class="form-note">Select a message from the left.</div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Admin</div>
+  </footer>
+
+  <script>
+    // ------------------------------------------------------------------
+    // Basic "admin gate" (static-site friendly). Your admin login page
+    // will later set: localStorage.setItem("padelinAdmin", "1")
+    // ------------------------------------------------------------------
+    (function adminGate(){
+      const isAdmin = localStorage.getItem("padelinAdmin") === "1";
+      if (!isAdmin) {
+        // Redirect to login (you can adjust later)
+        window.location.href = "login.html";
+      }
+    })();
+
+    const KEY = "padelinMessages";
+
+    function loadMessages() {
+      try { return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+      catch { return []; }
+    }
+
+    function saveMessages(list) {
+      localStorage.setItem(KEY, JSON.stringify(list));
+    }
+
+    function fmtDate(iso) {
+      try {
+        const d = new Date(iso);
+        return d.toLocaleString(undefined, { year:"numeric", month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit" });
+      } catch { return iso; }
+    }
+
+    const inboxList = document.getElementById("inboxList");
+    const detailPane = document.getElementById("detailPane");
+    const emptyState = document.getElementById("emptyState");
+    const countLine = document.getElementById("countLine");
+    const searchInput = document.getElementById("searchInput");
+
+    let messages = loadMessages();
+    let activeId = null;
+
+    function renderList(filterText="") {
+      const q = filterText.trim().toLowerCase();
+      const filtered = q
+        ? messages.filter(m =>
+            (m.name||"").toLowerCase().includes(q) ||
+            (m.phone||"").toLowerCase().includes(q) ||
+            (m.email||"").toLowerCase().includes(q) ||
+            (m.message||"").toLowerCase().includes(q)
+          )
+        : messages;
+
+      countLine.textContent = `${filtered.length} message${filtered.length === 1 ? "" : "s"}`;
+      inboxList.innerHTML = "";
+
+      if (filtered.length === 0) {
+        emptyState.style.display = "block";
+        detailPane.innerHTML = `<div class="form-note">No messages found.</div>`;
+        return;
+      }
+
+      emptyState.style.display = "none";
+
+      filtered
+        .sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))
+        .forEach(m => {
+          const item = document.createElement("button");
+          item.type = "button";
+          item.className = "inbox-item" + (m.id === activeId ? " is-active" : "");
+          item.innerHTML = `
+            <div class="inbox-top">
+              <div class="inbox-name">${escapeHtml(m.name || "Unknown")}</div>
+              <div class="inbox-date">${escapeHtml(fmtDate(m.createdAt))}</div>
+            </div>
+            <div class="inbox-meta">
+              <div>${escapeHtml(m.phone || "")}</div>
+              <div>${escapeHtml(m.email || "")}</div>
+            </div>
+            <div class="inbox-preview">${escapeHtml((m.message || "").slice(0, 90))}${(m.message||"").length>90 ? "…" : ""}</div>
+          `;
+          item.addEventListener("click", () => {
+            activeId = m.id;
+            renderList(searchInput.value);
+            renderDetail(m);
+          });
+          inboxList.appendChild(item);
+        });
+    }
+
+    function renderDetail(m) {
+      detailPane.innerHTML = `
+        <div class="msg-card">
+          <div class="msg-row">
+            <div class="msg-k">Name</div>
+            <div class="msg-v">${escapeHtml(m.name || "")}</div>
+          </div>
+          <div class="msg-row">
+            <div class="msg-k">Phone</div>
+            <div class="msg-v"><a class="contact-link" href="tel:${escapeHtml(m.phone || "")}">${escapeHtml(m.phone || "")}</a></div>
+          </div>
+          <div class="msg-row">
+            <div class="msg-k">Email</div>
+            <div class="msg-v">${m.email ? `<a class="contact-link" href="mailto:${escapeHtml(m.email)}">${escapeHtml(m.email)}</a>` : `<span class="muted">Not provided</span>`}</div>
+          </div>
+          <div class="msg-row">
+            <div class="msg-k">Received</div>
+            <div class="msg-v">${escapeHtml(fmtDate(m.createdAt))}</div>
+          </div>
+          <div class="msg-divider"></div>
+          <div class="msg-message">
+            ${escapeHtml(m.message || "").replace(/\n/g, "<br>")}
+          </div>
+          <div class="msg-actions">
+            <button class="btn btn-ghost" type="button" id="deleteBtn">Delete</button>
+          </div>
+        </div>
+      `;
+
+      const deleteBtn = document.getElementById("deleteBtn");
+      deleteBtn.addEventListener("click", () => {
+        messages = messages.filter(x => x.id !== m.id);
+        saveMessages(messages);
+        activeId = null;
+        renderList(searchInput.value);
+      });
+    }
+
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // toolbar actions
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      messages = [];
+      saveMessages(messages);
+      activeId = null;
+      renderList(searchInput.value);
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("padelinAdmin");
+      window.location.href = "login.html";
+    });
+
+    searchInput.addEventListener("input", () => renderList(searchInput.value));
+
+    // initial
+    renderList();
+  </script>
+
+</body>
+</html>
