@@ -80,47 +80,33 @@
     if (href === path) a.classList.add("active");
   });
 })();
-// ===== AUTH PANEL (login icon) =====
-(function () {
-  const openBtn = document.querySelector("[data-auth-open]");
-  const closeBtn = document.querySelector("[data-auth-close]");
-  const overlay = document.querySelector("[data-auth-overlay]");
-  const panel = document.querySelector("[data-auth-panel]");
-  const tabs = document.querySelectorAll("[data-auth-tab]");
-  const forms = document.querySelectorAll("[data-auth-form]");
 
-  if (!openBtn || !closeBtn || !overlay || !panel) return;
+// ===== Account Modal (Login icon) =====
+const accountOpenBtn = document.querySelector("[data-auth-open]");
+const accountModal = document.querySelector("[data-account-modal]");
+const accountOverlay = document.querySelector("[data-account-overlay]");
+const accountCloseBtn = document.querySelector("[data-account-close]");
 
-  function openAuth() {
-    overlay.classList.add("is-open");
-    panel.classList.add("is-open");
-    panel.setAttribute("aria-hidden", "false");
-  }
+function openAccount() {
+  if (!accountModal || !accountOverlay) return;
+  accountModal.classList.add("is-open");
+  accountOverlay.classList.add("is-open");
+  accountModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
 
-  function closeAuth() {
-    overlay.classList.remove("is-open");
-    panel.classList.remove("is-open");
-    panel.setAttribute("aria-hidden", "true");
-  }
+function closeAccount() {
+  if (!accountModal || !accountOverlay) return;
+  accountModal.classList.remove("is-open");
+  accountOverlay.classList.remove("is-open");
+  accountModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
 
-  openBtn.addEventListener("click", openAuth);
-  closeBtn.addEventListener("click", closeAuth);
-  overlay.addEventListener("click", closeAuth);
+if (accountOpenBtn) accountOpenBtn.addEventListener("click", openAccount);
+if (accountCloseBtn) accountCloseBtn.addEventListener("click", closeAccount);
+if (accountOverlay) accountOverlay.addEventListener("click", closeAccount);
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeAuth();
-  });
-
-  // tabs switch
-  tabs.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      tabs.forEach((b) => b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-
-      const name = btn.getAttribute("data-auth-tab");
-      forms.forEach((f) => {
-        f.classList.toggle("is-active", f.getAttribute("data-auth-form") === name);
-      });
-    });
-  });
-})();
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeAccount();
+});
