@@ -734,9 +734,10 @@ button, input { font: inherit; }
 /* mobile tweak: keep button visible and not too low */
 @media (max-width: 760px){
   .padelin-hero.hero-photo{
-  height: 56vh;
-  min-height: 420px;
-  background-position: center 30%;
+    height: 56vh;
+    min-height: 420px;
+    background-position: center 30%;
+  }
 }
 
 /* ===========================
