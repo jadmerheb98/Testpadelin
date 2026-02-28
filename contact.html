@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Header (matches site style, no auth drawer trigger on this page) -->
+  <header class="header">
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+          <div class="hamburger-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
+      </div>
+
+      <div class="header-right">
+        <a class="icon-btn" href="contact.html" aria-label="Contact us">
+          <!-- phone icon -->
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile side menu -->
+  <div class="overlay" data-overlay></div>
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+    </div>
+    <div class="side-links">
+      <a href="./membership.html">Membership</a>
+      <a href="./training.html">Training</a>
+      <a href="./tournaments.html">Tournaments</a>
+    </div>
+
+    <!-- If you want this page to have no sign-in/up UI at all, remove this link too -->
+    <a class="side-signin" href="./login.html">Sign in</a>
+  </aside>
+
+  <main class="contact-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="contact-hero" aria-label="Contact hero">
+        <div class="contact-eyebrow">Contact</div>
+        <h1>Let’s plan your next session.</h1>
+        <p>
+          Reach PADELIN for bookings, memberships, training, tournaments, and private events.
+          We reply quickly during opening hours.
+        </p>
+      </section>
+
+      <!-- Top grid: Info + Form -->
+      <section class="contact-grid" aria-label="Contact details and form">
+        <!-- LEFT: Cards -->
+        <div class="contact-stack">
+
+          <!-- Contact info -->
+          <article class="contact-card">
+            <header class="contact-card-head">
+              <div class="contact-card-title">Contact Information</div>
+              <div class="contact-card-sub">Direct lines for fast coordination.</div>
+            </header>
+
+            <div class="contact-card-body">
+              <div class="contact-list" role="list">
+
+                <div class="contact-item" role="listitem">
+                  <div class="contact-ico" aria-hidden="true">
+                    <!-- phone -->
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                      <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
+                    </svg>
+                  </div>
+                  <div class="contact-meta">
+                    <div class="contact-label">Phone</div>
+                    <a class="contact-link" href="tel:+96171884882">+961 71 884 882</a>
+                  </div>
+                </div>
+
+                <div class="contact-item" role="listitem">
+                  <div class="contact-ico" aria-hidden="true">
+                    <!-- whatsapp -->
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                      <path fill="currentColor" d="M20.5 3.5A11 11 0 0 0 2.9 16.7L2 22l5.5-1.4A11 11 0 1 0 20.5 3.5zm-8.6 18a9 9 0 0 1-4.6-1.3l-.3-.2-3.2.8.9-3.1-.2-.3A9 9 0 1 1 11.9 21.5zm5.2-6.8c-.3-.2-1.6-.8-1.9-.9s-.5-.2-.7.2-.8.9-1 .9-.4.1-.7-.1a7.4 7.4 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6s0-.4 0-.6-.7-1.7-1-2.3c-.3-.6-.6-.5-.8-.5h-.7c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.9 1.3 3.3 1.5 3.6 2.6 4 6.2 5.5c.9.4 1.6.6 2.2.8.9.3 1.8.3 2.5.2.8-.1 2.4-1 2.7-1.9.3-.9.3-1.7.2-1.9-.1-.2-.3-.3-.6-.5z"/>
+                    </svg>
+                  </div>
+                  <div class="contact-meta">
+                    <div class="contact-label">WhatsApp</div>
+                    <a class="contact-link" href="https://wa.me/96171884882" target="_blank" rel="noopener">Message us on WhatsApp</a>
+                  </div>
+                </div>
+
+                <div class="contact-item" role="listitem">
+                  <div class="contact-ico" aria-hidden="true">
+                    <!-- email -->
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                      <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"/>
+                    </svg>
+                  </div>
+                  <div class="contact-meta">
+                    <div class="contact-label">Email</div>
+                    <a class="contact-link" href="mailto:hello@padelin.com">hello@padelin.com</a>
+                  </div>
+                </div>
+
+                <div class="contact-item" role="listitem">
+                  <div class="contact-ico" aria-hidden="true">
+                    <!-- location -->
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                      <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/>
+                    </svg>
+                  </div>
+                  <div class="contact-meta">
+                    <div class="contact-label">Location</div>
+                    <div class="contact-text">Byblos, Lebanon</div>
+                    <a class="contact-mini" href="#map">Open map</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </article>
+
+          <!-- Social -->
+          <article class="contact-card">
+            <header class="contact-card-head">
+              <div class="contact-card-title">Social</div>
+              <div class="contact-card-sub">Club updates, highlights, tournaments.</div>
+            </header>
+
+            <div class="contact-card-body">
+              <div class="social-grid">
+                <a class="social-btn" href="https://instagram.com/" target="_blank" rel="noopener" aria-label="PADELIN on Instagram">
+                  <span class="social-ico" aria-hidden="true">
+                    <!-- instagram -->
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                      <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.2a3.8 3.8 0 1 1 0 7.6 3.8 3.8 0 0 1 0-7.6zM18 6.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                    </svg>
+                  </span>
+                  <span class="social-label">Instagram</span>
+                  <span class="social-hint">@padelin</span>
+                </a>
+
+                <a class="social-btn" href="https://tiktok.com/" target="_blank" rel="noopener" aria-label="PADELIN on TikTok">
+                  <span class="social-ico" aria-hidden="true">
+                    <!-- tiktok (simple) -->
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                      <path fill="currentColor" d="M16.7 3c.7 2.1 2.2 3.6 4.3 4.2v3.3c-1.8-.1-3.4-.7-4.8-1.7v7.2c0 3.5-2.8 6.3-6.3 6.3S3.6 19.8 3.6 16.3 6.4 10 9.9 10c.4 0 .8 0 1.2.1v3.5c-.4-.1-.8-.2-1.2-.2-1.6 0-2.9 1.3-2.9 2.9s1.3 2.9 2.9 2.9 2.9-1.3 2.9-2.9V3h3.9z"/>
+                    </svg>
+                  </span>
+                  <span class="social-label">TikTok</span>
+                  <span class="social-hint">@padelin</span>
+                </a>
+              </div>
+
+              <div class="social-note">
+                Follow for court availability, events, and competitive nights.
+              </div>
+            </div>
+          </article>
+
+          <!-- Opening hours (AM/PM) -->
+          <article class="contact-card">
+            <header class="contact-card-head">
+              <div class="contact-card-title">Opening Hours</div>
+              <div class="contact-card-sub">Plan ahead for peak hours.</div>
+            </header>
+
+            <div class="contact-card-body">
+              <div class="hours-table" role="table" aria-label="Opening hours">
+                <div class="hours-row" role="row">
+                  <div class="hours-day" role="cell">Monday – Friday</div>
+                  <div class="hours-time" role="cell">10:00 AM – 12:00 AM</div>
+                </div>
+                <div class="hours-row" role="row">
+                  <div class="hours-day" role="cell">Saturday</div>
+                  <div class="hours-time" role="cell">10:00 AM – 12:00 AM</div>
+                </div>
+                <div class="hours-row" role="row">
+                  <div class="hours-day" role="cell">Sunday</div>
+                  <div class="hours-time" role="cell">10:00 AM – 12:00 AM</div>
+                </div>
+              </div>
+
+              <div class="hours-mini">
+                For tournament days, hours may extend. Check social for announcements.
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- RIGHT: Form -->
+        <article class="contact-card contact-form-card">
+          <header class="contact-card-head">
+            <div class="contact-card-title">Send a Message</div>
+            <div class="contact-card-sub">We’ll respond with the next steps.</div>
+          </header>
+
+          <div class="contact-card-body">
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="form-row">
+                <label for="cName">Full name</label>
+                <input id="cName" name="name" type="text" placeholder="Your name" autocomplete="name" required />
+              </div>
+
+              <div class="form-row">
+                <label for="cEmail">Email</label>
+                <input id="cEmail" name="email" type="email" placeholder="you@email.com" autocomplete="email" required />
+              </div>
+
+              <div class="form-row">
+                <label for="cPhone">Phone (optional)</label>
+                <input id="cPhone" name="phone" type="tel" placeholder="+961 ..." autocomplete="tel" inputmode="tel" />
+              </div>
+
+              <div class="form-row">
+                <label for="cMsg">Message</label>
+                <textarea id="cMsg" name="message" placeholder="Tell us what you need (booking, training, membership…)" required></textarea>
+              </div>
+
+              <button class="btn btn-primary contact-submit" type="submit">
+                Send message
+                <svg class="btn-ico" viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+                  <path fill="currentColor" d="M2 21l21-9L2 3v7l15 2-15 2v7z"/>
+                </svg>
+              </button>
+
+              <div class="form-note" role="status" aria-live="polite" id="contactStatus">
+                This form is frontend-only. Connect it to your backend/email service later.
+              </div>
+            </form>
+          </div>
+        </article>
+      </section>
+
+      <!-- Map -->
+      <section class="map-wrap" id="map" aria-label="Map">
+        <div class="map-card">
+          <div class="map-head">
+            <div class="map-title">Find PADELIN</div>
+            <div class="map-sub">Byblos, Lebanon</div>
+          </div>
+
+          <div class="map-frame" role="application" aria-label="Google Map">
+            <!-- Replace the src with your real Google Maps embed link -->
+            <iframe
+              title="PADELIN location map"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Byblos%20Lebanon&output=embed">
+            </iframe>
+          </div>
+
+          <div class="map-actions">
+            <a class="btn btn-ghost" href="https://www.google.com/maps?q=Byblos%20Lebanon" target="_blank" rel="noopener">
+              Open in Google Maps
+            </a>
+            <a class="btn btn-primary" href="reservation.html">
+              Reserve now
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <!-- Optional: tiny UX for frontend-only submit -->
+  <script>
+    (function () {
+      const form = document.getElementById("contactForm");
+      const status = document.getElementById("contactStatus");
+      if (!form || !status) return;
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = form.querySelector("#cName");
+        const email = form.querySelector("#cEmail");
+        const msg = form.querySelector("#cMsg");
+
+        if (!name.value.trim() || !email.value.trim() || !msg.value.trim()) {
+          status.textContent = "Please complete name, email, and message.";
+          status.classList.add("is-error");
+          return;
+        }
+
+        status.textContent = "Message received. We will reply during opening hours.";
+        status.classList.remove("is-error");
+        form.reset();
+      });
+    })();
+  </script>
+
+</body>
+</html>
