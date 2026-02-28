@@ -16,8 +16,7 @@
   if (adminBadge && isAdmin) adminBadge.style.display = "block";
 
   // --- Config ---
-  const CLUB_PHONE = "96171884882"; // WhatsApp target (no +)
-
+  const WORKER_URL = "https://small-boat-38e3.padelin-lb.workers.dev"; // your worker URL
   // ✅ 10 AM -> 12 AM (midnight)
   const START_TIME = "10:00";
   const END_TIME = "24:00";
@@ -407,6 +406,28 @@ if (window.emailjs) {
   emailjs.init(EMAILJS_PUBLIC_KEY);
 }
 
+function ensureStatusEl() {
+  let el = document.querySelector("[data-res-status]");
+  if (el) return el;
+
+  el = document.createElement("div");
+  el.className = "res-status";
+  el.setAttribute("data-res-status", "");
+  el.setAttribute("aria-live", "polite");
+
+  const actions = document.querySelector(".booking-actions");
+  if (actions) actions.insertAdjacentElement("afterend", el);
+  return el;
+}
+
+function setStatus(type, text) {
+  const el = ensureStatusEl();
+  el.textContent = text;
+  el.classList.remove("is-success", "is-error");
+  if (type === "success") el.classList.add("is-success");
+  if (type === "error") el.classList.add("is-error");
+}
+  
 confirmBtn.addEventListener("click", async () => {
   if (isAdmin) return;
 
