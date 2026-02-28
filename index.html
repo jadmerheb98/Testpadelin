@@ -192,21 +192,30 @@
     <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
   </footer>
 
-  <!-- AUTH OVERLAY + PANEL -->
-<div class="auth-overlay" data-auth-overlay></div>
+  <!-- ACCOUNT MODAL (GoDaddy style, PADELIN theme) -->
+<div class="account-overlay" data-account-overlay></div>
 
-<div class="auth-panel" data-auth-panel aria-hidden="true">
-  <div class="auth-head">
-    <div class="auth-title">Account</div>
-    <button class="auth-close" type="button" aria-label="Close" data-auth-close>×</button>
+<section class="account-modal" data-account-modal aria-hidden="true" role="dialog" aria-label="Account">
+  <div class="account-modal-head">
+    <h3>Account</h3>
+    <button class="account-close" type="button" aria-label="Close" data-account-close>✕</button>
   </div>
 
-  <div class="auth-tabs">
-    <a class="auth-action primary" href="login.html">Sign in</a>
-    <a class="auth-action" href="membership.html">Create account</a>
+  <div class="account-block">
+    <div class="account-title">Registered Users</div>
+    <div class="account-text">Have an account? Sign in now.</div>
+    <a class="account-link" href="login.html">Sign In</a>
   </div>
 
-  <div class="auth-body">
+  <div class="account-divider"></div>
+
+  <div class="account-block">
+    <div class="account-title">New Customer</div>
+    <div class="account-text">New to PADELIN? Create an account to get started.</div>
+    <a class="account-link" href="membership.html">Create an Account</a>
+  </div>
+</section>
+  
     <!-- SIGN IN -->
     <form class="auth-form is-active" data-auth-form="signin" action="login.html">
       <label>Email</label>
