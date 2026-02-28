@@ -200,7 +200,7 @@
 
               <div class="form-row">
                 <label for="cEmail">Email (optional)</label>
-                <input id="cEmail" name="email" type="email" placeholder="you@email.com" autocomplete="email" />
+                <input id="cEmail" name="email" type="email" placeholder="you@email.com" autocomplete="email" required />
               </div>
 
               <div class="form-row">
@@ -296,8 +296,8 @@
       const phone = document.querySelector("#cPhone")?.value.trim(); // mandatory
       const msg   = document.querySelector("#cMsg")?.value.trim();
 
-      if (!name || !phone || !msg) {
-        status.textContent = "Please complete full name, phone, and message.";
+      if (!name || !phone || !email || !msg) {
+        status.textContent = "Please complete full name, email, phone, and message.";
         status.classList.add("is-error");
         return;
       }
