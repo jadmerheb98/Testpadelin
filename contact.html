@@ -264,51 +264,87 @@
 
   <script src="js/main.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <!-- WhatsApp submit: sends message to +96170392658 and shows thank-you -->
   <script>
-    (function () {
-      const form = document.getElementById("contactForm");
-      const status = document.getElementById("contactStatus");
-      if (!form || !status) return;
+  (function () {
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("contactStatus");
+    if (!form || !status) return;
 
-      function enc(v) { return encodeURIComponent(v || ""); }
+    // ===========================
+    // 1) Save to "inbox" locally
+    // ===========================
+    const KEY = "padelinMessages";
+    function loadMessages(){ try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { return []; } }
+    function saveMessages(list){ localStorage.setItem(KEY, JSON.stringify(list)); }
 
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
+    // ===========================
+    // 2) Email notification (EmailJS)
+    // ===========================
+    // IMPORTANT: You must create an EmailJS account and fill these 3 values:
+    const EMAILJS_PUBLIC_KEY = "k9HV58mqbfn62K1Ft";
+    const EMAILJS_SERVICE_ID = "service_8o62mir";
+    const EMAILJS_TEMPLATE_ID = "template_dxrxk78";
 
-        const name = form.querySelector("#cName").value.trim();
-        const email = form.querySelector("#cEmail").value.trim();
-        const phone = form.querySelector("#cPhone").value.trim();
-        const msg = form.querySelector("#cMsg").value.trim();
+    if (window.emailjs) {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    }
 
-        if (!name || !phone || !msg) {
-          status.textContent = "Please complete full name, phone, and message.";
-          status.classList.add("is-error");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name  = form.querySelector("#cName").value.trim();
+      const email = form.querySelector("#cEmail").value.trim(); // optional
+      const phone = form.querySelector("#cPhone").value.trim(); // mandatory
+      const msg   = form.querySelector("#cMsg").value.trim();
+
+      // Phone mandatory, email optional
+      if (!name || !phone || !msg) {
+        status.textContent = "Please complete full name, phone, and message.";
+        status.classList.add("is-error");
+        return;
+      }
+
+      status.classList.remove("is-error");
+      status.textContent = "Thank you. We will get back to you soon.";
+
+      // Save locally for admin inbox
+      const item = {
+        id: "m_" + Date.now(),
+        createdAt: new Date().toISOString(),
+        name, email, phone, message: msg
+      };
+      const list = loadMessages();
+      list.push(item);
+      saveMessages(list);
+
+      // Send email notification
+      try {
+        if (!window.emailjs || EMAILJS_PUBLIC_KEY.includes("REPLACE_")) {
+          // If EmailJS not configured yet, still works locally
+          form.reset();
           return;
         }
 
-        status.classList.remove("is-error");
-        status.textContent = "Thank you. We will get back to you soon.";
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          name: name,
+          phone: phone,
+          email: email || "(not provided)",
+          message: msg,
+          created_at: item.createdAt
+        });
 
-        const lines = [
-          "PADELIN — Contact Form",
-          "----------------------",
-          "Name: " + name,
-          "Phone: " + phone,
-          email ? ("Email: " + email) : "Email: (not provided)",
-          "Message: " + msg
-        ];
-
-        const text = lines.join("\n");
-
-        const waNumber = "96170392658";
-        const url = "https://wa.me/" + waNumber + "?text=" + enc(text);
-
-        window.open(url, "_blank", "noopener");
         form.reset();
-      });
-    })();
-  </script>
+      } catch (err) {
+        // Still saved to inbox; show a subtle message
+        status.textContent = "Saved. Email notification setup is not complete yet.";
+        form.reset();
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
