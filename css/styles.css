@@ -2457,3 +2457,5 @@ input:focus {
   background: #31d17c;
   box-shadow: 0 0 0 2px rgba(10,18,34,0.9);
 }
+/* Force hidden accordions to actually hide */
+.account-drawer [hidden] { display: none !important; }
