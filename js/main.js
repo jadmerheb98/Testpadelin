@@ -87,6 +87,9 @@ document.addEventListener("keydown", (e) => {
     localStorage.setItem("padelinUser", JSON.stringify(payload));
   }
 
+  auth.onAuthStateChanged((user) => {
+  setLocalUser(user);
+
   // Green dot on home page account icon when signed in
   const isHome =
     window.location.pathname.endsWith("/") ||
