@@ -168,3 +168,115 @@ document.addEventListener("keydown", (e) => {
     localStorage.removeItem("padelinUser");
   };
 })();
+// =========================================
+// Account Drawer Rendering (Signed out / Signed in)
+// =========================================
+(function () {
+  const body = document.getElementById("accountDrawerBody");
+  if (!body) return;
+
+  function icon(svgPathD) {
+    return `
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="${svgPathD}"></path>
+      </svg>
+    `;
+  }
+
+  function item(href, title, subtitle, svgPathD) {
+    return `
+      <a class="account-item" href="${href}">
+        ${icon(svgPathD)}
+        <span>
+          <span class="label">${title}</span>
+          ${subtitle ? `<span class="sub">${subtitle}</span>` : ``}
+        </span>
+      </a>
+    `;
+  }
+
+  function renderSignedOut() {
+    body.innerHTML = `
+      <div class="account-block">
+        <div class="account-label">Registered Users</div>
+        <div class="account-sub">Have an account? Sign in now.</div>
+
+        <a class="account-btn primary" href="login.html">
+          <svg class="btn-ico" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor"
+              d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+          </svg>
+          <span>Sign In</span>
+        </a>
+      </div>
+
+      <div class="account-divider"></div>
+
+      <div class="account-block">
+        <div class="account-label">New Customer</div>
+        <div class="account-sub">
+          Create an account to reserve faster and manage your bookings.
+        </div>
+
+        <a class="account-btn" href="signup.html">
+          <svg class="btn-ico" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor"
+              d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
+          </svg>
+          <span>Create Account</span>
+        </a>
+      </div>
+
+      <div class="account-micro">
+        Secure sign-in • No spam • Cancel anytime
+      </div>
+    `;
+  }
+
+  function renderSignedIn(user) {
+    const name = user?.displayName || "Member";
+    const tier = localStorage.getItem("padelinTier") || "Member";
+
+    body.innerHTML = `
+      <div class="account-user-header">
+        <div class="account-user-name">${name}</div>
+        <div class="account-user-tier">${tier}</div>
+      </div>
+
+      <div class="account-grid">
+        ${item("#", "My Points", "Track your club progress", "M12 21s-7-4.35-7-10a7 7 0 0 1 14 0c0 5.65-7 10-7 10z")}
+        ${item("reservation.html", "My Reservations", "Upcoming and past bookings", "M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3V2zm15 8H2v10h20V10z")}
+        ${item("membership.html", "My Membership", "Tier, benefits and status", "M12 2l3 7 7 .6-5.4 4.7 1.7 7.1L12 18l-6.3 3.4 1.7-7.1L2 9.6 9 9l3-7z")}
+        ${item("training.html", "My Training", "Sessions and coaching", "M20 8h-3V6a2 2 0 0 0-2-2H9A2 2 0 0 0 7 6v2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3v-2h10v2h3a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2z")}
+        ${item("tournaments.html", "My Tournaments", "Registrations and results", "M7 21h10v-2H7v2zm10-18H7v6a5 5 0 0 0 10 0V3zm-2 6a3 3 0 0 1-6 0V5h6v4z")}
+        ${item("#", "My Profile / Settings", "Account details and preferences", "M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z")}
+        ${item("#", "Notifications", "Updates about games and events", "M12 22a2.4 2.4 0 0 0 2.4-2.4h-4.8A2.4 2.4 0 0 0 12 22zm6-6V11a6 6 0 1 0-12 0v5L4 18v1h16v-1l-2-2z")}
+        ${item("contact.html", "Support / Contact", "We reply fast", "M2 5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H8l-6 4V5zm3-1a1 1 0 0 0-1 1v13.2L7.4 16H19a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5z")}
+        ${item("#", "Match History", "Your recent games", "M6 7h12v2H6V7zm0 4h12v2H6v-2zm0 4h8v2H6v-2z")}
+        ${item("leaderboard.html", "Performance", "Rankings and stats", "M4 19h16v2H4v-2zm2-8h3v8H6v-8zm5-4h3v12h-3V7zm5 6h3v6h-3v-6z")}
+      </div>
+
+      <div class="account-actions">
+        <button class="account-signout" type="button" id="accountSignOutBtn">Sign Out</button>
+      </div>
+    `;
+
+    const btn = document.getElementById("accountSignOutBtn");
+    if (btn) {
+      btn.addEventListener("click", async () => {
+        if (window.padelinSignOut) await window.padelinSignOut();
+        renderSignedOut();
+      });
+    }
+  }
+
+  // Listen to auth state changes and render
+  if (window.padelinAuth) {
+    window.padelinAuth.onAuthStateChanged((user) => {
+      if (user) renderSignedIn(user);
+      else renderSignedOut();
+    });
+  } else {
+    renderSignedOut();
+  }
+})();
