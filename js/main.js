@@ -312,19 +312,22 @@ document.addEventListener("keydown", (e) => {
   }
 
   // Accordion toggle (My Career) - reliable
+// Accordion toggle (My Career) - class-based (guaranteed)
 const accBtn = body.querySelector(".account-accordion-btn");
 if (accBtn) {
-  const accPanel = accBtn.nextElementSibling; // the <div class="account-accordion"...>
-
-  if (accPanel) {
-    // start closed every time (safe)
+  const accPanel = accBtn.nextElementSibling; // should be .account-accordion
+  if (accPanel && accPanel.classList.contains("account-accordion")) {
+    // start closed
     accBtn.setAttribute("aria-expanded", "false");
-    accPanel.hidden = true;
+    accPanel.classList.remove("is-open");
 
     accBtn.addEventListener("click", () => {
       const isOpen = accBtn.getAttribute("aria-expanded") === "true";
       accBtn.setAttribute("aria-expanded", String(!isOpen));
-      accPanel.hidden = isOpen ? true : false;
+      accPanel.classList.toggle("is-open");
+    });
+  }
+}
     });
   }
 }
