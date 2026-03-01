@@ -314,17 +314,23 @@ document.addEventListener("keydown", (e) => {
     });
   }
 
-  // Accordion toggle (My Career)
-  const accBtn = body.querySelector('[data-acc-btn="career"]');
-  const accPanel = body.querySelector('[data-acc-panel="career"]');
+  // Accordion toggle (My Career) - reliable
+const accBtn = body.querySelector(".account-accordion-btn");
+if (accBtn) {
+  const accPanel = accBtn.nextElementSibling; // the <div class="account-accordion"...>
 
-  if (accBtn && accPanel) {
+  if (accPanel) {
+    // start closed every time (safe)
+    accBtn.setAttribute("aria-expanded", "false");
+    accPanel.hidden = true;
+
     accBtn.addEventListener("click", () => {
       const isOpen = accBtn.getAttribute("aria-expanded") === "true";
       accBtn.setAttribute("aria-expanded", String(!isOpen));
-      accPanel.hidden = isOpen;
+      accPanel.hidden = isOpen ? true : false;
     });
   }
+}
 }
 
   // Listen to auth state changes and render
