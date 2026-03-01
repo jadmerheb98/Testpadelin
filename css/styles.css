@@ -2459,3 +2459,37 @@ input:focus {
 }
 /* Force hidden accordions to actually hide */
 .account-drawer [hidden] { display: none !important; }
+/* =========================================
+   Account drawer: FIX iOS scroll + header size
+   Paste at end of styles.css
+========================================= */
+
+/* Important: prevent flex children from blocking scroll */
+.account-drawer {
+  overflow: hidden; /* keep scroll inside the body */
+}
+
+.account-drawer-body {
+  flex: 1;
+  min-height: 0;                 /* CRITICAL for iOS Safari scroll */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 28px;
+}
+
+/* Make the user header card less “tall” / more proportional */
+.account-user-header {
+  padding: 14px 16px;            /* was 18px */
+  margin-bottom: 12px;           /* slightly tighter */
+  border-radius: 16px;
+}
+
+.account-user-name {
+  font-size: 16px;
+  line-height: 1.15;
+}
+
+.account-user-tier {
+  margin-top: 6px;
+  line-height: 1.2;
+}
