@@ -88,8 +88,20 @@ document.addEventListener("keydown", (e) => {
   }
 
   auth.onAuthStateChanged((user) => {
-    setLocalUser(user);
-  });
+  setLocalUser(user);
+
+  // Green dot on home page account icon when signed in
+  const isHome =
+    window.location.pathname.endsWith("/") ||
+    window.location.pathname.endsWith("/index.html") ||
+    window.location.pathname.endsWith("index.html");
+
+  const accountBtn = document.querySelector("[data-auth-open]");
+  if (accountBtn) {
+    if (isHome && user) accountBtn.classList.add("has-auth-dot");
+    else accountBtn.classList.remove("has-auth-dot");
+  }
+});
 
   // ---------- Login page ----------
   const isLoginPage =
