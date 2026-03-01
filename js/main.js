@@ -275,23 +275,14 @@ document.addEventListener("keydown", (e) => {
         </span>
       </div>
 
-      <!-- 2) My Career (accordion) -->
-      <button class="account-item account-accordion-btn" type="button" data-acc-btn="career" aria-expanded="false">
+            <!-- 2) My Career (normal button/link) -->
+      <a class="account-item" href="career.html">
         ${icon("M6 7h12v2H6V7zm0 4h12v2H6v-2zm0 4h8v2H6v-2z")}
         <span>
           <span class="label">My Career</span>
           <span class="sub">Reservations, membership, training, stats</span>
         </span>
-        <span class="chev" aria-hidden="true"></span>
-      </button>
-
-      <div class="account-accordion" data-acc-panel="career" hidden>
-        ${item("reservation.html", "My Reservations", "Upcoming and past", "M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3V2zm15 8H2v10h20V10z")}
-        ${item("membership.html", "My Membership", "Current and history", "M12 2l3 7 7 .6-5.4 4.7 1.7 7.1L12 18l-6.3 3.4 1.7-7.1L2 9.6 9 9l3-7z")}
-        ${item("training.html", "My Training", "Programs and coaching", "M20 8h-3V6a2 2 0 0 0-2-2H9A2 2 0 0 0 7 6v2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3v-2h10v2h3a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2z")}
-        ${item("#", "My Match History", "Recent games", "M6 7h12v2H6V7zm0 4h12v2H6v-2zm0 4h8v2H6v-2z")}
-        ${item("leaderboard.html", "My Performance", "Ranking and stats", "M4 19h16v2H4v-2zm2-8h3v8H6v-8zm5-4h3v12h-3V7zm5 6h3v6h-3v-6z")}
-      </div>
+      </a>
 
       <!-- 3) My Replays -->
       ${item("#", "My Replays", "Camera clips and highlights", "M8 5h8a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3zm3.2 4.4v5.2L15.6 12l-4.4-2.6z")}
@@ -313,24 +304,6 @@ document.addEventListener("keydown", (e) => {
       renderSignedOut();
     });
   }
-
-  // Accordion toggle (My Career) - reliable
-const accBtn = body.querySelector(".account-accordion-btn");
-if (accBtn) {
-  const accPanel = accBtn.nextElementSibling; // the <div class="account-accordion"...>
-
-  if (accPanel) {
-    // start closed every time (safe)
-    accBtn.setAttribute("aria-expanded", "false");
-    accPanel.hidden = true;
-
-    accBtn.addEventListener("click", () => {
-      const isOpen = accBtn.getAttribute("aria-expanded") === "true";
-      accBtn.setAttribute("aria-expanded", String(!isOpen));
-      accPanel.hidden = isOpen ? true : false;
-    });
-  }
-}
 }
 
   // Listen to auth state changes and render
