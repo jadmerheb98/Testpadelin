@@ -2370,3 +2370,33 @@ input:focus {
   transform: translateY(-1px);
   background: rgba(80,130,255,0.24);
 }
+/* ===============================
+   Fix: Account drawer scroll + readable text
+================================ */
+
+/* Ensure drawer takes full screen height and body can scroll */
+.account-drawer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make the content area scroll, not the whole page */
+.account-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 24px;
+}
+
+/* Ensure all injected content is readable on dark background */
+#accountDrawerBody,
+#accountDrawerBody * {
+  color: #fff;
+}
+
+/* Subtitles should be softer */
+#accountDrawerBody .sub,
+#accountDrawerBody .account-user-tier {
+  color: rgba(255, 255, 255, 0.72);
+}
