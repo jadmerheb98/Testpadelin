@@ -234,41 +234,86 @@ document.addEventListener("keydown", (e) => {
   }
 
   function renderSignedIn(user) {
-    const name = user?.displayName || "Member";
-    const tier = localStorage.getItem("padelinTier") || "Member";
+  const name = user?.displayName || "Member";
 
-    body.innerHTML = `
-      <div class="account-user-header">
-        <div class="account-user-name">${name}</div>
-        <div class="account-user-tier">${tier}</div>
+  // Tier label stays "Member" by default (you can change later)
+  const tier = localStorage.getItem("padelinTier") || "Member";
+
+  // Optional membership type (example: Gold / Platinum). If not set, show only "Member".
+  const membershipType = (localStorage.getItem("padelinMembershipType") || "").trim();
+  const tierLine = membershipType ? `${tier} • ${membershipType}` : tier;
+
+  // Points display (not clickable)
+  const points = Number(localStorage.getItem("padelinPoints") || 0);
+
+  body.innerHTML = `
+    <div class="account-user-header">
+      <div class="account-user-name">${name}</div>
+      <div class="account-user-tier">${tierLine}</div>
+    </div>
+
+    <div class="account-grid">
+
+      <!-- 1) My Points (display only, not clickable) -->
+      <div class="account-item account-points" role="group" aria-label="My points">
+        ${icon("M12 21s-7-4.35-7-10a7 7 0 0 1 14 0c0 5.65-7 10-7 10z")}
+        <span>
+          <span class="label">My Points</span>
+          <span class="sub"><strong class="points-num">${points}</strong> points</span>
+        </span>
       </div>
 
-      <div class="account-grid">
-        ${item("#", "My Points", "Track your club progress", "M12 21s-7-4.35-7-10a7 7 0 0 1 14 0c0 5.65-7 10-7 10z")}
-        ${item("reservation.html", "My Reservations", "Upcoming and past bookings", "M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3V2zm15 8H2v10h20V10z")}
-        ${item("membership.html", "My Membership", "Tier, benefits and status", "M12 2l3 7 7 .6-5.4 4.7 1.7 7.1L12 18l-6.3 3.4 1.7-7.1L2 9.6 9 9l3-7z")}
-        ${item("training.html", "My Training", "Sessions and coaching", "M20 8h-3V6a2 2 0 0 0-2-2H9A2 2 0 0 0 7 6v2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3v-2h10v2h3a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2z")}
-        ${item("tournaments.html", "My Tournaments", "Registrations and results", "M7 21h10v-2H7v2zm10-18H7v6a5 5 0 0 0 10 0V3zm-2 6a3 3 0 0 1-6 0V5h6v4z")}
-        ${item("#", "My Profile / Settings", "Account details and preferences", "M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z")}
-        ${item("#", "Notifications", "Updates about games and events", "M12 22a2.4 2.4 0 0 0 2.4-2.4h-4.8A2.4 2.4 0 0 0 12 22zm6-6V11a6 6 0 1 0-12 0v5L4 18v1h16v-1l-2-2z")}
-        ${item("contact.html", "Support / Contact", "We reply fast", "M2 5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H8l-6 4V5zm3-1a1 1 0 0 0-1 1v13.2L7.4 16H19a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5z")}
-        ${item("#", "Match History", "Your recent games", "M6 7h12v2H6V7zm0 4h12v2H6v-2zm0 4h8v2H6v-2z")}
-        ${item("leaderboard.html", "Performance", "Rankings and stats", "M4 19h16v2H4v-2zm2-8h3v8H6v-8zm5-4h3v12h-3V7zm5 6h3v6h-3v-6z")}
+      <!-- 2) My Career (accordion) -->
+      <button class="account-item account-accordion-btn" type="button" data-acc-btn="career" aria-expanded="false">
+        ${icon("M6 7h12v2H6V7zm0 4h12v2H6v-2zm0 4h8v2H6v-2z")}
+        <span>
+          <span class="label">My Career</span>
+          <span class="sub">Reservations, membership, training, stats</span>
+        </span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+
+      <div class="account-accordion" data-acc-panel="career" hidden>
+        ${item("reservation.html", "My Reservations", "Upcoming and past", "M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3V2zm15 8H2v10h20V10z")}
+        ${item("membership.html", "My Membership", "Current and history", "M12 2l3 7 7 .6-5.4 4.7 1.7 7.1L12 18l-6.3 3.4 1.7-7.1L2 9.6 9 9l3-7z")}
+        ${item("training.html", "My Training", "Programs and coaching", "M20 8h-3V6a2 2 0 0 0-2-2H9A2 2 0 0 0 7 6v2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3v-2h10v2h3a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2z")}
+        ${item("#", "My Match History", "Recent games", "M6 7h12v2H6V7zm0 4h12v2H6v-2zm0 4h8v2H6v-2z")}
+        ${item("leaderboard.html", "My Performance", "Ranking and stats", "M4 19h16v2H4v-2zm2-8h3v8H6v-8zm5-4h3v12h-3V7zm5 6h3v6h-3v-6z")}
       </div>
 
-      <div class="account-actions">
-        <button class="account-signout" type="button" id="accountSignOutBtn">Sign Out</button>
-      </div>
-    `;
+      <!-- 3) My Replays -->
+      ${item("#", "My Replays", "Camera clips and highlights", "M8 5h8a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3zm3.2 4.4v5.2L15.6 12l-4.4-2.6z")}
 
-    const btn = document.getElementById("accountSignOutBtn");
-    if (btn) {
-      btn.addEventListener("click", async () => {
-        if (window.padelinSignOut) await window.padelinSignOut();
-        renderSignedOut();
-      });
-    }
+      <!-- 4) My Profile -->
+      ${item("#", "My Profile", "Name, password, settings", "M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z")}
+    </div>
+
+    <div class="account-actions">
+      <button class="account-signout" type="button" id="accountSignOutBtn">Sign Out</button>
+    </div>
+  `;
+
+  // Sign out
+  const btn = document.getElementById("accountSignOutBtn");
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      if (window.padelinSignOut) await window.padelinSignOut();
+      renderSignedOut();
+    });
   }
+
+  // Accordion toggle (My Career)
+  const accBtn = body.querySelector('[data-acc-btn="career"]');
+  const accPanel = body.querySelector('[data-acc-panel="career"]');
+
+  if (accBtn && accPanel) {
+    accBtn.addEventListener("click", () => {
+      const isOpen = accBtn.getAttribute("aria-expanded") === "true";
+      accBtn.setAttribute("aria-expanded", String(!isOpen));
+      accPanel.hidden = isOpen;
+    });
+  }
+}
 
   // Listen to auth state changes and render
   if (window.padelinAuth) {
