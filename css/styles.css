@@ -2080,3 +2080,5 @@ button, input { font: inherit; }
   .account-item{ padding: 11px 11px; }
   .account-user-card{ min-height: 68px; }
 }
+
+body { outline: 6px solid red !important; }
