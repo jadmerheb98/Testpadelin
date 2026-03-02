@@ -27,35 +27,35 @@
   }
 
   // ===== Account Drawer (login icon) =====
-const accountOpenBtn = document.querySelector("[data-auth-open]");
-const accountDrawer = document.querySelector("[data-account-drawer]");
-const accountOverlay = document.querySelector("[data-account-overlay]");
-const accountCloseBtn = document.querySelector("[data-account-close]");
+  const accountOpenBtn = document.querySelector("[data-auth-open]");
+  const accountDrawer = document.querySelector("[data-account-drawer]");
+  const accountOverlay = document.querySelector("[data-account-overlay]");
+  const accountCloseBtn = document.querySelector("[data-account-close]");
 
-function openAccount() {
-  if (!accountDrawer || !accountOverlay) return;
-  accountOverlay.classList.add("open");
-  accountDrawer.classList.add("open");
-  accountDrawer.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
+  function openAccount() {
+    if (!accountDrawer || !accountOverlay) return;
+    accountOverlay.classList.add("open");
+    accountDrawer.classList.add("open");
+    accountDrawer.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
 
-function closeAccount() {
-  if (!accountDrawer || !accountOverlay) return;
-  accountOverlay.classList.remove("open");
-  accountDrawer.classList.remove("open");
-  accountDrawer.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
+  function closeAccount() {
+    if (!accountDrawer || !accountOverlay) return;
+    accountOverlay.classList.remove("open");
+    accountDrawer.classList.remove("open");
+    accountDrawer.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
 
-if (accountOpenBtn) accountOpenBtn.addEventListener("click", openAccount);
-if (accountCloseBtn) accountCloseBtn.addEventListener("click", closeAccount);
-if (accountOverlay) accountOverlay.addEventListener("click", closeAccount);
+  if (accountOpenBtn) accountOpenBtn.addEventListener("click", openAccount);
+  if (accountCloseBtn) accountCloseBtn.addEventListener("click", closeAccount);
+  if (accountOverlay) accountOverlay.addEventListener("click", closeAccount);
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeAccount();
-});
-  
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAccount();
+  });
+
   // Active link (desktop nav only)
   const path = window.location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".nav a").forEach((a) => {
@@ -63,6 +63,7 @@ document.addEventListener("keydown", (e) => {
     if (href === path) a.classList.add("active");
   });
 })();
+
 // =========================================
 // Firebase Auth Wiring (Email/Password)
 // =========================================
@@ -81,27 +82,27 @@ document.addEventListener("keydown", (e) => {
       uid: user.uid,
       email: user.email || "",
       name: user.displayName || "",
-      tier: localStorage.getItem("padelinTier") || "Member"
+      tier: localStorage.getItem("padelinTier") || "Member",
     };
 
     localStorage.setItem("padelinUser", JSON.stringify(payload));
   }
 
   auth.onAuthStateChanged((user) => {
-  setLocalUser(user);
+    setLocalUser(user);
 
-  // Green dot on home page account icon when signed in
-  const isHome =
-    window.location.pathname.endsWith("/") ||
-    window.location.pathname.endsWith("/index.html") ||
-    window.location.pathname.endsWith("index.html");
+    // Green dot on home page account icon when signed in
+    const isHome =
+      window.location.pathname.endsWith("/") ||
+      window.location.pathname.endsWith("/index.html") ||
+      window.location.pathname.endsWith("index.html");
 
-  const accountBtn = document.querySelector("[data-auth-open]");
-  if (accountBtn) {
-    if (isHome && user) accountBtn.classList.add("has-auth-dot");
-    else accountBtn.classList.remove("has-auth-dot");
-  }
-});
+    const accountBtn = document.querySelector("[data-auth-open]");
+    if (accountBtn) {
+      if (isHome && user) accountBtn.classList.add("has-auth-dot");
+      else accountBtn.classList.remove("has-auth-dot");
+    }
+  });
 
   // ---------- Login page ----------
   const isLoginPage =
@@ -174,12 +175,13 @@ document.addEventListener("keydown", (e) => {
     }
   }
 
-  // Global sign out (we’ll wire this to the drawer button next)
+  // Global sign out (wired to drawer button)
   window.padelinSignOut = async function () {
     await auth.signOut();
     localStorage.removeItem("padelinUser");
   };
 })();
+
 // =========================================
 // Account Drawer Rendering (Signed out / Signed in)
 // =========================================
@@ -246,20 +248,16 @@ document.addEventListener("keydown", (e) => {
   }
 
   function renderSignedIn(user) {
-  const name = user?.displayName || "Member";
+    const name = user?.displayName || "Member";
 
-  // Tier label stays "Member" by default (you can change later)
-  const tier = localStorage.getItem("padelinTier") || "Member";
+    const tier = localStorage.getItem("padelinTier") || "Member";
+    const membershipType = (localStorage.getItem("padelinMembershipType") || "").trim();
+    const tierLine = membershipType ? `${tier} • ${membershipType}` : tier;
 
-  // Optional membership type (example: Gold / Platinum). If not set, show only "Member".
-  const membershipType = (localStorage.getItem("padelinMembershipType") || "").trim();
-  const tierLine = membershipType ? `${tier} • ${membershipType}` : tier;
-
-  // Points display (not clickable)
-  const points = Number(localStorage.getItem("padelinPoints") || 0);
+    const points = Number(localStorage.getItem("padelinPoints") || 0);
 
     body.innerHTML = `
-    <div class="account-item account-user-card" role="group" aria-label="Account overview">
+    <div class="account-user-header account-item account-user-card" role="group" aria-label="Account overview">
       <div class="account-user-left">
         <div class="account-user-name">${name}</div>
         <div class="account-user-tier">${tierLine}</div>
@@ -274,8 +272,6 @@ document.addEventListener("keydown", (e) => {
     </div>
 
     <div class="account-grid">
-
-            <!-- 2) My Career (normal button/link) -->
       <a class="account-item" href="career.html">
         ${icon("M6 7h12v2H6V7zm0 4h12v2H6v-2zm0 4h8v2H6v-2z")}
         <span>
@@ -284,10 +280,7 @@ document.addEventListener("keydown", (e) => {
         </span>
       </a>
 
-      <!-- 3) My Replays -->
       ${item("#", "My Replays", "Camera clips and highlights", "M8 5h8a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3zm3.2 4.4v5.2L15.6 12l-4.4-2.6z")}
-
-      <!-- 4) My Profile -->
       ${item("#", "My Profile", "Name, password, settings", "M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z")}
     </div>
 
@@ -296,17 +289,15 @@ document.addEventListener("keydown", (e) => {
     </div>
   `;
 
-  // Sign out
-  const btn = document.getElementById("accountSignOutBtn");
-  if (btn) {
-    btn.addEventListener("click", async () => {
-      if (window.padelinSignOut) await window.padelinSignOut();
-      renderSignedOut();
-    });
+    const btn = document.getElementById("accountSignOutBtn");
+    if (btn) {
+      btn.addEventListener("click", async () => {
+        if (window.padelinSignOut) await window.padelinSignOut();
+        renderSignedOut();
+      });
+    }
   }
-}
 
-  // Listen to auth state changes and render
   if (window.padelinAuth) {
     window.padelinAuth.onAuthStateChanged((user) => {
       if (user) renderSignedIn(user);
