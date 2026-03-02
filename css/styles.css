@@ -2671,3 +2671,11 @@ input:focus {
 .account-sub{
   font-size: 13px;
 }
+/* Kill old hero header sizing (safety) */
+.account-user-header{
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+}
