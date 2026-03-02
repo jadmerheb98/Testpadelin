@@ -259,7 +259,7 @@ document.addEventListener("keydown", (e) => {
   const points = Number(localStorage.getItem("padelinPoints") || 0);
 
     body.innerHTML = `
-    <div class="account-user-header account-item account-user-card" role="group" aria-label="Account overview">
+    <div class="account-item account-user-card" role="group" aria-label="Account overview">
       <div class="account-user-left">
         <div class="account-user-name">${name}</div>
         <div class="account-user-tier">${tierLine}</div>
