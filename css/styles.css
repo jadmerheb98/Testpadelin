@@ -2316,3 +2316,26 @@ button, input { font: inherit; }
   box-shadow: none !important;
   border-color: rgba(255,255,255,0.10) !important;
 }
+/* ==========================================
+   ACCOUNT DRAWER: MOBILE DENSITY SCALE FIX
+   Paste at VERY END of css/styles.css
+========================================== */
+
+@media (max-width: 480px){
+  /* scale the inner content so everything looks like your Menu drawer */
+  .account-scale{
+    transform: scale(0.90);
+    transform-origin: top left;
+    width: calc(100% / 0.90);  /* prevents clipping after scale */
+  }
+
+  /* reduce outer spacing so scaled content fits nicely */
+  .account-drawer-body{
+    padding: 8px 12px 14px !important;
+  }
+
+  /* top user card: stop looking like a big hero block */
+  .account-user-card{
+    box-shadow: none !important;
+  }
+}
