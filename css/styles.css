@@ -1534,12 +1534,12 @@ input:focus {
   display:flex;
   align-items:center;
   gap: 10px;
-  padding: 14px 14px;
+  padding: 12px 12px;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.06);
   color: rgba(255,255,255,0.92);
-  font-weight: 900;
+  font-weight: 800;
   transition: transform 160ms ease, background 160ms ease;
 }
 .account-btn:hover{
