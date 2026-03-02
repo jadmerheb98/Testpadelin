@@ -2558,3 +2558,116 @@ input:focus {
   opacity: 0.7;
   font-weight: 800;
 }
+/* =========================================================
+   PADELIN — FINAL ACCOUNT DRAWER FIX
+   Paste this at the VERY END of styles.css
+========================================================= */
+
+/* Drawer layout */
+.account-drawer{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Scroll container (fixes iOS Safari scroll bug) */
+.account-drawer-body{
+  flex: 1;
+  min-height: 0; /* CRITICAL */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 28px;
+  display: grid;
+  gap: 12px;
+}
+
+/* All account cards */
+.account-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;  /* consistent size */
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.account-item:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(120,170,255,0.25);
+}
+
+/* ===== TOP USER CARD (same size, premium style) ===== */
+.account-user-card{
+  justify-content: space-between;
+  background: linear-gradient(
+    145deg,
+    rgba(18,35,59,0.9),
+    rgba(12,24,40,0.9)
+  );
+  border: 1px solid rgba(120,170,255,0.18);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+}
+
+.account-user-card:hover{
+  transform: none; /* not clickable */
+}
+
+/* Text sizing */
+.account-user-left{
+  display: grid;
+  gap: 4px;
+}
+
+.account-user-name{
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.account-user-tier{
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* Points badge */
+.account-points-badge{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(120,170,255,0.25);
+  background: rgba(80,130,255,0.12);
+}
+
+.account-points-badge .points-num{
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.account-points-badge .points-label{
+  font-size: 11px;
+  opacity: 0.7;
+  font-weight: 800;
+}
+
+/* ===== Signed-out screen tightening ===== */
+.account-btn{
+  padding: 12px 12px;
+  font-weight: 800;
+  border-radius: 14px;
+}
+
+.account-label{
+  font-size: 15px;
+}
+
+.account-sub{
+  font-size: 13px;
+}
