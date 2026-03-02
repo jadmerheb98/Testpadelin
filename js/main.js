@@ -258,22 +258,22 @@ document.addEventListener("keydown", (e) => {
   // Points display (not clickable)
   const points = Number(localStorage.getItem("padelinPoints") || 0);
 
-  body.innerHTML = `
-    <div class="account-user-header">
-      <div class="account-user-name">${name}</div>
-      <div class="account-user-tier">${tierLine}</div>
+    body.innerHTML = `
+    <div class="account-user-header account-item account-user-card" role="group" aria-label="Account overview">
+      <div class="account-user-left">
+        <div class="account-user-name">${name}</div>
+        <div class="account-user-tier">${tierLine}</div>
+      </div>
+
+      <div class="account-user-right" aria-label="Points">
+        <div class="account-points-badge">
+          <span class="points-num">${points}</span>
+          <span class="points-label">pts</span>
+        </div>
+      </div>
     </div>
 
     <div class="account-grid">
-
-      <!-- 1) My Points (display only, not clickable) -->
-      <div class="account-item account-points" role="group" aria-label="My points">
-        ${icon("M12 21s-7-4.35-7-10a7 7 0 0 1 14 0c0 5.65-7 10-7 10z")}
-        <span>
-          <span class="label">My Points</span>
-          <span class="sub"><strong class="points-num">${points}</strong> points</span>
-        </span>
-      </div>
 
             <!-- 2) My Career (normal button/link) -->
       <a class="account-item" href="career.html">
