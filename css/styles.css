@@ -7,6 +7,16 @@
    Light BG: #f8fafc
    =========================== */
 
+/* iOS Safari: stop auto text zoom that makes UI look huge */
+html{
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body{
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 :root {
   --navy: #0f172a;
   --accent: #3F6696;
@@ -2197,4 +2207,33 @@ button, input { font: inherit; }
   font-size: 14.5px !important;
   border-radius: 16px !important;
 }
-.account-drawer{ border-left: 10px solid #ff2d2d !important; }
+/* Drawer: lock text sizing inside panel (iOS Safari) */
+.account-drawer, .account-drawer *{
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
+/* Extra-compact density (hard override) */
+.account-drawer-header{ padding: 10px 12px 6px !important; }
+.account-drawer-title{ font-size: 20px !important; line-height: 1.1 !important; }
+.account-drawer-close{ width: 36px !important; height: 36px !important; }
+
+.account-drawer-body{
+  padding: 8px 12px 14px !important;
+  gap: 8px !important;
+}
+
+.account-item{ padding: 10px 10px !important; border-radius: 16px !important; }
+.account-item .label{ font-size: 14px !important; line-height: 1.15 !important; }
+.account-item .sub{ font-size: 12px !important; line-height: 1.35 !important; margin-top: 2px !important; }
+
+.account-user-card{ min-height: 68px !important; }
+.account-user-name{ font-size: 14px !important; }
+.account-user-tier{ font-size: 11.5px !important; }
+
+.account-points-badge{ padding: 6px 8px !important; }
+.account-points-badge .points-num{ font-size: 13px !important; }
+.account-points-badge .points-label{ font-size: 10.5px !important; }
+
+.account-btn{ padding: 10px 10px !important; font-size: 14px !important; }
+.account-signout{ height: 44px !important; font-size: 14.5px !important; }
