@@ -2493,3 +2493,68 @@ input:focus {
   margin-top: 6px;
   line-height: 1.2;
 }
+/* ===== Account header becomes a compact primary card (same size as others) ===== */
+
+/* Make drawer scroll reliable on iOS (keep this even if you already added overflow) */
+.account-drawer-body{
+  min-height: 0; /* critical in flex layouts for iOS scrolling */
+}
+
+/* Header card: same sizing as .account-item but special background */
+.account-user-card{
+  padding: 14px 14px;                 /* match .account-item padding */
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  /* different visual importance, still premium */
+  background: linear-gradient(145deg, rgba(18,35,59,0.85), rgba(12,24,40,0.85));
+  border: 1px solid rgba(120,170,255,0.16);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.22);
+}
+
+/* Disable hover lift on the header card (it’s not a link/button) */
+.account-user-card:hover{
+  transform: none;
+  background: linear-gradient(145deg, rgba(18,35,59,0.85), rgba(12,24,40,0.85));
+  border-color: rgba(120,170,255,0.16);
+}
+
+.account-user-left{
+  display: grid;
+  gap: 4px;
+}
+
+.account-user-name{
+  font-size: 15px;
+  line-height: 1.15;
+}
+
+.account-user-tier{
+  font-size: 12px;
+  opacity: 0.72;
+  margin-top: 0;
+}
+
+/* Points badge (right side) */
+.account-points-badge{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(120,170,255,0.22);
+  background: rgba(80,130,255,0.10);
+}
+
+.account-points-badge .points-num{
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  font-size: 14px;
+}
+
+.account-points-badge .points-label{
+  font-size: 11px;
+  opacity: 0.7;
+  font-weight: 800;
+}
