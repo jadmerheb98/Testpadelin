@@ -211,6 +211,7 @@
 
   function renderSignedOut() {
     body.innerHTML = `
+    <div class="account-scale">
       <div class="account-block">
         <div class="account-label">Registered Users</div>
         <div class="account-sub">Have an account? Sign in now.</div>
@@ -223,6 +224,7 @@
           <span>Sign In</span>
         </a>
       </div>
+    </div>
 
       <div class="account-divider"></div>
 
@@ -257,11 +259,13 @@
     const points = Number(localStorage.getItem("padelinPoints") || 0);
 
     body.innerHTML = `
+    <div class="account-scale">
     <div class="account-item account-user-card" role="group" aria-label="Account overview">
       <div class="account-user-left">
         <div class="account-user-name">${name}</div>
         <div class="account-user-tier">${tierLine}</div>
       </div>
+    </div>
 
       <div class="account-user-right" aria-label="Points">
         <div class="account-points-badge">
