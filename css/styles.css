@@ -1833,19 +1833,21 @@ button, input { font: inherit; }
   letter-spacing: .2px;
 }
 
-/* =========================================================
-   PADELIN — Account Drawer (COMPACT PREMIUM)
-   Paste at the VERY END of styles.css
-========================================================= */
+/* =========================================
+   PADELIN — Account Drawer (CLEAN + MOBILE)
+   Paste this as the LAST block in styles.css
+========================================= */
 
 :root{
-  --acc-text: rgba(255,255,255,0.92);
-  --acc-muted: rgba(255,255,255,0.65);
-  --acc-muted2: rgba(255,255,255,0.52);
+  --acc-bg1: rgba(10,16,30,0.98);
+  --acc-bg2: rgba(8,12,24,0.98);
+  --acc-text: rgba(255,255,255,0.96);
+  --acc-muted: rgba(255,255,255,0.72);
+  --acc-muted2: rgba(255,255,255,0.60);
   --acc-border: rgba(255,255,255,0.10);
-  --acc-border2: rgba(120,170,255,0.20);
-  --acc-panel: rgba(255,255,255,0.05);
-  --acc-panel2: rgba(255,255,255,0.035);
+  --acc-border2: rgba(120,170,255,0.22);
+  --acc-card: rgba(255,255,255,0.05);
+  --acc-card2: rgba(255,255,255,0.07);
   --acc-shadow: 0 18px 50px rgba(0,0,0,0.45);
 }
 
@@ -1869,7 +1871,7 @@ button, input { font: inherit; }
   position: fixed;
   top: 0;
   right: 0;
-  height: 100vh;
+  height: 100svh;                 /* better on mobile than 100vh */
   width: min(320px, 86vw);
   transform: translateX(110%);
   transition: transform 210ms cubic-bezier(.2,.9,.2,1);
@@ -1877,35 +1879,38 @@ button, input { font: inherit; }
 
   background:
     radial-gradient(120% 120% at 15% 0%, rgba(63,102,150,0.20) 0%, transparent 55%),
-    linear-gradient(180deg, rgba(10,16,30,0.98), rgba(8,12,24,0.98));
+    linear-gradient(180deg, var(--acc-bg1), var(--acc-bg2));
   box-shadow: var(--acc-shadow);
   border-left: 1px solid rgba(255,255,255,0.08);
 
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden;               /* body becomes scroll container */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 .account-drawer.open{ transform: translateX(0); }
 
-/* Header (smaller) */
+/* Header */
 .account-drawer-header{
-  padding: 14px 14px 8px;
+  padding: 12px 12px 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
 }
 .account-drawer-title{
-  font-size: 24px;            /* smaller than before */
+  font-size: 20px;
   letter-spacing: -0.3px;
   font-weight: 900;
   color: var(--acc-text);
+  line-height: 1.1;
 }
 .account-drawer-close{
-  width: 40px;                /* smaller */
-  height: 40px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.10);
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid var(--acc-border);
   background: rgba(255,255,255,0.06);
   color: var(--acc-text);
   cursor: pointer;
@@ -1913,43 +1918,43 @@ button, input { font: inherit; }
 }
 .account-drawer-close:hover{
   background: rgba(255,255,255,0.10);
-  border-color: rgba(120,170,255,0.22);
+  border-color: var(--acc-border2);
   transform: translateY(-1px);
 }
 
-/* Body (tight + iOS scroll fix) */
+/* Body: SCROLL FIX (this is critical) */
 .account-drawer-body{
   flex: 1;
-  min-height: 0;                       /* critical */
+  min-height: 0;                  /* critical for nested scroll */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 10px 14px 18px;             /* tighter */
+  padding: 10px 12px 14px;
   display: grid;
-  gap: 10px;                           /* tighter */
+  gap: 10px;
 }
 
-/* Signed-out blocks (tight) */
+/* Signed-out blocks */
 .account-block{
   display: grid;
-  gap: 6px;
-  padding: 6px 0;
+  gap: 8px;
+  padding: 4px 0;
 }
 .account-label{
   color: var(--acc-text);
   font-weight: 900;
-  font-size: 15px;                     /* smaller */
+  font-size: 15px;
   letter-spacing: -0.2px;
 }
 .account-sub{
   color: var(--acc-muted);
-  font-size: 12.5px;                   /* smaller */
+  font-size: 12.5px;
   line-height: 1.45;
   max-width: 36ch;
 }
 .account-divider{
   height: 1px;
   background: rgba(255,255,255,0.10);
-  margin: 8px 0;                       /* tighter */
+  margin: 10px 0;
 }
 .account-micro{
   color: var(--acc-muted2);
@@ -1958,12 +1963,12 @@ button, input { font: inherit; }
   margin-top: 2px;
 }
 
-/* Buttons (shorter) */
+/* Primary “button cards” */
 .account-btn{
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 12px;                  /* smaller */
+  padding: 12px 12px;
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.06);
@@ -1975,34 +1980,33 @@ button, input { font: inherit; }
 .account-btn:hover{
   transform: translateY(-1px);
   background: rgba(255,255,255,0.09);
-  border-color: rgba(120,170,255,0.22);
+  border-color: var(--acc-border2);
 }
 .account-btn.primary{
-  background: rgba(80,130,255,0.16);
+  background: rgba(80,130,255,0.14);
   border-color: rgba(120,170,255,0.26);
 }
 .account-btn.primary:hover{
-  background: rgba(80,130,255,0.20);
+  background: rgba(80,130,255,0.18);
 }
 .account-btn .btn-ico{
   width: 18px;
   height: 18px;
 }
 
-/* Signed-in grid */
+/* Signed-in cards */
 .account-grid{
   display: grid;
-  gap: 10px;                            /* tighter */
+  gap: 10px;
 }
 
-/* Cards (shorter) */
 .account-item{
-  display: flex;
+  display: flex !important;       /* force (prevents “badge drops under”) */
   align-items: center;
   gap: 12px;
-  padding: 12px 12px;                   /* smaller */
+  padding: 12px 12px;
   border-radius: 18px;
-  background: rgba(255,255,255,0.05);
+  background: var(--acc-card);
   border: 1px solid rgba(255,255,255,0.08);
   color: var(--acc-text);
   text-decoration: none;
@@ -2010,33 +2014,31 @@ button, input { font: inherit; }
 }
 .account-item:hover{
   transform: translateY(-1px);
-  background: rgba(255,255,255,0.07);
-  border-color: rgba(120,170,255,0.22);
+  background: var(--acc-card2);
+  border-color: var(--acc-border2);
 }
 
-/* Icons */
 .account-item .ico{
   width: 18px;
   height: 18px;
   opacity: 0.95;
 }
 
-/* Titles inside cards */
 .account-item .label{
   display: block;
   font-weight: 900;
-  font-size: 15px;                      /* smaller */
+  font-size: 15px;
   letter-spacing: -0.2px;
 }
 .account-item .sub{
   display: block;
   margin-top: 2px;
   color: var(--acc-muted);
-  font-size: 12.5px;                    /* smaller */
+  font-size: 12.5px;
   line-height: 1.35;
 }
 
-/* TOP USER CARD: compact height */
+/* TOP USER CARD — same “box size feel” as others (NOT huge) */
 .account-user-card{
   justify-content: space-between;
   background:
@@ -2044,16 +2046,17 @@ button, input { font: inherit; }
     linear-gradient(145deg, rgba(18,35,59,0.88), rgba(12,24,40,0.90));
   border: 1px solid rgba(120,170,255,0.18);
   box-shadow: 0 10px 22px rgba(0,0,0,0.22);
-  min-height: 86px;                     /* KEY: stops it feeling huge */
+  min-height: 72px;
 }
 .account-user-card:hover{ transform: none; }
 
 .account-user-left{
   display: grid;
   gap: 3px;
+  max-width: 70%;
 }
 .account-user-name{
-  font-size: 14.5px;                    /* smaller */
+  font-size: 14.5px;
   font-weight: 900;
   line-height: 1.15;
 }
@@ -2062,15 +2065,17 @@ button, input { font: inherit; }
   color: var(--acc-muted);
 }
 
-/* Points badge: smaller */
+.account-user-right{ flex: 0 0 auto; }
+
 .account-points-badge{
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
-  padding: 7px 9px;                     /* smaller */
+  padding: 6px 9px;
   border-radius: 12px;
   border: 1px solid rgba(120,170,255,0.24);
   background: rgba(80,130,255,0.10);
+  white-space: nowrap;
 }
 .account-points-badge .points-num{
   font-weight: 950;
@@ -2082,11 +2087,11 @@ button, input { font: inherit; }
   color: rgba(255,255,255,0.70);
 }
 
-/* Sign out button: not huge */
-.account-actions{ padding-top: 4px; }
+/* Sign out */
+.account-actions{ padding-top: 2px; }
 .account-signout{
   width: 100%;
-  height: 46px;                         /* smaller */
+  height: 44px;
   border-radius: 16px;
   border: 1px solid rgba(120,170,255,0.24);
   background: rgba(80,130,255,0.14);
@@ -2104,137 +2109,9 @@ button, input { font: inherit; }
 
 /* Extra-small phones */
 @media (max-width: 380px){
-  .account-drawer-title{ font-size: 22px; }
-  .account-drawer-body{ padding: 8px 12px 16px; }
+  .account-drawer{ width: min(310px, 88vw); }
+  .account-drawer-title{ font-size: 19px; }
+  .account-drawer-body{ padding: 8px 10px 12px; gap: 8px; }
   .account-item{ padding: 11px 11px; }
-  .account-user-card{ min-height: 82px; }
+  .account-user-card{ min-height: 68px; }
 }
-/* =========================================
-   HARD COMPACT OVERRIDE — paste LAST
-   If this doesn't change anything, the CSS isn't being applied.
-========================================= */
-
-/* Make sure drawer is the scroll container setup */
-.account-drawer{
-  display:flex !important;
-  flex-direction:column !important;
-  height:100vh !important;
-  overflow:hidden !important;
-}
-
-.account-drawer-body{
-  flex:1 !important;
-  min-height:0 !important;
-  overflow-y:auto !important;
-  -webkit-overflow-scrolling:touch !important;
-  padding: 8px 12px 14px !important;
-  gap: 8px !important;
-}
-
-/* Smaller header */
-.account-drawer-header{
-  padding: 10px 12px 6px !important;
-}
-
-.account-drawer-title{
-  font-size: 20px !important;   /* smaller */
-  line-height: 1.1 !important;
-  letter-spacing: -0.3px !important;
-}
-
-.account-drawer-close{
-  width: 36px !important;
-  height: 36px !important;
-  border-radius: 12px !important;
-}
-
-/* Cards smaller */
-.account-item{
-  padding: 10px 10px !important;
-  border-radius: 16px !important;
-}
-
-.account-item .label{
-  font-size: 14px !important;
-  line-height: 1.15 !important;
-}
-
-.account-item .sub{
-  font-size: 12px !important;
-  margin-top: 2px !important;
-  line-height: 1.35 !important;
-}
-
-/* Top user card: force compact height */
-.account-user-card{
-  min-height: 72px !important; /* KEY */
-  padding: 10px 10px !important;
-}
-
-.account-user-name{
-  font-size: 14px !important;
-  line-height: 1.15 !important;
-}
-
-.account-user-tier{
-  font-size: 11.5px !important;
-}
-
-/* Points badge smaller */
-.account-points-badge{
-  padding: 6px 8px !important;
-  border-radius: 12px !important;
-}
-
-.account-points-badge .points-num{
-  font-size: 13px !important;
-}
-
-.account-points-badge .points-label{
-  font-size: 10.5px !important;
-}
-
-/* Signed-out buttons smaller */
-.account-btn{
-  padding: 10px 10px !important;
-  border-radius: 16px !important;
-  font-size: 14px !important;
-}
-
-/* Sign out smaller */
-.account-signout{
-  height: 44px !important;
-  font-size: 14.5px !important;
-  border-radius: 16px !important;
-}
-/* Drawer: lock text sizing inside panel (iOS Safari) */
-.account-drawer, .account-drawer *{
-  -webkit-text-size-adjust: 100% !important;
-  text-size-adjust: 100% !important;
-}
-
-/* Extra-compact density (hard override) */
-.account-drawer-header{ padding: 10px 12px 6px !important; }
-.account-drawer-title{ font-size: 20px !important; line-height: 1.1 !important; }
-.account-drawer-close{ width: 36px !important; height: 36px !important; }
-
-.account-drawer-body{
-  padding: 8px 12px 14px !important;
-  gap: 8px !important;
-}
-
-.account-item{ padding: 10px 10px !important; border-radius: 16px !important; }
-.account-item .label{ font-size: 14px !important; line-height: 1.15 !important; }
-.account-item .sub{ font-size: 12px !important; line-height: 1.35 !important; margin-top: 2px !important; }
-
-.account-user-card{ min-height: 68px !important; }
-.account-user-name{ font-size: 14px !important; }
-.account-user-tier{ font-size: 11.5px !important; }
-
-.account-points-badge{ padding: 6px 8px !important; }
-.account-points-badge .points-num{ font-size: 13px !important; }
-.account-points-badge .points-label{ font-size: 10.5px !important; }
-
-.account-btn{ padding: 10px 10px !important; font-size: 14px !important; }
-.account-signout{ height: 44px !important; font-size: 14.5px !important; }
-
