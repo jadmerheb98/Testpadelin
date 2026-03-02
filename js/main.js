@@ -261,18 +261,18 @@
     body.innerHTML = `
     <div class="account-scale">
     <div class="account-item account-user-card" role="group" aria-label="Account overview">
-      <div class="account-user-left">
-        <div class="account-user-name">${name}</div>
-        <div class="account-user-tier">${tierLine}</div>
-      </div>
-    </div>
+  <div class="account-user-left">
+    <div class="account-user-name">${name}</div>
+    <div class="account-user-tier">${tierLine}</div>
+  </div>
 
-      <div class="account-user-right" aria-label="Points">
-        <div class="account-points-badge">
-          <span class="points-num">${points}</span>
-          <span class="points-label">pts</span>
-        </div>
-      </div>
+  <div class="account-user-right" aria-label="Points">
+    <div class="account-points-badge">
+      <span class="points-num">${points}</span>
+      <span class="points-label">pts</span>
+    </div>
+  </div>
+</div>
     </div>
 
     <div class="account-grid">
