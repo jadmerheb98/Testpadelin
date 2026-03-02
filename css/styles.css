@@ -1870,7 +1870,7 @@ button, input { font: inherit; }
   top: 0;
   right: 0;
   height: 100vh;
-  width: min(420px, 92vw);
+  width: min(320px, 86vw);
   transform: translateX(110%);
   transition: transform 210ms cubic-bezier(.2,.9,.2,1);
   z-index: 71;
@@ -2322,12 +2322,6 @@ button, input { font: inherit; }
 ========================================== */
 
 @media (max-width: 480px){
-  /* scale the inner content so everything looks like your Menu drawer */
-  .account-scale{
-    transform: scale(0.90);
-    transform-origin: top left;
-    width: calc(100% / 0.90);  /* prevents clipping after scale */
-  }
 
   /* reduce outer spacing so scaled content fits nicely */
   .account-drawer-body{
