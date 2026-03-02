@@ -148,7 +148,7 @@ button, input { font: inherit; }
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.62);
+  background: rgba(15, 23, 42, 0.48);
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms ease;
@@ -198,7 +198,7 @@ button, input { font: inherit; }
 .side-menu-close {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.06);
   color: var(--white);
@@ -215,8 +215,8 @@ button, input { font: inherit; }
   color: rgba(255, 255, 255, 0.86);
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  padding: 12px 12px;
-  border-radius: 12px;
+  padding: 14px 14px;
+  border-radius: 16px;
   font-weight: 650;
   transition: transform 160ms ease, background 160ms ease;
 }
@@ -388,12 +388,6 @@ button, input { font: inherit; }
 }
 
 /* Make Why PADELIN cards feel premium + less flat */
-.pillar {
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-left: 4px solid var(--accent);
-  padding: 18px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
 
 .pillar:hover {
   transform: translateY(-4px);
@@ -591,11 +585,6 @@ button, input { font: inherit; }
 .final-actions a {
   margin-left: auto;
   margin-right: auto;
-}
-
-.section-intro {
-  text-align: center;
-  margin-bottom: 28px;
 }
 
 .section-intro {
@@ -1001,7 +990,7 @@ button, input { font: inherit; }
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin: 0 auto:
+  margin: 0 auto;
 }
 
 .day-btn {
@@ -1057,27 +1046,6 @@ button, input { font: inherit; }
   .cards { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 760px) {
-  .nav { display: none; }
-  .hamburger { display: inline-flex; }
-  .brand { min-width: auto; }
-}
-
-/* HERO: move Play Now button higher (annotated area) */
-.padelin-hero {
-  position: relative;
-}
-
-.padelin-hero .hero-cta {
-  position: absolute;
-  left: 50%;
-  top: 48%;                 /* move up/down here */
-  transform: translate(-50%, -50%);
-  z-index: 5;
-  width: auto;
-  display: flex;
-  justify-content: center;
-}
 .reservation-punch {
   text-align: center;
   font-size: 16px;          /* smaller */
@@ -1112,9 +1080,6 @@ button, input { font: inherit; }
   color:#fff;
 }
 .icon-btn:active{ transform: scale(.98); }
-
-/* Hide old top nav if it still exists in any page */
-.nav { display:none !important; }
 
 /* ===========================
    Contact Page — Premium Layout
