@@ -2113,432 +2113,157 @@ button, input { font: inherit; }
   box-shadow: 0 0 0 2px #0b1220, 0 0 14px rgba(34,197,94,0.55);
 }
 /* ==========================================================
-   SIGNED-OUT ACCOUNT DRAWER — PREMIUM REDESIGN
-   Uses your existing markup:
-   .acc-actions contains:
-     button.acc-cta.primary   (Sign In)
-     button.acc-cta           (Create Account)
-     .acc-micro               (trust line)
-   Works only when user is signed out (no .acc-card).
+   SIGNED-OUT ACCOUNT DRAWER (Premium, GoDaddy-structure)
+   Requires the signed-out HTML structure from renderSignedOut()
 ========================================================== */
 
-/* ---------- Detect signed-out state ---------- */
-.acc-body:not(:has(.acc-card)) .acc-actions{
-  margin-top: 6px;
-  padding-top: 0;
-  border-top: 0;
+.acc-signedout{
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
-/* ---------- “Header card” inside drawer to remove emptiness ---------- */
-.acc-body:not(:has(.acc-card)) .acc-actions::before{
-  content: "Welcome to PADELin";
-  display: block;
+.acc-so-head{
+  border-radius: 18px;
   padding: 14px 14px 12px;
-  border-radius: 18px;
-  border: 1px solid rgba(120,170,255,0.18);
-  background:
-    radial-gradient(260px 160px at 20% 20%, rgba(80,130,255,0.20), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-  color: rgba(255,255,255,0.92);
-  font-weight: 950;
-  font-size: 16px;
-  box-shadow: 0 18px 55px rgba(0,0,0,0.35);
-}
-
-/* subtitle line right under the welcome card */
-.acc-body:not(:has(.acc-card)) .acc-actions::after{
-  content: "Sign in to manage bookings, track points, and access your account.";
-  display: block;
-  margin-top: -6px;
-  padding: 0 4px;
-  color: rgba(255,255,255,0.62);
-  font-size: 12px;
-  line-height: 1.45;
-}
-
-/* ---------- Button rows become premium cards ---------- */
-.acc-body:not(:has(.acc-card)) .acc-cta{
-  height: auto;
-  min-height: 56px;
-  padding: 14px 14px;
-  border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.10);
   background: rgba(255,255,255,0.04);
-  box-shadow: 0 18px 55px rgba(0,0,0,0.20);
+}
+
+.acc-so-title{
+  font-weight: 950;
+  font-size: 16px;
+  color: rgba(255,255,255,0.92);
+}
+
+.acc-so-sub{
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.60);
+}
+
+/* list */
+.acc-so-list{
+  display: grid;
+  gap: 10px;
+}
+
+/* Row button */
+.acc-row{
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.035);
+  border-radius: 18px;
+  padding: 14px 14px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
   text-align: left;
-  font-size: 16px;
-  font-weight: 950;
-  color: rgba(255,255,255,0.92);
   cursor: pointer;
   transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
 }
 
-/* replace your old chevron behaviour with a cleaner one */
-.acc-body:not(:has(.acc-card)) .acc-cta::after{
-  content: "›";
-  font-size: 24px;
-  opacity: .55;
-  transform: translateX(0);
-  transition: transform 140ms ease, opacity 140ms ease;
-}
-
-/* left icon bubble */
-.acc-body:not(:has(.acc-card)) .acc-cta::before{
-  content: "";
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  margin-right: 12px;
-  border: 1px solid rgba(120,170,255,0.18);
-  background:
-    radial-gradient(22px 22px at 30% 30%, rgba(120,170,255,0.26), transparent 60%),
-    rgba(255,255,255,0.05);
-  flex: 0 0 auto;
-}
-
-/* add emoji/icon inside bubble using background-image trick via pseudo overlay */
-.acc-body:not(:has(.acc-card)) .acc-cta{
-  position: relative;
-  padding-left: 64px; /* room for icon bubble */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta::before{
-  position: absolute;
-  left: 14px;
-}
-
-/* icon glyph per button */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::before{
-  content: "🔐";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary)::before{
-  content: "✨";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
-
-/* primary = Sign In (premium but not “empty blue pill”) */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  border-color: rgba(80,130,255,0.28);
-  background:
-    linear-gradient(180deg, rgba(80,130,255,0.40), rgba(80,130,255,0.16));
-  box-shadow: 0 22px 70px rgba(0,0,0,0.30);
-}
-
-/* hover/active */
-.acc-body:not(:has(.acc-card)) .acc-cta:hover{
-  background: rgba(255,255,255,0.06);
+.acc-row:hover{
+  background: rgba(255,255,255,0.05);
   border-color: rgba(120,170,255,0.16);
   transform: translateY(-1px);
 }
-.acc-body:not(:has(.acc-card)) .acc-cta:hover::after{
+
+.acc-row:active{
+  transform: translateY(0);
+  background: rgba(255,255,255,0.06);
+}
+
+/* Premium primary row */
+.acc-row.primary{
+  border-color: rgba(80,130,255,0.28);
+  background: linear-gradient(180deg, rgba(80,130,255,0.34), rgba(80,130,255,0.14));
+  box-shadow: 0 18px 55px rgba(0,0,0,0.25);
+}
+
+/* Icon container (premium, non-emoji) */
+.acc-ico{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(120,170,255,0.18);
+  background:
+    radial-gradient(22px 22px at 30% 30%, rgba(120,170,255,0.22), transparent 60%),
+    rgba(255,255,255,0.05);
+  position: relative;
+}
+
+/* “icon” drawn as clean strokes (CSS-only) */
+.acc-row.primary .acc-ico::after{
+  content:"";
+  position:absolute;
+  inset: 11px 12px 12px 12px;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.82);
+  opacity: .9;
+}
+.acc-row.primary .acc-ico::before{
+  content:"";
+  position:absolute;
+  left: 17px;
+  top: 18px;
+  width: 10px;
+  height: 8px;
+  border-radius: 6px;
+  border: 2px solid rgba(255,255,255,0.82);
+  border-bottom: 0;
+  opacity: .9;
+}
+
+/* Create account icon: “plus” */
+.acc-row:not(.primary) .acc-ico::before,
+.acc-row:not(.primary) .acc-ico::after{
+  content:"";
+  position:absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 2px;
+  background: rgba(255,255,255,0.82);
+  transform: translate(-50%,-50%);
+  border-radius: 99px;
+  opacity: .9;
+}
+.acc-row:not(.primary) .acc-ico::after{
+  width: 2px;
+  height: 16px;
+}
+
+/* Text */
+.acc-txt .t{
+  display: block;
+  font-weight: 950;
+  font-size: 16px;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.1;
+}
+.acc-txt .d{
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.60);
+}
+
+/* Chevron */
+.acc-chev{
+  margin-left: auto;
+  font-size: 24px;
+  opacity: .55;
+  transition: transform 140ms ease, opacity 140ms ease;
+}
+.acc-row:hover .acc-chev{
   transform: translateX(3px);
   opacity: .9;
 }
-.acc-body:not(:has(.acc-card)) .acc-cta:active{
-  transform: translateY(0);
-  background: rgba(255,255,255,0.07);
-}
 
-/* ---------- Add GoDaddy-like section labels + helper text ---------- */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  margin-top: 10px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  position: relative;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary span{
-  display: none; /* in case you ever wrap text */
-}
-
-/* label above Sign In */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::marker{ content:""; }
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::after{
-  content: "›";
-}
-
-/* Registered Users label */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  padding-top: 18px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::before{
-  /* keep icon */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  --label-top: 8px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  position: relative;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary .acc-rowlabel{ display:none; }
-
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  background-clip: padding-box;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* nothing */
-}
-
-/* Add the actual label using an extra pseudo element on the button */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  overflow: hidden;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::after{
-  content: "›";
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::before{
-  content: "🔐";
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size: 18px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  padding-top: 22px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::selection{ background: transparent; }
-
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  position: relative;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::after{
-  content: "›";
-}
-
-/* Registered Users + helper line */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  --gd1: "Registered Users";
-  --gd2: "Have an account? Sign in now.";
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::before{
-  content:"🔐";
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  padding-top: 26px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::after{
-  content:"›";
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  background:
-    radial-gradient(260px 160px at 20% 20%, rgba(80,130,255,0.22), transparent 60%),
-    linear-gradient(180deg, rgba(80,130,255,0.38), rgba(80,130,255,0.14));
-}
-
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  position: relative;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* labels */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* placeholder */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* nothing */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* final label injection */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* ok */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* ok */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* ok */
-}
-
-/* We’ll render label + helper using background overlay elements */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  padding-top: 28px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::after{
-  content:"›";
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::before{
-  content:"🔐";
-}
-
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  position: relative;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary .gd-label{ display:none; }
-
-/* label text above button title */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  --label1: "Registered Users";
-  --label2: "Have an account? Sign in now.";
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* draw label */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::after{
-  content:"›";
-}
-
-/* Use a pseudo element to print the labels */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  isolation: isolate;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::before{
-  content:"🔐";
-  position:absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border: 1px solid rgba(120,170,255,0.18);
-  background:
-    radial-gradient(22px 22px at 30% 30%, rgba(120,170,255,0.26), transparent 60%),
-    rgba(255,255,255,0.05);
-  z-index: 1;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary .__x{ display:none; }
-
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  padding-left: 64px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* label print */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* ok */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* ok */
-}
-
-/* Print section title + helper line above the button text */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  box-sizing: border-box;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  padding-top: 14px;
-  padding-bottom: 14px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  min-height: 72px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  font-size: 16px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* actual text inside button */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* We’re using :before for icon bubble, so use two extra lines via background */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  padding-left: 64px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary::after{
-  content:"›";
-  position:absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-  opacity: .6;
-}
-
-/* Use inner text styling by targeting the button itself with line-height */
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  line-height: 1.15;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* Put the button label as second line by adding a “fake” first line via background */
-}
-.acc-body:not(:has(.acc-card)) .acc-cta.primary{
-  /* We’ll emulate it using a gradient + text-shadow vibe, while keeping simple */
-}
-
-/* New Customer label + helper on Create Account row */
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary){
-  position: relative;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  padding-left: 64px;
-  min-height: 86px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary)::before{
-  content:"✨";
-  position:absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size: 18px;
-  border: 1px solid rgba(120,170,255,0.18);
-  background:
-    radial-gradient(22px 22px at 30% 30%, rgba(120,170,255,0.26), transparent 60%),
-    rgba(255,255,255,0.05);
-}
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary)::after{
-  content:"›";
-  position:absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-  opacity: .6;
-}
-
-/* Add label + helper text for Create Account using pseudo elements */
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary) > span{ display:none; }
-
-/* We render extra lines using background text via pseudo elements */
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary){
-  --line1: "New Customer";
-  --line2: "Create an account to reserve faster and manage your bookings.";
-}
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary)::selection{ background: transparent; }
-
-/* Render the two lines */
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary){
-  padding-top: 14px;
-  padding-bottom: 14px;
-}
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary){
-  font-size: 16px;
-}
-
-/* helper text below Create Account title */
-.acc-body:not(:has(.acc-card)) .acc-cta:not(.primary){
-  /* use box-shadow and spacing only; text is handled by actual button label */
-}
-
-/* ---------- Micro trust line ---------- */
-.acc-body:not(:has(.acc-card)) .acc-micro{
+/* Trust line */
+.acc-signedout .acc-micro{
   margin-top: 2px;
   padding: 10px 12px;
   border-radius: 14px;
