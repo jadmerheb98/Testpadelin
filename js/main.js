@@ -171,19 +171,42 @@
   });
 
   function renderSignedOut() {
-    body.innerHTML = `
-      <div class="acc-actions">
-        <button class="acc-cta primary" type="button" id="accGoLogin">Sign In</button>
-        <button class="acc-cta" type="button" id="accGoSignup">Create Account</button>
-        <div class="acc-micro">Secure sign-in • No spam • Cancel anytime</div>
+  body.innerHTML = `
+    <div class="acc-signedout">
+      <div class="acc-so-head">
+        <div class="acc-so-title">Registered Users</div>
+        <div class="acc-so-sub">Have an account? Sign in now.</div>
       </div>
-    `;
 
-    const goLogin = document.getElementById("accGoLogin");
-    const goSignup = document.getElementById("accGoSignup");
-    if (goLogin) goLogin.onclick = () => (window.location.href = "login.html");
-    if (goSignup) goSignup.onclick = () => (window.location.href = "signup.html");
-  }
+      <div class="acc-so-list">
+        <button class="acc-row primary" type="button" id="accGoLogin">
+          <span class="acc-ico" aria-hidden="true"></span>
+          <span class="acc-txt">
+            <span class="t">Sign In</span>
+            <span class="d">Access bookings, points, and your account</span>
+          </span>
+          <span class="acc-chev" aria-hidden="true">›</span>
+        </button>
+
+        <button class="acc-row" type="button" id="accGoSignup">
+          <span class="acc-ico" aria-hidden="true"></span>
+          <span class="acc-txt">
+            <span class="t">Create Account</span>
+            <span class="d">Join PADELin in under a minute</span>
+          </span>
+          <span class="acc-chev" aria-hidden="true">›</span>
+        </button>
+      </div>
+
+      <div class="acc-micro">Secure sign-in • No spam • Cancel anytime</div>
+    </div>
+  `;
+
+  const goLogin = document.getElementById("accGoLogin");
+  const goSignup = document.getElementById("accGoSignup");
+  if (goLogin) goLogin.onclick = () => (window.location.href = "login.html");
+  if (goSignup) goSignup.onclick = () => (window.location.href = "signup.html");
+}
 
   function renderSignedIn(user) {
     const name =
