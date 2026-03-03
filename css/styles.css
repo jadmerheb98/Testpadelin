@@ -1992,12 +1992,6 @@ button, input { font: inherit; }
   pointer-events:none;
 }
 
-/* Default icons by order (Career, Replays, Profile, Sessions) */
-.acc-links .acc-link:nth-child(1) > div::before{ content:"🏆"; }
-.acc-links .acc-link:nth-child(2) > div::before{ content:"🎥"; }
-.acc-links .acc-link:nth-child(3) > div::before{ content:"👤"; }
-.acc-links .acc-link:nth-child(4) > div::before{ content:"📅"; }
-
 /* Chevron */
 .acc-link::after{
   content:"›";
@@ -2273,4 +2267,50 @@ button, input { font: inherit; }
   font-size: 12px;
   line-height: 1.45;
   text-align: left;
+}
+/* ==========================================================
+   Signed-in drawer icons — PRO white SVG style
+   Order:
+   1 My Career
+   2 My Sessions
+   3 My Replays
+   4 My Profile
+========================================================== */
+
+.acc-link > div::before{
+  content:"";
+  position:absolute;
+  left:-52px;
+  top:50%;
+  transform:translateY(-50%);
+  width:38px;
+  height:38px;
+
+  background: rgba(255,255,255,0.92);
+
+  -webkit-mask: var(--acc-icn) center / 18px 18px no-repeat;
+  mask: var(--acc-icn) center / 18px 18px no-repeat;
+
+  pointer-events:none;
+  opacity:.95;
+}
+
+/* 1️⃣ My Career — Trophy */
+.acc-links .acc-link:nth-child(1){
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 4h8v3a4 4 0 0 1-8 0V4Z'/%3E%3Cpath d='M6 4H4v2a5 5 0 0 0 5 5'/%3E%3Cpath d='M18 4h2v2a5 5 0 0 1-5 5'/%3E%3Cpath d='M12 12v3'/%3E%3Cpath d='M8 21h8'/%3E%3Cpath d='M9 18h6'/%3E%3C/svg%3E");
+}
+
+/* 2️⃣ My Sessions — Calendar */
+.acc-links .acc-link:nth-child(2){
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v3M16 2v3'/%3E%3Cpath d='M3 8h18'/%3E%3Crect x='3' y='5' width='18' height='17' rx='2'/%3E%3Cpath d='M7 12h4M7 16h6'/%3E%3C/svg%3E");
+}
+
+/* 3️⃣ My Replays — Play Document */
+.acc-links .acc-link:nth-child(3){
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='M10 10l6 4-6 4v-8Z'/%3E%3C/svg%3E");
+}
+
+/* 4️⃣ My Profile — User */
+.acc-links .acc-link:nth-child(4){
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21a8 8 0 0 0-16 0'/%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3C/svg%3E");
 }
