@@ -183,7 +183,7 @@
           <span class="acc-ico" aria-hidden="true"></span>
           <span class="acc-txt">
             <span class="t">Sign In</span>
-            <span class="d">Access bookings, points, and your account</span>
+            <span class="d">Manage bookings, track points, and save your preferences</span>
           </span>
           <span class="acc-chev" aria-hidden="true">›</span>
         </button>
@@ -192,7 +192,7 @@
           <span class="acc-ico" aria-hidden="true"></span>
           <span class="acc-txt">
             <span class="t">Create Account</span>
-            <span class="d">Join PADELin in under a minute</span>
+            <span class="d">Create your account to book faster and unlock member features</span>
           </span>
           <span class="acc-chev" aria-hidden="true">›</span>
         </button>
