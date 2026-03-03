@@ -1946,6 +1946,20 @@ button, input { font: inherit; }
    Links list (with REAL “icons”, not empty)
 ============================ */
 .acc-links{ display:grid; gap: 8px; } /* smaller gap */
+/* The ROW itself (THIS IS REQUIRED) */
+.acc-link{
+  position: relative;
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  padding: 12px 12px;
+  border-radius: 18px;
+  border: 1px solid var(--acc-stroke-2);
+  background: rgba(255,255,255,0.035);
+  color: var(--acc-text);
+  text-decoration:none;
+  transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+}
 
 /* Icon bubble */
 /* ============================
@@ -1990,9 +2004,6 @@ button, input { font: inherit; }
 .acc-links .acc-link:nth-child(4){
   --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21a8 8 0 0 0-16 0'/%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3C/svg%3E");
 }
-
-/* Icon glyph inside bubble (not empty) */
-.acc-link > div{ position: relative; }
 
 /* Chevron */
 .acc-link::after{
