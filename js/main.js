@@ -211,34 +211,27 @@
       </div>
 
       <div class="acc-links">
-  <a class="acc-link" href="career.html">
-    <div>
-      <div class="k">My Career</div>
-      <span class="s">Reservations, membership, stats</span>
-    </div>
-  </a>
+        <a class="acc-link" href="career.html">
+          <div>
+            <div class="k">My Career</div>
+            <span class="s">Reservations, membership, training, stats</span>
+          </div>
+        </a>
 
-  <a class="acc-link" href="training.html">
-    <div>
-      <div class="k">My Sessions</div>
-      <span class="s">PT training sessions & schedule</span>
-    </div>
-  </a>
+        <a class="acc-link" href="#">
+          <div>
+            <div class="k">My Replays</div>
+            <span class="s">Camera clips and highlights</span>
+          </div>
+        </a>
 
-  <a class="acc-link" href="#">
-    <div>
-      <div class="k">My Replays</div>
-      <span class="s">Camera clips and highlights</span>
-    </div>
-  </a>
-
-  <a class="acc-link" href="#">
-    <div>
-      <div class="k">My Profile</div>
-      <span class="s">Name, password, settings</span>
-    </div>
-  </a>
-</div>
+        <a class="acc-link" href="#">
+          <div>
+            <div class="k">My Profile</div>
+            <span class="s">Name, password, settings</span>
+          </div>
+        </a>
+      </div>
 
       <div class="acc-actions">
         <button class="acc-cta" type="button" id="accSignOut">Sign Out</button>
@@ -248,16 +241,14 @@
     const signOutBtn = document.getElementById("accSignOut");
     if (signOutBtn) {
       signOutBtn.onclick = async () => {
-  try {
-    if (window.padelinAuth) await window.padelinAuth.signOut();
-    localStorage.removeItem("padelinUser");
-    openBtn.classList.remove("has-auth-dot"); // dot OFF
-    closeDrawer();
-    renderSignedOut();
-  } catch (err) {
-    alert(err.message || "Sign out failed.");
-  }
-};
+        try {
+          if (window.padelinAuth) await window.padelinAuth.signOut();
+          localStorage.removeItem("padelinUser");
+          closeDrawer();
+          renderSignedOut();
+        } catch (err) {
+          alert(err.message || "Sign out failed.");
+        }
       };
     }
   }
@@ -273,17 +264,11 @@
 
   // Hook into Firebase auth if present
   if (window.padelinAuth && typeof window.padelinAuth.onAuthStateChanged === "function") {
-  window.padelinAuth.onAuthStateChanged((user) => {
-    if (user) {
-      renderSignedIn(user);
-      openBtn.classList.add("has-auth-dot");   // green dot ON
-    } else {
-      renderSignedOut();
-      openBtn.classList.remove("has-auth-dot"); // green dot OFF
-    }
-  });
-} else {
-  renderSignedOut();
-  openBtn.classList.remove("has-auth-dot");
-}
+    window.padelinAuth.onAuthStateChanged((user) => {
+      if (user) renderSignedIn(user);
+      else renderSignedOut();
+    });
+  } else {
+    renderSignedOut();
+  }
 })();
