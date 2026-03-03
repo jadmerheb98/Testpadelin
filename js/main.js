@@ -124,3 +124,6 @@
       });
     }
   }
+  }); // end auth.onAuthStateChanged
+})(); // end Firebase IIFE
+})(); // end side menu IIFE
