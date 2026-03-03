@@ -25,6 +25,7 @@
       if (e.key === "Escape") closeMenu();
     });
   }
+})();
 
 // =========================================
 // Firebase Auth Wiring (Email/Password)
@@ -53,80 +54,78 @@
   auth.onAuthStateChanged((user) => {
     setLocalUser(user);
 
+    // ---------- Login page ----------
+    const isLoginPage =
+      /login\.html$/i.test(window.location.pathname) ||
+      document.title.toLowerCase().includes("login");
 
-  // ---------- Login page ----------
-  const isLoginPage =
-    /login\.html$/i.test(window.location.pathname) ||
-    document.title.toLowerCase().includes("login");
-
-  if (isLoginPage) {
-    const form = document.querySelector("form.auth-form-grid");
-    if (form) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const email = (form.querySelector("#email")?.value || "").trim();
-        const password = form.querySelector("#password")?.value || "";
-
-        try {
-          await auth.signInWithEmailAndPassword(email, password);
-          window.location.href = "index.html";
-        } catch (err) {
-          alert(err.message);
-        }
-      });
-
-      // Forgot password link is currently href="#" in your login page
-      const forgot = form.querySelector('.auth-link[href="#"]');
-      if (forgot) {
-        forgot.addEventListener("click", async (e) => {
+    if (isLoginPage) {
+      const form = document.querySelector("form.auth-form-grid");
+      if (form) {
+        form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
           const email = (form.querySelector("#email")?.value || "").trim();
-          if (!email) {
-            alert("Enter your email first.");
-            return;
-          }
+          const password = form.querySelector("#password")?.value || "";
 
           try {
-            await auth.sendPasswordResetEmail(email);
-            alert("Password reset email sent.");
+            await auth.signInWithEmailAndPassword(email, password);
+            window.location.href = "index.html";
+          } catch (err) {
+            alert(err.message);
+          }
+        });
+
+        // Forgot password link is currently href="#" in your login page
+        const forgot = form.querySelector('.auth-link[href="#"]');
+        if (forgot) {
+          forgot.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const email = (form.querySelector("#email")?.value || "").trim();
+            if (!email) {
+              alert("Enter your email first.");
+              return;
+            }
+
+            try {
+              await auth.sendPasswordResetEmail(email);
+              alert("Password reset email sent.");
+            } catch (err) {
+              alert(err.message);
+            }
+          });
+        }
+      }
+    }
+
+    // ---------- Signup page ----------
+    const isSignupPage =
+      /signup\.html$/i.test(window.location.pathname) ||
+      document.title.toLowerCase().includes("sign up");
+
+    if (isSignupPage) {
+      const form = document.querySelector("form.auth-form-grid");
+      if (form) {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const name = (form.querySelector("#name")?.value || "").trim();
+          const email = (form.querySelector("#email")?.value || "").trim();
+          const password = form.querySelector("#password")?.value || "";
+
+          try {
+            const cred = await auth.createUserWithEmailAndPassword(email, password);
+            if (name) await cred.user.updateProfile({ displayName: name });
+            window.location.href = "index.html";
           } catch (err) {
             alert(err.message);
           }
         });
       }
     }
-  }
-
-  // ---------- Signup page ----------
-  const isSignupPage =
-    /signup\.html$/i.test(window.location.pathname) ||
-    document.title.toLowerCase().includes("sign up");
-
-  if (isSignupPage) {
-    const form = document.querySelector("form.auth-form-grid");
-    if (form) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const name = (form.querySelector("#name")?.value || "").trim();
-        const email = (form.querySelector("#email")?.value || "").trim();
-        const password = form.querySelector("#password")?.value || "";
-
-        try {
-          const cred = await auth.createUserWithEmailAndPassword(email, password);
-          if (name) await cred.user.updateProfile({ displayName: name });
-          window.location.href = "index.html";
-        } catch (err) {
-          alert(err.message);
-        }
-      });
-    }
-  }
-  }); // end auth.onAuthStateChanged
-})(); // end Firebase IIFE
-})(); // end side menu IIFE
+  });
+})();
 
 // ================================
 // Account Drawer (Clean)
@@ -214,7 +213,14 @@
         <a class="acc-link" href="career.html">
           <div>
             <div class="k">My Career</div>
-            <span class="s">Reservations, membership, training, stats</span>
+            <span class="s">Reservations, membership, stats</span>
+          </div>
+        </a>
+
+        <a class="acc-link" href="training.html">
+          <div>
+            <div class="k">My Sessions</div>
+            <span class="s">PT training sessions & schedule</span>
           </div>
         </a>
 
@@ -244,6 +250,7 @@
         try {
           if (window.padelinAuth) await window.padelinAuth.signOut();
           localStorage.removeItem("padelinUser");
+          openBtn.classList.remove("has-auth-dot"); // green dot OFF
           closeDrawer();
           renderSignedOut();
         } catch (err) {
@@ -262,13 +269,19 @@
       .replaceAll("'", "&#039;");
   }
 
-  // Hook into Firebase auth if present
+  // Hook into Firebase auth if present (also toggles green dot)
   if (window.padelinAuth && typeof window.padelinAuth.onAuthStateChanged === "function") {
     window.padelinAuth.onAuthStateChanged((user) => {
-      if (user) renderSignedIn(user);
-      else renderSignedOut();
+      if (user) {
+        renderSignedIn(user);
+        openBtn.classList.add("has-auth-dot"); // green dot ON
+      } else {
+        renderSignedOut();
+        openBtn.classList.remove("has-auth-dot"); // green dot OFF
+      }
     });
   } else {
     renderSignedOut();
+    openBtn.classList.remove("has-auth-dot");
   }
 })();
