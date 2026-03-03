@@ -308,3 +308,32 @@
     openBtn.classList.remove("has-auth-dot");
   }
 })();
+// Signup page validation (confirm password + 8+ chars is handled by minlength)
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector(".auth-form-grid");
+  if (!form) return;
+
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+
+  const validateMatch = () => {
+    if (!password || !confirmPassword) return;
+
+    if (confirmPassword.value && password.value !== confirmPassword.value) {
+      confirmPassword.setCustomValidity("Passwords do not match.");
+    } else {
+      confirmPassword.setCustomValidity("");
+    }
+  };
+
+  password?.addEventListener("input", validateMatch);
+  confirmPassword?.addEventListener("input", validateMatch);
+
+  form.addEventListener("submit", (e) => {
+    validateMatch();
+    if (!form.checkValidity()) {
+      e.preventDefault(); // stop submit if invalid
+      form.reportValidity(); // show browser messages
+    }
+  });
+});
