@@ -1978,19 +1978,26 @@ button, input { font: inherit; }
 .acc-link > div{ position: relative; }
 
 /* paste pro icons block here */
+/* ===== Drawer icon glyph: perfectly centered in the rounded square ===== */
 .acc-link > div::before{
   content:"";
   position:absolute;
   left:-52px;
   top:50%;
-  transform:translateY(-50%);
+  transform: translateY(-50%);
   width:38px;
   height:38px;
-  background: rgba(255,255,255,0.92);
-  -webkit-mask: var(--acc-icn) center / 18px 18px no-repeat;
-  mask: var(--acc-icn) center / 18px 18px no-repeat;
+
+  /* Center the icon cleanly */
+  display:grid;
+  place-items:center;
+
+  /* The icon itself (mask) */
+  background: rgba(255,255,255,0.95);
+  -webkit-mask: var(--acc-icn) center / 20px 20px no-repeat;
+  mask: var(--acc-icn) center / 20px 20px no-repeat;
+
   pointer-events:none;
-  opacity:.95;
 }
 ...
 
@@ -2299,7 +2306,7 @@ button, input { font: inherit; }
 
 /* 1️⃣ My Career — Trophy */
 .acc-links .acc-link:nth-child(1){
-  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M8 4h8v3a4 4 0 0 1-8 0V4Zm-3 0h2v3a6 6 0 0 0 6 6v2H9v2h6v-2h-4v-2a6 6 0 0 0 6-6V4h2v2a5 5 0 0 1-5 5v-2a4 4 0 0 0 4-4V4h-1Zm-1 0v2a4 4 0 0 0 4 4v2A5 5 0 0 1 4 6V4Z'/%3E%3C/svg%3E");
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M8 2h3l1 3 1-3h3l-2.2 6.2a6 6 0 1 1-3.6 0L8 2Zm4 9a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z'/%3E%3C/svg%3E");
 }
 
 /* 2️⃣ My Sessions — Calendar */
@@ -2309,7 +2316,7 @@ button, input { font: inherit; }
 
 /* 3️⃣ My Replays — Play Document */
 .acc-links .acc-link:nth-child(3){
-  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Zm7 4v6l5-3-5-3Z'/%3E%3C/svg%3E");
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm6 5v6l5-3-5-3Z'/%3E%3C/svg%3E");
 }
 
 /* 4️⃣ My Profile — User */
