@@ -127,3 +127,148 @@
   }); // end auth.onAuthStateChanged
 })(); // end Firebase IIFE
 })(); // end side menu IIFE
+
+// ================================
+// Account Drawer (Clean)
+// ================================
+(function () {
+  const openBtn = document.querySelector("[data-auth-open]");
+  const drawer = document.querySelector("[data-acc-drawer]");
+  const overlay = document.querySelector("[data-acc-overlay]");
+  const closeBtn = document.querySelector("[data-acc-close]");
+  const body = document.getElementById("accBody");
+
+  if (!openBtn || !drawer || !overlay || !closeBtn || !body) return;
+
+  let lastFocus = null;
+
+  function lockScroll(lock) {
+    document.body.style.overflow = lock ? "hidden" : "";
+  }
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    overlay.classList.add("open");
+    drawer.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    lockScroll(true);
+    closeBtn.focus();
+  }
+
+  function closeDrawer() {
+    overlay.classList.remove("open");
+    drawer.classList.remove("open");
+    drawer.setAttribute("aria-hidden", "true");
+    lockScroll(false);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  openBtn.addEventListener("click", openDrawer);
+  closeBtn.addEventListener("click", closeDrawer);
+  overlay.addEventListener("click", closeDrawer);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer.classList.contains("open")) closeDrawer();
+  });
+
+  function renderSignedOut() {
+    body.innerHTML = `
+      <div class="acc-actions">
+        <button class="acc-cta primary" type="button" id="accGoLogin">Sign In</button>
+        <button class="acc-cta" type="button" id="accGoSignup">Create Account</button>
+        <div class="acc-micro">Secure sign-in • No spam • Cancel anytime</div>
+      </div>
+    `;
+
+    const goLogin = document.getElementById("accGoLogin");
+    const goSignup = document.getElementById("accGoSignup");
+    if (goLogin) goLogin.onclick = () => (window.location.href = "login.html");
+    if (goSignup) goSignup.onclick = () => (window.location.href = "signup.html");
+  }
+
+  function renderSignedIn(user) {
+    const name =
+      (user && (user.displayName || user.email)) ||
+      (JSON.parse(localStorage.getItem("padelinUser") || "{}").email) ||
+      "Member";
+
+    const tier = localStorage.getItem("padelinTier") || "Member";
+    const membershipType = (localStorage.getItem("padelinMembershipType") || "").trim();
+    const tierLine = membershipType ? `${tier} • ${membershipType}` : tier;
+
+    const points = Number(localStorage.getItem("padelinPoints") || 0);
+
+    body.innerHTML = `
+      <div class="acc-card">
+        <div>
+          <div class="acc-name">${escapeHtml(name)}</div>
+          <div class="acc-tier">${escapeHtml(tierLine)}</div>
+        </div>
+        <div class="acc-badge" aria-label="Points">
+          <span class="num">${points}</span>
+          <span class="lbl">pts</span>
+        </div>
+      </div>
+
+      <div class="acc-links">
+        <a class="acc-link" href="career.html">
+          <div>
+            <div class="k">My Career</div>
+            <span class="s">Reservations, membership, training, stats</span>
+          </div>
+        </a>
+
+        <a class="acc-link" href="#">
+          <div>
+            <div class="k">My Replays</div>
+            <span class="s">Camera clips and highlights</span>
+          </div>
+        </a>
+
+        <a class="acc-link" href="#">
+          <div>
+            <div class="k">My Profile</div>
+            <span class="s">Name, password, settings</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="acc-actions">
+        <button class="acc-cta" type="button" id="accSignOut">Sign Out</button>
+      </div>
+    `;
+
+    const signOutBtn = document.getElementById("accSignOut");
+    if (signOutBtn) {
+      signOutBtn.onclick = async () => {
+        try {
+          if (window.padelinAuth) await window.padelinAuth.signOut();
+          localStorage.removeItem("padelinUser");
+          closeDrawer();
+          renderSignedOut();
+        } catch (err) {
+          alert(err.message || "Sign out failed.");
+        }
+      };
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  // Hook into Firebase auth if present
+  if (window.padelinAuth && typeof window.padelinAuth.onAuthStateChanged === "function") {
+    window.padelinAuth.onAuthStateChanged((user) => {
+      if (user) renderSignedIn(user);
+      else renderSignedOut();
+    });
+  } else {
+    renderSignedOut();
+  }
+})();
