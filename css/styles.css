@@ -404,11 +404,10 @@ button, input { font: inherit; }
 
 /* Responsive for the new grids */
 @media (max-width: 760px) {
-  .nav { display: none; }
+  .header-gd .nav { display: none !important; }
   .hamburger { display: inline-flex; }
   .brand { min-width: auto; }
 
-  header .brand img { height: 38px; }
   .header-inner { height: 60px; }
 }
 
