@@ -154,29 +154,21 @@ window.location.href = "index.html";
         const forgot = form.querySelector('.auth-link[href="#"]');
         if (forgot) {
           forgot.addEventListener("click", async (e) => {
-            e.preventDefault();
+  e.preventDefault();
 
-            const email = (form.querySelector("#email")?.value || "").trim();
-const password = form.querySelector("#password")?.value || "";
-
-// ✅ Secret staff redirect from normal login page
-if (window.location.pathname.toLowerCase().endsWith("/login.html")) {
-  const e = email.toLowerCase();
-  const p = password.toLowerCase();
-
-  if (e === "admin@admin.com" && p === "admin@admin.com") {
-    window.location.href = "admin-login.html";
+  const email = (form.querySelector("#email")?.value || "").trim();
+  if (!email) {
+    alert("Enter your email first.");
     return;
   }
-}
 
-try {
-  await auth.signInWithEmailAndPassword(email, password);
-  window.location.href = "index.html";
-} catch (err) {
-  alert(err.message);
-}
-          });
+  try {
+    await auth.sendPasswordResetEmail(email);
+    alert("Password reset email sent.");
+  } catch (err) {
+    alert(err.message);
+  }
+});
         }
       }
     }
