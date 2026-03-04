@@ -174,7 +174,7 @@
   <div class="acc-signedout">
 
     <div class="acc-so-sub">
-      Why cereate an account?
+      Why create an account?
     </div>
 
     <div class="acc-so-bullets">
