@@ -76,6 +76,18 @@ const isStaffLoginPage =
           const email = (form.querySelector("#email")?.value || "").trim();
           const password = form.querySelector("#password")?.value || "";
 
+          // ✅ Secret redirect to staff login (ONLY on normal login page)
+const path = window.location.pathname.toLowerCase();
+const isNormalLogin = path.endsWith("login.html") && !path.endsWith("admin-login.html");
+
+const eVal = email.trim().toLowerCase();
+const pVal = (password || "").trim().toLowerCase();
+
+if (isNormalLogin && eVal === "admin@admin.com" && pVal === "admin@admin.com") {
+  window.location.href = "admin-login.html";
+  return; // IMPORTANT: stop here so Firebase sign-in doesn't run
+}
+
           try {
             await auth.signInWithEmailAndPassword(email, password);
 
