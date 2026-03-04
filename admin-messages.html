@@ -399,9 +399,7 @@
         row.querySelector(`[data-reset]`)?.addEventListener("click", async () => {
           try {
             setMsg("Sending reset email...");
-            await auth.sendPasswordResetEmail(email, {
-              url: "https://jadmerheb98.github.io/Testpadelin/admin-login.html"
-            });
+            await auth.sendPasswordResetEmail(email);
             setMsg("Reset email sent.", true);
           } catch(e){
             setMsg(e.message || "Failed to send reset.", false);
@@ -479,9 +477,7 @@
         });
 
         // Send reset email so employer sets their own password
-        await auth.sendPasswordResetEmail(email, {
-          url: "https://jadmerheb98.github.io/Testpadelin/admin-login.html"
-        });
+        await auth.sendPasswordResetEmail(email);
 
         await secondaryAuth.signOut();
 
