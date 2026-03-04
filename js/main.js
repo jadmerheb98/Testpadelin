@@ -55,9 +55,17 @@
     setLocalUser(user);
 
     // ---------- Login page ----------
-    const isLoginPage =
-      /login\.html$/i.test(window.location.pathname) ||
-      document.title.toLowerCase().includes("login");
+    const path = window.location.pathname.toLowerCase();
+const title = document.title.toLowerCase();
+
+const isLoginPage =
+  /login\.html$/i.test(path) ||
+  /admin-login\.html$/i.test(path) ||
+  title.includes("login");
+
+const isStaffLoginPage =
+  /admin-login\.html$/i.test(path) ||
+  title.includes("staff");
 
     if (isLoginPage) {
       const form = document.querySelector("form.auth-form-grid");
@@ -70,7 +78,34 @@
 
           try {
             await auth.signInWithEmailAndPassword(email, password);
-            window.location.href = "index.html";
+
+// ✅ Bootstrap: YOUR email becomes Admin one-time (sets staff marker)
+const BOOTSTRAP_ADMIN_EMAIL = "brewlinecoffee.lb@gmail.com";
+const u = auth.currentUser;
+
+if (isStaffLoginPage) {
+  // If it's you and not marked yet -> mark as STAFF:ADMIN
+  if ((u?.email || "").toLowerCase() === BOOTSTRAP_ADMIN_EMAIL.toLowerCase()) {
+    if (!u.displayName || !u.displayName.startsWith("STAFF:")) {
+      await u.updateProfile({ displayName: "STAFF:ADMIN" });
+    }
+  }
+
+  // ✅ Staff gate: only users with displayName starting STAFF: can enter
+  const dn = (u?.displayName || "");
+  if (!dn.startsWith("STAFF:")) {
+    await auth.signOut();
+    alert("Staff access only.");
+    return;
+  }
+
+  // Staff destination
+  window.location.href = "admin-messages.html";
+  return;
+}
+
+// Normal login
+window.location.href = "index.html";
           } catch (err) {
             alert(err.message);
           }
@@ -83,17 +118,22 @@
             e.preventDefault();
 
             const email = (form.querySelector("#email")?.value || "").trim();
-            if (!email) {
-              alert("Enter your email first.");
-              return;
-            }
+const password = form.querySelector("#password")?.value || "";
 
-            try {
-              await auth.sendPasswordResetEmail(email);
-              alert("Password reset email sent.");
-            } catch (err) {
-              alert(err.message);
-            }
+// ✅ Secret staff redirect from normal login page
+if (window.location.pathname.toLowerCase().endsWith("/login.html")) {
+  if (email.toLowerCase() === "admin" && password.toLowerCase() === "admin") {
+    window.location.href = "admin-login.html";
+    return;
+  }
+}
+
+try {
+  await auth.signInWithEmailAndPassword(email, password);
+  window.location.href = "index.html";
+} catch (err) {
+  alert(err.message);
+}
           });
         }
       }
