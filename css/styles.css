@@ -2299,3 +2299,29 @@ button, input { font: inherit; }
     gap: 10px;
   }
 }
+/* ===== ADMIN-MESSAGES ONLY (scoped) ===== */
+
+/* Center "Create Employer Account" button only inside Staff Accounts box */
+#staffBox #createStaffBtn{
+  display:block;
+  margin:12px auto 0;
+  padding:10px 18px;
+  font-size:14px;
+  border-radius:10px;
+}
+
+/* Put employer action buttons on one line + make them smaller (only in Staff Accounts box) */
+#staffBox .staff-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:nowrap;
+  align-items:center;
+  margin-top:10px;
+}
+
+#staffBox .staff-actions button{
+  padding:7px 10px;
+  font-size:13px;
+  border-radius:10px;
+  white-space:nowrap;
+}
