@@ -217,7 +217,14 @@
 
   </div>
 `;
+// ✅ attach click handlers AFTER the HTML exists
+  const goLogin = document.getElementById("accGoLogin");
+  const goSignup = document.getElementById("accGoSignup");
 
+  if (goLogin)  goLogin.addEventListener("click", () => (window.location.href = "login.html"));
+  if (goSignup) goSignup.addEventListener("click", () => (window.location.href = "signup.html"));
+}
+ 
   function renderSignedIn(user) {
     const name =
       (user && (user.displayName || user.email)) ||
