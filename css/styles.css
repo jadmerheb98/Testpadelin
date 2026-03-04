@@ -2221,8 +2221,6 @@ button, input { font: inherit; }
 
   width: fit-content;
   min-width: 160px;
-  margin-left: auto;
-  margin-right: auto;
 
   transition: background .15s ease, transform .15s ease;
 }
