@@ -116,6 +116,19 @@
   });
 })();
 
+    // Change Admin / Staff label
+(function setRoleLabel(){
+  const el = document.getElementById("roleEyebrow");
+  if (!el) return;
+
+  if (window.padelinAuth) {
+    window.padelinAuth.onAuthStateChanged((u) => {
+      const dn = (u?.displayName || "");
+      el.textContent = dn === "STAFF:ADMIN" ? "Admin" : "Staff";
+    });
+  }
+})();
+
     const KEY = "padelinMessages";
 
     function loadMessages() {
