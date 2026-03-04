@@ -260,16 +260,20 @@
 
 <script>
 (async function staffCreateWiring(){
-  if (!window.padelinAuth || !window.firebase) return;
+  if (!window.padelinAuth || !window.firebase || !window.padelinDB) return;
 
   const auth = window.padelinAuth;
+  const db = window.padelinDB;
+
   const staffBox = document.getElementById("staffBox");
   const staffEmail = document.getElementById("staffEmail");
   const btn = document.getElementById("createStaffBtn");
   const msg = document.getElementById("staffMsg");
+  const list = document.getElementById("staffList");
+  const empty = document.getElementById("staffEmpty");
 
-  // Secondary app so creating users doesn't log out the admin
   let secondaryAuth = null;
+
   try {
     const secondaryApp = firebase.initializeApp(firebase.app().options, "secondary");
     secondaryAuth = secondaryApp.auth();
@@ -277,36 +281,163 @@
     secondaryAuth = firebase.app("secondary").auth();
   }
 
-  auth.onAuthStateChanged((u) => {
-    const dn = (u?.displayName || "");
-    const isAdmin = dn === "STAFF:ADMIN";
-    if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
-  });
+  function setMsg(text, ok=null){
+    if (!msg) return;
+    msg.textContent = text || "";
+    msg.style.color = ok === true ? "green" : ok === false ? "red" : "";
+  }
 
   function randomTempPassword(){
     return "Tmp!" + Math.random().toString(36).slice(2) + "A9";
   }
 
+  function canAdmin(u){
+    return (u?.displayName || "") === "STAFF:ADMIN";
+  }
+
+  auth.onAuthStateChanged((u) => {
+    if (staffBox) staffBox.style.display = canAdmin(u) ? "block" : "none";
+  });
+
+  async function loadEmployers(){
+
+    if (!list || !empty) return;
+
+    list.innerHTML = "";
+    empty.style.display = "none";
+
+    const snap = await db.collection("staffUsers")
+      .where("role", "==", "EMPLOYER")
+      .orderBy("createdAt", "desc")
+      .get();
+
+    if (snap.empty) {
+      empty.style.display = "block";
+      return;
+    }
+
+    snap.forEach(doc => {
+
+      const data = doc.data() || {};
+      const email = data.email || "(no email)";
+      const active = data.active !== false;
+
+      const row = document.createElement("div");
+      row.className = "inbox-item";
+
+      row.innerHTML = `
+        <div class="inbox-top">
+          <div class="inbox-name">${email}</div>
+          <div class="inbox-date">${active ? "Active" : "Disabled"}</div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:10px;">
+
+          <button class="btn btn-ghost" type="button" data-reset="${email}">
+            Send reset
+          </button>
+
+          <button class="btn btn-ghost" type="button" data-toggle="${doc.id}">
+            ${active ? "Disable" : "Enable"}
+          </button>
+
+        </div>
+      `;
+
+      row.querySelector(`[data-reset]`)?.addEventListener("click", async () => {
+        try {
+          setMsg("Sending reset email...");
+          await auth.sendPasswordResetEmail(email);
+          setMsg("Reset email sent", true);
+        } catch(e){
+          setMsg(e.message || "Failed", false);
+        }
+      });
+
+      row.querySelector(`[data-toggle]`)?.addEventListener("click", async () => {
+
+        try {
+
+          const id = doc.id;
+
+          setMsg("Updating status...");
+
+          await db.collection("staffUsers")
+            .doc(id)
+            .update({ active: !active });
+
+          setMsg("Updated", true);
+
+          await loadEmployers();
+
+        } catch(e){
+
+          setMsg(e.message || "Failed", false);
+
+        }
+
+      });
+
+      list.appendChild(row);
+
+    });
+
+  }
+
   btn?.addEventListener("click", async () => {
-    const email = (staffEmail?.value || "").trim();
-    if (!email) { msg.textContent = "Enter an email."; return; }
+
+    const current = auth.currentUser;
+
+    if (!canAdmin(current)) {
+      setMsg("Admin only", false);
+      return;
+    }
+
+    const email = (staffEmail?.value || "").trim().toLowerCase();
+
+    if (!email) {
+      setMsg("Enter an email", false);
+      return;
+    }
 
     try {
-      msg.textContent = "Creating account...";
+
+      setMsg("Creating employer...");
+
       const tempPass = randomTempPassword();
 
       const cred = await secondaryAuth.createUserWithEmailAndPassword(email, tempPass);
+
       await cred.user.updateProfile({ displayName: "STAFF:EMPLOYER" });
 
+      await db.collection("staffUsers").doc(cred.user.uid).set({
+        uid: cred.user.uid,
+        email,
+        role: "EMPLOYER",
+        active: true,
+        createdAt: new Date().toISOString()
+      });
+
       await auth.sendPasswordResetEmail(email);
+
       await secondaryAuth.signOut();
 
-      msg.textContent = "Employer created. Password reset email sent.";
+      setMsg("Employer created. Password reset sent.", true);
+
       staffEmail.value = "";
+
+      await loadEmployers();
+
     } catch (e) {
-      msg.textContent = e.message || "Failed.";
+
+      setMsg(e.message || "Failed", false);
+
     }
+
   });
+
+  await loadEmployers();
+
 })();
 </script>
   
