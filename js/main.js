@@ -171,7 +171,7 @@
   });
 
  body.innerHTML = `
-<div class="acc-signedout">
+  <div class="acc-signedout">
 
     <div class="acc-so-sub">
       Sign in to manage reservations, track points, and save your preferences.
@@ -182,47 +182,42 @@
       <div class="b">• Earn and track your points</div>
       <div class="b">• Access member benefits & history</div>
     </div>
+
+    <div class="acc-so-divider"></div>
+
+    <div class="acc-so-section">
+      <div class="acc-so-sec-title">
+        <span class="sec-icon login"></span>
+        Sign In
+      </div>
+
+      <div class="acc-so-sec-sub">
+        I already have an account
+      </div>
+
+      <button class="acc-so-btn" id="accGoLogin">Sign In</button>
+    </div>
+
+    <div class="acc-so-divider"></div>
+
+    <div class="acc-so-section">
+      <div class="acc-so-sec-title">
+        <span class="sec-icon signup"></span>
+        Create Account
+      </div>
+
+      <div class="acc-so-sec-sub">
+        New here? Create your account in seconds
+      </div>
+
+      <button class="acc-so-btn" id="accGoSignup">Create Account</button>
+    </div>
+
+    <div class="acc-so-foot">
+      Secure sign-in • No spam • Cancel anytime
+    </div>
+
   </div>
-
-  <div class="acc-so-divider"></div>
-
-  <div class="acc-so-section">
-    <div class="acc-so-sec-title">
-      <span class="sec-icon login"></span>
-      Sign In
-    </div>
-
-    <div class="acc-so-sec-sub">
-      I already have an account
-    </div>
-
-    <button class="acc-so-btn primary" id="accGoLogin">
-      Sign In
-    </button>
-  </div>
-
-  <div class="acc-so-divider"></div>
-
-  <div class="acc-so-section">
-    <div class="acc-so-sec-title">
-      <span class="sec-icon signup"></span>
-      Create Account
-    </div>
-
-    <div class="acc-so-sec-sub">
-      New here? Create your account in seconds
-    </div>
-
-    <button class="acc-so-btn" id="accGoSignup">
-      Create Account
-    </button>
-  </div>
-
-<div class="acc-so-foot">
-Secure sign-in • No spam • Cancel anytime
-</div>
-
-</div>
 `;
 
   function renderSignedIn(user) {
