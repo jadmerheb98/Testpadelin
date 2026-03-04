@@ -2243,3 +2243,59 @@ button, input { font: inherit; }
 .staff-login .auth-card-title{
   color:#e53935;
 }
+/* ===========================
+   Admin / Staff pages — mobile polish
+   =========================== */
+@media (max-width: 520px){
+
+  .contact-page{
+    padding: 22px 0 36px;
+  }
+
+  .contact-hero{
+    margin: 8px 0 14px;
+  }
+
+  .contact-hero h1{
+    font-size: 24px;
+    line-height: 1.12;
+    margin-bottom: 8px;
+  }
+
+  .contact-hero p{
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .contact-card-head{
+    padding: 14px 14px 10px;
+  }
+
+  .contact-card-body{
+    padding: 14px;
+  }
+
+  .contact-card-title{
+    font-size: 16px;
+  }
+
+  .contact-card-sub{
+    font-size: 12px;
+  }
+
+  .inbox-search{
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .btn{
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-weight: 800;
+  }
+
+  .msg-row{
+    grid-template-columns: 92px 1fr;
+    gap: 10px;
+  }
+}
