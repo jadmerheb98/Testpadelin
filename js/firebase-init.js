@@ -16,3 +16,5 @@ firebase.initializeApp(firebaseConfig);
 
 // Expose auth globally
 window.padelinAuth = firebase.auth();
+
+window.padelinDB = firebase.firestore();
