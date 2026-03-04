@@ -2024,7 +2024,12 @@ button, input { font: inherit; }
 }
 .acc-link:active{ transform: scale(0.99); }
 
-.acc-link .k{ font-weight: 950; font-size: 16px; } /* smaller like Menu */
+.acc-link .k{
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: .2px;
+}
+
 .acc-link .s{
   display:block;
   font-size: 12px;
@@ -2096,7 +2101,7 @@ button, input { font: inherit; }
   .acc-drawer{ width: min(350px, 92vw); }
   .acc-title{ font-size: 21px; }
   .acc-body{ padding: 12px 12px 14px; gap: 10px; }
-  .acc-link{ padding: 12px 12px; }
+  .acc-link{ padding: 14px 14px; }
 }
 
 /* ============================
