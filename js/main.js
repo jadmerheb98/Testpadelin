@@ -170,47 +170,59 @@
     if (e.key === "Escape" && drawer.classList.contains("open")) closeDrawer();
   });
 
- function renderSignedOut() {
-  body.innerHTML = `
-    <div class="acc-signedout">
+ body.innerHTML = `
+<div class="acc-signedout">
 
-      <div class="acc-so-copy">
-        <div class="acc-so-title">Account</div>
-        <div class="acc-so-sub">
-          Sign in to manage reservations, track points, and save your preferences.
-        </div>
+  <div class="acc-so-copy">
+    <div class="acc-so-title">Account</div>
 
-        <div class="acc-so-bullets">
-          <div class="b">• Faster booking with saved details</div>
-          <div class="b">• Earn and track your points</div>
-          <div class="b">• Access member benefits & history</div>
-        </div>
-      </div>
-
-      <div class="acc-so-actions">
-        <button class="acc-so-btn primary" type="button" id="accGoLogin">
-          <span class="t">Sign In</span>
-          <span class="d">I already have an account</span>
-        </button>
-
-        <button class="acc-so-btn" type="button" id="accGoSignup">
-          <span class="t">Create Account</span>
-          <span class="d">New here? Join in seconds</span>
-        </button>
-      </div>
-
-      <div class="acc-so-foot">
-        Secure sign-in • No spam • Cancel anytime
-      </div>
-
+    <div class="acc-so-sub">
+      Sign in to manage reservations, track points, and save your preferences.
     </div>
-  `;
 
-  const goLogin = document.getElementById("accGoLogin");
-  const goSignup = document.getElementById("accGoSignup");
-  if (goLogin) goLogin.onclick = () => (window.location.href = "login.html");
-  if (goSignup) goSignup.onclick = () => (window.location.href = "signup.html");
-}
+    <div class="acc-so-bullets">
+      <div class="b">• Faster booking with saved details</div>
+      <div class="b">• Earn and track your points</div>
+      <div class="b">• Access member benefits & history</div>
+    </div>
+  </div>
+
+  <div class="acc-so-divider"></div>
+
+  <div class="acc-so-section">
+    <div class="acc-so-sec-title">
+      <span class="sec-icon login"></span>
+      Sign In
+    </div>
+
+    <div class="acc-so-sec-sub">
+      I already have an account
+    </div>
+
+    <button class="acc-so-btn primary" id="accGoLogin">
+      Sign In
+    </button>
+  </div>
+
+  <div class="acc-so-divider"></div>
+
+  <div class="acc-so-section">
+    <div class="acc-so-sec-title">
+      <span class="sec-icon signup"></span>
+      Create Account
+    </div>
+
+    <div class="acc-so-sec-sub">
+      New here? Create your account in seconds
+    </div>
+
+    <button class="acc-so-btn" id="accGoSignup">
+      Create Account
+    </button>
+  </div>
+
+</div>
+`;
 
   function renderSignedIn(user) {
     const name =
