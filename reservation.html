@@ -115,19 +115,19 @@
     <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
   </footer>
 
-<!-- AUTH OVERLAY + PANEL -->
-<div class="auth-overlay" data-auth-overlay></div>
+<!-- Account Drawer -->
+<div class="acc-overlay" data-acc-overlay></div>
 
-<div class="auth-panel" data-auth-panel aria-hidden="true">
-  <div class="auth-head">
-    <div class="auth-title">Account</div>
-    <button class="auth-close" type="button" aria-label="Close" data-auth-close>×</button>
+<aside class="acc-drawer" data-acc-drawer aria-hidden="true" aria-label="Account">
+  <div class="acc-head">
+    <div class="acc-title">Account</div>
+    <button class="acc-close" type="button" aria-label="Close" data-acc-close>✕</button>
   </div>
 
-  <div class="auth-tabs">
-    <button class="auth-tab is-active" type="button" data-auth-tab="signin">Sign in</button>
-    <button class="auth-tab" type="button" data-auth-tab="signup">Sign up</button>
+  <div class="acc-body" id="accBody">
+    <!-- injected by JS -->
   </div>
+</aside>
 
   <div class="auth-body">
     <!-- SIGN IN -->
