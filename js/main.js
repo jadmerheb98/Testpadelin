@@ -170,53 +170,59 @@
     if (e.key === "Escape" && drawer.classList.contains("open")) closeDrawer();
   });
 
- body.innerHTML = `
-  <div class="acc-signedout">
+function renderSignedOut() {
+  body.innerHTML = `
+    <div class="acc-signedout">
 
-    <div class="acc-so-sub">
-      Why create an account?
-    </div>
-
-    <div class="acc-so-bullets">
-      <div class="b">• Book here faster.</div>
-      <div class="b">• Track your points.</div>
-      <div class="b">• Watch full replays.</div>
-    </div>
-
-    <div class="acc-so-divider"></div>
-
-    <div class="acc-so-section">
-      <div class="acc-so-sec-title">
-        Sign In
+      <div class="acc-so-sub">
+        Why create an account?
       </div>
 
-      <div class="acc-so-sec-sub">
-        I already have an account
+      <div class="acc-so-bullets">
+        <div class="b">• Book here faster.</div>
+        <div class="b">• Track your points.</div>
+        <div class="b">• Watch full replays.</div>
       </div>
 
-      <button class="acc-so-btn" id="accGoLogin">Sign In</button>
-    </div>
+      <div class="acc-so-divider"></div>
 
-    <div class="acc-so-divider"></div>
-
-    <div class="acc-so-section">
-      <div class="acc-so-sec-title">
-        Create Account
+      <div class="acc-so-section">
+        <div class="acc-so-sec-title">Sign In</div>
+        <div class="acc-so-sec-sub">I already have an account</div>
+        <button class="acc-so-btn" id="accGoLogin" type="button">Sign In</button>
       </div>
 
-      <div class="acc-so-sec-sub">
-        New here? Create your account in seconds
+      <div class="acc-so-divider"></div>
+
+      <div class="acc-so-section">
+        <div class="acc-so-sec-title">Create Account</div>
+        <div class="acc-so-sec-sub">New here? Create your account in seconds</div>
+        <button class="acc-so-btn" id="accGoSignup" type="button">Create Account</button>
       </div>
 
-      <button class="acc-so-btn" id="accGoSignup">Create Account</button>
-    </div>
+      <div class="acc-so-foot">
+        Secure sign-in • No spam • Cancel anytime
+      </div>
 
-    <div class="acc-so-foot">
-      Secure sign-in • No spam • Cancel anytime
     </div>
+  `;
 
-  </div>
-`;
+  // ✅ bind clicks AFTER HTML is injected
+  const goLogin = document.getElementById("accGoLogin");
+  const goSignup = document.getElementById("accGoSignup");
+
+  if (goLogin) {
+    goLogin.addEventListener("click", () => {
+      window.location.href = "login.html";   // <-- change destination here
+    });
+  }
+
+  if (goSignup) {
+    goSignup.addEventListener("click", () => {
+      window.location.href = "signup.html";  // <-- change destination here
+    });
+  }
+}
 
   function renderSignedIn(user) {
     const name =
