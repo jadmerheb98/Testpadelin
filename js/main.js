@@ -178,10 +178,9 @@
     </div>
 
     <div class="acc-so-bullets">
-      <div class="b">• Book faster with your details saved automatically.</div>
-      <div class="b">• Earn and track your points as you play and improve.</div>
-      <div class="b">• Manage your bookings and unlock exclusive member perks.</div>
-      <div class="b">• Watch full replays of your games and enjoy every moment.</div>
+      <div class="b">• Book here faster.</div>
+      <div class="b">• Track your points.</div>
+      <div class="b">• Watch full replays.</div>
     </div>
 
     <div class="acc-so-divider"></div>
