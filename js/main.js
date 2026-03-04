@@ -92,7 +92,7 @@ if (isNormalLogin && eVal === "admin@admin.com" && pVal === "admin@admin.com") {
             await auth.signInWithEmailAndPassword(email, password);
 
 // ✅ Bootstrap: YOUR email becomes Admin one-time (sets staff marker)
-const BOOTSTRAP_ADMIN_EMAIL = "brewlinecoffee.lb@gmail.com";
+const BOOTSTRAP_ADMIN_EMAIL = "padelin.admin@hotmail.com";
 const u = auth.currentUser;
 
 if (isStaffLoginPage) {
@@ -105,6 +105,12 @@ if (isStaffLoginPage) {
 
   // ✅ Staff gate: only users with displayName starting STAFF: can enter
   const dn = (u?.displayName || "");
+  // ✅ Only the bootstrap email may be ADMIN
+if (dn === "STAFF:ADMIN" && (u?.email || "").toLowerCase() !== BOOTSTRAP_ADMIN_EMAIL.toLowerCase()) {
+  await auth.signOut();
+  alert("Staff access only.");
+  return;
+}
   if (!dn.startsWith("STAFF:")) {
     await auth.signOut();
     alert("Staff access only.");
