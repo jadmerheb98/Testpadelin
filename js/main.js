@@ -187,7 +187,6 @@
 
     <div class="acc-so-section">
       <div class="acc-so-sec-title">
-        <span class="sec-icon login"></span>
         Sign In
       </div>
 
@@ -202,7 +201,6 @@
 
     <div class="acc-so-section">
       <div class="acc-so-sec-title">
-        <span class="sec-icon signup"></span>
         Create Account
       </div>
 
