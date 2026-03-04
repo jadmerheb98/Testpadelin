@@ -2124,8 +2124,7 @@ button, input { font: inherit; }
 }
 
 /* ==========================================================
-   SIGNED-OUT ACCOUNT DRAWER (REDESIGN — clean + consistent)
-   Only affects signed-out drawer markup (.acc-signedout + children)
+   SIGNED-OUT ACCOUNT DRAWER (CLEAN + SOLID + TEXT-FIRST)
 ========================================================== */
 
 .acc-signedout{
@@ -2133,100 +2132,94 @@ button, input { font: inherit; }
   gap: 12px;
 }
 
-/* Hero */
-.acc-so-hero{
-  border-radius: 18px;
-  padding: 14px 14px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background:
-    radial-gradient(260px 140px at 18% 18%, rgba(80,130,255,0.22), transparent 60%),
-    rgba(255,255,255,0.04);
-}
-
-.acc-so-eyebrow{
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 2.6px;
-  color: rgba(255,255,255,0.55);
+/* TEXT ONLY (no card, no gradient) */
+.acc-so-copy{
+  padding: 4px 2px; /* keeps it airy without “box” feel */
 }
 
 .acc-so-title{
-  margin-top: 8px;
   font-weight: 950;
-  font-size: 18px;
-  color: rgba(255,255,255,0.92);
+  font-size: 20px;
   letter-spacing: .2px;
+  color: rgba(255,255,255,0.92);
 }
 
 .acc-so-sub{
-  margin-top: 6px;
-  font-size: 12px;
-  line-height: 1.45;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
   color: rgba(255,255,255,0.62);
   max-width: 46ch;
 }
 
-.acc-so-chips{
+.acc-so-bullets{
   margin-top: 12px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 8px;
 }
 
-.acc-so-chips .chip{
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.03);
-  color: rgba(255,255,255,0.62);
-  font-size: 12px;
-  font-weight: 800;
+.acc-so-bullets .b{
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.70);
 }
 
-/* Actions */
+/* BUTTONS (minimal boxes only here) */
 .acc-so-actions{
   display: grid;
   gap: 10px;
+  margin-top: 4px;
 }
 
 .acc-so-btn{
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
   align-items: center;
   gap: 12px;
-  padding: 14px 14px;
-  border-radius: 18px;
+
+  padding: 12px 12px;
+  border-radius: 16px;
+
   border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.03); /* solid */
   color: rgba(255,255,255,0.92);
+
   cursor: pointer;
   text-align: left;
+
   transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
-  position: relative;
-  overflow: hidden;
 }
 
-/* Icon bubble (header-consistent) */
+/* icon bubble like header icon-btn (solid) */
 .acc-so-btn::before{
   content:"";
   width: 34px;
   height: 34px;
   border-radius: 14px;
-  flex: 0 0 auto;
-  border: 1px solid rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,0.12);
   background:
     var(--so-icn) center/18px 18px no-repeat,
-    rgba(255,255,255,.06);
+    rgba(255,255,255,0.06);
 }
 
-/* Button text */
-.acc-so-btn .txt{ display:block; }
+/* chevron */
+.acc-so-btn::after{
+  content:"›";
+  font-size: 22px;
+  opacity: .55;
+  transform: translateX(0);
+  transition: transform 140ms ease, opacity 140ms ease;
+}
+
+/* text inside buttons */
 .acc-so-btn .t{
-  display:block;
-  font-weight: 800;
+  font-weight: 850;
   font-size: 17px;
   letter-spacing: .2px;
+  line-height: 1.1;
 }
+
 .acc-so-btn .d{
   display:block;
   margin-top: 4px;
@@ -2235,45 +2228,32 @@ button, input { font: inherit; }
   line-height: 1.35;
 }
 
-/* Chevron */
-.acc-so-btn .chev{
-  margin-left: auto;
-  font-size: 22px;
-  opacity: .55;
-  transform: translateX(0);
-  transition: transform 140ms ease, opacity 140ms ease;
-}
-
-/* Primary */
-.acc-so-btn.primary{
-  border-color: rgba(80,130,255,0.26);
-  background: linear-gradient(180deg, rgba(80,130,255,0.18), rgba(255,255,255,0.03));
-}
-.acc-so-btn.primary::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: radial-gradient(280px 140px at 20% 10%, rgba(255,255,255,0.06), transparent 55%);
-  pointer-events:none;
-  opacity: 0;
-  transition: opacity 140ms ease;
-}
-
-/* Hover */
+/* hover */
 .acc-so-btn:hover{
   background: rgba(255,255,255,0.045);
   border-color: rgba(120,170,255,0.16);
   transform: translateY(-1px);
 }
-.acc-so-btn:hover .chev{
+.acc-so-btn:hover::after{
   transform: translateX(3px);
   opacity: .9;
 }
-.acc-so-btn.primary:hover::after{ opacity: 1; }
-.acc-so-btn:active{ transform: translateY(0); }
+.acc-so-btn:active{
+  transform: translateY(0);
+  background: rgba(255,255,255,0.055);
+}
 
-/* Icons (SVG data-uri, same style system as your drawer icons) */
+/* primary: still SOLID (no gradients), just a subtle border + background bump */
 .acc-so-btn.primary{
+  border-color: rgba(80,130,255,0.28);
+  background: rgba(80,130,255,0.10);
+}
+.acc-so-btn.primary:hover{
+  background: rgba(80,130,255,0.14);
+}
+
+/* Icons (same stroke softness as your header vibe) */
+#accGoLogin.acc-so-btn{
   --so-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.85)' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 17l5-5'/%3E%3Cpath d='M15 12l4 4'/%3E%3Cpath d='M14 7a4 4 0 1 0 0 8'/%3E%3Cpath d='M21 21l-2-2'/%3E%3C/svg%3E");
 }
 
@@ -2281,15 +2261,10 @@ button, input { font: inherit; }
   --so-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.85)' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21a8 8 0 0 0-16 0'/%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M19 8v6'/%3E%3Cpath d='M16 11h6'/%3E%3C/svg%3E");
 }
 
-/* Trust pill (keep your existing idea) */
-.acc-signedout .acc-micro{
+/* footer phrase (no box) */
+.acc-so-foot{
   margin-top: 2px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.03);
-  color: rgba(255,255,255,0.58);
   font-size: 12px;
-  line-height: 1.35;
+  color: rgba(255,255,255,0.58);
   text-align: center;
 }
