@@ -173,9 +173,6 @@
  body.innerHTML = `
 <div class="acc-signedout">
 
-  <div class="acc-so-copy">
-    <div class="acc-so-title">Account</div>
-
     <div class="acc-so-sub">
       Sign in to manage reservations, track points, and save your preferences.
     </div>
@@ -220,6 +217,10 @@
       Create Account
     </button>
   </div>
+
+<div class="acc-so-foot">
+Secure sign-in • No spam • Cancel anytime
+</div>
 
 </div>
 `;
