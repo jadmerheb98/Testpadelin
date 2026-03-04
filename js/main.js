@@ -170,31 +170,38 @@
     if (e.key === "Escape" && drawer.classList.contains("open")) closeDrawer();
   });
 
-  function renderSignedOut() {
+ function renderSignedOut() {
   body.innerHTML = `
     <div class="acc-signedout">
-      <div class="acc-so-head">
-        <div class="acc-so-title">Registered Users</div>
-        <div class="acc-so-sub">Have an account? Sign in now.</div>
+      <div class="acc-so-hero">
+        <div class="acc-so-eyebrow">ACCOUNT</div>
+        <div class="acc-so-title">Welcome back</div>
+        <div class="acc-so-sub">
+          Sign in to manage reservations, track points, and save your preferences.
+        </div>
+
+        <div class="acc-so-chips">
+          <span class="chip">Fast booking</span>
+          <span class="chip">Points tracking</span>
+          <span class="chip">Member perks</span>
+        </div>
       </div>
 
-      <div class="acc-so-list">
-        <button class="acc-row primary" type="button" id="accGoLogin">
-          <span class="acc-ico" aria-hidden="true"></span>
-          <span class="acc-txt">
+      <div class="acc-so-actions">
+        <button class="acc-so-btn primary" type="button" id="accGoLogin">
+          <span class="txt">
             <span class="t">Sign In</span>
-            <span class="d">Manage bookings, track points, and save your preferences</span>
+            <span class="d">Access your account</span>
           </span>
-          <span class="acc-chev" aria-hidden="true">›</span>
+          <span class="chev" aria-hidden="true">›</span>
         </button>
 
-        <button class="acc-row" type="button" id="accGoSignup">
-          <span class="acc-ico" aria-hidden="true"></span>
-          <span class="acc-txt">
+        <button class="acc-so-btn" type="button" id="accGoSignup">
+          <span class="txt">
             <span class="t">Create Account</span>
-            <span class="d">Create your account to book faster and unlock member features</span>
+            <span class="d">Join PADELIN in seconds</span>
           </span>
-          <span class="acc-chev" aria-hidden="true">›</span>
+          <span class="chev" aria-hidden="true">›</span>
         </button>
       </div>
 
