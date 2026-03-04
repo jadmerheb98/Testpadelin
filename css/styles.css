@@ -2135,10 +2135,10 @@ button, input { font: inherit; }
 /* Intro text */
 .acc-so-sub{
   margin-top: 6px;
-  font-size: 13px;
+  font-size: 16px;
+  font-weight: 700;
   line-height: 1.5;
-  color: rgba(255,255,255,0.62);
-  max-width: 46ch;
+  color: rgba(255,255,255,1);
 }
 
 .acc-so-bullets{
