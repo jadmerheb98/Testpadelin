@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="header">
+  <div class="container header-inner header-gd">
+    <div class="header-left">
+      <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+        <div class="hamburger-lines" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+
+      <a class="brand" href="index.html" aria-label="PADELIN Home">
+        <img src="assets/img/logo.png" alt="PADELIN Logo" />
+      </a>
+    </div>
+
+    <div class="header-right">
+      <!-- optional: keep this empty on login page -->
+    </div>
+  </div>
+</header>
+
+  <div class="overlay" data-overlay></div>
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+    </div>
+    <div class="side-links">
+      <a href="membership.html">Membership</a>
+      <a href="training.html">Training</a>
+      <a href="tournaments.html">Tournaments</a>
+    </div>
+  </aside>
+
+  <main class="auth-page">
+  <div class="container">
+    <div class="auth-hero">
+      <div class="auth-eyebrow">Account</div>
+ </div>
+    
+    <div class="auth-card">
+      <div class="auth-card-head">
+        <div class="auth-card-title">Sign In</div>
+        <div class="auth-card-sub">Let’s get you on court.</div>
+      </div>
+
+      <form class="auth-form-grid">
+        <div class="auth-row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required />
+        </div>
+
+        <div class="auth-row">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+          <div class="auth-actions-row">
+            <a class="auth-link" href="#">Forgot password?</a>
+          </div>
+        </div>
+
+        <button class="btn btn-primary auth-submit" type="submit">Sign In</button>
+
+        <div class="auth-footer" style="opacity:.75;">
+  Staff only — if you don’t have access, contact the administrator.
+</div>
+      </form>
+    </div>
+  </div>
+</main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="js/firebase-init.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
