@@ -37,6 +37,23 @@
             <div class="contact-card-sub" id="countLine">0 messages</div>
           </header>
 
+          <section class="contact-card" id="staffBox" style="margin-top:14px; display:none;">
+  <header class="contact-card-head">
+    <div class="contact-card-title">Staff Accounts</div>
+    <div class="contact-card-sub">Admin only — create employer logins.</div>
+  </header>
+
+  <div class="contact-card-body">
+    <div class="auth-row">
+      <label for="staffEmail">Employer Email</label>
+      <input id="staffEmail" type="email" placeholder="staff@email.com" />
+    </div>
+
+    <button class="btn btn-primary" type="button" id="createStaffBtn">Create Employer Account</button>
+    <div class="form-note" id="staffMsg" style="margin-top:10px;"></div>
+  </div>
+</section>
+
           <div class="contact-card-body">
             <div class="inbox-toolbar">
               <input class="inbox-search" id="searchInput" type="search" placeholder="Search by name, phone, email…" />
@@ -72,18 +89,24 @@
     <div class="container">© 2026 Padelin | Admin</div>
   </footer>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="js/firebase-init.js"></script>
+
   <script>
     // ------------------------------------------------------------------
     // Basic "admin gate" (static-site friendly). Your admin login page
     // will later set: localStorage.setItem("padelinAdmin", "1")
     // ------------------------------------------------------------------
-    (function adminGate(){
-      const isAdmin = localStorage.getItem("padelinAdmin") === "1";
-      if (!isAdmin) {
-        // Redirect to login (you can adjust later)
-        window.location.href = "login.html";
-      }
-    })();
+    (function staffGate(){
+  if (!window.padelinAuth) return;
+  window.padelinAuth.onAuthStateChanged((u) => {
+    const dn = (u?.displayName || "");
+    if (!u || !dn.startsWith("STAFF:")) {
+      window.location.href = "login.html";
+    }
+  });
+})();
 
     const KEY = "padelinMessages";
 
@@ -215,10 +238,12 @@
       renderList(searchInput.value);
     });
 
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      localStorage.removeItem("padelinAdmin");
-      window.location.href = "login.html";
-    });
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+  try {
+    if (window.padelinAuth) await window.padelinAuth.signOut();
+  } catch {}
+  window.location.href = "login.html";
+});
 
     searchInput.addEventListener("input", () => renderList(searchInput.value));
 
@@ -226,5 +251,58 @@
     renderList();
   </script>
 
+<script>
+(async function staffCreateWiring(){
+  if (!window.padelinAuth || !window.firebase) return;
+
+  const auth = window.padelinAuth;
+  const staffBox = document.getElementById("staffBox");
+  const staffEmail = document.getElementById("staffEmail");
+  const btn = document.getElementById("createStaffBtn");
+  const msg = document.getElementById("staffMsg");
+
+  // Secondary app so creating users doesn't log out the admin
+  let secondaryAuth = null;
+  try {
+    const secondaryApp = firebase.initializeApp(firebase.app().options, "secondary");
+    secondaryAuth = secondaryApp.auth();
+  } catch {
+    secondaryAuth = firebase.app("secondary").auth();
+  }
+
+  auth.onAuthStateChanged((u) => {
+    const dn = (u?.displayName || "");
+    const isAdmin = dn === "STAFF:ADMIN";
+    if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
+  });
+
+  function randomTempPassword(){
+    return "Tmp!" + Math.random().toString(36).slice(2) + "A9";
+  }
+
+  btn?.addEventListener("click", async () => {
+    const email = (staffEmail?.value || "").trim();
+    if (!email) { msg.textContent = "Enter an email."; return; }
+
+    try {
+      msg.textContent = "Creating account...";
+      const tempPass = randomTempPassword();
+
+      const cred = await secondaryAuth.createUserWithEmailAndPassword(email, tempPass);
+      await cred.user.updateProfile({ displayName: "STAFF:EMPLOYER" });
+
+      await auth.sendPasswordResetEmail(email);
+      await secondaryAuth.signOut();
+
+      msg.textContent = "Employer created. Password reset email sent.";
+      staffEmail.value = "";
+    } catch (e) {
+      msg.textContent = e.message || "Failed.";
+    }
+  });
+})();
+</script>
+  
 </body>
+
 </html>
