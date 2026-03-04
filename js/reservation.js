@@ -401,6 +401,19 @@ function setStatus(type, text) {
 confirmBtn.addEventListener("click", async () => {
   if (isAdmin) return;
 
+  // ✅ Require sign-in before confirming reservation
+  const userRaw = localStorage.getItem("padelinUser");
+  let user = null;
+  try { user = userRaw ? JSON.parse(userRaw) : null; } catch { user = null; }
+
+  if (!user || (!user.uid && !user.email)) {
+    alert("Please sign in before confirming your reservation.");
+    // Optional: open the account drawer (helps them sign in)
+    document.querySelector("[data-auth-open]")?.click();
+    setStatus("error", "Please sign in before confirming your reservation.");
+    return;
+  }
+
   const mins = selectedDurationMinutes();
   if (mins < MIN_BOOK_MINUTES) {
     setStatus("error", "Please select at least 60 minutes (2 consecutive 30-min slots).");
