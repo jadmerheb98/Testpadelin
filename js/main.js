@@ -34,6 +34,7 @@
   if (!window.padelinAuth) return;
 
   const auth = window.padelinAuth;
+  const db = window.padelinDB; // Firestore (for staff enable/disable)
 
   function setLocalUser(user) {
     if (!user) {
@@ -117,6 +118,26 @@ if (dn === "STAFF:ADMIN" && (u?.email || "").toLowerCase() !== BOOTSTRAP_ADMIN_E
     return;
   }
 
+// ✅ If employer is disabled in Firestore -> block access
+if (dn !== "STAFF:ADMIN") {
+  try {
+    if (!db) throw new Error("Firestore not loaded");
+    const snap = await db.collection("staffUsers").doc(u.uid).get();
+    const active = snap.exists ? (snap.data().active !== false) : false;
+
+    if (!active) {
+      await auth.signOut();
+      alert("Your staff access is disabled. Contact admin.");
+      return;
+    }
+  } catch (e) {
+    // safest behavior: block if we can't verify
+    await auth.signOut();
+    alert("Could not verify staff access. Try again.");
+    return;
+  }
+}
+  
   // Staff destination
   window.location.href = "admin-messages.html";
   return;
