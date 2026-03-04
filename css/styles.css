@@ -1967,20 +1967,17 @@ button, input { font: inherit; }
    IMPORTANT: remove ALL ".acc-link > div::before" blocks first
 ============================ */
 
-/* Icon bubble + icon (single place, no duplicates) */
 .acc-link::before{
   content:"";
-  width: 34px;
-  height: 34px;
-  border-radius: 12px;
-  flex: 0 0 auto;
-  border: 1px solid rgba(120,170,255,0.18);
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  flex:0 0 auto;
+  border:1px solid rgba(255,255,255,.12);
 
-  /* icon layer + premium bubble */
   background:
     var(--acc-icn) center/20px 20px no-repeat,
-    radial-gradient(20px 20px at 30% 30%, rgba(120,170,255,0.24), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+    rgba(255,255,255,.06);
 }
 
 /* Map icons to your order:
@@ -1989,20 +1986,21 @@ button, input { font: inherit; }
    3) My Replays
    4) My Profile
 */
+
 .acc-links .acc-link:nth-child(1){
-  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 21h8'/%3E%3Cpath d='M12 17v4'/%3E%3Cpath d='M7 4h10'/%3E%3Cpath d='M17 4v3a5 5 0 0 1-10 0V4'/%3E%3Cpath d='M5 7a3 3 0 0 0 3 3'/%3E%3Cpath d='M19 7a3 3 0 0 1-3 3'/%3E%3C/svg%3E");
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.85)' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 21h8'/%3E%3Cpath d='M12 17v4'/%3E%3Cpath d='M7 4h10'/%3E%3Cpath d='M17 4v3a5 5 0 0 1-10 0V4'/%3E%3Cpath d='M5 7a3 3 0 0 0 3 3'/%3E%3Cpath d='M19 7a3 3 0 0 1-3 3'/%3E%3C/svg%3E");
 }
 
 .acc-links .acc-link:nth-child(2){
-  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4'/%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M3 10h18'/%3E%3Cpath d='M8 14h3'/%3E%3Cpath d='M8 18h5'/%3E%3C/svg%3E");
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.85)' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4'/%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M3 10h18'/%3E%3Cpath d='M8 14h3'/%3E%3Cpath d='M8 18h5'/%3E%3C/svg%3E");
 }
 
 .acc-links .acc-link:nth-child(3){
-  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='4'/%3E%3Cpath d='M11 9l5 3-5 3V9z'/%3E%3C/svg%3E");
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.85)' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='4'/%3E%3Cpath d='M11 9l5 3-5 3V9z'/%3E%3C/svg%3E");
 }
 
 .acc-links .acc-link:nth-child(4){
-  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21a8 8 0 0 0-16 0'/%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3C/svg%3E");
+  --acc-icn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.85)' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21a8 8 0 0 0-16 0'/%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3C/svg%3E");
 }
 
 /* Chevron */
