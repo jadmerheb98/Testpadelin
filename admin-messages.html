@@ -37,29 +37,50 @@
             <div class="contact-card-sub" id="countLine">0 messages</div>
           </header>
 
+          <!-- STAFF BOX -->
           <section class="contact-card" id="staffBox" style="margin-top:14px; display:none;">
-  <header class="contact-card-head">
-    <div class="contact-card-title">Staff Accounts</div>
-    <div class="contact-card-sub">Admin only — create employer logins.</div>
-  </header>
+            <header class="contact-card-head">
+              <div class="contact-card-title">Staff Accounts</div>
+              <div class="contact-card-sub">Admin only — create employer logins.</div>
+            </header>
 
-  <div class="contact-card-body">
-    <div class="auth-row">
-      <label for="staffEmail">Employer Email</label>
-      <input id="staffEmail" type="email" placeholder="staff@email.com" />
-    </div>
+            <div class="contact-card-body">
+              <div class="auth-row">
+                <label for="staffFirst">First Name</label>
+                <input id="staffFirst" type="text" placeholder="First name" autocomplete="off" />
+              </div>
 
-    <button class="btn btn-primary" type="button" id="createStaffBtn">Create Employer Account</button>
-    <div class="form-note" id="staffMsg" style="margin-top:10px;"></div>
+              <div class="auth-row">
+                <label for="staffLast">Family Name</label>
+                <input id="staffLast" type="text" placeholder="Family name" autocomplete="off" />
+              </div>
 
-<div id="staffListWrap" style="margin-top:12px;">
-  <div class="contact-card-sub" style="margin-bottom:8px;">Employers</div>
-  <div id="staffList" class="inbox-list"></div>
-  <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
-</div>
-    
-  </div>
-</section>
+              <div class="auth-row">
+                <label for="staffPhone">Phone Number</label>
+                <input id="staffPhone" type="tel" placeholder="+961..." autocomplete="off" />
+              </div>
+
+              <div class="auth-row">
+                <label for="staffEmail">Employer Email</label>
+                <input id="staffEmail" type="email" placeholder="staff@email.com" autocomplete="off" />
+              </div>
+
+              <button class="btn btn-primary" type="button" id="createStaffBtn">Create Employer Account</button>
+              <div class="form-note" id="staffMsg" style="margin-top:10px;"></div>
+
+              <div id="staffListWrap" style="margin-top:12px;">
+                <div class="contact-card-sub" style="margin-bottom:8px;">Employers</div>
+                <div id="staffList" class="inbox-list"></div>
+                <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
+              </div>
+
+              <div class="form-note" style="margin-top:10px; opacity:.75;">
+                Note: “Delete” removes the staff record + access from the website. To fully delete the Firebase Auth user,
+                remove them from Firebase Console → Authentication → Users (or we can add a Cloud Function later).
+              </div>
+            </div>
+          </section>
+          <!-- /STAFF BOX -->
 
           <div class="contact-card-body">
             <div class="inbox-toolbar">
@@ -96,38 +117,37 @@
     <div class="container">© 2026 Padelin | Admin</div>
   </footer>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script src="js/firebase-init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-init.js"></script>
 
   <script>
     // ------------------------------------------------------------------
-    // Basic "admin gate" (static-site friendly). Your admin login page
-    // will later set: localStorage.setItem("padelinAdmin", "1")
+    // Staff gate: only STAFF:* can access this page
     // ------------------------------------------------------------------
     (function staffGate(){
-  if (!window.padelinAuth) return;
-  window.padelinAuth.onAuthStateChanged((u) => {
-    const dn = (u?.displayName || "");
-    if (!u || !dn.startsWith("STAFF:")) {
-      window.location.href = "login.html";
-    }
-  });
-})();
+      if (!window.padelinAuth) return;
+      window.padelinAuth.onAuthStateChanged((u) => {
+        const dn = (u?.displayName || "");
+        if (!u || !dn.startsWith("STAFF:")) {
+          window.location.href = "login.html";
+        }
+      });
+    })();
 
     // Change Admin / Staff label
-(function setRoleLabel(){
-  const el = document.getElementById("roleEyebrow");
-  if (!el) return;
+    (function setRoleLabel(){
+      const el = document.getElementById("roleEyebrow");
+      if (!el) return;
 
-  if (window.padelinAuth) {
-    window.padelinAuth.onAuthStateChanged((u) => {
-      const dn = (u?.displayName || "");
-      el.textContent = dn === "STAFF:ADMIN" ? "Admin" : "Staff";
-    });
-  }
-})();
+      if (window.padelinAuth) {
+        window.padelinAuth.onAuthStateChanged((u) => {
+          const dn = (u?.displayName || "");
+          el.textContent = dn === "STAFF:ADMIN" ? "Admin" : "Staff";
+        });
+      }
+    })();
 
     const KEY = "padelinMessages";
 
@@ -260,11 +280,11 @@
     });
 
     document.getElementById("logoutBtn").addEventListener("click", async () => {
-  try {
-    if (window.padelinAuth) await window.padelinAuth.signOut();
-  } catch {}
-  window.location.href = "login.html";
-});
+      try {
+        if (window.padelinAuth) await window.padelinAuth.signOut();
+      } catch {}
+      window.location.href = "login.html";
+    });
 
     searchInput.addEventListener("input", () => renderList(searchInput.value));
 
@@ -272,189 +292,216 @@
     renderList();
   </script>
 
-<script>
-(async function staffCreateWiring(){
-  if (!window.padelinAuth || !window.firebase || !window.padelinDB) return;
+  <script>
+  (async function staffCreateWiring(){
+    if (!window.padelinAuth || !window.firebase || !window.padelinDB) return;
 
-  const auth = window.padelinAuth;
-  const db = window.padelinDB;
+    const auth = window.padelinAuth;
+    const db = window.padelinDB;
 
-  const staffBox = document.getElementById("staffBox");
-  const staffEmail = document.getElementById("staffEmail");
-  const btn = document.getElementById("createStaffBtn");
-  const msg = document.getElementById("staffMsg");
-  const list = document.getElementById("staffList");
-  const empty = document.getElementById("staffEmpty");
+    const staffBox   = document.getElementById("staffBox");
+    const staffFirst = document.getElementById("staffFirst");
+    const staffLast  = document.getElementById("staffLast");
+    const staffPhone = document.getElementById("staffPhone");
+    const staffEmail = document.getElementById("staffEmail");
+    const btn        = document.getElementById("createStaffBtn");
+    const msg        = document.getElementById("staffMsg");
+    const list       = document.getElementById("staffList");
+    const empty      = document.getElementById("staffEmpty");
 
-  let secondaryAuth = null;
-
-  try {
-    const secondaryApp = firebase.initializeApp(firebase.app().options, "secondary");
-    secondaryAuth = secondaryApp.auth();
-  } catch {
-    secondaryAuth = firebase.app("secondary").auth();
-  }
-
-  function setMsg(text, ok=null){
-    if (!msg) return;
-    msg.textContent = text || "";
-    msg.style.color = ok === true ? "green" : ok === false ? "red" : "";
-  }
-
-  function randomTempPassword(){
-    return "Tmp!" + Math.random().toString(36).slice(2) + "A9";
-  }
-
-  function canAdmin(u){
-    return (u?.displayName || "") === "STAFF:ADMIN";
-  }
-
-  auth.onAuthStateChanged((u) => {
-    if (staffBox) staffBox.style.display = canAdmin(u) ? "block" : "none";
-  });
-
-  async function loadEmployers(){
-
-    if (!list || !empty) return;
-
-    list.innerHTML = "";
-    empty.style.display = "none";
-
-    const snap = await db.collection("staffUsers")
-      .where("role", "==", "EMPLOYER")
-      .orderBy("createdAt", "desc")
-      .get();
-
-    if (snap.empty) {
-      empty.style.display = "block";
-      return;
+    // Secondary app so creating users doesn't log out the admin
+    let secondaryAuth = null;
+    try {
+      const secondaryApp = firebase.initializeApp(firebase.app().options, "secondary");
+      secondaryAuth = secondaryApp.auth();
+    } catch {
+      secondaryAuth = firebase.app("secondary").auth();
     }
 
-    snap.forEach(doc => {
+    function esc(s){
+      return String(s ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
 
-      const data = doc.data() || {};
-      const email = data.email || "(no email)";
-      const active = data.active !== false;
+    function setMsg(text, ok=null){
+      if (!msg) return;
+      msg.textContent = text || "";
+      msg.style.color = ok === true ? "green" : ok === false ? "red" : "";
+    }
 
-      const row = document.createElement("div");
-      row.className = "inbox-item";
+    function randomTempPassword(){
+      return "Tmp!" + Math.random().toString(36).slice(2) + "A9";
+    }
 
-      row.innerHTML = `
-        <div class="inbox-top">
-          <div class="inbox-name">${email}</div>
-          <div class="inbox-date">${active ? "Active" : "Disabled"}</div>
-        </div>
+    function canAdmin(u){
+      return (u?.displayName || "") === "STAFF:ADMIN";
+    }
 
-        <div style="display:flex; gap:8px; margin-top:10px;">
-
-          <button class="btn btn-ghost" type="button" data-reset="${email}">
-            Send reset
-          </button>
-
-          <button class="btn btn-ghost" type="button" data-toggle="${doc.id}">
-            ${active ? "Disable" : "Enable"}
-          </button>
-
-        </div>
-      `;
-
-      row.querySelector(`[data-reset]`)?.addEventListener("click", async () => {
-        try {
-          setMsg("Sending reset email...");
-          await auth.sendPasswordResetEmail(email);
-          setMsg("Reset email sent", true);
-        } catch(e){
-          setMsg(e.message || "Failed", false);
-        }
-      });
-
-      row.querySelector(`[data-toggle]`)?.addEventListener("click", async () => {
-
-        try {
-
-          const id = doc.id;
-
-          setMsg("Updating status...");
-
-          await db.collection("staffUsers")
-            .doc(id)
-            .update({ active: !active });
-
-          setMsg("Updated", true);
-
-          await loadEmployers();
-
-        } catch(e){
-
-          setMsg(e.message || "Failed", false);
-
-        }
-
-      });
-
-      list.appendChild(row);
-
+    auth.onAuthStateChanged((u) => {
+      if (staffBox) staffBox.style.display = canAdmin(u) ? "block" : "none";
     });
 
-  }
+    async function loadEmployers(){
+      if (!list || !empty) return;
 
-  btn?.addEventListener("click", async () => {
+      list.innerHTML = "";
+      empty.style.display = "none";
 
-    const current = auth.currentUser;
+      const snap = await db.collection("staffUsers")
+        .where("role", "==", "EMPLOYER")
+        .orderBy("createdAt", "desc")
+        .get();
 
-    if (!canAdmin(current)) {
-      setMsg("Admin only", false);
-      return;
-    }
+      if (snap.empty) {
+        empty.style.display = "block";
+        return;
+      }
 
-    const email = (staffEmail?.value || "").trim().toLowerCase();
+      snap.forEach(doc => {
+        const data = doc.data() || {};
+        const email = data.email || "(no email)";
+        const active = data.active !== false;
 
-    if (!email) {
-      setMsg("Enter an email", false);
-      return;
-    }
+        const first = data.firstName || "";
+        const last  = data.lastName || "";
+        const fullName = (first + " " + last).trim();
+        const phone = data.phone || "";
 
-    try {
+        const row = document.createElement("div");
+        row.className = "inbox-item";
+        row.style.cursor = "default";
 
-      setMsg("Creating employer...");
+        row.innerHTML = `
+          <div class="inbox-top">
+            <div class="inbox-name">${esc(fullName || email)}</div>
+            <div class="inbox-date">${active ? "Active" : "Disabled"}</div>
+          </div>
 
-      const tempPass = randomTempPassword();
+          <div class="inbox-meta" style="margin-top:6px;">
+            <div>${esc(email)}</div>
+            <div>${esc(phone)}</div>
+          </div>
 
-      const cred = await secondaryAuth.createUserWithEmailAndPassword(email, tempPass);
+          <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+            <button class="btn btn-ghost" type="button" data-reset="${esc(email)}">Send reset</button>
+            <button class="btn btn-ghost" type="button" data-toggle="${doc.id}">
+              ${active ? "Disable" : "Enable"}
+            </button>
+            <button class="btn btn-ghost" type="button" data-del="${doc.id}">Delete</button>
+          </div>
+        `;
 
-      await cred.user.updateProfile({ displayName: "STAFF:EMPLOYER" });
+        // Reset password email
+        row.querySelector(`[data-reset]`)?.addEventListener("click", async () => {
+          try {
+            setMsg("Sending reset email...");
+            await auth.sendPasswordResetEmail(email, {
+              url: "https://jadmerheb98.github.io/Testpadelin/admin-login.html"
+            });
+            setMsg("Reset email sent.", true);
+          } catch(e){
+            setMsg(e.message || "Failed to send reset.", false);
+          }
+        });
 
-      await db.collection("staffUsers").doc(cred.user.uid).set({
-        uid: cred.user.uid,
-        email,
-        role: "EMPLOYER",
-        active: true,
-        createdAt: new Date().toISOString()
+        // Toggle active/disabled
+        row.querySelector(`[data-toggle]`)?.addEventListener("click", async () => {
+          try {
+            setMsg("Updating status...");
+            await db.collection("staffUsers").doc(doc.id).update({ active: !active });
+            setMsg("Updated.", true);
+            await loadEmployers();
+          } catch(e){
+            setMsg(e.message || "Failed.", false);
+          }
+        });
+
+        // Delete Firestore record (removes from list + removes access)
+        row.querySelector(`[data-del]`)?.addEventListener("click", async () => {
+          const ok = confirm("Delete this employer record? This will remove access and remove it from the list.");
+          if (!ok) return;
+
+          try {
+            setMsg("Deleting...");
+            await db.collection("staffUsers").doc(doc.id).delete();
+            setMsg("Deleted.", true);
+            await loadEmployers();
+          } catch(e){
+            setMsg(e.message || "Delete failed.", false);
+          }
+        });
+
+        list.appendChild(row);
       });
-
-      await auth.sendPasswordResetEmail(email);
-
-      await secondaryAuth.signOut();
-
-      setMsg("Employer created. Password reset sent.", true);
-
-      staffEmail.value = "";
-
-      await loadEmployers();
-
-    } catch (e) {
-
-      setMsg(e.message || "Failed", false);
-
     }
 
-  });
+    btn?.addEventListener("click", async () => {
+      const current = auth.currentUser;
 
-  await loadEmployers();
+      if (!canAdmin(current)) {
+        setMsg("Admin only.", false);
+        return;
+      }
 
-})();
-</script>
-  
+      const firstName = (staffFirst?.value || "").trim();
+      const lastName  = (staffLast?.value || "").trim();
+      const phone     = (staffPhone?.value || "").trim();
+      const email     = (staffEmail?.value || "").trim().toLowerCase();
+
+      if (!firstName || !lastName || !phone || !email) {
+        setMsg("Fill first name, family name, phone, and email.", false);
+        return;
+      }
+
+      try {
+        setMsg("Creating employer...");
+
+        const tempPass = randomTempPassword();
+
+        // Create Auth user
+        const cred = await secondaryAuth.createUserWithEmailAndPassword(email, tempPass);
+        await cred.user.updateProfile({ displayName: "STAFF:EMPLOYER" });
+
+        // Create Firestore record
+        await db.collection("staffUsers").doc(cred.user.uid).set({
+          uid: cred.user.uid,
+          email,
+          role: "EMPLOYER",
+          active: true,
+          firstName,
+          lastName,
+          phone,
+          createdAt: new Date().toISOString()
+        });
+
+        // Send reset email so employer sets their own password
+        await auth.sendPasswordResetEmail(email, {
+          url: "https://jadmerheb98.github.io/Testpadelin/admin-login.html"
+        });
+
+        await secondaryAuth.signOut();
+
+        setMsg("Employer created. Password reset sent.", true);
+
+        if (staffFirst) staffFirst.value = "";
+        if (staffLast) staffLast.value = "";
+        if (staffPhone) staffPhone.value = "";
+        if (staffEmail) staffEmail.value = "";
+
+        await loadEmployers();
+
+      } catch (e) {
+        setMsg(e.message || "Failed.", false);
+      }
+    });
+
+    await loadEmployers();
+  })();
+  </script>
+
 </body>
-
 </html>
