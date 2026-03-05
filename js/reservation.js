@@ -420,11 +420,10 @@ confirmBtn.addEventListener("click", async () => {
   }
 
   const summary = selectionSummary();
-  if (!summary) return;
-  
+if (!summary) return;
+
 setStatus("success", "Automation removed. Step 2: we will rebuild WhatsApp clean.");
-  
-  });
+});
 
   // ---- Day navigation wiring (NEW) ----
   function changeDateTo(newDate) {
