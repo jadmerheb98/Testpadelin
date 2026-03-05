@@ -15,8 +15,7 @@
   const isAdmin = localStorage.getItem("isAdmin") === "true";
   if (adminBadge && isAdmin) adminBadge.style.display = "block";
 
-  // --- Config ---
-  const WORKER_URL = "https://small-boat-38e3.padelin-lb.workers.dev"; // your worker URL
+ 
   // ✅ 10 AM -> 12 AM (midnight)
   const START_TIME = "10:00";
   const END_TIME = "24:00";
@@ -422,39 +421,10 @@ confirmBtn.addEventListener("click", async () => {
 
   const summary = selectionSummary();
   if (!summary) return;
-
-  setStatus("", "Sending reservation request...");
-
-  const payload = {
-    date: formatDateLabel(currentDate),
-    court: summary.courtLabel,
-    start: summary.start,
-    end: summary.end,
-    duration: `${mins} minutes`
-  };
-
-  try {
-    const res = await fetch(WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    if (!res.ok) {
-      const t = await res.text();
-      console.log("Worker error:", t);
-      setStatus("error", "Could not send reservation request. Please try again.");
-      return;
-    }
-
-    setStatus("success", "Thank you. We will confirm your reservation soon.");
-    clearSelection();
-    render();
-  } catch (err) {
-    console.log(err);
-    setStatus("error", "Network error. Please try again.");
-  }
-});
+  
+setStatus("success", "Automation removed. Step 2: we will rebuild WhatsApp clean.");
+  
+  });
 
   // ---- Day navigation wiring (NEW) ----
   function changeDateTo(newDate) {
