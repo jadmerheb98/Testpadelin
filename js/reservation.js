@@ -444,11 +444,11 @@ try {
   });
 
   if (!res.ok) {
-    const txt = await res.text();
-    console.error(txt);
-    setStatus("error", "Could not send WhatsApp reservation.");
-    return;
-  }
+  const txt = await res.text();
+  console.error("Worker error:", txt);
+  setStatus("error", `WhatsApp failed: ${txt}`);
+  return;
+}
 
   setStatus("success", "Reservation request sent successfully.");
   clearSelection();
