@@ -422,7 +422,42 @@ confirmBtn.addEventListener("click", async () => {
   const summary = selectionSummary();
 if (!summary) return;
 
-setStatus("success", "Automation removed. Step 2: we will rebuild WhatsApp clean.");
+// Build user info
+const name = user.name || user.displayName || "Unknown";
+const email = user.email || "Unknown";
+
+// Send booking to Cloudflare Worker
+try {
+  const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      date: formatDateLabel(currentDate),
+      court: summary.courtLabel,
+      start: summary.start,
+      end: summary.end,
+      name: name,
+      email: email
+    })
+  });
+
+  if (!res.ok) {
+    const txt = await res.text();
+    console.error(txt);
+    setStatus("error", "Could not send WhatsApp reservation.");
+    return;
+  }
+
+  setStatus("success", "Reservation request sent successfully.");
+  clearSelection();
+  render();
+
+} catch (err) {
+  console.error(err);
+  setStatus("error", "Network error while sending reservation.");
+}
 });
 
   // ---- Day navigation wiring (NEW) ----
