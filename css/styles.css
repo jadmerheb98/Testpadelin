@@ -2452,3 +2452,94 @@ button, input { font: inherit; }
   padding:16px;
   overflow:auto;
 }
+/* ===========================
+   Admin dashboard only
+   Scoped styles for admin-messages.html only
+   =========================== */
+
+body:has(.dashboard-accordion) .contact-hero h1 {
+  font-size: 24px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+body:has(.dashboard-accordion) .contact-hero p {
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 34ch;
+}
+
+body:has(.dashboard-accordion) .contact-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2.2px;
+}
+
+body:has(.dashboard-accordion) .dash-acc-toggle {
+  font-size: 16px;
+  padding: 16px 18px;
+}
+
+body:has(.dashboard-accordion) .contact-card-title {
+  font-size: 16px;
+}
+
+body:has(.dashboard-accordion) .contact-card-sub {
+  font-size: 12px;
+}
+
+body:has(.dashboard-accordion) .form-note.dash-note {
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 600;
+  text-align: left;
+  color: rgba(11,18,32,0.72);
+}
+
+/* Better logout button only on dashboard */
+body:has(.dashboard-accordion) #logoutBtn {
+  background: #fff;
+  color: var(--navy);
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  min-width: 88px;
+  box-shadow: 0 6px 16px rgba(15,23,42,0.06);
+}
+
+body:has(.dashboard-accordion) #logoutBtn:hover {
+  background: rgba(15,23,42,0.04);
+  border-color: rgba(15,23,42,0.16);
+  transform: translateY(-1px);
+}
+
+/* Smaller dashboard action button */
+body:has(.dashboard-accordion) .dashboard-actions .btn {
+  font-size: 15px;
+  padding: 12px 18px;
+  border-radius: 12px;
+}
+
+/* Mobile polish */
+@media (max-width: 520px) {
+  body:has(.dashboard-accordion) .contact-hero h1 {
+    font-size: 22px;
+  }
+
+  body:has(.dashboard-accordion) .dash-acc-toggle {
+    font-size: 15px;
+    padding: 15px 16px;
+  }
+
+  body:has(.dashboard-accordion) #logoutBtn {
+    font-size: 13px;
+    padding: 9px 12px;
+    min-width: 78px;
+  }
+
+  body:has(.dashboard-accordion) .dashboard-actions .btn {
+    font-size: 14px;
+    padding: 11px 16px;
+  }
+}
