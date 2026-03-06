@@ -27,7 +27,7 @@
       <section class="contact-hero" aria-label="Dashboard hero">
         <div class="contact-eyebrow" id="roleEyebrow">Staff</div>
         <h1>Dashboard</h1>
-        <p>Manage reservation controls and employer access from one place.</p>
+        <p>Private dashboard for reservation control and staff management.</p>
       </section>
 
       <section class="dashboard-accordion" aria-label="Dashboard sections">
@@ -47,12 +47,9 @@
                 </button>
               </div>
 
-              <div class="form-note" style="margin-top:12px;">
-                Staff and admin can manually change slot state:
-                <strong>Available</strong>,
-                <strong>Pending</strong>,
-                <strong>Reserved</strong>.
-              </div>
+              <div class="form-note dash-note" style="margin-top:12px;">
+  Update court availability manually and keep the public reservation table accurate.
+</div>
             </div>
           </div>
         </article>
@@ -104,10 +101,9 @@
               <div id="staffList" class="inbox-list"></div>
               <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
 
-              <div class="form-note" style="margin-top:12px; opacity:.75;">
-                Note: “Delete” removes the staff record + access from the website. To fully delete the Firebase Auth user,
-                remove them from Firebase Console → Authentication → Users.
-              </div>
+              <div class="form-note dash-note" style="margin-top:12px;">
+  Manage employer access, password reset, and account status from this section.
+</div>
             </div>
           </div>
         </article>
@@ -121,9 +117,9 @@
 
           <div class="dash-acc-panel">
             <div class="contact-card-body">
-              <div class="form-note">
-                Coming next: booking ID, name, phone, date, time, court, status, sorting.
-              </div>
+              <div class="form-note dash-note">
+  Reservation records and sorting tools will be added here next.
+</div>
             </div>
           </div>
         </article>
