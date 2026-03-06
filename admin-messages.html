@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inbox | PADELIN Admin</title>
+  <title>Dashboard | PADELIN Admin</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -24,23 +24,21 @@
   <main class="contact-page">
     <div class="container">
 
-      <section class="contact-hero" aria-label="Inbox hero">
+      <section class="contact-hero" aria-label="Dashboard hero">
         <div class="contact-eyebrow" id="roleEyebrow">Staff</div>
-        <h1>Messages Inbox</h1>
-        <p>New contact requests from the website. Saved locally for now (until backend is added).</p>
+        <h1>Dashboard</h1>
+        <p>Manage staff accounts and reservation table controls from one place.</p>
       </section>
 
-      <section class="contact-grid" aria-label="Inbox layout">
-        <article class="contact-card">
-          <header class="contact-card-head">
-            <div class="contact-card-title">All Messages</div>
-            <div class="contact-card-sub" id="countLine">0 messages</div>
-          </header>
+      <section class="dashboard-grid" aria-label="Dashboard layout">
 
-          <!-- STAFF BOX -->
-          <section class="contact-card" id="staffBox" style="margin-top:14px; display:none;">
+        <!-- LEFT COLUMN -->
+        <div class="dashboard-stack">
+
+          <!-- ADMIN ONLY: STAFF ACCOUNTS -->
+          <article class="contact-card" id="staffBox" style="display:none;">
             <header class="contact-card-head">
-              <div class="contact-card-title">Staff Accounts</div>
+              <div class="contact-card-title">Create Employer</div>
               <div class="contact-card-sub">Admin only — create employer logins.</div>
             </header>
 
@@ -67,49 +65,73 @@
 
               <button class="btn btn-primary" type="button" id="createStaffBtn">Create Employer Account</button>
               <div class="form-note" id="staffMsg" style="margin-top:10px;"></div>
+            </div>
+          </article>
 
-              <div id="staffListWrap" style="margin-top:12px;">
-                <div class="contact-card-sub" style="margin-bottom:8px;">Employers</div>
-                <div id="staffList" class="inbox-list"></div>
-                <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
-              </div>
+          <!-- ADMIN ONLY: EMPLOYERS LIST -->
+          <article class="contact-card" id="employersBox" style="display:none;">
+            <header class="contact-card-head">
+              <div class="contact-card-title">Employers List</div>
+              <div class="contact-card-sub">Admin only — manage employer access.</div>
+            </header>
 
-              <div class="form-note" style="margin-top:10px; opacity:.75;">
+            <div class="contact-card-body">
+              <div id="staffList" class="inbox-list"></div>
+              <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
+
+              <div class="form-note" style="margin-top:12px; opacity:.75;">
                 Note: “Delete” removes the staff record + access from the website. To fully delete the Firebase Auth user,
-                remove them from Firebase Console → Authentication → Users (or we can add a Cloud Function later).
+                remove them from Firebase Console → Authentication → Users.
               </div>
             </div>
-          </section>
-          <!-- /STAFF BOX -->
+          </article>
 
-          <div class="contact-card-body">
-            <div class="inbox-toolbar">
-              <input class="inbox-search" id="searchInput" type="search" placeholder="Search by name, phone, email…" />
-              <button class="btn btn-ghost" type="button" id="clearBtn">Clear All</button>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="dashboard-stack">
+
+          <!-- STAFF + ADMIN -->
+          <article class="contact-card">
+            <header class="contact-card-head">
+              <div class="contact-card-title">Reservation Table</div>
+              <div class="contact-card-sub">Staff and admin can manually edit slot statuses.</div>
+            </header>
+
+            <div class="contact-card-body">
+              <div class="dashboard-actions">
+                <button class="btn btn-primary" type="button" id="openTableEditorBtn">
+                  Edit Reservation Table
+                </button>
+              </div>
+
+              <div class="form-note">
+                Slot states:
+                <strong>Available</strong>,
+                <strong>Pending</strong>,
+                <strong>Reserved</strong>.
+              </div>
             </div>
+          </article>
 
-            <div class="inbox-list" id="inboxList"></div>
+          <!-- ADMIN ONLY: RESERVATIONS PLACEHOLDER -->
+          <article class="contact-card" id="reservationsBox" style="display:none;">
+            <header class="contact-card-head">
+              <div class="contact-card-title">Reservations</div>
+              <div class="contact-card-sub">Admin only — sortable reservation list will be added next.</div>
+            </header>
 
-            <div class="form-note" id="emptyState" style="display:none;">
-              No messages yet.
+            <div class="contact-card-body">
+              <div class="form-note">
+                Coming next:
+                booking ID, name, phone, date, time, court, status, sorting.
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="contact-card contact-form-card">
-          <header class="contact-card-head">
-            <div class="contact-card-title">Message Details</div>
-            <div class="contact-card-sub">Select a message to view full information.</div>
-          </header>
+        </div>
 
-          <div class="contact-card-body">
-            <div class="msg-detail" id="detailPane">
-              <div class="form-note">Select a message from the left.</div>
-            </div>
-          </div>
-        </article>
       </section>
-
     </div>
   </main>
 
@@ -124,7 +146,7 @@
 
   <script>
     // ------------------------------------------------------------------
-    // Staff gate: only STAFF:* can access this page
+    // Staff gate
     // ------------------------------------------------------------------
     (function staffGate(){
       if (!window.padelinAuth) return;
@@ -136,160 +158,32 @@
       });
     })();
 
-    // Change Admin / Staff label
-    (function setRoleLabel(){
-      const el = document.getElementById("roleEyebrow");
-      if (!el) return;
+    // Role label + section visibility
+    (function roleSetup(){
+      const roleEyebrow = document.getElementById("roleEyebrow");
+      const staffBox = document.getElementById("staffBox");
+      const employersBox = document.getElementById("employersBox");
+      const reservationsBox = document.getElementById("reservationsBox");
 
-      if (window.padelinAuth) {
-        window.padelinAuth.onAuthStateChanged((u) => {
-          const dn = (u?.displayName || "");
-          el.textContent = dn === "STAFF:ADMIN" ? "Admin" : "Staff";
-        });
-      }
+      if (!window.padelinAuth) return;
+
+      window.padelinAuth.onAuthStateChanged((u) => {
+        const isAdmin = (u?.displayName || "") === "STAFF:ADMIN";
+
+        if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "Admin" : "Staff";
+        if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
+        if (employersBox) employersBox.style.display = isAdmin ? "block" : "none";
+        if (reservationsBox) reservationsBox.style.display = isAdmin ? "block" : "none";
+      });
     })();
 
-    const KEY = "padelinMessages";
-
-    function loadMessages() {
-      try { return JSON.parse(localStorage.getItem(KEY) || "[]"); }
-      catch { return []; }
-    }
-
-    function saveMessages(list) {
-      localStorage.setItem(KEY, JSON.stringify(list));
-    }
-
-    function fmtDate(iso) {
-      try {
-        const d = new Date(iso);
-        return d.toLocaleString(undefined, { year:"numeric", month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit" });
-      } catch { return iso; }
-    }
-
-    const inboxList = document.getElementById("inboxList");
-    const detailPane = document.getElementById("detailPane");
-    const emptyState = document.getElementById("emptyState");
-    const countLine = document.getElementById("countLine");
-    const searchInput = document.getElementById("searchInput");
-
-    let messages = loadMessages();
-    let activeId = null;
-
-    function renderList(filterText="") {
-      const q = filterText.trim().toLowerCase();
-      const filtered = q
-        ? messages.filter(m =>
-            (m.name||"").toLowerCase().includes(q) ||
-            (m.phone||"").toLowerCase().includes(q) ||
-            (m.email||"").toLowerCase().includes(q) ||
-            (m.message||"").toLowerCase().includes(q)
-          )
-        : messages;
-
-      countLine.textContent = `${filtered.length} message${filtered.length === 1 ? "" : "s"}`;
-      inboxList.innerHTML = "";
-
-      if (filtered.length === 0) {
-        emptyState.style.display = "block";
-        detailPane.innerHTML = `<div class="form-note">No messages found.</div>`;
-        return;
-      }
-
-      emptyState.style.display = "none";
-
-      filtered
-        .sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))
-        .forEach(m => {
-          const item = document.createElement("button");
-          item.type = "button";
-          item.className = "inbox-item" + (m.id === activeId ? " is-active" : "");
-          item.innerHTML = `
-            <div class="inbox-top">
-              <div class="inbox-name">${escapeHtml(m.name || "Unknown")}</div>
-              <div class="inbox-date">${escapeHtml(fmtDate(m.createdAt))}</div>
-            </div>
-            <div class="inbox-meta">
-              <div>${escapeHtml(m.phone || "")}</div>
-              <div>${escapeHtml(m.email || "")}</div>
-            </div>
-            <div class="inbox-preview">${escapeHtml((m.message || "").slice(0, 90))}${(m.message||"").length>90 ? "…" : ""}</div>
-          `;
-          item.addEventListener("click", () => {
-            activeId = m.id;
-            renderList(searchInput.value);
-            renderDetail(m);
-          });
-          inboxList.appendChild(item);
-        });
-    }
-
-    function renderDetail(m) {
-      detailPane.innerHTML = `
-        <div class="msg-card">
-          <div class="msg-row">
-            <div class="msg-k">Name</div>
-            <div class="msg-v">${escapeHtml(m.name || "")}</div>
-          </div>
-          <div class="msg-row">
-            <div class="msg-k">Phone</div>
-            <div class="msg-v"><a class="contact-link" href="tel:${escapeHtml(m.phone || "")}">${escapeHtml(m.phone || "")}</a></div>
-          </div>
-          <div class="msg-row">
-            <div class="msg-k">Email</div>
-            <div class="msg-v">${m.email ? `<a class="contact-link" href="mailto:${escapeHtml(m.email)}">${escapeHtml(m.email)}</a>` : `<span class="muted">Not provided</span>`}</div>
-          </div>
-          <div class="msg-row">
-            <div class="msg-k">Received</div>
-            <div class="msg-v">${escapeHtml(fmtDate(m.createdAt))}</div>
-          </div>
-          <div class="msg-divider"></div>
-          <div class="msg-message">
-            ${escapeHtml(m.message || "").replace(/\n/g, "<br>")}
-          </div>
-          <div class="msg-actions">
-            <button class="btn btn-ghost" type="button" id="deleteBtn">Delete</button>
-          </div>
-        </div>
-      `;
-
-      const deleteBtn = document.getElementById("deleteBtn");
-      deleteBtn.addEventListener("click", () => {
-        messages = messages.filter(x => x.id !== m.id);
-        saveMessages(messages);
-        activeId = null;
-        renderList(searchInput.value);
-      });
-    }
-
-    function escapeHtml(s){
-      return String(s ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    // toolbar actions
-    document.getElementById("clearBtn").addEventListener("click", () => {
-      messages = [];
-      saveMessages(messages);
-      activeId = null;
-      renderList(searchInput.value);
-    });
-
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
+    // Logout
+    document.getElementById("logoutBtn")?.addEventListener("click", async () => {
       try {
         if (window.padelinAuth) await window.padelinAuth.signOut();
       } catch {}
       window.location.href = "login.html";
     });
-
-    searchInput.addEventListener("input", () => renderList(searchInput.value));
-
-    // initial
-    renderList();
   </script>
 
   <script>
@@ -309,7 +203,6 @@
     const list       = document.getElementById("staffList");
     const empty      = document.getElementById("staffEmpty");
 
-    // Secondary app so creating users doesn't log out the admin
     let secondaryAuth = null;
     try {
       const secondaryApp = firebase.initializeApp(firebase.app().options, "secondary");
@@ -395,7 +288,6 @@
           </div>
         `;
 
-        // Reset password email
         row.querySelector(`[data-reset]`)?.addEventListener("click", async () => {
           try {
             setMsg("Sending reset email...");
@@ -406,7 +298,6 @@
           }
         });
 
-        // Toggle active/disabled
         row.querySelector(`[data-toggle]`)?.addEventListener("click", async () => {
           try {
             setMsg("Updating status...");
@@ -418,7 +309,6 @@
           }
         });
 
-        // Delete Firestore record (removes from list + removes access)
         row.querySelector(`[data-del]`)?.addEventListener("click", async () => {
           const ok = confirm("Delete this employer record? This will remove access and remove it from the list.");
           if (!ok) return;
@@ -460,11 +350,9 @@
 
         const tempPass = randomTempPassword();
 
-        // Create Auth user
         const cred = await secondaryAuth.createUserWithEmailAndPassword(email, tempPass);
         await cred.user.updateProfile({ displayName: "STAFF:EMPLOYER" });
 
-        // Create Firestore record
         await db.collection("staffUsers").doc(cred.user.uid).set({
           uid: cred.user.uid,
           email,
@@ -476,9 +364,7 @@
           createdAt: new Date().toISOString()
         });
 
-        // Send reset email so employer sets their own password
         await auth.sendPasswordResetEmail(email);
-
         await secondaryAuth.signOut();
 
         setMsg("Employer created. Password reset sent.", true);
