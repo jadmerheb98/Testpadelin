@@ -2651,3 +2651,105 @@ body:has(.dashboard-accordion) .dash-editor-body .auth-row {
     font-size: 13px;
   }
 }
+/* ===========================
+   Reservations dashboard
+   Admin only
+   =========================== */
+
+body:has(.dashboard-accordion) .resdash-section h3 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+body:has(.dashboard-accordion) .resdash-head p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: rgba(11,18,32,0.60);
+}
+
+body:has(.dashboard-accordion) .resdash-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+body:has(.dashboard-accordion) .resdash-item {
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 16px;
+  background: #fff;
+  padding: 14px;
+}
+
+body:has(.dashboard-accordion) .resdash-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+body:has(.dashboard-accordion) .resdash-item-title {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
+body:has(.dashboard-accordion) .resdash-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  font-size: 13px;
+  color: rgba(11,18,32,0.82);
+}
+
+body:has(.dashboard-accordion) .resdash-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+body:has(.dashboard-accordion) .resdash-badge.is-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+body:has(.dashboard-accordion) .resdash-badge.is-reserved {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+body:has(.dashboard-accordion) .resdash-badge.is-cancelled {
+  background: #eceff3;
+  color: #556070;
+}
+
+body:has(.dashboard-accordion) .resdash-badge.is-neutral {
+  background: #eef2f7;
+  color: #334155;
+}
+
+body:has(.dashboard-accordion) .resdash-history-line {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(11,18,32,0.82);
+  margin-bottom: 10px;
+}
+
+body:has(.dashboard-accordion) .resdash-time {
+  font-size: 12px;
+  color: rgba(11,18,32,0.52);
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  body:has(.dashboard-accordion) .resdash-grid {
+    grid-template-columns: 1fr;
+  }
+}
