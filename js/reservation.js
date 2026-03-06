@@ -75,9 +75,10 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(takenByDate));
   }
 
-  let takenByDate = loadTakenByDate();
-  let currentISO = getLocalISO(currentDate);
-  let taken = new Set(Array.isArray(takenByDate[currentISO]) ? takenByDate[currentISO] : []);
+ let takenByDate = loadTakenByDate();
+let currentISO = getLocalISO(currentDate);
+let taken = new Set(Array.isArray(takenByDate[currentISO]) ? takenByDate[currentISO] : []);
+let liveStatuses = {};
 
   // ---- Your existing selection engine (kept) ----
   const selected = new Set(); // `${timeRange}|${court}`
@@ -235,33 +236,62 @@
     return selectedStarts.length * STEP_MINUTES;
   }
 
-  function selectionSummary() {
-    if (!selectedCourt || selectedStarts.length === 0) return null;
+ function selectionSummary() {
+  if (!selectedCourt || selectedStarts.length === 0) return null;
 
-    selectedStarts.sort((a, b) => a - b);
-    const start = minutesToTime(selectedStarts[0]);
-    const end = minutesToTime(selectedStarts[selectedStarts.length - 1] + STEP_MINUTES);
+  selectedStarts.sort((a, b) => a - b);
+  const start = minutesToTime(selectedStarts[0]);
+  const end = minutesToTime(selectedStarts[selectedStarts.length - 1] + STEP_MINUTES);
 
-    const courtLabel = selectedCourt === "court1" ? "Court 1" : "Court 2";
-    return { court: selectedCourt, courtLabel, start, end };
+  const courtLabel = selectedCourt === "court1" ? "Court 1" : "Court 2";
+  return { court: selectedCourt, courtLabel, start, end };
+}
+
+async function loadLiveStatuses() {
+  try {
+    const url = `https://solitary-morning-9ea4.padelin-lb.workers.dev/date-status?date=${encodeURIComponent(formatDateLabel(currentDate))}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.ok && data.slots) {
+      liveStatuses = data.slots;
+    } else {
+      liveStatuses = {};
+    }
+  } catch (err) {
+    console.error("Failed to load live statuses:", err);
+    liveStatuses = {};
   }
+}
 
-  function makeSlotEl(timeRange, court) {
+function makeSlotEl(timeRange, court) {
     const div = document.createElement("div");
     div.className = "slot";
     div.setAttribute("role", "button");
     div.setAttribute("tabindex", "0");
 
     const k = keyOf(timeRange, court);
-    const isTaken = taken.has(k);
+const isTaken = taken.has(k);
 
-    if (isTaken) {
-      div.classList.add("taken");
-      div.textContent = "Taken";
-      div.setAttribute("aria-disabled", "true");
-    } else {
-      div.textContent = "Available";
-    }
+const courtLabel = court === "court1" ? "Court 1" : "Court 2";
+const liveKey = `${courtLabel}|${timeRange}`;
+const liveStatus = liveStatuses[liveKey] || null;
+
+    if (liveStatus === "reserved") {
+  div.classList.add("reserved");
+  div.textContent = "Reserved";
+  div.setAttribute("aria-disabled", "true");
+} else if (liveStatus === "pending") {
+  div.classList.add("pending");
+  div.textContent = "Pending";
+  div.setAttribute("aria-disabled", "true");
+} else if (isTaken) {
+  div.classList.add("taken");
+  div.textContent = "Taken";
+  div.setAttribute("aria-disabled", "true");
+} else {
+  div.textContent = "Available";
+}
 
     if (isAdmin) {
       div.addEventListener("click", () => {
@@ -283,7 +313,7 @@
       return div;
     }
 
-    if (!isTaken) {
+    if (!isTaken && !liveStatus) {
       div.addEventListener("click", () => toggleSelect(timeRange, court));
       div.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") toggleSelect(timeRange, court);
@@ -293,8 +323,9 @@
     return div;
   }
 
-  function render() {
+  async function render() {
     tableBody.innerHTML = "";
+    await loadLiveStatuses();
 
     timeSlots.forEach((timeRange) => {
       const tr = document.createElement("tr");
@@ -447,7 +478,7 @@ try {
   if (!res.ok) {
   const txt = await res.text();
   console.error("Worker error:", txt);
-  setStatus("error", `WhatsApp failed: ${txt}`);
+  setStatus("error", `Reservation failed: ${txt}`);
   return;
 }
 
