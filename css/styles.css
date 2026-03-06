@@ -2400,3 +2400,55 @@ button, input { font: inherit; }
   display:grid;
   gap:14px;
 }
+/* ===========================
+   Table editor drawer
+   =========================== */
+
+.dash-editor-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+  z-index: 1000;
+}
+
+.dash-editor-overlay.open{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dash-editor-drawer{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(760px, 96vw);
+  height: 100dvh;
+  background: #fff;
+  box-shadow: -16px 0 40px rgba(15,23,42,0.20);
+  transform: translateX(100%);
+  transition: transform 220ms ease;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-editor-drawer.open{
+  transform: translateX(0);
+}
+
+.dash-editor-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:16px;
+  border-bottom:1px solid rgba(15,23,42,0.08);
+  background: rgba(15,23,42,0.02);
+}
+
+.dash-editor-body{
+  padding:16px;
+  overflow:auto;
+}
