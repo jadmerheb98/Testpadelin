@@ -2338,3 +2338,65 @@ button, input { font: inherit; }
   color: #721c24;
   cursor: not-allowed;
 }
+/* ===========================
+   Dashboard accordion
+   =========================== */
+
+.dashboard-accordion{
+  display:grid;
+  gap:14px;
+}
+
+.dash-acc-item{
+  overflow:hidden;
+}
+
+.dash-acc-toggle{
+  width:100%;
+  border:0;
+  background:#fff;
+  color:var(--text-dark);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:18px 18px;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  text-align:left;
+}
+
+.dash-acc-toggle:hover{
+  background: rgba(15,23,42,0.02);
+}
+
+.dash-acc-icon{
+  font-size:22px;
+  line-height:1;
+  transition: transform 180ms ease;
+}
+
+.dash-acc-toggle.is-open .dash-acc-icon{
+  transform: rotate(180deg);
+}
+
+.dash-acc-panel{
+  display:none;
+  border-top:1px solid rgba(15,23,42,0.08);
+  background:#fff;
+}
+
+.dash-acc-panel.is-open{
+  display:block;
+}
+
+.dashboard-actions{
+  display:flex;
+  justify-content:center;
+}
+
+.dashboard-stack{
+  display:grid;
+  gap:14px;
+}
