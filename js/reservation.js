@@ -433,14 +433,15 @@ try {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      date: formatDateLabel(currentDate),
-      court: summary.courtLabel,
-      start: summary.start,
-      end: summary.end,
-      name: name,
-      email: email
-    })
+   body: JSON.stringify({
+  date: formatDateLabel(currentDate),
+  court: summary.courtLabel,
+  start: summary.start,
+  end: summary.end,
+  name: name,
+  email: email,
+  phone: user.phone || user.phoneNumber || "Unknown"
+})
   });
 
   if (!res.ok) {
