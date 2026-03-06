@@ -253,10 +253,31 @@ async function loadLiveStatuses() {
     const res = await fetch(url);
     const data = await res.json();
 
+    liveStatuses = {};
+
     if (data.ok && data.slots) {
-      liveStatuses = data.slots;
-    } else {
-      liveStatuses = {};
+      for (const fullKey in data.slots) {
+        const status = data.slots[fullKey];
+
+        // fullKey format: "Court 1|10:30 PM|12:00 AM"
+        const parts = fullKey.split("|");
+        if (parts.length !== 3) continue;
+
+        const courtLabel = parts[0];
+        const start = parts[1];
+        const end = parts[2];
+
+        let current = parseTimeToMinutes(start);
+        const endMins = parseTimeToMinutes(end);
+
+        while (current !== endMins) {
+          const next = (current + STEP_MINUTES) % 1440;
+          const slotRange = `${minutesToTime(current)} - ${minutesToTime(next)}`;
+          const slotKey = `${courtLabel}|${slotRange}`;
+          liveStatuses[slotKey] = status;
+          current = next;
+        }
+      }
     }
   } catch (err) {
     console.error("Failed to load live statuses:", err);
