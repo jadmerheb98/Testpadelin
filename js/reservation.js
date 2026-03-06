@@ -440,7 +440,6 @@ try {
       end: summary.end,
       name: name,
       email: email
-      phone: user.phone || user.phoneNumber || "Unknown"
     })
   });
 
