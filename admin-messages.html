@@ -116,12 +116,32 @@
           </button>
 
           <div class="dash-acc-panel">
-            <div class="contact-card-body">
-              <div class="form-note dash-note">
-  Reservation records and sorting tools will be added here next.
+  <div class="contact-card-body">
+
+    <section class="resdash-section">
+      <div class="resdash-head">
+        <h3>Active</h3>
+        <p>Current pending and reserved bookings.</p>
+      </div>
+      <div id="activeReservations" class="resdash-list"></div>
+      <div id="activeReservationsEmpty" class="form-note dash-note" style="display:none;">
+        No active reservations.
+      </div>
+    </section>
+
+    <section class="resdash-section" style="margin-top:18px;">
+      <div class="resdash-head">
+        <h3>History</h3>
+        <p>Latest booking actions and staff changes.</p>
+      </div>
+      <div id="historyReservations" class="resdash-list"></div>
+      <div id="historyReservationsEmpty" class="form-note dash-note" style="display:none;">
+        No history yet.
+      </div>
+    </section>
+
+  </div>
 </div>
-            </div>
-          </div>
         </article>
 
       </section>
@@ -660,6 +680,153 @@
   overlay.addEventListener("click", closeDrawer);
   dateInput.addEventListener("change", initEditor);
   saveBtn.addEventListener("click", saveChanges);
+})();
+</script>
+
+  <script>
+(function reservationsDashboardSetup(){
+  const activeBox = document.getElementById("activeReservations");
+  const activeEmpty = document.getElementById("activeReservationsEmpty");
+  const historyBox = document.getElementById("historyReservations");
+  const historyEmpty = document.getElementById("historyReservationsEmpty");
+  const reservationsBox = document.getElementById("reservationsBox");
+
+  if (!activeBox || !activeEmpty || !historyBox || !historyEmpty || !reservationsBox) return;
+
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function prettyDateTime(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+    return d.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  }
+
+  function makeStatusBadge(status) {
+    const s = String(status || "").toLowerCase();
+    const cls =
+      s === "reserved" ? "is-reserved" :
+      s === "pending" ? "is-pending" :
+      s === "rejected" || s === "cancelled" ? "is-cancelled" :
+      "is-neutral";
+
+    return `<span class="resdash-badge ${cls}">${esc(status || "Unknown")}</span>`;
+  }
+
+  function renderActive(items) {
+    activeBox.innerHTML = "";
+    activeEmpty.style.display = items.length ? "none" : "block";
+
+    items.forEach(item => {
+      const row = document.createElement("article");
+      row.className = "resdash-item";
+
+      row.innerHTML = `
+        <div class="resdash-item-top">
+          <div class="resdash-item-title">${esc(item.bookingId || "No ID")}</div>
+          <div>${makeStatusBadge(item.status)}</div>
+        </div>
+
+        <div class="resdash-grid">
+          <div><strong>Name:</strong> ${esc(item.name || "Unknown")}</div>
+          <div><strong>Phone:</strong> ${esc(item.phone || "Unknown")}</div>
+          <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
+          <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
+          <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
+          <div><strong>Updated:</strong> ${esc(prettyDateTime(item.updatedAt || item.createdAt))}</div>
+        </div>
+      `;
+
+      activeBox.appendChild(row);
+    });
+  }
+
+  function renderHistory(items) {
+    historyBox.innerHTML = "";
+    historyEmpty.style.display = items.length ? "none" : "block";
+
+    items.forEach(item => {
+      const row = document.createElement("article");
+      row.className = "resdash-item resdash-history-item";
+
+      row.innerHTML = `
+        <div class="resdash-item-top">
+          <div class="resdash-item-title">${esc(item.type || "event")}</div>
+          <div class="resdash-time">${esc(prettyDateTime(item.timestamp))}</div>
+        </div>
+
+        <div class="resdash-history-line">
+          <strong>${esc(item.actor || "system")}</strong>
+          — ${esc(item.message || "No details")}
+        </div>
+
+        <div class="resdash-grid">
+          <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
+          <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
+          <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
+          <div><strong>Status:</strong> ${esc(item.newStatus || "-")}</div>
+        </div>
+      `;
+
+      historyBox.appendChild(row);
+    });
+  }
+
+  async function loadReservationsDashboard() {
+    try {
+      const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/dashboard-data?t=" + Date.now(), {
+        cache: "no-store"
+      });
+
+      const data = await res.json();
+
+      if (!data.ok) {
+        renderActive([]);
+        renderHistory([]);
+        return;
+      }
+
+      renderActive(Array.isArray(data.active) ? data.active : []);
+      renderHistory(Array.isArray(data.history) ? data.history : []);
+    } catch (err) {
+      console.error("Failed to load dashboard data:", err);
+      renderActive([]);
+      renderHistory([]);
+    }
+  }
+
+  // load only when admin section exists/openable
+  const observer = new MutationObserver(() => {
+    const isVisible = reservationsBox.style.display !== "none";
+    if (isVisible) loadReservationsDashboard();
+  });
+
+  observer.observe(reservationsBox, { attributes: true, attributeFilter: ["style"] });
+
+  // also refresh whenever reservations accordion is opened
+  document.querySelectorAll("[data-acc-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const label = btn.textContent || "";
+      if (label.toLowerCase().includes("reservations")) {
+        setTimeout(loadReservationsDashboard, 120);
+      }
+    });
+  });
+
+  // initial load for admin
+  setTimeout(loadReservationsDashboard, 300);
 })();
 </script>
 
