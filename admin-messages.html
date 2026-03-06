@@ -132,6 +132,44 @@
     </div>
   </main>
 
+  <div class="dash-editor-overlay" id="tableEditorOverlay"></div>
+
+<aside class="dash-editor-drawer" id="tableEditorDrawer" aria-hidden="true">
+  <div class="dash-editor-head">
+    <div>
+      <div class="contact-card-title">Edit Reservation Table</div>
+      <div class="contact-card-sub">Tap slots to cycle status, then save changes.</div>
+    </div>
+    <button class="btn btn-ghost" type="button" id="closeTableEditorBtn">Close</button>
+  </div>
+
+  <div class="dash-editor-body">
+    <div class="auth-row">
+      <label for="editorDate">Date</label>
+      <input id="editorDate" type="date" />
+    </div>
+
+    <div class="table-card" style="margin-top:12px;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width:34%;">Time</th>
+            <th>Court 1</th>
+            <th>Court 2</th>
+          </tr>
+        </thead>
+        <tbody id="editorTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="dashboard-actions" style="margin-top:14px;">
+      <button class="btn btn-primary" type="button" id="saveTableEditorBtn">Save Changes</button>
+    </div>
+
+    <div class="form-note" id="tableEditorMsg" style="margin-top:12px;"></div>
+  </div>
+</aside>
+
   <footer class="footer">
     <div class="container">© 2026 Padelin | Admin</div>
   </footer>
@@ -390,6 +428,244 @@
     await loadEmployers();
   })();
   </script>
+
+  <script>
+(function tableEditorSetup(){
+  const openBtn = document.getElementById("openTableEditorBtn");
+  const closeBtn = document.getElementById("closeTableEditorBtn");
+  const overlay = document.getElementById("tableEditorOverlay");
+  const drawer = document.getElementById("tableEditorDrawer");
+  const dateInput = document.getElementById("editorDate");
+  const tableBody = document.getElementById("editorTableBody");
+  const saveBtn = document.getElementById("saveTableEditorBtn");
+  const msg = document.getElementById("tableEditorMsg");
+
+  if (!openBtn || !closeBtn || !overlay || !drawer || !dateInput || !tableBody || !saveBtn) return;
+
+  const START_TIME = "10:00";
+  const END_TIME = "24:00";
+  const STEP_MINUTES = 30;
+
+  let liveStatuses = {};
+  let changedStatuses = {};
+
+  function setMsg(text, ok=null){
+    msg.textContent = text || "";
+    msg.classList.remove("is-success", "is-error");
+    if (ok === true) msg.classList.add("is-success");
+    if (ok === false) msg.classList.add("is-error");
+  }
+
+  function openDrawer(){
+    overlay.classList.add("open");
+    drawer.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeDrawer(){
+    overlay.classList.remove("open");
+    drawer.classList.remove("open");
+    drawer.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  function getLocalISO(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+
+  function formatDateLabel(d) {
+    return d.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
+  function parseTimeToMinutes(t) {
+    const str = String(t).trim();
+    const match = str.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (match) {
+      let hh = Number(match[1]);
+      const mm = Number(match[2]);
+      const period = match[3].toUpperCase();
+      if (period === "PM" && hh !== 12) hh += 12;
+      if (period === "AM" && hh === 12) hh = 0;
+      return hh * 60 + mm;
+    }
+    const parts = str.split(":");
+    return Number(parts[0]) * 60 + Number(parts[1]);
+  }
+
+  function minutesToTime(mins) {
+    const normalized = ((mins % 1440) + 1440) % 1440;
+    const hours24 = Math.floor(normalized / 60);
+    const minutes = normalized % 60;
+    const period = hours24 >= 12 ? "PM" : "AM";
+    const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+    return `${String(hours12).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
+  }
+
+  function buildSlots(startHHMM, endHHMM, step) {
+    const start = parseTimeToMinutes(startHHMM);
+    const end = parseTimeToMinutes(endHHMM);
+    const list = [];
+    for (let m = start; m < end; m += step) {
+      list.push(`${minutesToTime(m)} - ${minutesToTime(m + step)}`);
+    }
+    return list;
+  }
+
+  const timeSlots = buildSlots(START_TIME, END_TIME, STEP_MINUTES);
+
+  function getSelectedDateLabel(){
+    const [y, m, d] = dateInput.value.split("-").map(Number);
+    const dt = new Date(y, m - 1, d);
+    dt.setHours(0, 0, 0, 0);
+    return formatDateLabel(dt);
+  }
+
+  async function loadStatuses() {
+    const dateLabel = getSelectedDateLabel();
+    const url = `https://solitary-morning-9ea4.padelin-lb.workers.dev/date-status?date=${encodeURIComponent(dateLabel)}&t=${Date.now()}`;
+    const res = await fetch(url, { cache: "no-store" });
+    const data = await res.json();
+
+    liveStatuses = {};
+    changedStatuses = {};
+
+    if (data.ok && data.slots) {
+      for (const fullKey in data.slots) {
+        const status = data.slots[fullKey];
+        const parts = fullKey.split("|");
+        if (parts.length !== 3) continue;
+
+        const courtLabel = parts[0];
+        const start = parts[1];
+        const end = parts[2];
+
+        let current = parseTimeToMinutes(start);
+        const endMins = parseTimeToMinutes(end);
+
+        while (current !== endMins) {
+          const next = (current + STEP_MINUTES) % 1440;
+          const slotRange = `${minutesToTime(current)} - ${minutesToTime(next)}`;
+          liveStatuses[`${courtLabel}|${slotRange}`] = status;
+          current = next;
+        }
+      }
+    }
+  }
+
+  function nextStatus(current){
+    if (!current) return "pending";
+    if (current === "pending") return "reserved";
+    if (current === "reserved") return "available";
+    return "pending";
+  }
+
+  function getSlotStatus(courtLabel, timeRange){
+    const key = `${courtLabel}|${timeRange}`;
+    return changedStatuses[key] ?? liveStatuses[key] ?? "available";
+  }
+
+  function renderTable(){
+    tableBody.innerHTML = "";
+
+    timeSlots.forEach((timeRange) => {
+      const tr = document.createElement("tr");
+
+      const tdTime = document.createElement("td");
+      tdTime.textContent = timeRange;
+
+      ["Court 1", "Court 2"].forEach((courtLabel) => {
+        const td = document.createElement("td");
+        const div = document.createElement("div");
+        const status = getSlotStatus(courtLabel, timeRange);
+
+        div.className = "slot";
+        if (status === "pending") div.classList.add("pending");
+        if (status === "reserved") div.classList.add("reserved");
+        div.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+
+        div.addEventListener("click", () => {
+          const key = `${courtLabel}|${timeRange}`;
+          changedStatuses[key] = nextStatus(getSlotStatus(courtLabel, timeRange));
+          renderTable();
+        });
+
+        td.appendChild(div);
+        tr.appendChild(td);
+      });
+
+      tr.prepend(tdTime);
+      tableBody.appendChild(tr);
+    });
+  }
+
+  async function initEditor(){
+    try {
+      setMsg("Loading...");
+      await loadStatuses();
+      renderTable();
+      setMsg("");
+    } catch (e) {
+      console.error(e);
+      setMsg("Failed to load table.", false);
+    }
+  }
+
+  async function saveChanges(){
+    try {
+      setMsg("Saving...");
+      const role = (window.padelinAuth?.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "staff";
+      const dateLabel = getSelectedDateLabel();
+
+      const entries = Object.entries(changedStatuses);
+      for (const [key, status] of entries) {
+        const [court, timeRange] = key.split("|");
+        const [start, end] = timeRange.split(" - ");
+
+        await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            date: dateLabel,
+            court,
+            start,
+            end,
+            status,
+            updatedBy: role
+          })
+        });
+      }
+
+      setMsg("Changes saved.", true);
+      await loadStatuses();
+      renderTable();
+    } catch (e) {
+      console.error(e);
+      setMsg("Failed to save changes.", false);
+    }
+  }
+
+  dateInput.value = getLocalISO(new Date());
+
+  openBtn.addEventListener("click", async () => {
+    openDrawer();
+    await initEditor();
+  });
+
+  closeBtn.addEventListener("click", closeDrawer);
+  overlay.addEventListener("click", closeDrawer);
+  dateInput.addEventListener("change", initEditor);
+  saveBtn.addEventListener("click", saveChanges);
+})();
+</script>
 
 </body>
 </html>
