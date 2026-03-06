@@ -2543,3 +2543,111 @@ body:has(.dashboard-accordion) .dashboard-actions .btn {
     padding: 11px 16px;
   }
 }
+/* ===========================
+   Admin dashboard polish only
+   Scoped to dashboard page
+   =========================== */
+
+body:has(.dashboard-accordion) #logoutBtn {
+  padding: 8px 12px;
+  min-width: 74px;
+  height: 40px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* Create Employer form fields */
+body:has(.dashboard-accordion) #staffBox .auth-row {
+  margin-bottom: 12px;
+}
+
+body:has(.dashboard-accordion) #staffBox .auth-row label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.82);
+}
+
+body:has(.dashboard-accordion) #staffBox .auth-row input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.14);
+  background: #fff;
+  color: var(--text-dark);
+  font-size: 16px;
+  outline: none;
+  box-shadow: none;
+  transition: border 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+body:has(.dashboard-accordion) #staffBox .auth-row input::placeholder {
+  color: rgba(11,18,32,0.35);
+}
+
+body:has(.dashboard-accordion) #staffBox .auth-row input:focus {
+  border-color: rgba(63,102,150,0.55);
+  box-shadow: 0 0 0 3px rgba(63,102,150,0.12);
+  background: #fff;
+}
+
+/* Create Employer button slightly tighter */
+body:has(.dashboard-accordion) #createStaffBtn {
+  margin-top: 6px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 15px;
+}
+
+/* Table editor date picker to match public reservation page feel */
+body:has(.dashboard-accordion) #editorDate {
+  width: 100%;
+  max-width: 220px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.03);
+  color: var(--text-dark);
+  font-weight: 800;
+  font-size: 13px;
+  outline: none;
+  box-shadow: none;
+}
+
+body:has(.dashboard-accordion) #editorDate:focus {
+  border-color: rgba(63,102,150,0.45);
+  box-shadow: 0 0 0 3px rgba(63,102,150,0.10);
+}
+
+/* Keep date field aligned nicely inside editor */
+body:has(.dashboard-accordion) .dash-editor-body .auth-row {
+  display: grid;
+  gap: 8px;
+}
+
+/* Mobile refinement */
+@media (max-width: 520px) {
+  body:has(.dashboard-accordion) #logoutBtn {
+    padding: 7px 11px;
+    min-width: 68px;
+    height: 38px;
+    font-size: 12px;
+  }
+
+  body:has(.dashboard-accordion) #staffBox .auth-row input {
+    height: 50px;
+    border-radius: 15px;
+    font-size: 15px;
+  }
+
+  body:has(.dashboard-accordion) #editorDate {
+    max-width: 100%;
+    height: 42px;
+    font-size: 13px;
+  }
+}
