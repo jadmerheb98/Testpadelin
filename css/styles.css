@@ -2325,3 +2325,16 @@ button, input { font: inherit; }
   border-radius:10px;
   white-space:nowrap;
 }
+.slot.pending {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  color: #856404;
+  cursor: not-allowed;
+}
+
+.slot.reserved {
+  background: #f8d7da;
+  border: 2px solid #dc3545;
+  color: #721c24;
+  cursor: not-allowed;
+}
