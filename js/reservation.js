@@ -249,8 +249,8 @@ let liveStatuses = {};
 
 async function loadLiveStatuses() {
   try {
-    const url = `https://solitary-morning-9ea4.padelin-lb.workers.dev/date-status?date=${encodeURIComponent(formatDateLabel(currentDate))}`;
-    const res = await fetch(url);
+    const url = `https://solitary-morning-9ea4.padelin-lb.workers.dev/date-status?date=${encodeURIComponent(formatDateLabel(currentDate))}&t=${Date.now()}`;
+    const res = await fetch(url, { cache: "no-store" });
     const data = await res.json();
 
     liveStatuses = {};
@@ -259,7 +259,6 @@ async function loadLiveStatuses() {
       for (const fullKey in data.slots) {
         const status = data.slots[fullKey];
 
-        // fullKey format: "Court 1|10:30 PM|12:00 AM"
         const parts = fullKey.split("|");
         if (parts.length !== 3) continue;
 
@@ -499,11 +498,27 @@ try {
   if (!res.ok) {
   const txt = await res.text();
   console.error("Worker error:", txt);
-  setStatus("error", `Reservation failed: ${txt}`);
+
+  let msg = "Reservation failed.";
+  try {
+    const parsed = JSON.parse(txt);
+    if (parsed.error) msg = parsed.error;
+  } catch {}
+
+  setStatus("error", msg);
   return;
 }
 
-  setStatus("success", "Reservation request sent successfully.");
+    setStatus("success", "Reservation request sent successfully.");
+
+  // Show selected slots as pending immediately
+  const courtLabel = summary.courtLabel;
+  selectedStarts.forEach((startM) => {
+    const slotRange = `${minutesToTime(startM)} - ${minutesToTime(startM + STEP_MINUTES)}`;
+    const slotKey = `${courtLabel}|${slotRange}`;
+    liveStatuses[slotKey] = "pending";
+  });
+
   clearSelection();
   render();
 
