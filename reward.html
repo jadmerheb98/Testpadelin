@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rewards | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    body.rewards-page{
+      min-height:100vh;
+      margin:0;
+      background:
+        radial-gradient(1200px 700px at -10% -10%, rgba(58,108,190,0.20), transparent 55%),
+        radial-gradient(900px 600px at 110% 0%, rgba(14,24,44,0.18), transparent 55%),
+        linear-gradient(180deg, #eef4fb 0%, #f8fafc 45%, #edf2f8 100%);
+      color:#0d1526;
+    }
+
+    .rewards-page .rewards-main{
+      padding: 26px 0 64px;
+    }
+
+    .rewards-page .rewards-shell{
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      display: grid;
+      gap: 22px;
+    }
+
+    .rewards-page .rewards-topbar{
+      position: relative;
+      overflow: hidden;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(25,41,72,0.94));
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 28px 80px rgba(15,23,42,0.20);
+      padding: 22px;
+      color: #fff;
+      isolation: isolate;
+    }
+
+    .rewards-page .rewards-topbar::before{
+      content:"";
+      position:absolute;
+      width: 360px;
+      height: 360px;
+      right: -120px;
+      top: -140px;
+      border-radius:999px;
+      background: radial-gradient(circle, rgba(103,161,255,0.28), transparent 64%);
+      z-index:-1;
+    }
+
+    .rewards-page .rewards-topbar::after{
+      content:"";
+      position:absolute;
+      width: 260px;
+      height: 260px;
+      left: -100px;
+      bottom: -100px;
+      border-radius:999px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 66%);
+      z-index:-1;
+    }
+
+    .rewards-page .rewards-topbar-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .rewards-page .rewards-brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      min-width: 0;
+    }
+
+    .rewards-page .rewards-brand-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px);
+    }
+
+    .rewards-page .rewards-brand-pill img{
+      height: 36px;
+      width: auto;
+      display:block;
+    }
+
+    .rewards-page .rewards-top-copy h1{
+      margin:0 0 6px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color:#fff;
+    }
+
+    .rewards-page .rewards-top-copy p{
+      margin:0;
+      color: rgba(255,255,255,0.78);
+      font-size: 14px;
+      line-height:1.6;
+      font-weight:700;
+    }
+
+    .rewards-page .rewards-user{
+      min-width: 280px;
+      max-width: 360px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 24px;
+      padding: 16px 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .rewards-page .rewards-user-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+
+    .rewards-page .rewards-user-kicker{
+      display:inline-flex;
+      align-items:center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.82);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    .rewards-page .rewards-user-name{
+      font-size: 22px;
+      line-height:1.05;
+      font-weight: 1000;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+      word-break: break-word;
+    }
+
+    .rewards-page .rewards-user-sub{
+      color: rgba(255,255,255,0.70);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .rewards-page .rewards-points-box{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:end;
+      gap:10px;
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .rewards-page .rewards-points-label{
+      display:block;
+      font-size: 11px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.62);
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .rewards-page .rewards-points-value{
+      display:block;
+      font-size: 44px;
+      line-height: .9;
+      font-weight: 1000;
+      letter-spacing: -0.05em;
+      color: #fff;
+    }
+
+    .rewards-page .rewards-points-mini{
+      color: rgba(255,255,255,0.76);
+      font-weight: 800;
+      font-size: 13px;
+      padding-bottom: 4px;
+    }
+
+    .rewards-page .rewards-summary{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .rewards-page .rewards-intro-card,
+    .rewards-page .rewards-status-card{
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,255,255,0.92));
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: 0 22px 56px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.76);
+      padding: 22px;
+      backdrop-filter: blur(12px);
+    }
+
+    .rewards-page .rewards-intro-card h2,
+    .rewards-page .rewards-status-card h2{
+      margin:0 0 8px;
+      font-size: 28px;
+      line-height:1.05;
+      letter-spacing: -0.04em;
+      color:#0d1526;
+    }
+
+    .rewards-page .rewards-intro-card p,
+    .rewards-page .rewards-status-card p{
+      margin:0;
+      color: rgba(13,21,38,0.64);
+      font-size: 15px;
+      line-height:1.65;
+      font-weight:700;
+    }
+
+    .rewards-page .rewards-feature-row{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .rewards-page .rewards-feature{
+      border-radius: 20px;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid rgba(13,21,38,0.08);
+      box-shadow: 0 12px 26px rgba(15,23,42,0.04);
+    }
+
+    .rewards-page .rewards-feature-icon{
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display:grid;
+      place-items:center;
+      margin-bottom: 10px;
+      background: rgba(70,118,179,0.10);
+      border: 1px solid rgba(70,118,179,0.16);
+      font-size: 22px;
+    }
+
+    .rewards-page .rewards-feature-title{
+      font-weight: 900;
+      margin-bottom: 4px;
+      color:#0d1526;
+    }
+
+    .rewards-page .rewards-feature-text{
+      color: rgba(13,21,38,0.62);
+      font-size: 13px;
+      line-height:1.55;
+      font-weight:700;
+    }
+
+    .rewards-page .rewards-progress-card{
+      margin-top: 16px;
+      border-radius: 22px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(70,118,179,0.08), rgba(70,118,179,0.04));
+      border: 1px solid rgba(70,118,179,0.14);
+    }
+
+    .rewards-page .rewards-progress-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+
+    .rewards-page .rewards-progress-title{
+      font-size: 14px;
+      font-weight: 900;
+      color:#0d1526;
+    }
+
+    .rewards-page .rewards-progress-value{
+      font-size: 14px;
+      font-weight: 900;
+      color:#355a89;
+    }
+
+    .rewards-page .rewards-progress-track{
+      width:100%;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(13,21,38,0.08);
+      overflow:hidden;
+    }
+
+    .rewards-page .rewards-progress-fill{
+      height:100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #4f8df0, #3867ba);
+      box-shadow: 0 10px 20px rgba(56,103,186,0.25);
+      transition: width 300ms ease;
+    }
+
+    .rewards-page .rewards-filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 16px;
+    }
+
+    .rewards-page .rewards-filter{
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(13,21,38,0.10);
+      background: rgba(13,21,38,0.04);
+      color: rgba(13,21,38,0.72);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      cursor:pointer;
+      transition: all 160ms ease;
+    }
+
+    .rewards-page .rewards-filter.is-active{
+      background: linear-gradient(180deg, #ffffff, #f4f8ff);
+      color: #355a89;
+      border-color: rgba(70,118,179,0.18);
+      box-shadow: 0 10px 20px rgba(15,23,42,0.06);
+    }
+
+    .rewards-page .rewards-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .rewards-page .reward-card{
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,255,255,0.92));
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: 0 20px 50px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.78);
+      backdrop-filter: blur(12px);
+      display:grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .rewards-page .reward-card::before{
+      content:"";
+      position:absolute;
+      width: 160px;
+      height: 160px;
+      right: -60px;
+      top: -60px;
+      border-radius:999px;
+      background: radial-gradient(circle, rgba(70,118,179,0.08), transparent 68%);
+      pointer-events:none;
+    }
+
+    .rewards-page .reward-image-wrap{
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow:hidden;
+      background: linear-gradient(135deg, #dbe7f8, #eff4fb);
+      border-bottom: 1px solid rgba(13,21,38,0.06);
+    }
+
+    .rewards-page .reward-image{
+      width:100%;
+      height:100%;
+      display:grid;
+      place-items:center;
+      font-size: 72px;
+      line-height:1;
+      user-select:none;
+    }
+
+    .rewards-page .reward-badge{
+      position:absolute;
+      top: 14px;
+      left: 14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.95);
+      color: #0d1526;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 20px rgba(15,23,42,0.08);
+    }
+
+    .rewards-page .reward-body{
+      padding: 18px;
+      display:grid;
+      gap: 12px;
+    }
+
+    .rewards-page .reward-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .rewards-page .reward-title{
+      margin:0;
+      font-size: 24px;
+      line-height:1.05;
+      letter-spacing: -0.04em;
+      color:#0d1526;
+    }
+
+    .rewards-page .reward-points-pill{
+      flex-shrink:0;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 38px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(70,118,179,0.10);
+      border: 1px solid rgba(70,118,179,0.16);
+      color: #355a89;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .rewards-page .reward-desc{
+      margin:0;
+      color: rgba(13,21,38,0.64);
+      font-size: 14px;
+      line-height:1.65;
+      font-weight:700;
+    }
+
+    .rewards-page .reward-meta{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items:center;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(13,21,38,0.04);
+      border: 1px solid rgba(13,21,38,0.08);
+    }
+
+    .rewards-page .reward-meta-left{
+      min-width:0;
+    }
+
+    .rewards-page .reward-meta-label{
+      display:block;
+      font-size: 11px;
+      color: rgba(13,21,38,0.54);
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .rewards-page .reward-meta-value{
+      font-size: 15px;
+      color:#0d1526;
+      font-weight: 900;
+    }
+
+    .rewards-page .reward-state{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .rewards-page .reward-state.locked{
+      background: rgba(13,21,38,0.06);
+      color: rgba(13,21,38,0.66);
+      border: 1px solid rgba(13,21,38,0.08);
+    }
+
+    .rewards-page .reward-state.ready{
+      background: rgba(16,185,129,0.12);
+      color: #087443;
+      border: 1px solid rgba(16,185,129,0.20);
+    }
+
+    .rewards-page .reward-actions{
+      display:grid;
+      gap:10px;
+    }
+
+    .rewards-page .reward-btn{
+      min-height: 54px;
+      border: 0;
+      border-radius: 18px;
+      font-size: 15px;
+      font-weight: 950;
+      letter-spacing: .02em;
+      cursor:pointer;
+      transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
+    }
+
+    .rewards-page .reward-btn.primary{
+      background: linear-gradient(180deg, #0f172a, #192844);
+      color:#fff;
+      box-shadow: 0 18px 34px rgba(15,23,42,0.18);
+    }
+
+    .rewards-page .reward-btn.primary:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .rewards-page .reward-btn.primary:disabled{
+      opacity:.52;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .rewards-page .reward-btn.secondary{
+      background: rgba(70,118,179,0.08);
+      color:#355a89;
+      border: 1px solid rgba(70,118,179,0.16);
+    }
+
+    .rewards-page .reward-note{
+      text-align:center;
+      font-size: 13px;
+      color: rgba(13,21,38,0.58);
+      font-weight: 700;
+      min-height: 18px;
+    }
+
+    .rewards-page .rewards-modal-backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.56);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+      z-index: 1500;
+    }
+
+    .rewards-page .rewards-modal-backdrop.is-open{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .rewards-page .rewards-modal{
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: min(92vw, 460px);
+      transform: translate(-50%, -50%) scale(.92);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1501;
+      transition: transform 240ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+    }
+
+    .rewards-page .rewards-modal.is-open{
+      opacity:1;
+      pointer-events:auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .rewards-page .rewards-modal-card{
+      position:relative;
+      overflow:hidden;
+      border-radius: 30px;
+      background:
+        radial-gradient(220px 170px at 50% 0%, rgba(255,255,255,0.24), transparent 70%),
+        linear-gradient(180deg, #0f172a 0%, #14213d 58%, #1c3056 100%);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 36px 80px rgba(15,23,42,0.38);
+      color: #fff;
+      padding: 26px 24px;
+      text-align:center;
+    }
+
+    .rewards-page .rewards-modal-card::before{
+      content:"";
+      position:absolute;
+      width: 240px;
+      height: 240px;
+      right: -90px;
+      top: -90px;
+      border-radius:999px;
+      background: radial-gradient(circle, rgba(99,155,255,0.28), transparent 64%);
+      pointer-events:none;
+    }
+
+    .rewards-page .rewards-modal-burst{
+      width: 94px;
+      height: 94px;
+      border-radius: 999px;
+      margin: 0 auto 16px;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.34), rgba(255,255,255,0.07)),
+        linear-gradient(180deg, rgba(99,155,255,0.84), rgba(71,117,183,0.78));
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow:
+        0 0 0 10px rgba(99,155,255,0.10),
+        0 0 0 24px rgba(99,155,255,0.06),
+        0 26px 46px rgba(0,0,0,0.24);
+      font-size: 40px;
+    }
+
+    .rewards-page .rewards-modal-kicker{
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: rgba(255,255,255,0.66);
+      margin-bottom: 8px;
+    }
+
+    .rewards-page .rewards-modal-title{
+      margin:0 0 10px;
+      font-size: 32px;
+      line-height:1.02;
+      font-weight: 1000;
+      letter-spacing: -0.04em;
+    }
+
+    .rewards-page .rewards-modal-copy{
+      margin:0 0 18px;
+      color: rgba(255,255,255,0.80);
+      line-height:1.65;
+      font-size: 14px;
+      font-weight:700;
+    }
+
+    .rewards-page .rewards-modal-actions{
+      display:grid;
+      gap:10px;
+    }
+
+    .rewards-page .rewards-modal-btn{
+      min-height: 58px;
+      border:0;
+      border-radius: 18px;
+      font-size: 16px;
+      font-weight:950;
+      cursor:pointer;
+    }
+
+    .rewards-page .rewards-modal-btn.primary{
+      background: linear-gradient(180deg, #4f8df0, #3867ba);
+      color:#fff;
+      box-shadow: 0 18px 34px rgba(53,103,170,0.26);
+    }
+
+    .rewards-page .rewards-modal-btn.secondary{
+      background: rgba(255,255,255,0.08);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    @media (max-width: 980px){
+      .rewards-page .rewards-summary{
+        grid-template-columns: 1fr;
+      }
+
+      .rewards-page .rewards-grid{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .rewards-page .rewards-topbar-row{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .rewards-page .rewards-user{
+        max-width: none;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 720px){
+      .rewards-page .rewards-shell{
+        width: min(100%, calc(100% - 18px));
+      }
+
+      .rewards-page .rewards-topbar,
+      .rewards-page .rewards-intro-card,
+      .rewards-page .rewards-status-card,
+      .rewards-page .reward-card{
+        border-radius: 24px;
+      }
+
+      .rewards-page .rewards-grid,
+      .rewards-page .rewards-feature-row{
+        grid-template-columns: 1fr;
+      }
+
+      .rewards-page .rewards-rewards-head{
+        flex-direction:column;
+      }
+
+      .rewards-page .reward-top,
+      .rewards-page .reward-meta{
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="rewards-page">
+  <main class="rewards-main">
+    <div class="rewards-shell">
+      <section class="rewards-topbar">
+        <div class="rewards-topbar-row">
+          <div class="rewards-brand">
+            <div class="rewards-brand-pill">
+              <img src="assets/img/logo.png" alt="PADELIN Logo" />
+            </div>
+
+            <div class="rewards-top-copy">
+              <h1>Your rewards</h1>
+              <p>Unlock premium benefits as you play more and collect more points.</p>
+            </div>
+          </div>
+
+          <div class="rewards-user">
+            <div class="rewards-user-top">
+              <div class="rewards-user-kicker">Your profile</div>
+            </div>
+
+            <div class="rewards-user-name" id="profileUserName">Member</div>
+            <div class="rewards-user-sub">PADELIN player profile</div>
+
+            <div class="rewards-points-box">
+              <div>
+                <span class="rewards-points-label">Available points</span>
+                <span class="rewards-points-value" id="profilePoints">124</span>
+              </div>
+              <div class="rewards-points-mini">pts</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rewards-summary">
+        <div class="rewards-intro-card">
+          <h2>Play. Collect. Redeem.</h2>
+          <p>
+            Every reward has a point target. When your balance reaches the required amount,
+            the redeem button becomes available instantly.
+          </p>
+
+          <div class="rewards-feature-row">
+            <div class="rewards-feature">
+              <div class="rewards-feature-icon">🎾</div>
+              <div class="rewards-feature-title">Court benefits</div>
+              <div class="rewards-feature-text">Redeem free hours, equipment perks, and more.</div>
+            </div>
+
+            <div class="rewards-feature">
+              <div class="rewards-feature-icon">🏆</div>
+              <div class="rewards-feature-title">Earn faster</div>
+              <div class="rewards-feature-text">The more you play, the faster premium rewards unlock.</div>
+            </div>
+
+            <div class="rewards-feature">
+              <div class="rewards-feature-icon">✨</div>
+              <div class="rewards-feature-title">Instant status</div>
+              <div class="rewards-feature-text">See at a glance which rewards are ready to redeem.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rewards-status-card">
+          <h2>Closest reward</h2>
+          <p id="closestRewardText">You are getting closer to your next premium reward.</p>
+
+          <div class="rewards-progress-card">
+            <div class="rewards-progress-top">
+              <div class="rewards-progress-title" id="progressRewardName">Loading…</div>
+              <div class="rewards-progress-value" id="progressRewardValue">0 / 0 pts</div>
+            </div>
+
+            <div class="rewards-progress-track">
+              <div class="rewards-progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+          <div class="rewards-filters">
+            <button type="button" class="rewards-filter is-active" data-filter="all">All rewards</button>
+            <button type="button" class="rewards-filter" data-filter="ready">Ready now</button>
+            <button type="button" class="rewards-filter" data-filter="locked">More to unlock</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="rewards-grid" id="rewardsGrid"></section>
+    </div>
+  </main>
+
+  <div id="redeemModalBackdrop" class="rewards-modal-backdrop"></div>
+
+  <div id="redeemModal" class="rewards-modal" role="dialog" aria-modal="true" aria-labelledby="redeemModalTitle">
+    <div class="rewards-modal-card">
+      <div class="rewards-modal-burst">🎁</div>
+      <div class="rewards-modal-kicker">Reward redeemed</div>
+      <h2 class="rewards-modal-title" id="redeemModalTitle">Your reward is ready</h2>
+      <p class="rewards-modal-copy" id="redeemModalCopy">
+        Show this reward at reception to claim it.
+      </p>
+
+      <div class="rewards-modal-actions">
+        <button type="button" class="rewards-modal-btn primary" id="redeemModalDoneBtn">Awesome</button>
+        <button type="button" class="rewards-modal-btn secondary" id="redeemModalCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/rewards.js"></script>
+</body>
+</html>
