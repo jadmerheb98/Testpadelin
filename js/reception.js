@@ -35,6 +35,10 @@
     });
   }
 
+  const tabsWrap = document.querySelector(".reception-tabs");
+  const authHeadTitle = document.querySelector(".reception-auth-head h2");
+  const authHeadText = document.querySelector(".reception-auth-head p");
+
   const tabButtons = document.querySelectorAll("[data-tab-btn]");
   const signInForm = document.getElementById("receptionSignInForm");
   const signUpForm = document.getElementById("receptionSignUpForm");
@@ -50,7 +54,10 @@
   const signedUserName = document.getElementById("signedUserName");
   const signedUserEmail = document.getElementById("signedUserEmail");
 
-  const continueToSiteBtn = document.getElementById("continueToSiteBtn");
+  const rewardsPanel = document.getElementById("receptionRewardsPanel");
+  const collectRewardsBtn = document.getElementById("collectRewardsBtn");
+  const collectRewardsNote = document.getElementById("collectRewardsNote");
+
   const showRewardAgainBtn = document.getElementById("showRewardAgainBtn");
   const signOutReceptionBtn = document.getElementById("signOutReceptionBtn");
 
@@ -103,15 +110,6 @@
     button.textContent = isLoading ? loadingText : idleText;
   }
 
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
   function setLocalUser(user) {
     if (!user) {
       localStorage.removeItem("padelinUser");
@@ -140,6 +138,7 @@
     rewardPopup.classList.remove("is-open");
     rewardPopupBackdrop.classList.remove("is-open");
     document.body.style.overflow = "";
+    if (rewardsPanel) rewardsPanel.classList.add("is-visible");
   }
 
   if (rewardPopupDoneBtn) rewardPopupDoneBtn.addEventListener("click", closeRewardPopup);
@@ -150,9 +149,18 @@
     if (e.key === "Escape") closeRewardPopup();
   });
 
-  function renderSignedInState(user) {
-    if (!signedState) return;
+  function resetRewardsUI() {
+    if (rewardsPanel) rewardsPanel.classList.remove("is-visible");
+    if (collectRewardsBtn) {
+      collectRewardsBtn.disabled = false;
+      collectRewardsBtn.textContent = "Collect rewards";
+    }
+    if (collectRewardsNote) {
+      collectRewardsNote.textContent = "Reward not collected yet.";
+    }
+  }
 
+  function renderSignedInState(user) {
     const name = (user && (user.displayName || user.email)) || "Member";
     const email = (user && user.email) || "";
 
@@ -162,20 +170,19 @@
     signedState.classList.add("is-visible");
     signInForm.classList.remove("is-active");
     signUpForm.classList.remove("is-active");
-    document.querySelector(".reception-tabs").style.display = "none";
-    document.querySelector(".reception-auth-head h2").textContent = "Welcome back";
-    document.querySelector(".reception-auth-head p").textContent =
-      "You’re signed in successfully on a real PADELIN account.";
+
+    if (tabsWrap) tabsWrap.style.display = "none";
+    if (authHeadTitle) authHeadTitle.textContent = "Checked in successfully";
+    if (authHeadText) authHeadText.textContent = "Your reward summary appears right after the popup.";
   }
 
   function renderSignedOutState() {
-    if (!signedState) return;
-
     signedState.classList.remove("is-visible");
-    document.querySelector(".reception-tabs").style.display = "grid";
-    document.querySelector(".reception-auth-head h2").textContent = "Check in at reception";
-    document.querySelector(".reception-auth-head p").textContent =
-      "Use your account, or create one now in less than a minute.";
+    resetRewardsUI();
+
+    if (tabsWrap) tabsWrap.style.display = "grid";
+    if (authHeadTitle) authHeadTitle.textContent = "Check in for today’s play";
+    if (authHeadText) authHeadText.textContent = "Use your account, or create one now in less than a minute.";
 
     setActiveTab("signin");
   }
@@ -211,6 +218,7 @@
 
     try {
       setButtonLoading(signInBtn, true, "Signing in...", "Sign In");
+      resetRewardsUI();
       const cred = await auth.signInWithEmailAndPassword(email, password);
       setLocalUser(cred.user);
       renderSignedInState(cred.user);
@@ -250,6 +258,7 @@
 
     try {
       setButtonLoading(signUpBtn, true, "Creating account...", "Create Account");
+      resetRewardsUI();
 
       const cred = await auth.createUserWithEmailAndPassword(email, password);
 
@@ -270,15 +279,21 @@
     }
   });
 
-  if (continueToSiteBtn) {
-    continueToSiteBtn.addEventListener("click", () => {
-      window.location.href = "index.html";
+  if (showRewardAgainBtn) {
+    showRewardAgainBtn.addEventListener("click", () => {
+      resetRewardsUI();
+      renderSignedInState(auth.currentUser);
+      openRewardPopup();
     });
   }
 
-  if (showRewardAgainBtn) {
-    showRewardAgainBtn.addEventListener("click", () => {
-      openRewardPopup();
+  if (collectRewardsBtn) {
+    collectRewardsBtn.addEventListener("click", () => {
+      collectRewardsBtn.disabled = true;
+      collectRewardsBtn.textContent = "Rewards collected";
+      if (collectRewardsNote) {
+        collectRewardsNote.textContent = "Rewards collected successfully.";
+      }
     });
   }
 
