@@ -7,38 +7,7 @@
     return;
   }
 
-  const hamburger = document.querySelector("[data-hamburger]");
-  const overlay = document.querySelector("[data-overlay]");
-  const sideMenu = document.querySelector("[data-side-menu]");
-  const closeBtn = document.querySelector("[data-side-close]");
-
-  function openMenu() {
-    if (!overlay || !sideMenu) return;
-    overlay.classList.add("open");
-    sideMenu.classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeMenu() {
-    if (!overlay || !sideMenu) return;
-    overlay.classList.remove("open");
-    sideMenu.classList.remove("open");
-    document.body.style.overflow = "";
-  }
-
-  if (hamburger && overlay && sideMenu && closeBtn) {
-    hamburger.addEventListener("click", openMenu);
-    closeBtn.addEventListener("click", closeMenu);
-    overlay.addEventListener("click", closeMenu);
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu();
-    });
-  }
-
   const tabsWrap = document.querySelector(".reception-tabs");
-  const authHeadTitle = document.querySelector(".reception-auth-head h2");
-  const authHeadText = document.querySelector(".reception-auth-head p");
-
   const tabButtons = document.querySelectorAll("[data-tab-btn]");
   const signInForm = document.getElementById("receptionSignInForm");
   const signUpForm = document.getElementById("receptionSignUpForm");
@@ -53,13 +22,11 @@
   const signedState = document.getElementById("receptionSignedState");
   const signedUserName = document.getElementById("signedUserName");
   const signedUserEmail = document.getElementById("signedUserEmail");
-
-  const rewardsPanel = document.getElementById("receptionRewardsPanel");
-  const collectRewardsBtn = document.getElementById("collectRewardsBtn");
-  const collectRewardsNote = document.getElementById("collectRewardsNote");
-
-  const showRewardAgainBtn = document.getElementById("showRewardAgainBtn");
   const signOutReceptionBtn = document.getElementById("signOutReceptionBtn");
+
+  const rewardsSection = document.getElementById("receptionRewardsSection");
+  const seeRewardsBtn = document.getElementById("seeRewardsBtn");
+  const seeRewardsNote = document.getElementById("seeRewardsNote");
 
   const rewardPopup = document.getElementById("rewardPopup");
   const rewardPopupBackdrop = document.getElementById("rewardPopupBackdrop");
@@ -138,7 +105,7 @@
     rewardPopup.classList.remove("is-open");
     rewardPopupBackdrop.classList.remove("is-open");
     document.body.style.overflow = "";
-    if (rewardsPanel) rewardsPanel.classList.add("is-visible");
+    if (rewardsSection) rewardsSection.classList.add("is-visible");
   }
 
   if (rewardPopupDoneBtn) rewardPopupDoneBtn.addEventListener("click", closeRewardPopup);
@@ -150,13 +117,13 @@
   });
 
   function resetRewardsUI() {
-    if (rewardsPanel) rewardsPanel.classList.remove("is-visible");
-    if (collectRewardsBtn) {
-      collectRewardsBtn.disabled = false;
-      collectRewardsBtn.textContent = "Collect rewards";
+    if (rewardsSection) rewardsSection.classList.remove("is-visible");
+    if (seeRewardsBtn) {
+      seeRewardsBtn.disabled = false;
+      seeRewardsBtn.textContent = "See rewards";
     }
-    if (collectRewardsNote) {
-      collectRewardsNote.textContent = "Reward not collected yet.";
+    if (seeRewardsNote) {
+      seeRewardsNote.textContent = "Rewards preview not opened yet.";
     }
   }
 
@@ -168,22 +135,15 @@
     signedUserEmail.textContent = email;
 
     signedState.classList.add("is-visible");
+    if (tabsWrap) tabsWrap.style.display = "none";
     signInForm.classList.remove("is-active");
     signUpForm.classList.remove("is-active");
-
-    if (tabsWrap) tabsWrap.style.display = "none";
-    if (authHeadTitle) authHeadTitle.textContent = "Checked in successfully";
-    if (authHeadText) authHeadText.textContent = "Your reward summary appears right after the popup.";
   }
 
   function renderSignedOutState() {
     signedState.classList.remove("is-visible");
     resetRewardsUI();
-
     if (tabsWrap) tabsWrap.style.display = "grid";
-    if (authHeadTitle) authHeadTitle.textContent = "Check in for today’s play";
-    if (authHeadText) authHeadText.textContent = "Use your account, or create one now in less than a minute.";
-
     setActiveTab("signin");
   }
 
@@ -219,7 +179,9 @@
     try {
       setButtonLoading(signInBtn, true, "Signing in...", "Sign In");
       resetRewardsUI();
+
       const cred = await auth.signInWithEmailAndPassword(email, password);
+
       setLocalUser(cred.user);
       renderSignedInState(cred.user);
       showStatus("Signed in successfully.", "success");
@@ -279,20 +241,12 @@
     }
   });
 
-  if (showRewardAgainBtn) {
-    showRewardAgainBtn.addEventListener("click", () => {
-      resetRewardsUI();
-      renderSignedInState(auth.currentUser);
-      openRewardPopup();
-    });
-  }
-
-  if (collectRewardsBtn) {
-    collectRewardsBtn.addEventListener("click", () => {
-      collectRewardsBtn.disabled = true;
-      collectRewardsBtn.textContent = "Rewards collected";
-      if (collectRewardsNote) {
-        collectRewardsNote.textContent = "Rewards collected successfully.";
+  if (seeRewardsBtn) {
+    seeRewardsBtn.addEventListener("click", () => {
+      seeRewardsBtn.disabled = true;
+      seeRewardsBtn.textContent = "Rewards opened";
+      if (seeRewardsNote) {
+        seeRewardsNote.textContent = "Rewards preview opened successfully.";
       }
     });
   }
