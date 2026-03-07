@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reception Rewards | PADELIN</title>
+  <title>Reception Check-In | PADELIN</title>
   <link rel="stylesheet" href="css/styles.css" />
 
   <style>
@@ -98,27 +98,6 @@
       white-space: nowrap;
     }
 
-    .reception-page .reception-eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 2.4px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.72);
-      margin-bottom: 12px;
-    }
-
-    .reception-page .reception-eyebrow::before{
-      content:"";
-      width: 8px;
-      height: 8px;
-      border-radius:999px;
-      background: rgba(133,182,255,0.95);
-      box-shadow: 0 0 0 5px rgba(133,182,255,0.16);
-    }
-
     .reception-page .reception-hero-grid{
       display:grid;
       grid-template-columns: 1.08fr 0.92fr;
@@ -131,7 +110,7 @@
       font-size: clamp(34px, 5vw, 58px);
       line-height: 0.98;
       letter-spacing: -0.03em;
-      max-width: 10ch;
+      max-width: 11ch;
     }
 
     .reception-page .reception-copy p{
@@ -398,10 +377,6 @@
       letter-spacing: .02em;
     }
 
-    .reception-page .reception-input-wrap{
-      position:relative;
-    }
-
     .reception-page .reception-input{
       width:100%;
       min-height: 58px;
@@ -475,13 +450,6 @@
       text-underline-offset: 3px;
       cursor:pointer;
       padding: 4px;
-    }
-
-    .reception-page .reception-note{
-      text-align:center;
-      font-size: 13px;
-      color: rgba(11,18,32,0.65);
-      font-weight: 700;
     }
 
     .reception-page .reception-status{
@@ -564,6 +532,128 @@
       line-height:1.6;
       font-size: 14px;
       margin:0;
+    }
+
+    .reception-page .reception-rewards-panel{
+      display:none;
+      border-radius: 22px;
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(70,118,179,0.12), rgba(70,118,179,0.05));
+      border: 1px solid rgba(70,118,179,0.18);
+      box-shadow: 0 18px 34px rgba(53,90,137,0.08);
+      gap: 14px;
+    }
+
+    .reception-page .reception-rewards-panel.is-visible{
+      display:grid;
+    }
+
+    .reception-page .reception-rewards-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .reception-page .reception-rewards-head h3{
+      margin:0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .reception-page .reception-rewards-head p{
+      margin:4px 0 0;
+      color: rgba(11,18,32,0.66);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .reception-page .reception-rewards-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(70,118,179,0.12);
+      border: 1px solid rgba(70,118,179,0.18);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #355a89;
+      white-space: nowrap;
+    }
+
+    .reception-page .reception-rewards-stats{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+
+    .reception-page .reception-reward-stat{
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid rgba(15,23,42,0.08);
+      box-shadow: 0 12px 24px rgba(15,23,42,0.05);
+    }
+
+    .reception-page .reception-reward-stat .label{
+      display:block;
+      font-size: 12px;
+      color: rgba(11,18,32,0.56);
+      font-weight: 900;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .reception-page .reception-reward-stat .value{
+      display:block;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 1000;
+      letter-spacing: -0.05em;
+      color: #0b1220;
+    }
+
+    .reception-page .reception-reward-stat.today .value{
+      color: #355a89;
+    }
+
+    .reception-page .reception-collect-btn{
+      min-height: 58px;
+      border: 0;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #0f172a, #1b2a48);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: .02em;
+      cursor: pointer;
+      box-shadow: 0 18px 34px rgba(15,23,42,0.20);
+      transition: transform 160ms ease, filter 160ms ease;
+    }
+
+    .reception-page .reception-collect-btn:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .reception-page .reception-collect-btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .reception-page .reception-collect-note{
+      text-align:center;
+      font-size: 13px;
+      color: rgba(11,18,32,0.60);
+      font-weight: 700;
     }
 
     .reception-page .reception-signed-actions{
@@ -770,14 +860,6 @@
       border: 1px solid rgba(255,255,255,0.12);
     }
 
-    .reception-page .reception-footnote{
-      text-align:center;
-      color: rgba(11,18,32,0.56);
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 2px;
-    }
-
     @media (max-width: 980px){
       .reception-page .reception-hero-grid,
       .reception-page .reception-grid{
@@ -795,7 +877,8 @@
         align-items:flex-start;
       }
 
-      .reception-page .reception-row-2{
+      .reception-page .reception-row-2,
+      .reception-page .reception-rewards-stats{
         grid-template-columns: 1fr;
       }
 
@@ -815,6 +898,11 @@
       .reception-page .reception-copy h1{
         max-width: none;
       }
+
+      .reception-page .reception-rewards-head{
+        align-items:flex-start;
+        flex-direction:column;
+      }
     }
   </style>
 </head>
@@ -828,14 +916,12 @@
           </div>
         </button>
 
-        <a class="brand" href="index.html" aria-label="PADELIN Home">
+        <a class="brand" href="#" aria-label="PADELIN">
           <img src="assets/img/logo.png" alt="PADELIN Logo" />
         </a>
       </div>
 
-      <div class="header-right">
-        <a class="btn btn-ghost" href="index.html">Back to site</a>
-      </div>
+      <div class="header-right"></div>
     </div>
   </header>
 
@@ -848,7 +934,6 @@
     </div>
 
     <div class="side-links">
-      <a href="index.html">Home</a>
       <a href="reservation.html">Reserve</a>
       <a href="membership.html">Membership</a>
       <a href="login.html">Main Login</a>
@@ -862,35 +947,34 @@
           <div class="reception-brand">
             <img src="assets/img/logo.png" alt="PADELIN Logo" />
           </div>
-          <div class="reception-chip">Reception Rewards Experience</div>
+          <div class="reception-chip">Reception Check-In</div>
         </div>
 
         <div class="reception-hero-grid">
           <div class="reception-copy">
-            <div class="reception-eyebrow">Welcome to rewards</div>
-            <h1>Play today. Earn your next reason to come back.</h1>
+            <h1>Your game starts here.</h1>
             <p>
               Sign in or create your PADELIN account in seconds at reception.
-              Your account is real and works across the website anytime. For now,
-              the reward celebration below is a beautiful visual preview of the points experience.
+              After check-in, customers can view today’s points, total points,
+              and collect their reward on the same screen.
             </p>
 
             <div class="reception-points-strip">
               <div class="reception-mini-pill">Fast sign in</div>
               <div class="reception-mini-pill">Real website account</div>
-              <div class="reception-mini-pill">Beautiful reward moment</div>
+              <div class="reception-mini-pill">Tablet friendly</div>
             </div>
           </div>
 
           <div class="reception-visual">
             <div class="reception-glass-card">
-              <div class="reception-glass-title">Today’s example reward</div>
+              <div class="reception-glass-title">Today’s reward preview</div>
               <div class="reception-big-points">
                 <div class="num">+6</div>
                 <div class="lbl">pts</div>
               </div>
               <div class="reception-glass-sub">
-                Customers get a polished reward moment right after signing in or signing up at reception.
+                A smooth sign-in flow with a polished reward moment, designed for reception.
               </div>
             </div>
 
@@ -904,8 +988,8 @@
                 <span class="v">124</span>
               </div>
               <div class="reception-stat">
-                <span class="k">Mood</span>
-                <span class="v">🔥</span>
+                <span class="k">Collect</span>
+                <span class="v">🎁</span>
               </div>
             </div>
           </div>
@@ -917,26 +1001,26 @@
           <div class="reception-panel-inner">
             <div class="reception-info-grid">
               <div class="reception-info-card">
-                <h2>A premium check-in experience</h2>
+                <h2>Quick rewards preview</h2>
                 <p>
-                  This page is designed for customers standing at reception on iPad:
-                  clean, fast, visual, and easy to understand in a few seconds.
+                  Customers can sign in or create an account, see a reward popup,
+                  then view today’s points and total points before collecting their reward.
                 </p>
 
                 <div class="reception-benefits">
                   <div class="reception-benefit">
                     <div class="reception-benefit-icon">⚡</div>
                     <div>
-                      <div class="reception-benefit-title">Fast to use</div>
-                      <div class="reception-benefit-text">Large touch-friendly fields and buttons for quick sign in.</div>
+                      <div class="reception-benefit-title">Quick at reception</div>
+                      <div class="reception-benefit-text">Large touch-friendly fields for easy check-in while standing.</div>
                     </div>
                   </div>
 
                   <div class="reception-benefit">
                     <div class="reception-benefit-icon">🎁</div>
                     <div>
-                      <div class="reception-benefit-title">Rewards feel exciting</div>
-                      <div class="reception-benefit-text">A polished popup makes the experience feel special, not boring.</div>
+                      <div class="reception-benefit-title">Reward moment</div>
+                      <div class="reception-benefit-text">A polished popup makes the experience feel exciting and premium.</div>
                     </div>
                   </div>
 
@@ -944,18 +1028,10 @@
                     <div class="reception-benefit-icon">🔐</div>
                     <div>
                       <div class="reception-benefit-title">Same real account</div>
-                      <div class="reception-benefit-text">Accounts created here use the same Firebase auth as the rest of your site.</div>
+                      <div class="reception-benefit-text">Accounts created here are real and can be used later on your website.</div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="reception-info-card">
-                <h2>How it works today</h2>
-                <p>
-                  Sign in or sign up normally. After success, the customer sees a beautiful example reward popup.
-                  The popup is visual only for now and does not write real points yet.
-                </p>
               </div>
             </div>
           </div>
@@ -965,7 +1041,7 @@
           <div class="reception-panel-inner">
             <div id="receptionAuthArea">
               <div class="reception-auth-head">
-                <h2>Check in at reception</h2>
+                <h2>Check in for today’s play</h2>
                 <p>Use your account, or create one now in less than a minute.</p>
               </div>
 
@@ -993,16 +1069,12 @@
               <form id="receptionSignInForm" class="reception-form is-active" novalidate>
                 <div class="reception-field">
                   <label for="receptionSignInEmail">Email</label>
-                  <div class="reception-input-wrap">
-                    <input class="reception-input" id="receptionSignInEmail" type="email" autocomplete="email" placeholder="you@email.com" required />
-                  </div>
+                  <input class="reception-input" id="receptionSignInEmail" type="email" autocomplete="email" placeholder="you@email.com" required />
                 </div>
 
                 <div class="reception-field">
                   <label for="receptionSignInPassword">Password</label>
-                  <div class="reception-input-wrap">
-                    <input class="reception-input" id="receptionSignInPassword" type="password" autocomplete="current-password" placeholder="Your password" required />
-                  </div>
+                  <input class="reception-input" id="receptionSignInPassword" type="password" autocomplete="current-password" placeholder="Your password" required />
                 </div>
 
                 <button id="receptionSignInBtn" class="reception-submit" type="submit">Sign In</button>
@@ -1015,38 +1087,28 @@
               <form id="receptionSignUpForm" class="reception-form" novalidate>
                 <div class="reception-field">
                   <label for="receptionName">Full name</label>
-                  <div class="reception-input-wrap">
-                    <input class="reception-input" id="receptionName" type="text" autocomplete="name" placeholder="Your full name" required />
-                  </div>
+                  <input class="reception-input" id="receptionName" type="text" autocomplete="name" placeholder="Your full name" required />
                 </div>
 
                 <div class="reception-field">
                   <label for="receptionPhone">Phone number</label>
-                  <div class="reception-input-wrap">
-                    <input class="reception-input" id="receptionPhone" type="tel" autocomplete="tel" placeholder="+961 00 000 000" required />
-                  </div>
+                  <input class="reception-input" id="receptionPhone" type="tel" autocomplete="tel" placeholder="+961 00 000 000" required />
                 </div>
 
                 <div class="reception-field">
                   <label for="receptionEmail">Email</label>
-                  <div class="reception-input-wrap">
-                    <input class="reception-input" id="receptionEmail" type="email" autocomplete="email" placeholder="you@email.com" required />
-                  </div>
+                  <input class="reception-input" id="receptionEmail" type="email" autocomplete="email" placeholder="you@email.com" required />
                 </div>
 
                 <div class="reception-row-2">
                   <div class="reception-field">
                     <label for="receptionPassword">Password</label>
-                    <div class="reception-input-wrap">
-                      <input class="reception-input" id="receptionPassword" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" minlength="8" required />
-                    </div>
+                    <input class="reception-input" id="receptionPassword" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" minlength="8" required />
                   </div>
 
                   <div class="reception-field">
                     <label for="receptionConfirmPassword">Confirm password</label>
-                    <div class="reception-input-wrap">
-                      <input class="reception-input" id="receptionConfirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter password" minlength="8" required />
-                    </div>
+                    <input class="reception-input" id="receptionConfirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter password" minlength="8" required />
                   </div>
                 </div>
 
@@ -1067,19 +1129,38 @@
                   <div class="reception-signed-name" id="signedUserName">Welcome</div>
                   <div class="reception-signed-email" id="signedUserEmail"></div>
                   <p class="reception-signed-copy">
-                    Your account is active and ready to use across the website. The reward popup shown here is currently a visual example only.
+                    Your account is active. Close the popup to see today’s points and collect your reward.
                   </p>
                 </div>
 
+                <div id="receptionRewardsPanel" class="reception-rewards-panel">
+                  <div class="reception-rewards-head">
+                    <div>
+                      <h3>Your rewards</h3>
+                      <p>Available after today’s check-in.</p>
+                    </div>
+                    <div class="reception-rewards-badge">Ready to collect</div>
+                  </div>
+
+                  <div class="reception-rewards-stats">
+                    <div class="reception-reward-stat today">
+                      <span class="label">Today</span>
+                      <span class="value">+6</span>
+                    </div>
+                    <div class="reception-reward-stat">
+                      <span class="label">Total</span>
+                      <span class="value">124</span>
+                    </div>
+                  </div>
+
+                  <button type="button" class="reception-collect-btn" id="collectRewardsBtn">Collect rewards</button>
+                  <div class="reception-collect-note" id="collectRewardsNote">Reward not collected yet.</div>
+                </div>
+
                 <div class="reception-signed-actions">
-                  <button type="button" class="reception-submit" id="showRewardAgainBtn">Show reward popup again</button>
-                  <button type="button" class="reception-secondary" id="continueToSiteBtn">Continue to website</button>
+                  <button type="button" class="reception-secondary" id="showRewardAgainBtn">Show popup again</button>
                   <button type="button" class="reception-secondary" id="signOutReceptionBtn">Sign out</button>
                 </div>
-              </div>
-
-              <div class="reception-footnote">
-                Visual reward popup only for now • No real points are saved yet
               </div>
             </div>
           </div>
@@ -1104,11 +1185,11 @@
       </div>
 
       <p class="reception-popup-copy">
-        Great job — keep playing to unlock more rewards, climb higher, and make every match count.
+        Great job — keep playing to unlock more rewards and make every match count.
       </p>
 
       <div class="reception-popup-actions">
-        <button type="button" class="reception-popup-btn primary" id="rewardPopupDoneBtn">Awesome</button>
+        <button type="button" class="reception-popup-btn primary" id="rewardPopupDoneBtn">Nice</button>
         <button type="button" class="reception-popup-btn secondary" id="rewardPopupCloseBtn">Close</button>
       </div>
     </div>
