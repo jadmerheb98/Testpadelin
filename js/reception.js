@@ -83,21 +83,32 @@
     button.textContent = isLoading ? loadingText : idleText;
   }
 
-  function setLocalUser(user) {
-    if (!user) {
-      localStorage.removeItem("padelinUser");
-      return;
-    }
-
-    const payload = {
-      uid: user.uid,
-      email: user.email || "",
-      name: user.displayName || "",
-      tier: localStorage.getItem("padelinTier") || "Member",
-    };
-
-    localStorage.setItem("padelinUser", JSON.stringify(payload));
+function getTodayLabel() {
+  const d = new Date();
+  return d.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+  
+  function setLocalUser(user, extra = {}) {
+  if (!user) {
+    localStorage.removeItem("padelinUser");
+    return;
   }
+
+  const payload = {
+    uid: user.uid,
+    email: user.email || "",
+    name: user.displayName || "",
+    phone: extra.phone || "",
+    tier: localStorage.getItem("padelinTier") || "Member",
+  };
+
+  localStorage.setItem("padelinUser", JSON.stringify(payload));
+}
 
   function openRewardPopup() {
     if (!rewardPopup || !rewardPopupBackdrop) return;
@@ -169,6 +180,26 @@
     );
   }
 
+  async function claimReceptionPointsByPhone(phone) {
+  const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/reception/claim-points", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      phone: phone || "",
+      date: getTodayLabel()
+    })
+  });
+
+  const data = await res.json();
+  if (!res.ok || !data.ok) {
+    throw new Error(data.error || "Failed to claim points.");
+  }
+
+  return data;
+}
+
   signInForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideStatus();
@@ -187,9 +218,24 @@
 
       const cred = await auth.signInWithEmailAndPassword(email, password);
 
-      setLocalUser(cred.user);
-      renderSignedInState(cred.user);
-      openRewardPopup();
+      let profilePhone = "";
+try {
+  if (db) {
+    const snap = await db.collection("users").doc(cred.user.uid).get();
+    if (snap.exists) {
+      const profile = snap.data() || {};
+      profilePhone = profile.phone || "";
+    }
+  }
+} catch {}
+
+const claim = await claimReceptionPointsByPhone(profilePhone);
+
+localStorage.setItem("padelinReceptionEarnedPoints", String(claim.earnedPoints || 0));
+
+setLocalUser(cred.user, { phone: profilePhone });
+renderSignedInState(cred.user);
+openRewardPopup();
     } catch (err) {
       showStatus(err.message || "Could not sign in.", "error");
     } finally {
@@ -232,11 +278,15 @@
         await cred.user.updateProfile({ displayName: name });
       }
 
-      await saveUserProfile(cred.user, { name, phone, email });
+     await saveUserProfile(cred.user, { name, phone, email });
 
-      setLocalUser(auth.currentUser || cred.user);
-      renderSignedInState(auth.currentUser || cred.user);
-      openRewardPopup();
+const claim = await claimReceptionPointsByPhone(phone);
+
+localStorage.setItem("padelinReceptionEarnedPoints", String(claim.earnedPoints || 0));
+
+setLocalUser(auth.currentUser || cred.user, { phone });
+renderSignedInState(auth.currentUser || cred.user);
+openRewardPopup();
     } catch (err) {
       showStatus(err.message || "Could not create account.", "error");
     } finally {
@@ -263,12 +313,12 @@
   }
 
   auth.onAuthStateChanged((user) => {
-    setLocalUser(user);
+  setLocalUser(user);
 
-    if (user) {
-      renderSignedInState(user);
-    } else {
-      renderSignedOutState();
-    }
-  });
+  if (user) {
+    renderSignedInState(user);
+  } else {
+    renderSignedOutState();
+  }
+});
 })();
