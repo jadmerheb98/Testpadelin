@@ -306,7 +306,12 @@ else if (rewardsSection) rewardsSection.classList.add("is-visible");
     hideStatus();
 
     const name = document.getElementById("receptionName").value.trim();
-    const phone = document.getElementById("receptionPhone").value.trim();
+    let phone = document.getElementById("receptionPhone").value.trim();
+
+phone = phone
+  .replace(/\s+/g, "")
+  .replace(/^\+961/, "")
+  .replace(/^961/, "");
     const email = document.getElementById("receptionEmail").value.trim();
     const password = document.getElementById("receptionPassword").value;
     const confirmPassword = document.getElementById("receptionConfirmPassword").value;
