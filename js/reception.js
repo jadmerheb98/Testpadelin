@@ -110,12 +110,22 @@ function getTodayLabel() {
   localStorage.setItem("padelinUser", JSON.stringify(payload));
 }
 
+function renderRewardPopupPoints() {
+  const earned = Number(localStorage.getItem("padelinReceptionEarnedPoints") || "0");
+
+  const earnedEls = document.querySelectorAll("[data-earned-points]");
+  earnedEls.forEach((el) => {
+    el.textContent = `+${earned}`;
+  });
+}
+  
   function openRewardPopup() {
-    if (!rewardPopup || !rewardPopupBackdrop) return;
-    rewardPopup.classList.add("is-open");
-    rewardPopupBackdrop.classList.add("is-open");
-    document.body.style.overflow = "hidden";
-  }
+  if (!rewardPopup || !rewardPopupBackdrop) return;
+  renderRewardPopupPoints();
+  rewardPopup.classList.add("is-open");
+  rewardPopupBackdrop.classList.add("is-open");
+  document.body.style.overflow = "hidden";
+}
 
   function closeRewardPopup() {
     if (!rewardPopup || !rewardPopupBackdrop) return;
