@@ -245,11 +245,10 @@
   });
 
   if (seeRewardsBtn) {
-    seeRewardsBtn.addEventListener("click", () => {
-      seeRewardsBtn.disabled = true;
-      seeRewardsBtn.textContent = "Rewards coming soon";
-    });
-  }
+  seeRewardsBtn.addEventListener("click", () => {
+    window.location.href = "rewards.html";
+  });
+}
 
   if (signOutReceptionBtn) {
     signOutReceptionBtn.addEventListener("click", async () => {
