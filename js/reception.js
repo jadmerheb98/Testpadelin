@@ -112,10 +112,16 @@ function getTodayLabel() {
 
 function renderRewardPopupPoints() {
   const earned = Number(localStorage.getItem("padelinReceptionEarnedPoints") || "0");
+  const total = Number(localStorage.getItem("padelinRewardPoints") || "0");
 
   const earnedEls = document.querySelectorAll("[data-earned-points]");
   earnedEls.forEach((el) => {
     el.textContent = `+${earned}`;
+  });
+
+  const totalEls = document.querySelectorAll("[data-total-points]");
+  totalEls.forEach((el) => {
+    el.textContent = String(total);
   });
 }
   
@@ -210,6 +216,27 @@ function renderRewardPopupPoints() {
   return data;
 }
 
+async function addPointsToUserProfile(uid, earnedPoints) {
+  if (!db || !uid) return 0;
+
+  const ref = db.collection("users").doc(uid);
+  const snap = await ref.get();
+
+  const current = snap.exists ? Number((snap.data() || {}).points || 0) : 0;
+  const nextTotal = current + Number(earnedPoints || 0);
+
+  await ref.set(
+    {
+      points: nextTotal,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    },
+    { merge: true }
+  );
+
+  localStorage.setItem("padelinRewardPoints", String(nextTotal));
+  return nextTotal;
+}  
+
   signInForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideStatus();
@@ -242,6 +269,9 @@ try {
 const claim = await claimReceptionPointsByPhone(profilePhone);
 
 localStorage.setItem("padelinReceptionEarnedPoints", String(claim.earnedPoints || 0));
+
+const nextTotal = await addPointsToUserProfile(cred.user.uid, claim.earnedPoints || 0);
+localStorage.setItem("padelinRewardPoints", String(nextTotal));
 
 setLocalUser(cred.user, { phone: profilePhone });
 renderSignedInState(cred.user);
@@ -294,8 +324,12 @@ const claim = await claimReceptionPointsByPhone(phone);
 
 localStorage.setItem("padelinReceptionEarnedPoints", String(claim.earnedPoints || 0));
 
-setLocalUser(auth.currentUser || cred.user, { phone });
-renderSignedInState(auth.currentUser || cred.user);
+const currentUser = auth.currentUser || cred.user;
+const nextTotal = await addPointsToUserProfile(currentUser.uid, claim.earnedPoints || 0);
+localStorage.setItem("padelinRewardPoints", String(nextTotal));
+
+setLocalUser(currentUser, { phone });
+renderSignedInState(currentUser);
 openRewardPopup();
     } catch (err) {
       showStatus(err.message || "Could not create account.", "error");
