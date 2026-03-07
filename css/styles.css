@@ -2854,3 +2854,114 @@ body:has(.dashboard-accordion) .resdash-history-item {
     min-width: 100%;
   }
 }
+/* ===========================
+   Reservations hierarchy
+   Admin page only
+   =========================== */
+
+/* LEVEL 2: Active / History */
+body:has(.dashboard-accordion) .resdash-subtoggle {
+  background: rgba(63,102,150,0.08);
+  border: 1px solid rgba(63,102,150,0.14);
+  border-radius: 16px;
+  padding: 15px 16px;
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--navy);
+  box-shadow: 0 4px 12px rgba(15,23,42,0.04);
+}
+
+body:has(.dashboard-accordion) .resdash-subtoggle:hover {
+  background: rgba(63,102,150,0.12);
+  border-color: rgba(63,102,150,0.22);
+}
+
+body:has(.dashboard-accordion) .resdash-subpanel {
+  margin-top: 10px;
+  padding-left: 8px;
+}
+
+/* LEVEL 3: Today / Yesterday / date groups */
+body:has(.dashboard-accordion) .resdash-daytoggle {
+  background: rgba(15,23,42,0.03);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.82);
+  box-shadow: none;
+}
+
+body:has(.dashboard-accordion) .resdash-daytoggle:hover {
+  background: rgba(15,23,42,0.05);
+  border-color: rgba(15,23,42,0.12);
+}
+
+/* Nested date content */
+body:has(.dashboard-accordion) .resdash-daypanel {
+  margin-top: 8px;
+  padding-left: 12px;
+  border-left: 2px solid rgba(15,23,42,0.06);
+}
+
+/* Cards inside history groups */
+body:has(.dashboard-accordion) .resdash-history-item {
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 14px;
+}
+
+/* Active cards slightly stronger than history cards */
+body:has(.dashboard-accordion) #activeReservations .resdash-item {
+  background: #fff;
+  border: 1px solid rgba(63,102,150,0.12);
+  box-shadow: 0 6px 18px rgba(15,23,42,0.05);
+}
+
+/* History cards a little quieter */
+body:has(.dashboard-accordion) #historyReservations .resdash-item {
+  background: rgba(255,255,255,0.98);
+  border: 1px solid rgba(15,23,42,0.07);
+  box-shadow: none;
+}
+
+/* Better spacing between day groups */
+body:has(.dashboard-accordion) .resdash-daygroup {
+  margin-top: 14px;
+}
+
+/* Head text under Active / History */
+body:has(.dashboard-accordion) .resdash-head p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: rgba(11,18,32,0.55);
+  line-height: 1.45;
+}
+
+/* Make sub-icons feel smaller on nested levels */
+body:has(.dashboard-accordion) .resdash-subtoggle .resdash-subicon {
+  font-size: 17px;
+}
+
+body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
+  font-size: 15px;
+  opacity: 0.75;
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  body:has(.dashboard-accordion) .resdash-subtoggle {
+    padding: 14px 14px;
+    font-size: 14px;
+  }
+
+  body:has(.dashboard-accordion) .resdash-daytoggle {
+    padding: 11px 12px;
+    font-size: 12.5px;
+  }
+
+  body:has(.dashboard-accordion) .resdash-daypanel {
+    padding-left: 10px;
+  }
+}
