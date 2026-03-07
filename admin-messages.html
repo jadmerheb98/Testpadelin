@@ -192,16 +192,6 @@
       <input id="editorDate" type="date" />
     </div>
 
-    <div class="auth-row">
-      <label for="editorCustomerName">Customer Name</label>
-      <input id="editorCustomerName" type="text" placeholder="Full name" autocomplete="off" />
-    </div>
-
-    <div class="auth-row">
-      <label for="editorCustomerPhone">Phone Number</label>
-      <input id="editorCustomerPhone" type="tel" placeholder="+961..." autocomplete="off" />
-    </div>
-
     <div class="table-card" style="margin-top:12px;">
       <table class="table">
         <thead>
@@ -489,13 +479,11 @@
   const overlay = document.getElementById("tableEditorOverlay");
   const drawer = document.getElementById("tableEditorDrawer");
   const dateInput = document.getElementById("editorDate");
-const customerNameInput = document.getElementById("editorCustomerName");
-const customerPhoneInput = document.getElementById("editorCustomerPhone");
-const tableBody = document.getElementById("editorTableBody");
-const saveBtn = document.getElementById("saveTableEditorBtn");
-const msg = document.getElementById("tableEditorMsg");
+  const tableBody = document.getElementById("editorTableBody");
+  const saveBtn = document.getElementById("saveTableEditorBtn");
+  const msg = document.getElementById("tableEditorMsg");
 
-  if (!openBtn || !closeBtn || !overlay || !drawer || !dateInput || !customerNameInput || !customerPhoneInput || !tableBody || !saveBtn) return;
+  if (!openBtn || !closeBtn || !overlay || !drawer || !dateInput || !tableBody || !saveBtn) return;
 
   const START_TIME = "10:00";
   const END_TIME = "24:00";
@@ -675,54 +663,38 @@ const msg = document.getElementById("tableEditorMsg");
   }
 
   async function saveChanges(){
-  try {
-    setMsg("Saving...");
-    const role = (window.padelinAuth?.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "staff";
-    const dateLabel = getSelectedDateLabel();
-    const customerName = (customerNameInput.value || "").trim();
-    const customerPhone = (customerPhoneInput.value || "").trim();
+    try {
+      setMsg("Saving...");
+      const role = (window.padelinAuth?.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "staff";
+      const dateLabel = getSelectedDateLabel();
 
-    const entries = Object.entries(changedStatuses);
+      const entries = Object.entries(changedStatuses);
+      for (const [key, status] of entries) {
+        const [court, timeRange] = key.split("|");
+        const [start, end] = timeRange.split(" - ");
 
-    const needsCustomerInfo = entries.some(([, status]) => status === "pending" || status === "reserved");
+        await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            date: dateLabel,
+            court,
+            start,
+            end,
+            status,
+            updatedBy: role
+          })
+        });
+      }
 
-    if (needsCustomerInfo && (!customerName || !customerPhone)) {
-      setMsg("Enter customer name and phone number for manual pending/reserved slots.", false);
-      return;
+      setMsg("Changes saved.", true);
+      await loadStatuses();
+      renderTable();
+    } catch (e) {
+      console.error(e);
+      setMsg("Failed to save changes.", false);
     }
-
-    for (const [key, status] of entries) {
-      const [court, timeRange] = key.split("|");
-      const [start, end] = timeRange.split(" - ");
-
-      await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: dateLabel,
-          court,
-          start,
-          end,
-          status,
-          updatedBy: role,
-          customerName: status === "available" ? "" : customerName,
-          customerPhone: status === "available" ? "" : customerPhone
-        })
-      });
-    }
-
-    setMsg("Changes saved.", true);
-
-    if (customerNameInput) customerNameInput.value = "";
-    if (customerPhoneInput) customerPhoneInput.value = "";
-
-    await loadStatuses();
-    renderTable();
-  } catch (e) {
-    console.error(e);
-    setMsg("Failed to save changes.", false);
   }
-}
 
   dateInput.value = getLocalISO(new Date());
 
@@ -967,7 +939,7 @@ const msg = document.getElementById("tableEditorMsg");
 
   function startAutoRefresh() {
     if (refreshTimer) clearInterval(refreshTimer);
-    refreshTimer = setInterval(loadReservationsDashboard, 30000);
+    refreshTimer = setInterval(loadReservationsDashboard, 5000);
   }
 
   function setupSubAccordions() {
