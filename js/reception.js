@@ -8,9 +8,9 @@
   }
 
   const tabsWrap = document.querySelector(".reception-tabs");
-  const tabButtons = document.querySelectorAll("[data-tab-btn]");
   const signInForm = document.getElementById("receptionSignInForm");
   const signUpForm = document.getElementById("receptionSignUpForm");
+  const tabButtons = document.querySelectorAll("[data-tab-btn]");
 
   const signInBtn = document.getElementById("receptionSignInBtn");
   const signUpBtn = document.getElementById("receptionSignUpBtn");
@@ -19,6 +19,7 @@
   const goToSigninLink = document.getElementById("goToSigninLink");
 
   const statusBox = document.getElementById("receptionStatus");
+
   const signedState = document.getElementById("receptionSignedState");
   const signedUserName = document.getElementById("signedUserName");
   const signedUserEmail = document.getElementById("signedUserEmail");
@@ -26,7 +27,6 @@
 
   const rewardsSection = document.getElementById("receptionRewardsSection");
   const seeRewardsBtn = document.getElementById("seeRewardsBtn");
-  const seeRewardsNote = document.getElementById("seeRewardsNote");
 
   const rewardPopup = document.getElementById("rewardPopup");
   const rewardPopupBackdrop = document.getElementById("rewardPopupBackdrop");
@@ -59,10 +59,16 @@
 
   function showStatus(message, type) {
     if (!statusBox) return;
+
+    if (type === "success") {
+      statusBox.textContent = "";
+      statusBox.className = "reception-status";
+      return;
+    }
+
     statusBox.textContent = message;
     statusBox.className = "reception-status is-visible";
     if (type === "error") statusBox.classList.add("is-error");
-    if (type === "success") statusBox.classList.add("is-success");
   }
 
   function hideStatus() {
@@ -122,9 +128,6 @@
       seeRewardsBtn.disabled = false;
       seeRewardsBtn.textContent = "See rewards";
     }
-    if (seeRewardsNote) {
-      seeRewardsNote.textContent = "Rewards preview not opened yet.";
-    }
   }
 
   function renderSignedInState(user) {
@@ -143,6 +146,8 @@
   function renderSignedOutState() {
     signedState.classList.remove("is-visible");
     resetRewardsUI();
+    hideStatus();
+
     if (tabsWrap) tabsWrap.style.display = "grid";
     setActiveTab("signin");
   }
@@ -184,7 +189,6 @@
 
       setLocalUser(cred.user);
       renderSignedInState(cred.user);
-      showStatus("Signed in successfully.", "success");
       openRewardPopup();
     } catch (err) {
       showStatus(err.message || "Could not sign in.", "error");
@@ -232,7 +236,6 @@
 
       setLocalUser(auth.currentUser || cred.user);
       renderSignedInState(auth.currentUser || cred.user);
-      showStatus("Account created successfully.", "success");
       openRewardPopup();
     } catch (err) {
       showStatus(err.message || "Could not create account.", "error");
@@ -244,10 +247,7 @@
   if (seeRewardsBtn) {
     seeRewardsBtn.addEventListener("click", () => {
       seeRewardsBtn.disabled = true;
-      seeRewardsBtn.textContent = "Rewards opened";
-      if (seeRewardsNote) {
-        seeRewardsNote.textContent = "Rewards preview opened successfully.";
-      }
+      seeRewardsBtn.textContent = "Rewards coming soon";
     });
   }
 
@@ -256,7 +256,6 @@
       try {
         await auth.signOut();
         localStorage.removeItem("padelinUser");
-        hideStatus();
         renderSignedOutState();
       } catch (err) {
         showStatus(err.message || "Could not sign out.", "error");
