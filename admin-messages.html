@@ -793,12 +793,13 @@
 
        <div class="resdash-grid">
   <div><strong>Booking ID:</strong> ${esc(item.bookingId || "—")}</div>
-  <div><strong>Name:</strong> ${esc(item.customerName || "—")}</div>
-  <div><strong>Phone:</strong> ${esc(item.customerPhone || "—")}</div>
+  <div><strong>Name:</strong> ${esc(item.name || "—")}</div>
+  <div><strong>Phone:</strong> ${esc(item.phone || "—")}</div>
   <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
   <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
   <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
-  <div><strong>Status:</strong> ${esc(item.newStatus || "—")}</div>
+  <div><strong>Status:</strong> ${esc(item.status || "—")}</div>
+  <div><strong>Updated by:</strong> ${esc(item.actor || "—")}</div>
 </div>
       `;
 
@@ -877,15 +878,14 @@
           </div>
 
           <div class="resdash-grid">
-            <div><strong>Booking ID:</strong> ${esc(item.bookingId || "—")}</div>
-            <div><strong>Name:</strong> ${esc(item.customerName || "—")}</div>
-            <div><strong>Phone:</strong> ${esc(item.customerPhone || "—")}</div>
-            <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
-            <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
-            <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
-            <div><strong>Previous:</strong> ${esc(item.previousStatus || "—")}</div>
-            <div><strong>New:</strong> ${esc(item.newStatus || "—")}</div>
-          </div>
+  <div><strong>Booking ID:</strong> ${esc(item.bookingId || "—")}</div>
+  <div><strong>Name:</strong> ${esc(item.customerName || "—")}</div>
+  <div><strong>Phone:</strong> ${esc(item.customerPhone || "—")}</div>
+  <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
+  <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
+  <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
+  <div><strong>Status:</strong> ${esc(item.newStatus || "—")}</div>
+</div>
         `;
 
         panel.appendChild(row);
