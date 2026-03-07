@@ -187,10 +187,7 @@
   </div>
 
   <div class="dash-editor-body">
-    <div class="auth-row">
-      <label for="editorDate">Date</label>
-      <input id="editorDate" type="date" />
-    </div>
+   <div class="auth-row">
 
     <div class="table-card" style="margin-top:12px;">
       <table class="table">
@@ -479,11 +476,13 @@
   const overlay = document.getElementById("tableEditorOverlay");
   const drawer = document.getElementById("tableEditorDrawer");
   const dateInput = document.getElementById("editorDate");
-  const tableBody = document.getElementById("editorTableBody");
-  const saveBtn = document.getElementById("saveTableEditorBtn");
-  const msg = document.getElementById("tableEditorMsg");
+const customerNameInput = document.getElementById("editorCustomerName");
+const customerPhoneInput = document.getElementById("editorCustomerPhone");
+const tableBody = document.getElementById("editorTableBody");
+const saveBtn = document.getElementById("saveTableEditorBtn");
+const msg = document.getElementById("tableEditorMsg");
 
-  if (!openBtn || !closeBtn || !overlay || !drawer || !dateInput || !tableBody || !saveBtn) return;
+  if (!openBtn || !closeBtn || !overlay || !drawer || !dateInput || !customerNameInput || !customerPhoneInput || !tableBody || !saveBtn) return;
 
   const START_TIME = "10:00";
   const END_TIME = "24:00";
@@ -663,38 +662,54 @@
   }
 
   async function saveChanges(){
-    try {
-      setMsg("Saving...");
-      const role = (window.padelinAuth?.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "staff";
-      const dateLabel = getSelectedDateLabel();
+  try {
+    setMsg("Saving...");
+    const role = (window.padelinAuth?.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "staff";
+    const dateLabel = getSelectedDateLabel();
+    const customerName = (customerNameInput.value || "").trim();
+    const customerPhone = (customerPhoneInput.value || "").trim();
 
-      const entries = Object.entries(changedStatuses);
-      for (const [key, status] of entries) {
-        const [court, timeRange] = key.split("|");
-        const [start, end] = timeRange.split(" - ");
+    const entries = Object.entries(changedStatuses);
 
-        await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            date: dateLabel,
-            court,
-            start,
-            end,
-            status,
-            updatedBy: role
-          })
-        });
-      }
+    const needsCustomerInfo = entries.some(([, status]) => status === "pending" || status === "reserved");
 
-      setMsg("Changes saved.", true);
-      await loadStatuses();
-      renderTable();
-    } catch (e) {
-      console.error(e);
-      setMsg("Failed to save changes.", false);
+    if (needsCustomerInfo && (!customerName || !customerPhone)) {
+      setMsg("Enter customer name and phone number for manual pending/reserved slots.", false);
+      return;
     }
+
+    for (const [key, status] of entries) {
+      const [court, timeRange] = key.split("|");
+      const [start, end] = timeRange.split(" - ");
+
+      await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          date: dateLabel,
+          court,
+          start,
+          end,
+          status,
+          updatedBy: role,
+          customerName: status === "available" ? "" : customerName,
+          customerPhone: status === "available" ? "" : customerPhone
+        })
+      });
+    }
+
+    setMsg("Changes saved.", true);
+
+    if (customerNameInput) customerNameInput.value = "";
+    if (customerPhoneInput) customerPhoneInput.value = "";
+
+    await loadStatuses();
+    renderTable();
+  } catch (e) {
+    console.error(e);
+    setMsg("Failed to save changes.", false);
   }
+}
 
   dateInput.value = getLocalISO(new Date());
 
