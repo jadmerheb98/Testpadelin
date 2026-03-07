@@ -127,6 +127,13 @@ function renderRewardPopupPoints() {
   
   function openRewardPopup() {
   if (!rewardPopup || !rewardPopupBackdrop) return;
+
+  const earned = Number(localStorage.getItem("padelinReceptionEarnedPoints") || "0");
+  if (earned <= 0) {
+    if (rewardsSection) rewardsSection.classList.add("is-visible");
+    return;
+  }
+
   renderRewardPopupPoints();
   rewardPopup.classList.add("is-open");
   rewardPopupBackdrop.classList.add("is-open");
@@ -266,6 +273,15 @@ try {
   }
 } catch {}
 
+if (!profilePhone) {
+  localStorage.setItem("padelinReceptionEarnedPoints", "0");
+  localStorage.setItem("padelinRewardPoints", localStorage.getItem("padelinRewardPoints") || "0");
+  setLocalUser(cred.user, { phone: "" });
+  renderSignedInState(cred.user);
+  if (rewardsSection) rewardsSection.classList.add("is-visible");
+  return;
+}
+
 const claim = await claimReceptionPointsByPhone(profilePhone);
 
 localStorage.setItem("padelinReceptionEarnedPoints", String(claim.earnedPoints || 0));
@@ -275,7 +291,9 @@ localStorage.setItem("padelinRewardPoints", String(nextTotal));
 
 setLocalUser(cred.user, { phone: profilePhone });
 renderSignedInState(cred.user);
-openRewardPopup();
+
+if ((claim.earnedPoints || 0) > 0) openRewardPopup();
+else if (rewardsSection) rewardsSection.classList.add("is-visible");
     } catch (err) {
       showStatus(err.message || "Could not sign in.", "error");
     } finally {
@@ -330,7 +348,9 @@ localStorage.setItem("padelinRewardPoints", String(nextTotal));
 
 setLocalUser(currentUser, { phone });
 renderSignedInState(currentUser);
-openRewardPopup();
+
+if ((claim.earnedPoints || 0) > 0) openRewardPopup();
+else if (rewardsSection) rewardsSection.classList.add("is-visible");
     } catch (err) {
       showStatus(err.message || "Could not create account.", "error");
     } finally {
