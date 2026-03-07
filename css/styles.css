@@ -2753,3 +2753,104 @@ body:has(.dashboard-accordion) .resdash-time {
     grid-template-columns: 1fr;
   }
 }
+/* ===========================
+   Reservations dashboard upgrade
+   Admin page only
+   =========================== */
+
+body:has(.dashboard-accordion) .resdash-subtoggle,
+body:has(.dashboard-accordion) .resdash-daytoggle {
+  width: 100%;
+  border: 0;
+  background: rgba(15,23,42,0.02);
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  text-align: left;
+}
+
+body:has(.dashboard-accordion) .resdash-subtoggle:hover,
+body:has(.dashboard-accordion) .resdash-daytoggle:hover {
+  background: rgba(15,23,42,0.04);
+}
+
+body:has(.dashboard-accordion) .resdash-subicon {
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+body:has(.dashboard-accordion) .resdash-subtoggle.is-open .resdash-subicon,
+body:has(.dashboard-accordion) .resdash-daytoggle.is-open .resdash-subicon {
+  transform: rotate(180deg);
+}
+
+body:has(.dashboard-accordion) .resdash-subpanel,
+body:has(.dashboard-accordion) .resdash-daypanel {
+  display: none;
+}
+
+body:has(.dashboard-accordion) .resdash-subpanel.is-open,
+body:has(.dashboard-accordion) .resdash-daypanel.is-open {
+  display: block;
+}
+
+body:has(.dashboard-accordion) .resdash-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+body:has(.dashboard-accordion) .resdash-sort {
+  display: grid;
+  gap: 6px;
+  min-width: 170px;
+}
+
+body:has(.dashboard-accordion) .resdash-sort label {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.70);
+}
+
+body:has(.dashboard-accordion) .resdash-sort select {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.12);
+  background: #fff;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+  outline: none;
+}
+
+body:has(.dashboard-accordion) .resdash-daygroup {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+body:has(.dashboard-accordion) .resdash-history-item {
+  margin-top: 10px;
+}
+
+@media (max-width: 520px) {
+  body:has(.dashboard-accordion) .resdash-toolbar {
+    align-items: stretch;
+  }
+
+  body:has(.dashboard-accordion) .resdash-sort {
+    min-width: 100%;
+  }
+}
