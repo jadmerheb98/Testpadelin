@@ -10,340 +10,146 @@
     body.reception-page{
       min-height:100vh;
       background:
-        radial-gradient(1200px 700px at 0% 0%, rgba(63,102,150,0.22), transparent 55%),
-        radial-gradient(900px 600px at 100% 10%, rgba(15,23,42,0.18), transparent 58%),
-        linear-gradient(180deg, #f8fafc 0%, #eef3f9 100%);
+        radial-gradient(900px 500px at 0% 0%, rgba(63,102,150,0.20), transparent 55%),
+        radial-gradient(800px 480px at 100% 0%, rgba(15,23,42,0.16), transparent 58%),
+        linear-gradient(180deg, #f8fafc 0%, #edf3f9 100%);
     }
 
     .reception-page .reception-main{
-      padding: 28px 0 56px;
+      padding: 24px 0 56px;
     }
 
     .reception-page .reception-shell{
-      width: min(1100px, calc(100% - 32px));
+      width: min(760px, calc(100% - 24px));
       margin: 0 auto;
       display: grid;
       gap: 18px;
     }
 
-    .reception-page .reception-hero{
-      position: relative;
-      overflow: hidden;
-      border-radius: 28px;
-      padding: 24px;
-      background:
-        linear-gradient(135deg, rgba(15,23,42,0.96), rgba(24,39,67,0.94)),
-        linear-gradient(180deg, rgba(63,102,150,0.16), rgba(63,102,150,0.04));
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 26px 70px rgba(15,23,42,0.20);
-      isolation: isolate;
-    }
-
-    .reception-page .reception-hero::before{
-      content:"";
-      position:absolute;
-      inset:auto -80px -120px auto;
-      width: 340px;
-      height: 340px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(99,155,255,0.30), transparent 62%);
-      z-index:-1;
-    }
-
-    .reception-page .reception-hero::after{
-      content:"";
-      position:absolute;
-      inset:-120px auto auto -100px;
-      width: 280px;
-      height: 280px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 68%);
-      z-index:-1;
-    }
-
-    .reception-page .reception-brand-row{
+    .reception-page .reception-top{
       display:flex;
+      justify-content:center;
       align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom: 18px;
+      padding-top: 4px;
     }
 
-    .reception-page .reception-brand{
+    .reception-page .reception-logo{
       display:inline-flex;
       align-items:center;
-      gap:14px;
+      justify-content:center;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: 0 16px 36px rgba(15,23,42,0.08);
+      backdrop-filter: blur(8px);
     }
 
-    .reception-page .reception-brand img{
+    .reception-page .reception-logo img{
       height: 42px;
       width: auto;
       display:block;
     }
 
-    .reception-page .reception-chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      min-height: 42px;
-      padding: 0 14px;
+    .reception-page .reception-card{
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.90));
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow:
+        0 26px 70px rgba(15,23,42,0.10),
+        inset 0 1px 0 rgba(255,255,255,0.72);
+      backdrop-filter: blur(14px);
+    }
+
+    .reception-page .reception-card::before{
+      content:"";
+      position:absolute;
+      width: 300px;
+      height: 300px;
+      right: -90px;
+      top: -120px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.92);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: .2px;
-      white-space: nowrap;
+      background: radial-gradient(circle, rgba(70,118,179,0.12), transparent 65%);
+      pointer-events:none;
     }
 
-    .reception-page .reception-hero-grid{
-      display:grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .reception-page .reception-copy h1{
-      margin: 0 0 12px;
-      font-size: clamp(34px, 5vw, 58px);
-      line-height: 0.98;
-      letter-spacing: -0.03em;
-      max-width: 11ch;
-    }
-
-    .reception-page .reception-copy p{
-      margin: 0;
-      max-width: 44ch;
-      font-size: 17px;
-      line-height: 1.65;
-      color: rgba(255,255,255,0.82);
-    }
-
-    .reception-page .reception-points-strip{
-      margin-top: 18px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .reception-page .reception-mini-pill{
-      min-height: 42px;
-      padding: 0 14px;
+    .reception-page .reception-card::after{
+      content:"";
+      position:absolute;
+      width: 240px;
+      height: 240px;
+      left: -90px;
+      bottom: -120px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
+      background: radial-gradient(circle, rgba(15,23,42,0.06), transparent 68%);
+      pointer-events:none;
+    }
+
+    .reception-page .reception-card-inner{
+      position: relative;
+      z-index: 1;
+      padding: 26px;
+    }
+
+    .reception-page .reception-head{
+      text-align:center;
+      margin-bottom: 20px;
+    }
+
+    .reception-page .reception-kicker{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      color: rgba(255,255,255,0.92);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .reception-page .reception-visual{
-      display:grid;
-      gap:14px;
-      align-content: end;
-    }
-
-    .reception-page .reception-glass-card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.05));
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 24px;
-      padding: 18px;
-      backdrop-filter: blur(8px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
-    }
-
-    .reception-page .reception-glass-title{
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.66);
-      margin-bottom: 8px;
-    }
-
-    .reception-page .reception-big-points{
-      display:flex;
-      align-items:flex-end;
-      gap:10px;
-      line-height:1;
-    }
-
-    .reception-page .reception-big-points .num{
-      font-size: clamp(42px, 7vw, 74px);
-      font-weight: 1000;
-      color: #fff;
-      letter-spacing: -0.05em;
-      text-shadow: 0 14px 30px rgba(0,0,0,0.24);
-    }
-
-    .reception-page .reception-big-points .lbl{
-      font-size: 16px;
-      font-weight: 900;
-      color: rgba(255,255,255,0.76);
-      margin-bottom: 10px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .reception-page .reception-glass-sub{
-      margin-top: 10px;
-      color: rgba(255,255,255,0.78);
-      font-size: 14px;
-      line-height: 1.55;
-      font-weight: 650;
-    }
-
-    .reception-page .reception-total-card{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .reception-page .reception-stat{
-      border-radius: 18px;
-      padding: 14px 12px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.10);
-      text-align:center;
-    }
-
-    .reception-page .reception-stat .k{
-      display:block;
-      font-size: 11px;
-      color: rgba(255,255,255,0.60);
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(70,118,179,0.10);
+      border: 1px solid rgba(70,118,179,0.15);
+      color: #355a89;
+      font-size: 12px;
       font-weight: 900;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
     }
 
-    .reception-page .reception-stat .v{
-      display:block;
-      font-size: 22px;
-      color: #fff;
-      font-weight: 950;
-      letter-spacing: -0.03em;
+    .reception-page .reception-head h1{
+      margin: 0 0 8px;
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: #0b1220;
     }
 
-    .reception-page .reception-grid{
-      display:grid;
-      grid-template-columns: minmax(0, 1fr) minmax(360px, 430px);
-      gap: 18px;
-      align-items:start;
-    }
-
-    .reception-page .reception-panel{
-      border-radius: 28px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(255,255,255,0.75);
-      box-shadow: 0 26px 70px rgba(15,23,42,0.10);
-      backdrop-filter: blur(12px);
-      overflow: hidden;
-    }
-
-    .reception-page .reception-panel-inner{
-      padding: 22px;
-    }
-
-    .reception-page .reception-info-grid{
-      display:grid;
-      gap:14px;
-    }
-
-    .reception-page .reception-info-card{
-      border-radius: 22px;
-      background: #fff;
-      border: 1px solid rgba(15,23,42,0.08);
-      box-shadow: 0 12px 30px rgba(15,23,42,0.06);
-      padding: 18px;
-    }
-
-    .reception-page .reception-info-card h2,
-    .reception-page .reception-auth-head h2{
-      margin:0 0 6px;
-      font-size: 24px;
-      letter-spacing: -0.02em;
-    }
-
-    .reception-page .reception-info-card p,
-    .reception-page .reception-auth-head p{
-      margin:0;
-      color: rgba(11,18,32,0.68);
-      line-height:1.6;
-      font-size: 14px;
-    }
-
-    .reception-page .reception-benefits{
-      margin-top: 14px;
-      display:grid;
-      gap:10px;
-    }
-
-    .reception-page .reception-benefit{
-      display:grid;
-      grid-template-columns: 46px 1fr;
-      gap:12px;
-      align-items:center;
-      padding: 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(15,23,42,0.08);
-      background: rgba(15,23,42,0.02);
-    }
-
-    .reception-page .reception-benefit-icon{
-      width: 46px;
-      height: 46px;
-      border-radius: 16px;
-      display:grid;
-      place-items:center;
-      background: rgba(63,102,150,0.10);
-      border: 1px solid rgba(63,102,150,0.20);
-      font-size: 20px;
-    }
-
-    .reception-page .reception-benefit-title{
-      font-weight: 900;
-      margin-bottom: 2px;
-    }
-
-    .reception-page .reception-benefit-text{
-      color: rgba(11,18,32,0.68);
-      font-size: 14px;
-      line-height:1.5;
-    }
-
-    .reception-page .reception-auth-panel{
-      position: sticky;
-      top: 86px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.88));
-    }
-
-    .reception-page .reception-auth-head{
-      margin-bottom: 18px;
+    .reception-page .reception-head p{
+      margin: 0 auto;
+      max-width: 42ch;
+      color: rgba(11,18,32,0.66);
+      font-size: 15px;
+      line-height: 1.65;
+      font-weight: 700;
     }
 
     .reception-page .reception-tabs{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:8px;
+      gap: 8px;
       padding: 8px;
-      border-radius: 20px;
+      border-radius: 22px;
       background: rgba(15,23,42,0.05);
       border: 1px solid rgba(15,23,42,0.08);
       margin-bottom: 18px;
     }
 
     .reception-page .reception-tab{
-      min-height: 56px;
+      min-height: 58px;
       border: 0;
       border-radius: 16px;
       background: transparent;
-      color: rgba(11,18,32,0.62);
+      color: rgba(11,18,32,0.60);
       font-size: 15px;
       font-weight: 900;
       cursor: pointer;
@@ -353,12 +159,12 @@
     .reception-page .reception-tab.is-active{
       background: linear-gradient(180deg, #ffffff, #f4f7fb);
       color: #0b1220;
-      box-shadow: 0 10px 22px rgba(15,23,42,0.08);
+      box-shadow: 0 12px 24px rgba(15,23,42,0.08);
     }
 
     .reception-page .reception-form{
       display:none;
-      gap:12px;
+      gap: 12px;
     }
 
     .reception-page .reception-form.is-active{
@@ -367,7 +173,7 @@
 
     .reception-page .reception-field{
       display:grid;
-      gap:8px;
+      gap: 8px;
     }
 
     .reception-page .reception-field label{
@@ -379,48 +185,53 @@
 
     .reception-page .reception-input{
       width:100%;
-      min-height: 58px;
+      min-height: 60px;
       border-radius: 18px;
       border: 1px solid rgba(15,23,42,0.10);
-      background: #fff;
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
       color: #0b1220;
       padding: 0 16px;
       outline:none;
       transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.8), 0 8px 18px rgba(15,23,42,0.03);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.9),
+        0 10px 22px rgba(15,23,42,0.04);
     }
 
     .reception-page .reception-input:focus{
-      border-color: rgba(63,102,150,0.62);
-      box-shadow: 0 0 0 4px rgba(63,102,150,0.12), 0 10px 24px rgba(15,23,42,0.06);
-    }
-
-    .reception-page .reception-help{
-      font-size: 12px;
-      color: rgba(11,18,32,0.55);
-      font-weight: 700;
-      padding-left: 2px;
+      border-color: rgba(63,102,150,0.58);
+      box-shadow:
+        0 0 0 4px rgba(63,102,150,0.12),
+        0 14px 26px rgba(15,23,42,0.07);
     }
 
     .reception-page .reception-row-2{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:12px;
+      gap: 12px;
+    }
+
+    .reception-page .reception-help{
+      text-align:center;
+      font-size: 12px;
+      color: rgba(11,18,32,0.55);
+      font-weight: 700;
+      margin-top: 2px;
     }
 
     .reception-page .reception-submit{
-      min-height: 60px;
-      border:0;
-      border-radius: 18px;
+      min-height: 62px;
+      border: 0;
+      border-radius: 20px;
       background: linear-gradient(180deg, #4676b3, #355a89);
       color: #fff;
       font-size: 16px;
       font-weight: 950;
       letter-spacing: .02em;
-      cursor:pointer;
-      box-shadow: 0 18px 34px rgba(63,102,150,0.28);
+      cursor: pointer;
+      box-shadow: 0 20px 36px rgba(63,102,150,0.28);
       transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     .reception-page .reception-submit:hover{
@@ -429,7 +240,7 @@
     }
 
     .reception-page .reception-submit:disabled{
-      opacity: .65;
+      opacity: .7;
       cursor:not-allowed;
       transform:none;
       box-shadow:none;
@@ -454,7 +265,7 @@
 
     .reception-page .reception-status{
       display:none;
-      margin-top: 4px;
+      margin-top: 6px;
       padding: 14px 16px;
       border-radius: 16px;
       font-size: 14px;
@@ -483,7 +294,8 @@
 
     .reception-page .reception-signed{
       display:none;
-      gap:14px;
+      gap: 14px;
+      margin-top: 10px;
     }
 
     .reception-page .reception-signed.is-visible{
@@ -518,147 +330,140 @@
       font-weight: 1000;
       letter-spacing: -0.03em;
       margin-bottom: 4px;
+      color: #0b1220;
     }
 
     .reception-page .reception-signed-email{
       color: rgba(11,18,32,0.68);
       font-weight: 700;
-      margin-bottom: 12px;
       word-break: break-word;
     }
 
-    .reception-page .reception-signed-copy{
-      color: rgba(11,18,32,0.76);
-      line-height:1.6;
-      font-size: 14px;
-      margin:0;
-    }
-
-    .reception-page .reception-rewards-panel{
+    .reception-page .reception-rewards{
       display:none;
-      border-radius: 22px;
-      padding: 18px;
+      border-radius: 28px;
       background:
-        linear-gradient(180deg, rgba(70,118,179,0.12), rgba(70,118,179,0.05));
-      border: 1px solid rgba(70,118,179,0.18);
-      box-shadow: 0 18px 34px rgba(53,90,137,0.08);
-      gap: 14px;
+        linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.88));
+      border: 1px solid rgba(255,255,255,0.86);
+      box-shadow:
+        0 24px 56px rgba(15,23,42,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.70);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
     }
 
-    .reception-page .reception-rewards-panel.is-visible{
-      display:grid;
+    .reception-page .reception-rewards.is-visible{
+      display:block;
+    }
+
+    .reception-page .reception-rewards-inner{
+      padding: 24px;
     }
 
     .reception-page .reception-rewards-head{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
+      gap: 14px;
+      margin-bottom: 16px;
     }
 
-    .reception-page .reception-rewards-head h3{
-      margin:0;
-      font-size: 22px;
-      letter-spacing: -0.02em;
+    .reception-page .reception-rewards-head h2{
+      margin:0 0 4px;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      color: #0b1220;
     }
 
     .reception-page .reception-rewards-head p{
-      margin:4px 0 0;
-      color: rgba(11,18,32,0.66);
+      margin:0;
+      color: rgba(11,18,32,0.64);
       font-size: 14px;
+      line-height: 1.6;
       font-weight: 700;
     }
 
-    .reception-page .reception-rewards-badge{
+    .reception-page .reception-badge{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       min-height: 38px;
       padding: 0 14px;
       border-radius: 999px;
-      background: rgba(70,118,179,0.12);
-      border: 1px solid rgba(70,118,179,0.18);
+      background: rgba(70,118,179,0.10);
+      border: 1px solid rgba(70,118,179,0.16);
+      color: #355a89;
       font-size: 12px;
       font-weight: 900;
       letter-spacing: 1.4px;
       text-transform: uppercase;
-      color: #355a89;
       white-space: nowrap;
     }
 
-    .reception-page .reception-rewards-stats{
+    .reception-page .reception-rewards-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:12px;
+      gap: 14px;
+      margin-bottom: 14px;
     }
 
-    .reception-page .reception-reward-stat{
-      border-radius: 18px;
-      padding: 16px;
+    .reception-page .reception-points-card{
+      border-radius: 22px;
+      padding: 18px;
       background: #fff;
       border: 1px solid rgba(15,23,42,0.08);
-      box-shadow: 0 12px 24px rgba(15,23,42,0.05);
+      box-shadow: 0 12px 26px rgba(15,23,42,0.05);
     }
 
-    .reception-page .reception-reward-stat .label{
+    .reception-page .reception-points-card .label{
       display:block;
+      margin-bottom: 8px;
       font-size: 12px;
       color: rgba(11,18,32,0.56);
       font-weight: 900;
-      letter-spacing: 1.6px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 8px;
     }
 
-    .reception-page .reception-reward-stat .value{
+    .reception-page .reception-points-card .value{
       display:block;
-      font-size: 34px;
+      font-size: clamp(34px, 7vw, 52px);
       line-height: 1;
       font-weight: 1000;
       letter-spacing: -0.05em;
       color: #0b1220;
     }
 
-    .reception-page .reception-reward-stat.today .value{
+    .reception-page .reception-points-card.today .value{
       color: #355a89;
     }
 
-    .reception-page .reception-collect-btn{
-      min-height: 58px;
+    .reception-page .reception-rewards-btn{
+      min-height: 60px;
+      width: 100%;
       border: 0;
-      border-radius: 18px;
+      border-radius: 20px;
       background: linear-gradient(180deg, #0f172a, #1b2a48);
       color: #fff;
       font-size: 16px;
       font-weight: 950;
       letter-spacing: .02em;
       cursor: pointer;
-      box-shadow: 0 18px 34px rgba(15,23,42,0.20);
+      box-shadow: 0 18px 34px rgba(15,23,42,0.18);
       transition: transform 160ms ease, filter 160ms ease;
     }
 
-    .reception-page .reception-collect-btn:hover{
+    .reception-page .reception-rewards-btn:hover{
       transform: translateY(-1px);
       filter: brightness(1.03);
     }
 
-    .reception-page .reception-collect-btn:disabled{
-      opacity:.7;
-      cursor:not-allowed;
-      transform:none;
-      box-shadow:none;
-    }
-
-    .reception-page .reception-collect-note{
+    .reception-page .reception-rewards-note{
+      margin-top: 12px;
       text-align:center;
       font-size: 13px;
       color: rgba(11,18,32,0.60);
       font-weight: 700;
-    }
-
-    .reception-page .reception-signed-actions{
-      display:grid;
-      gap:10px;
     }
 
     .reception-page .reception-secondary{
@@ -860,311 +665,158 @@
       border: 1px solid rgba(255,255,255,0.12);
     }
 
-    @media (max-width: 980px){
-      .reception-page .reception-hero-grid,
-      .reception-page .reception-grid{
-        grid-template-columns: 1fr;
-      }
-
-      .reception-page .reception-auth-panel{
-        position: static;
-      }
-    }
-
     @media (max-width: 720px){
-      .reception-page .reception-brand-row{
-        flex-direction: column;
-        align-items:flex-start;
-      }
-
-      .reception-page .reception-row-2,
-      .reception-page .reception-rewards-stats{
-        grid-template-columns: 1fr;
-      }
-
-      .reception-page .reception-total-card{
-        grid-template-columns: 1fr;
-      }
-
-      .reception-page .reception-hero,
-      .reception-page .reception-panel{
-        border-radius: 22px;
-      }
-
-      .reception-page .reception-panel-inner{
+      .reception-page .reception-card-inner,
+      .reception-page .reception-rewards-inner{
         padding: 18px;
       }
 
-      .reception-page .reception-copy h1{
-        max-width: none;
+      .reception-page .reception-row-2,
+      .reception-page .reception-rewards-grid{
+        grid-template-columns: 1fr;
       }
 
       .reception-page .reception-rewards-head{
-        align-items:flex-start;
         flex-direction:column;
+        align-items:flex-start;
       }
     }
   </style>
 </head>
 <body class="reception-page">
-  <header class="header">
-    <div class="container header-inner header-gd">
-      <div class="header-left">
-        <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
-          <div class="hamburger-lines" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
-        </button>
-
-        <a class="brand" href="#" aria-label="PADELIN">
-          <img src="assets/img/logo.png" alt="PADELIN Logo" />
-        </a>
-      </div>
-
-      <div class="header-right"></div>
-    </div>
-  </header>
-
-  <div class="overlay" data-overlay></div>
-
-  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
-    <div class="side-menu-header">
-      <div class="side-menu-title">Menu</div>
-      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
-    </div>
-
-    <div class="side-links">
-      <a href="reservation.html">Reserve</a>
-      <a href="membership.html">Membership</a>
-      <a href="login.html">Main Login</a>
-    </div>
-  </aside>
-
   <main class="reception-main">
     <div class="reception-shell">
-      <section class="reception-hero">
-        <div class="reception-brand-row">
-          <div class="reception-brand">
-            <img src="assets/img/logo.png" alt="PADELIN Logo" />
-          </div>
-          <div class="reception-chip">Reception Check-In</div>
+      <div class="reception-top">
+        <div class="reception-logo">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
         </div>
+      </div>
 
-        <div class="reception-hero-grid">
-          <div class="reception-copy">
-            <h1>Your game starts here.</h1>
+      <section class="reception-card">
+        <div class="reception-card-inner">
+          <div class="reception-head">
+            <div class="reception-kicker">Reception Check-In</div>
+            <h1>Check in for today’s play</h1>
             <p>
-              Sign in or create your PADELIN account in seconds at reception.
-              After check-in, customers can view today’s points, total points,
-              and collect their reward on the same screen.
+              Sign in with your PADELIN account or create one now in a few seconds.
             </p>
-
-            <div class="reception-points-strip">
-              <div class="reception-mini-pill">Fast sign in</div>
-              <div class="reception-mini-pill">Real website account</div>
-              <div class="reception-mini-pill">Tablet friendly</div>
-            </div>
           </div>
 
-          <div class="reception-visual">
-            <div class="reception-glass-card">
-              <div class="reception-glass-title">Today’s reward preview</div>
-              <div class="reception-big-points">
-                <div class="num">+6</div>
-                <div class="lbl">pts</div>
+          <div class="reception-tabs" role="tablist" aria-label="Account options">
+            <button
+              type="button"
+              class="reception-tab is-active"
+              data-tab-btn="signin"
+              role="tab"
+              aria-selected="true"
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              class="reception-tab"
+              data-tab-btn="signup"
+              role="tab"
+              aria-selected="false"
+            >
+              Sign Up
+            </button>
+          </div>
+
+          <form id="receptionSignInForm" class="reception-form is-active" novalidate>
+            <div class="reception-field">
+              <label for="receptionSignInEmail">Email</label>
+              <input class="reception-input" id="receptionSignInEmail" type="email" autocomplete="email" placeholder="you@email.com" required />
+            </div>
+
+            <div class="reception-field">
+              <label for="receptionSignInPassword">Password</label>
+              <input class="reception-input" id="receptionSignInPassword" type="password" autocomplete="current-password" placeholder="Your password" required />
+            </div>
+
+            <button id="receptionSignInBtn" class="reception-submit" type="submit">Sign In</button>
+
+            <div class="reception-alt">
+              <button type="button" class="reception-link" id="goToSignupLink">Need an account? Create one</button>
+            </div>
+          </form>
+
+          <form id="receptionSignUpForm" class="reception-form" novalidate>
+            <div class="reception-field">
+              <label for="receptionName">Full name</label>
+              <input class="reception-input" id="receptionName" type="text" autocomplete="name" placeholder="Your full name" required />
+            </div>
+
+            <div class="reception-field">
+              <label for="receptionPhone">Phone number</label>
+              <input class="reception-input" id="receptionPhone" type="tel" autocomplete="tel" placeholder="+961 00 000 000" required />
+            </div>
+
+            <div class="reception-field">
+              <label for="receptionEmail">Email</label>
+              <input class="reception-input" id="receptionEmail" type="email" autocomplete="email" placeholder="you@email.com" required />
+            </div>
+
+            <div class="reception-row-2">
+              <div class="reception-field">
+                <label for="receptionPassword">Password</label>
+                <input class="reception-input" id="receptionPassword" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" minlength="8" required />
               </div>
-              <div class="reception-glass-sub">
-                A smooth sign-in flow with a polished reward moment, designed for reception.
+
+              <div class="reception-field">
+                <label for="receptionConfirmPassword">Confirm password</label>
+                <input class="reception-input" id="receptionConfirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter password" minlength="8" required />
               </div>
             </div>
 
-            <div class="reception-total-card">
-              <div class="reception-stat">
-                <span class="k">Today</span>
-                <span class="v">+6</span>
-              </div>
-              <div class="reception-stat">
-                <span class="k">Total</span>
-                <span class="v">124</span>
-              </div>
-              <div class="reception-stat">
-                <span class="k">Collect</span>
-                <span class="v">🎁</span>
-              </div>
+            <div class="reception-help">This creates a real account that also works on the website.</div>
+
+            <button id="receptionSignUpBtn" class="reception-submit" type="submit">Create Account</button>
+
+            <div class="reception-alt">
+              <button type="button" class="reception-link" id="goToSigninLink">Already have an account? Sign in</button>
             </div>
+          </form>
+
+          <div id="receptionStatus" class="reception-status" aria-live="polite"></div>
+
+          <div id="receptionSignedState" class="reception-signed" aria-live="polite">
+            <div class="reception-signed-card">
+              <div class="reception-signed-badge">Signed in successfully</div>
+              <div class="reception-signed-name" id="signedUserName">Welcome</div>
+              <div class="reception-signed-email" id="signedUserEmail"></div>
+            </div>
+
+            <button type="button" class="reception-secondary" id="signOutReceptionBtn">Sign out</button>
           </div>
         </div>
       </section>
 
-      <section class="reception-grid">
-        <div class="reception-panel">
-          <div class="reception-panel-inner">
-            <div class="reception-info-grid">
-              <div class="reception-info-card">
-                <h2>Quick rewards preview</h2>
-                <p>
-                  Customers can sign in or create an account, see a reward popup,
-                  then view today’s points and total points before collecting their reward.
-                </p>
+      <section id="receptionRewardsSection" class="reception-rewards">
+        <div class="reception-rewards-inner">
+          <div class="reception-rewards-head">
+            <div>
+              <h2>Your points</h2>
+              <p>Today’s reward summary is shown here after check-in.</p>
+            </div>
+            <div class="reception-badge">Ready</div>
+          </div>
 
-                <div class="reception-benefits">
-                  <div class="reception-benefit">
-                    <div class="reception-benefit-icon">⚡</div>
-                    <div>
-                      <div class="reception-benefit-title">Quick at reception</div>
-                      <div class="reception-benefit-text">Large touch-friendly fields for easy check-in while standing.</div>
-                    </div>
-                  </div>
+          <div class="reception-rewards-grid">
+            <div class="reception-points-card today">
+              <span class="label">Current points</span>
+              <span class="value">+6</span>
+            </div>
 
-                  <div class="reception-benefit">
-                    <div class="reception-benefit-icon">🎁</div>
-                    <div>
-                      <div class="reception-benefit-title">Reward moment</div>
-                      <div class="reception-benefit-text">A polished popup makes the experience feel exciting and premium.</div>
-                    </div>
-                  </div>
-
-                  <div class="reception-benefit">
-                    <div class="reception-benefit-icon">🔐</div>
-                    <div>
-                      <div class="reception-benefit-title">Same real account</div>
-                      <div class="reception-benefit-text">Accounts created here are real and can be used later on your website.</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="reception-points-card">
+              <span class="label">Total points</span>
+              <span class="value">124</span>
             </div>
           </div>
+
+          <button type="button" class="reception-rewards-btn" id="seeRewardsBtn">See rewards</button>
+          <div class="reception-rewards-note" id="seeRewardsNote">Rewards preview not opened yet.</div>
         </div>
-
-        <aside class="reception-panel reception-auth-panel">
-          <div class="reception-panel-inner">
-            <div id="receptionAuthArea">
-              <div class="reception-auth-head">
-                <h2>Check in for today’s play</h2>
-                <p>Use your account, or create one now in less than a minute.</p>
-              </div>
-
-              <div class="reception-tabs" role="tablist" aria-label="Account options">
-                <button
-                  type="button"
-                  class="reception-tab is-active"
-                  data-tab-btn="signin"
-                  role="tab"
-                  aria-selected="true"
-                >
-                  Sign In
-                </button>
-                <button
-                  type="button"
-                  class="reception-tab"
-                  data-tab-btn="signup"
-                  role="tab"
-                  aria-selected="false"
-                >
-                  Sign Up
-                </button>
-              </div>
-
-              <form id="receptionSignInForm" class="reception-form is-active" novalidate>
-                <div class="reception-field">
-                  <label for="receptionSignInEmail">Email</label>
-                  <input class="reception-input" id="receptionSignInEmail" type="email" autocomplete="email" placeholder="you@email.com" required />
-                </div>
-
-                <div class="reception-field">
-                  <label for="receptionSignInPassword">Password</label>
-                  <input class="reception-input" id="receptionSignInPassword" type="password" autocomplete="current-password" placeholder="Your password" required />
-                </div>
-
-                <button id="receptionSignInBtn" class="reception-submit" type="submit">Sign In</button>
-
-                <div class="reception-alt">
-                  <button type="button" class="reception-link" id="goToSignupLink">Need an account? Create one</button>
-                </div>
-              </form>
-
-              <form id="receptionSignUpForm" class="reception-form" novalidate>
-                <div class="reception-field">
-                  <label for="receptionName">Full name</label>
-                  <input class="reception-input" id="receptionName" type="text" autocomplete="name" placeholder="Your full name" required />
-                </div>
-
-                <div class="reception-field">
-                  <label for="receptionPhone">Phone number</label>
-                  <input class="reception-input" id="receptionPhone" type="tel" autocomplete="tel" placeholder="+961 00 000 000" required />
-                </div>
-
-                <div class="reception-field">
-                  <label for="receptionEmail">Email</label>
-                  <input class="reception-input" id="receptionEmail" type="email" autocomplete="email" placeholder="you@email.com" required />
-                </div>
-
-                <div class="reception-row-2">
-                  <div class="reception-field">
-                    <label for="receptionPassword">Password</label>
-                    <input class="reception-input" id="receptionPassword" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" minlength="8" required />
-                  </div>
-
-                  <div class="reception-field">
-                    <label for="receptionConfirmPassword">Confirm password</label>
-                    <input class="reception-input" id="receptionConfirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter password" minlength="8" required />
-                  </div>
-                </div>
-
-                <div class="reception-help">This creates a real account that also works on the website.</div>
-
-                <button id="receptionSignUpBtn" class="reception-submit" type="submit">Create Account</button>
-
-                <div class="reception-alt">
-                  <button type="button" class="reception-link" id="goToSigninLink">Already have an account? Sign in</button>
-                </div>
-              </form>
-
-              <div id="receptionStatus" class="reception-status" aria-live="polite"></div>
-
-              <div id="receptionSignedState" class="reception-signed" aria-live="polite">
-                <div class="reception-signed-card">
-                  <div class="reception-signed-badge">Signed in successfully</div>
-                  <div class="reception-signed-name" id="signedUserName">Welcome</div>
-                  <div class="reception-signed-email" id="signedUserEmail"></div>
-                  <p class="reception-signed-copy">
-                    Your account is active. Close the popup to see today’s points and collect your reward.
-                  </p>
-                </div>
-
-                <div id="receptionRewardsPanel" class="reception-rewards-panel">
-                  <div class="reception-rewards-head">
-                    <div>
-                      <h3>Your rewards</h3>
-                      <p>Available after today’s check-in.</p>
-                    </div>
-                    <div class="reception-rewards-badge">Ready to collect</div>
-                  </div>
-
-                  <div class="reception-rewards-stats">
-                    <div class="reception-reward-stat today">
-                      <span class="label">Today</span>
-                      <span class="value">+6</span>
-                    </div>
-                    <div class="reception-reward-stat">
-                      <span class="label">Total</span>
-                      <span class="value">124</span>
-                    </div>
-                  </div>
-
-                  <button type="button" class="reception-collect-btn" id="collectRewardsBtn">Collect rewards</button>
-                  <div class="reception-collect-note" id="collectRewardsNote">Reward not collected yet.</div>
-                </div>
-
-                <div class="reception-signed-actions">
-                  <button type="button" class="reception-secondary" id="showRewardAgainBtn">Show popup again</button>
-                  <button type="button" class="reception-secondary" id="signOutReceptionBtn">Sign out</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
       </section>
     </div>
   </main>
