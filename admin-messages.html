@@ -791,16 +791,15 @@
           <div>${makeStatusBadge(item.status)}</div>
         </div>
 
-        <div class="resdash-grid">
-          <div><strong>Name:</strong> ${esc(item.name || "Unknown")}</div>
-          <div><strong>Phone:</strong> ${esc(item.phone || "Unknown")}</div>
-          <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
-          <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
-          <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
-          <div><strong>Status:</strong> ${esc(item.status || "-")}</div>
-          <div><strong>Source:</strong> ${esc(item.source || "-")}</div>
-          <div><strong>Updated by:</strong> ${esc(item.actor || "-")}</div>
-        </div>
+       <div class="resdash-grid">
+  <div><strong>Booking ID:</strong> ${esc(item.bookingId || "—")}</div>
+  <div><strong>Name:</strong> ${esc(item.customerName || "—")}</div>
+  <div><strong>Phone:</strong> ${esc(item.customerPhone || "—")}</div>
+  <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
+  <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
+  <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
+  <div><strong>Status:</strong> ${esc(item.newStatus || "—")}</div>
+</div>
       `;
 
       activeBox.appendChild(row);
