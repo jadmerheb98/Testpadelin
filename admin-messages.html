@@ -931,10 +931,28 @@ const msg = document.getElementById("tableEditorMsg");
     });
   }
 
+ function getOpenHistoryDays() {
+  const openDays = [];
+  document.querySelectorAll(".resdash-daytoggle.is-open").forEach((btn) => {
+    const label = btn.querySelector("span")?.textContent?.trim();
+    if (label) openDays.push(label);
+  });
+  return openDays;
+} 
+
+function restoreOpenHistoryDays(openDays) {
+  document.querySelectorAll(".resdash-daytoggle").forEach((btn) => {
+    const label = btn.querySelector("span")?.textContent?.trim();
+    const panel = btn.nextElementSibling;
+    const shouldOpen = openDays.includes(label);
+
+    btn.classList.toggle("is-open", shouldOpen);
+    btn.setAttribute("aria-expanded", String(shouldOpen));
+    panel?.classList.toggle("is-open", shouldOpen);
+  });
+}
+  
   function applyDashboardRender() {
-    renderActive(Array.isArray(dashboardData.active) ? dashboardData.active : []);
-    renderHistory(Array.isArray(dashboardData.history) ? dashboardData.history : []);
-  }
 
   async function loadReservationsDashboard() {
     try {
