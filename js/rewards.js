@@ -1,4 +1,5 @@
 (function () {
+  const API_BASE = "https://solitary-morning-9ea4.padelin-lb.workers.dev";
   const DEMO_REWARDS = [
     {
       id: "rental-hour",
@@ -299,4 +300,43 @@
     redeemModalBackdrop.classList.remove("is-open");
     document.body.style.overflow = "";
   }
+
+async function syncBookingPoints() {
+  try {
+
+    const userRaw = localStorage.getItem("padelinUser");
+    if (!userRaw) return;
+
+    const user = JSON.parse(userRaw);
+
+    const response = await fetch(`${API_BASE}/account/claim-booking-points`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        uid: user.uid || "",
+        email: user.email || "",
+        phone: user.phone || ""
+      })
+    });
+
+    const result = await response.json();
+
+    if (!result.ok) return;
+
+    if (result.earnedPoints > 0) {
+
+      currentPoints += result.earnedPoints;
+
+      localStorage.setItem("padelinRewardPoints", currentPoints);
+
+      renderProfile();
+
+    }
+
+  } catch (err) {
+    console.error("Points sync failed", err);
+  }
+}
 })();
