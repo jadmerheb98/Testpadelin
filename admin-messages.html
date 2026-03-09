@@ -953,33 +953,40 @@ function restoreOpenHistoryDays(openDays) {
 }
   
   function applyDashboardRender() {
+  const openDays = getOpenHistoryDays();
 
-  async function loadReservationsDashboard() {
-    try {
-      const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/dashboard-data?t=" + Date.now(), {
-        cache: "no-store"
-      });
+  renderActive(Array.isArray(dashboardData.active) ? dashboardData.active : []);
+  renderHistory(Array.isArray(dashboardData.history) ? dashboardData.history : []);
 
-      const data = await res.json();
+  restoreOpenHistoryDays(openDays);
+}
 
-      if (!data.ok) {
-        dashboardData = { active: [], history: [] };
-        applyDashboardRender();
-        return;
-      }
+async function loadReservationsDashboard() {
+  try {
+    const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/dashboard-data?t=" + Date.now(), {
+      cache: "no-store"
+    });
 
-      dashboardData = {
-        active: Array.isArray(data.active) ? data.active : [],
-        history: Array.isArray(data.history) ? data.history : []
-      };
+    const data = await res.json();
 
-      applyDashboardRender();
-    } catch (err) {
-      console.error("Failed to load dashboard data:", err);
+    if (!data.ok) {
       dashboardData = { active: [], history: [] };
       applyDashboardRender();
+      return;
     }
+
+    dashboardData = {
+      active: Array.isArray(data.active) ? data.active : [],
+      history: Array.isArray(data.history) ? data.history : []
+    };
+
+    applyDashboardRender();
+  } catch (err) {
+    console.error("Failed to load dashboard data:", err);
+    dashboardData = { active: [], history: [] };
+    applyDashboardRender();
   }
+}
 
   function startAutoRefresh() {
     if (refreshTimer) clearInterval(refreshTimer);
