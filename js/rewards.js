@@ -80,8 +80,10 @@
   let redeemedRewards = readRedeemedRewards();
 
   renderProfile();
-  renderClosestReward();
-  renderRewards();
+renderClosestReward();
+renderRewards();
+
+syncBookingPoints();
 
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
