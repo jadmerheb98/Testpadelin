@@ -815,18 +815,17 @@ const msg = document.getElementById("tableEditorMsg");
 
       row.innerHTML = `
         <div class="resdash-item-top">
-          <div class="resdash-item-title">${esc(item.bookingId || "No ID")}</div>
+          <div class="resdash-item-title">${esc(item.name || "Reservation")}</div>
           <div>${makeStatusBadge(item.status)}</div>
         </div>
 
        <div class="resdash-grid">
-  <div><strong>Booking ID:</strong> ${esc(item.bookingId || "—")}</div>
-  <div><strong>Name:</strong> ${esc(item.name || "—")}</div>
   <div><strong>Phone:</strong> ${esc(item.phone || "—")}</div>
-  <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
-  <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
+  <div><strong>Name:</strong> ${esc(item.name || "—")}</div>
   <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
+  <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
   <div><strong>Status:</strong> ${esc(item.status || "—")}</div>
+  <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
   <div><strong>Updated by:</strong> ${esc(item.actor || "—")}</div>
 </div>
       `;
@@ -896,7 +895,7 @@ const msg = document.getElementById("tableEditorMsg");
 
         row.innerHTML = `
           <div class="resdash-item-top">
-            <div class="resdash-item-title">${esc(item.type || "event")}</div>
+            <div class="resdash-item-title">${esc(item.title || item.type || "Update")}</div>
             <div class="resdash-time">${esc(prettyDateTime(item.timestamp))}</div>
           </div>
 
@@ -906,13 +905,12 @@ const msg = document.getElementById("tableEditorMsg");
           </div>
 
           <div class="resdash-grid">
-  <div><strong>Booking ID:</strong> ${esc(item.bookingId || "—")}</div>
-  <div><strong>Name:</strong> ${esc(item.customerName || "—")}</div>
   <div><strong>Phone:</strong> ${esc(item.customerPhone || "—")}</div>
-  <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
-  <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
+  <div><strong>Name:</strong> ${esc(item.customerName || "—")}</div>
   <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
+  <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
   <div><strong>Status:</strong> ${esc(item.newStatus || "—")}</div>
+  <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
 </div>
         `;
 
