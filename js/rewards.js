@@ -101,7 +101,7 @@ syncBookingPoints();
     if (e.key === "Escape") closeRedeemModal();
   });
 
-  function readCurrentUser() {
+  readCurrentUser() {
     try {
       const raw = localStorage.getItem("padelinUser");
       if (!raw) return { name: "Player", email: "" };
@@ -115,7 +115,7 @@ syncBookingPoints();
     }
   }
 
-  function readCurrentPoints() {
+  readCurrentPoints() {
     const stored = localStorage.getItem("padelinRewardPoints");
     if (stored && !Number.isNaN(Number(stored))) {
       return Number(stored);
@@ -129,7 +129,7 @@ syncBookingPoints();
     return 124;
   }
 
-  function readRedeemedRewards() {
+  readRedeemedRewards() {
     try {
       const raw = localStorage.getItem("padelinRedeemedRewards");
       if (!raw) return [];
@@ -140,16 +140,16 @@ syncBookingPoints();
     }
   }
 
-  function saveRedeemedRewards() {
+  saveRedeemedRewards() {
     localStorage.setItem("padelinRedeemedRewards", JSON.stringify(redeemedRewards));
   }
 
-  function renderProfile() {
+  renderProfile() {
     if (profileUserName) profileUserName.textContent = user.name;
     if (profilePoints) profilePoints.textContent = String(currentPoints);
   }
 
-  function getClosestReward() {
+  getClosestReward() {
     const lockedRewards = DEMO_REWARDS
       .filter((reward) => !redeemedRewards.includes(reward.id))
       .sort((a, b) => a.pointsNeeded - b.pointsNeeded);
@@ -160,7 +160,7 @@ syncBookingPoints();
     return lockedRewards[0] || DEMO_REWARDS[0];
   }
 
-  function renderClosestReward() {
+  renderClosestReward() {
     const reward = getClosestReward();
     if (!reward) return;
 
@@ -180,7 +180,7 @@ syncBookingPoints();
     }
   }
 
-  function getFilteredRewards() {
+  getFilteredRewards() {
     const base = DEMO_REWARDS.map((reward) => {
       const isRedeemed = redeemedRewards.includes(reward.id);
       const isReady = currentPoints >= reward.pointsNeeded && !isRedeemed;
@@ -205,7 +205,7 @@ syncBookingPoints();
     return base;
   }
 
-  function renderRewards() {
+  renderRewards() {
     if (!rewardsGrid) return;
 
     const rewards = getFilteredRewards();
@@ -269,7 +269,7 @@ syncBookingPoints();
     });
   }
 
-  function redeemReward(rewardId) {
+  redeemReward(rewardId) {
     const reward = DEMO_REWARDS.find((item) => item.id === rewardId);
     if (!reward) return;
 
@@ -284,7 +284,7 @@ syncBookingPoints();
     openRedeemModal(reward);
   }
 
-  function openRedeemModal(reward) {
+  openRedeemModal(reward) {
     if (!redeemModal || !redeemModalBackdrop) return;
 
     if (redeemModalCopy) {
@@ -296,14 +296,14 @@ syncBookingPoints();
     document.body.style.overflow = "hidden";
   }
 
-  function closeRedeemModal() {
+  closeRedeemModal() {
     if (!redeemModal || !redeemModalBackdrop) return;
     redeemModal.classList.remove("is-open");
     redeemModalBackdrop.classList.remove("is-open");
     document.body.style.overflow = "";
   }
 
-async function syncBookingPoints() {
+async syncBookingPoints() {
   try {
 
     const userRaw = localStorage.getItem("padelinUser");
