@@ -292,6 +292,7 @@
       const staffBox = document.getElementById("staffBox");
       const employersBox = document.getElementById("employersBox");
       const reservationsBox = document.getElementById("reservationsBox");
+      const pointsBox = document.getElementById("pointsBox");
 
       if (!window.padelinAuth) return;
 
@@ -302,6 +303,7 @@
         if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
         if (employersBox) employersBox.style.display = isAdmin ? "block" : "none";
         if (reservationsBox) reservationsBox.style.display = isAdmin ? "block" : "none";
+        if (pointsBox) pointsBox.style.display = isAdmin ? "block" : "none";
       });
     })();
 
