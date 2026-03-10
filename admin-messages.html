@@ -787,15 +787,21 @@ const msg = document.getElementById("tableEditorMsg");
   <script>
 (function reservationsDashboardSetup(){
   const activeBox = document.getElementById("activeReservations");
-  const activeEmpty = document.getElementById("activeReservationsEmpty");
-  const historyBox = document.getElementById("historyReservations");
-  const historyEmpty = document.getElementById("historyReservationsEmpty");
-  const reservationsBox = document.getElementById("reservationsBox");
-  const historySort = document.getElementById("historySort");
+const activeEmpty = document.getElementById("activeReservationsEmpty");
+const historyBox = document.getElementById("historyReservations");
+const historyEmpty = document.getElementById("historyReservationsEmpty");
+const reservationsBox = document.getElementById("reservationsBox");
+const historySort = document.getElementById("historySort");
+
+const pointsHistoryBox = document.getElementById("pointsHistory");
+const pointsHistoryEmpty = document.getElementById("pointsHistoryEmpty");
+const membersPointsBox = document.getElementById("membersPoints");
+const membersPointsEmpty = document.getElementById("membersPointsEmpty");
+const pointsBox = document.getElementById("pointsBox");
 
   if (!activeBox || !activeEmpty || !historyBox || !historyEmpty || !reservationsBox) return;
 
-  let dashboardData = { active: [], history: [] };
+  let dashboardData = { active: [], history: [], pointsHistory: [] };
   let refreshTimer = null;
 
   function esc(s){
@@ -976,6 +982,121 @@ const msg = document.getElementById("tableEditorMsg");
       });
     });
   }
+
+  function renderPointsHistory(items) {
+  if (!pointsHistoryBox || !pointsHistoryEmpty) return;
+
+  pointsHistoryBox.innerHTML = "";
+  pointsHistoryEmpty.style.display = items.length ? "none" : "block";
+
+  items.forEach(item => {
+    const row = document.createElement("article");
+    row.className = "resdash-item resdash-history-item";
+
+    row.innerHTML = `
+      <div class="resdash-item-top">
+        <div class="resdash-item-title">${esc(item.title || "Points Update")}</div>
+        <div class="resdash-time">${esc(prettyDateTime(item.timestamp))}</div>
+      </div>
+
+      <div class="resdash-history-line">
+        <strong>${esc(item.customerName || "Member")}</strong>
+        — ${esc(item.message || "Points updated")}
+      </div>
+
+      <div class="resdash-grid">
+        <div><strong>Name:</strong> ${esc(item.customerName || "—")}</div>
+        <div><strong>Phone:</strong> ${esc(item.customerPhone || "—")}</div>
+        <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
+        <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
+        <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
+      </div>
+    `;
+
+    pointsHistoryBox.appendChild(row);
+  });
+}
+
+async function renderMembersPoints() {
+  if (!membersPointsBox || !membersPointsEmpty || !window.padelinDB || !window.padelinAuth) return;
+
+  membersPointsBox.innerHTML = "";
+  membersPointsEmpty.style.display = "none";
+
+  const isAdmin = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN";
+
+  try {
+    const snap = await window.padelinDB.collection("users").get();
+
+    if (snap.empty) {
+      membersPointsEmpty.style.display = "block";
+      return;
+    }
+
+    const docs = [];
+    snap.forEach(doc => docs.push({ id: doc.id, ...(doc.data() || {}) }));
+
+    docs.sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+
+    docs.forEach(user => {
+      const row = document.createElement("article");
+      row.className = "resdash-item";
+
+      row.innerHTML = `
+        <div class="resdash-item-top">
+          <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
+          <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
+        </div>
+
+        <div class="resdash-grid">
+          <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
+          <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
+          <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
+          <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
+        </div>
+
+        ${isAdmin ? `
+          <div class="staff-actions" style="margin-top:12px;">
+            <button class="btn btn-ghost" type="button" data-edit-points="${esc(user.id)}" data-current-points="${esc(String(Number(user.points || 0)))}">
+              Edit Points
+            </button>
+          </div>
+        ` : ""}
+      `;
+
+      if (isAdmin) {
+        row.querySelector("[data-edit-points]")?.addEventListener("click", async () => {
+          const current = Number(user.points || 0);
+          const nextValue = prompt(`Edit points for ${user.name || user.email || "member"}`, String(current));
+          if (nextValue === null) return;
+
+          const parsed = Number(nextValue);
+          if (!Number.isFinite(parsed) || parsed < 0) {
+            alert("Enter a valid number.");
+            return;
+          }
+
+          try {
+            await window.padelinDB.collection("users").doc(user.id).set({
+              points: parsed,
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            }, { merge: true });
+
+            await renderMembersPoints();
+          } catch (e) {
+            alert(e.message || "Failed to update points.");
+          }
+        });
+      }
+
+      membersPointsBox.appendChild(row);
+    });
+
+  } catch (e) {
+    console.error("Failed to load members points:", e);
+    membersPointsEmpty.style.display = "block";
+  }
+}
 
  function getOpenHistoryDays() {
   const openDays = [];
