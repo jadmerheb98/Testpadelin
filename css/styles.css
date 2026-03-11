@@ -835,7 +835,7 @@ button, input { font: inherit; }
 
 .hero-text{
   font-size: 14px;
-  margin: auto 0 14px;
+  margin: auto 0 8px;
 }
 
 .hero-btn{
