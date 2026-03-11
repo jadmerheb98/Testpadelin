@@ -1124,6 +1124,8 @@ function restoreOpenHistoryDays(openDays) {
 
   renderActive(Array.isArray(dashboardData.active) ? dashboardData.active : []);
   renderHistory(Array.isArray(dashboardData.history) ? dashboardData.history : []);
+  renderPointsHistory(Array.isArray(dashboardData.pointsHistory) ? dashboardData.pointsHistory : []);
+  renderMembersPoints();
 
   restoreOpenHistoryDays(openDays);
 }
@@ -1143,9 +1145,6 @@ async function loadReservationsDashboard() {
     }
 
     dashboardData = {
-      active: Array.isArray(data.active) ? data.active : [],
-      history: Array.isArray(data.history) ? data.history : []
-    };
 
     applyDashboardRender();
   } catch (err) {
@@ -1181,11 +1180,19 @@ async function loadReservationsDashboard() {
   startAutoRefresh();
 
   const observer = new MutationObserver(() => {
-    const isVisible = reservationsBox.style.display !== "none";
-    if (isVisible) loadReservationsDashboard();
-  });
+  const reservationsVisible = reservationsBox && reservationsBox.style.display !== "none";
+  const pointsVisible = pointsBox && pointsBox.style.display !== "none";
 
+  if (reservationsVisible || pointsVisible) loadReservationsDashboard();
+});
+
+  if (reservationsBox) {
   observer.observe(reservationsBox, { attributes: true, attributeFilter: ["style"] });
+}
+
+if (pointsBox) {
+  observer.observe(pointsBox, { attributes: true, attributeFilter: ["style"] });
+}
 
   document.querySelectorAll("[data-acc-toggle]").forEach((btn) => {
     btn.addEventListener("click", () => {
