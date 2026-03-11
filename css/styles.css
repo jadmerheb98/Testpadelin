@@ -735,7 +735,7 @@ button, input { font: inherit; }
 
 .hero-title{
   margin: 0 0 18px;
-  font-size: 84px;
+  font-size: 64px;
   line-height: 0.92;
   font-weight: 900;
   color: #ffffff;
@@ -744,7 +744,7 @@ button, input { font: inherit; }
 
 .hero-sub{
   margin: 0 0 18px;
-  font-size: 31px;
+  font-size: 24px;
   line-height: 1.15;
   font-weight: 850;
   color: #ffffff;
@@ -765,25 +765,29 @@ button, input { font: inherit; }
 .hero-text{
   margin: 0 0 34px;
   color: rgba(255,255,255,0.88);
-  font-size: 19px;
+  font-size: 16px;
   line-height: 1.45;
 }
 
 .hero-btn{
   width: auto;
-  height: 58px;
-  padding: 0 22px;
-  border-radius: 18px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 14px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  font-size: 16px;
-  box-shadow: 0 14px 30px rgba(15,23,42,0.28);
+  gap: 10px;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  box-shadow: 0 10px 22px rgba(15,23,42,0.25);
 }
 
 .hero-btn-arrow{
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1;
   font-weight: 900;
 }
