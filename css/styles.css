@@ -764,6 +764,10 @@ button, input { font: inherit; }
   font-size: 15px;
 }
 
+.hero-card{
+  min-height: 300px;
+}   
+
 /* ===========================
    Sections
    =========================== */
