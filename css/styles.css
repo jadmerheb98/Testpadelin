@@ -682,59 +682,366 @@ button, input { font: inherit; }
   font-size: 14px;
 }
 
-/* HERO PHOTO TEST (image already contains the text) */
-.padelin-hero.hero-photo{
-  position: relative;
-  height: 62vh;              /* ✅ smaller like your gradient */
-  min-height: 460px;         /* ✅ keeps it strong on small phones */
-  max-height: 640px;         /* ✅ stops it from being too tall */
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 26px;
+/* ===========================
+   Home Hero — Clean / No Photo
+   =========================== */
 
-  background: url("../assets/img/hero.png") center 35% / cover no-repeat;
-}
-.hero-cta{
+.padelin-hero.hero-clean{
   position: relative;
-  z-index: 2;
+  overflow: hidden;
+  padding: 28px 0 22px;
+  background:
+    radial-gradient(900px 440px at 80% 18%, rgba(63,102,150,0.28), transparent 58%),
+    radial-gradient(700px 320px at 18% 78%, rgba(63,102,150,0.16), transparent 60%),
+    linear-gradient(135deg, #08101d 0%, #0b1630 42%, #10224b 100%);
 }
 
-/* subtle overlay to keep button readable without ruining photo text */
-.padelin-hero.hero-photo::before{
+.hero-clean-inner{
+  position: relative;
+  min-height: 520px;
+  border-radius: 30px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow:
+    0 22px 60px rgba(15,23,42,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  padding: 40px 34px;
+}
+
+.hero-clean-inner::before{
   content:"";
   position:absolute;
   inset:0;
-  background: linear-gradient(
-    to top,
-    rgba(15,23,42,0.55),
-    rgba(15,23,42,0.10) 55%,
-    rgba(15,23,42,0.00)
-  );
+  background:
+    linear-gradient(90deg, rgba(8,16,29,0.10), rgba(8,16,29,0.00) 45%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), transparent 24%);
   pointer-events:none;
 }
 
-.hero-cta{
+.hero-clean-copy{
   position: relative;
+  z-index: 2;
+  max-width: 520px;
+}
+
+.hero-kicker{
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: rgba(99,149,255,0.88);
+  margin-bottom: 16px;
+}
+
+.hero-clean-title{
+  margin: 0;
+  font-size: clamp(56px, 9vw, 96px);
+  line-height: 0.95;
+  font-weight: 900;
+  letter-spacing: -2px;
+  color: #ffffff;
+}
+
+.hero-clean-sub{
+  margin: 18px 0 0;
+  font-size: clamp(24px, 4vw, 34px);
+  line-height: 1.15;
+  font-weight: 800;
+  color: rgba(255,255,255,0.95);
+}
+
+.hero-clean-sub span{
+  color: #6ea8ff;
+}
+
+.hero-clean-line{
+  width: 84px;
+  height: 3px;
+  border-radius: 999px;
+  margin: 24px 0 20px;
+  background: linear-gradient(90deg, rgba(110,168,255,1), rgba(110,168,255,0.18));
+}
+
+.hero-clean-text{
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.78);
+  max-width: 30ch;
+}
+
+.hero-clean-actions{
+  margin-top: 28px;
+}
+
+.hero-clean-actions .btn{
+  min-width: 190px;
+  min-height: 54px;
+  font-size: 16px;
+  padding: 14px 22px;
+}
+
+.hero-clean-visual{
+  position: relative;
+  min-height: 440px;
   z-index: 1;
-  width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
-/* button looks premium on top of image */
-.hero-btn{
-  padding: 14px 26px;
-  border-radius: 14px;
-  box-shadow: 0 14px 30px rgba(15,23,42,0.28);
+.hero-glow{
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(22px);
 }
 
-/* mobile tweak: keep button visible and not too low */
+.hero-glow-1{
+  width: 340px;
+  height: 340px;
+  right: 0;
+  top: 20px;
+  background: radial-gradient(circle, rgba(88,145,255,0.28), rgba(88,145,255,0.00) 70%);
+}
+
+.hero-glow-2{
+  width: 250px;
+  height: 250px;
+  left: 26px;
+  bottom: 26px;
+  background: radial-gradient(circle, rgba(44,119,255,0.18), rgba(44,119,255,0.00) 72%);
+}
+
+.hero-racket{
+  position: absolute;
+  right: 12px;
+  bottom: 26px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 10px solid rgba(255,255,255,0.95);
+  box-shadow:
+    0 0 0 12px rgba(56,104,194,0.18),
+    0 30px 60px rgba(2,6,23,0.40);
+  opacity: 0.92;
+}
+
+.hero-racket::before{
+  content:"";
+  position:absolute;
+  inset: 24px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.06), rgba(255,255,255,0.01)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.12) 0 2px,
+      transparent 2px 18px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.12) 0 2px,
+      transparent 2px 18px
+    );
+}
+
+.hero-racket::after{
+  content:"";
+  position:absolute;
+  width: 118px;
+  height: 28px;
+  background: linear-gradient(90deg, rgba(18,31,59,0.95), rgba(39,70,128,0.95));
+  border-radius: 18px;
+  bottom: -32px;
+  left: 22px;
+  transform: rotate(-36deg);
+  box-shadow: 0 12px 24px rgba(2,6,23,0.28);
+}
+
+.hero-ball{
+  position:absolute;
+  right: 210px;
+  bottom: 122px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background:
+    linear-gradient(135deg, #e7ff69, #c9eb28);
+  box-shadow:
+    0 0 0 6px rgba(201,235,40,0.10),
+    0 10px 20px rgba(2,6,23,0.26);
+}
+
+.hero-ball::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius:50%;
+  background:
+    linear-gradient(120deg, transparent 42%, rgba(79,112,205,0.95) 43%, rgba(79,112,205,0.95) 57%, transparent 58%);
+  opacity: 0.9;
+}
+
+.hero-arc{
+  position:absolute;
+  left: 0;
+  right: 0;
+  bottom: 34px;
+  height: 150px;
+  pointer-events:none;
+}
+
+.hero-arc::before{
+  content:"";
+  position:absolute;
+  left: 12px;
+  right: 20px;
+  bottom: 0;
+  height: 100%;
+  border-bottom: 3px solid rgba(53,125,255,0.9);
+  border-radius: 0 0 320px 320px;
+  filter: drop-shadow(0 0 12px rgba(53,125,255,0.40));
+  opacity: 0.95;
+}
+
+.hero-dots{
+  position:absolute;
+  right: 66px;
+  bottom: 40px;
+  width: 140px;
+  height: 70px;
+  opacity: 0.34;
+  background-image: radial-gradient(rgba(255,255,255,0.72) 1.2px, transparent 1.2px);
+  background-size: 14px 14px;
+}
+
+@media (max-width: 920px){
+  .hero-clean-inner{
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 34px 22px 26px;
+    gap: 24px;
+  }
+
+  .hero-clean-copy{
+    max-width: none;
+  }
+
+  .hero-clean-visual{
+    min-height: 250px;
+  }
+
+  .hero-racket{
+    width: 210px;
+    height: 210px;
+    right: 8px;
+    bottom: 18px;
+    border-width: 8px;
+  }
+
+  .hero-racket::before{
+    inset: 16px;
+  }
+
+  .hero-racket::after{
+    width: 92px;
+    height: 22px;
+    bottom: -24px;
+    left: 16px;
+  }
+
+  .hero-ball{
+    right: 150px;
+    bottom: 86px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-arc{
+    height: 100px;
+    bottom: 18px;
+  }
+
+  .hero-dots{
+    right: 34px;
+    bottom: 22px;
+    width: 100px;
+    height: 48px;
+  }
+}
+
 @media (max-width: 760px){
-  .padelin-hero.hero-photo{
-    height: 56vh;
-    min-height: 420px;
-    background-position: center 30%;
+  .padelin-hero.hero-clean{
+    padding: 16px 0 14px;
+  }
+
+  .hero-clean-inner{
+    width: min(var(--max), calc(100% - 20px));
+    padding: 28px 18px 22px;
+    border-radius: 24px;
+  }
+
+  .hero-kicker{
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .hero-clean-title{
+    font-size: clamp(48px, 15vw, 74px);
+    letter-spacing: -1.5px;
+  }
+
+  .hero-clean-sub{
+    margin-top: 14px;
+    font-size: 22px;
+  }
+
+  .hero-clean-line{
+    margin: 18px 0 16px;
+    width: 72px;
+  }
+
+  .hero-clean-text{
+    font-size: 16px;
+    max-width: 22ch;
+  }
+
+  .hero-clean-actions{
+    margin-top: 22px;
+  }
+
+  .hero-clean-actions .btn{
+    min-width: 100%;
+  }
+
+  .hero-clean-visual{
+    min-height: 220px;
+  }
+
+  .hero-glow-1{
+    width: 240px;
+    height: 240px;
+  }
+
+  .hero-glow-2{
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-racket{
+    width: 170px;
+    height: 170px;
+    right: 0;
+    bottom: 16px;
+  }
+
+  .hero-ball{
+    right: 122px;
+    bottom: 70px;
+    width: 28px;
+    height: 28px;
   }
 }
 
