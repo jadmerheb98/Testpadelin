@@ -1132,24 +1132,29 @@ function restoreOpenHistoryDays(openDays) {
 
 async function loadReservationsDashboard() {
   try {
-    const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/dashboard-data?t=" + Date.now(), {
-      cache: "no-store"
-    });
+    const res = await fetch(
+      "https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/dashboard-data?t=" + Date.now(),
+      { cache: "no-store" }
+    );
 
     const data = await res.json();
 
     if (!data.ok) {
-      dashboardData = { active: [], history: [] };
+      dashboardData = { active: [], history: [], pointsHistory: [] };
       applyDashboardRender();
       return;
     }
 
     dashboardData = {
+      active: Array.isArray(data.active) ? data.active : [],
+      history: Array.isArray(data.history) ? data.history : [],
+      pointsHistory: Array.isArray(data.pointsHistory) ? data.pointsHistory : []
+    };
 
     applyDashboardRender();
   } catch (err) {
     console.error("Failed to load dashboard data:", err);
-    dashboardData = { active: [], history: [] };
+    dashboardData = { active: [], history: [], pointsHistory: [] };
     applyDashboardRender();
   }
 }
@@ -1160,17 +1165,20 @@ async function loadReservationsDashboard() {
   }
 
   function setupSubAccordions() {
-    document.querySelectorAll("[data-res-subtoggle]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const panel = btn.nextElementSibling;
-        const isOpen = btn.classList.contains("is-open");
+  document.querySelectorAll("[data-res-subtoggle]").forEach((btn) => {
+    if (btn.dataset.bound === "1") return;
+    btn.dataset.bound = "1";
 
-        btn.classList.toggle("is-open", !isOpen);
-        btn.setAttribute("aria-expanded", String(!isOpen));
-        if (panel) panel.classList.toggle("is-open", !isOpen);
-      });
+    btn.addEventListener("click", () => {
+      const panel = btn.nextElementSibling;
+      const isOpen = btn.classList.contains("is-open");
+
+      btn.classList.toggle("is-open", !isOpen);
+      btn.setAttribute("aria-expanded", String(!isOpen));
+      if (panel) panel.classList.toggle("is-open", !isOpen);
     });
-  }
+  });
+}
 
   if (historySort) {
     historySort.addEventListener("change", applyDashboardRender);
@@ -1203,7 +1211,7 @@ if (pointsBox) {
     });
   });
 
-  setTimeout(loadReservationsDashboard, 300);
+  loadReservationsDashboard();
 })();
 </script>
 
