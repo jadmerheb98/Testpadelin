@@ -726,11 +726,24 @@ button, input { font: inherit; }
   position: relative;
   z-index: 2;
   max-width: 430px;
-  min-height: 290px;
+  min-height: 300px;
   padding-left: 46px;
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-top{
+  display: grid;
+  gap: 10px;
+}
+
+.hero-bottom{
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  text-align: center;
 }
 
 .hero-kicker{
@@ -738,11 +751,11 @@ button, input { font: inherit; }
   font-weight: 900;
   letter-spacing: 4px;
   font-size: 16px;
-  margin-bottom: 12px;
+  margin: 0;
 }
 
 .hero-title{
-  margin: 0 0 18px;
+  margin: 0;
   font-size: 64px;
   line-height: 0.92;
   font-weight: 900;
@@ -751,9 +764,9 @@ button, input { font: inherit; }
 }
 
 .hero-sub{
-  margin: 0 0 18px;
+  margin: 0;
   font-size: 24px;
-  line-height: 1.15;
+  line-height: 1.12;
   font-weight: 850;
   color: #ffffff;
 }
@@ -766,21 +779,22 @@ button, input { font: inherit; }
   width: 74px;
   height: 3px;
   border-radius: 999px;
-  margin-bottom: 22px;
+  margin: 0;
   background: linear-gradient(90deg, #5f95ff, rgba(95,149,255,0.22));
 }
 
 .hero-text{
-  margin: auto 0 18px;
-  color: rgba(255,255,255,0.88);
+  margin: 0;
+  color: rgba(255,255,255,0.92);
   font-size: 16px;
   line-height: 1.45;
+  max-width: 22ch;
 }
 
 .hero-btn{
   width: auto;
-  height: 48px;
-  padding: 0 20px;
+  height: 50px;
+  padding: 0 22px;
   border-radius: 15px;
 
   display: inline-flex;
@@ -800,6 +814,8 @@ button, input { font: inherit; }
   font-weight: 900;
 }
 
+@media (max-width: 760px){
+
 .hero-content{
   max-width: 320px;
   min-height: 255px;
@@ -807,7 +823,18 @@ button, input { font: inherit; }
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
+
+.hero-top{
+  gap: 8px;
+}
+
+.hero-bottom{
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+}   
 
 .hero-kicker{
   font-size: 12px;
@@ -833,18 +860,18 @@ button, input { font: inherit; }
 
 .hero-text{
   font-size: 14px;
-  margin: auto 0 14px;
+  margin: 0;
+  max-width: 20ch;
 }
 
 .hero-btn{
   width: auto;
-  height: 46px;
-  padding: 0 18px;
+  height: 48px;
+  padding: 0 20px;
   border-radius: 14px;
   font-size: 14px;
   gap: 8px;
 }
-
 .hero-btn-arrow{
   font-size: 15px;
 }
