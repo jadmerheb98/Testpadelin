@@ -805,46 +805,47 @@ button, input { font: inherit; }
 
   .hero-content{
     max-width: 320px;
-    padding: 38px 20px 0 22px;
+    padding: 34px 20px 0 22px;
   }
 
   .hero-kicker{
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 3px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 
   .hero-title{
-    font-size: 58px;
-    margin-bottom: 14px;
-    letter-spacing: -1.5px;
+    font-size: 46px;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
   }
 
   .hero-sub{
-    font-size: 26px;
-    margin-bottom: 16px;
+    font-size: 20px;
+    margin-bottom: 12px;
   }
 
   .hero-divider{
-    width: 64px;
-    margin-bottom: 18px;
+    width: 56px;
+    margin-bottom: 14px;
   }
 
   .hero-text{
-    font-size: 16px;
-    margin-bottom: 26px;
+    font-size: 14px;
+    margin-bottom: 18px;
   }
 
   .hero-btn{
-    width: 230px;
-    height: 54px;
-    border-radius: 16px;
-    font-size: 15px;
-    gap: 14px;
+    width: auto;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 13px;
+    font-size: 13px;
+    gap: 8px;
   }
 
   .hero-btn-arrow{
-    font-size: 18px;
+    font-size: 15px;
   }
 }
 
