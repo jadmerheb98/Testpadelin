@@ -295,50 +295,6 @@ button, input { font: inherit; }
    (Hero • Community • Leaderboard • Why • Final CTA)
    =========================== */
 
-.padelin-hero {
-  background:
-    linear-gradient(120deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.70)),
-    url("../assets/img/hero-padel.jpg");
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  padding: 96px 0 72px;
-}
-
-.padelin-hero-inner {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 22px;
-  align-items: center;
-}
-
-.padelin-hero h1 {
-  margin: 0 0 10px;
-  font-size: clamp(34px, 4.2vw, 54px);
-  line-height: 1.05;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-/* Break hero text into punch lines (matches your new HTML) */
-.hero-lines {
-  margin: 0 0 22px;
-  display: grid;
-  gap: 6px;
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.hero-strong {
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: 0.3px;
-}
-
 /* Community: convert text wall into 2 blocks */
 .community-grid {
   display: grid;
@@ -409,42 +365,6 @@ button, input { font: inherit; }
   .brand { min-width: auto; }
 
   .header-inner { height: 60px; }
-}
-
-/* Right hero card */
-.hero-card {
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-  padding: 16px;
-}
-
-.hero-card-title {
-  font-weight: 900;
-  letter-spacing: 0.2px;
-  margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.hero-card-lines {
-  display: grid;
-  gap: 8px;
-  color: rgba(255, 255, 255, 0.80);
-  font-weight: 650;
-  font-size: 13px;
-}
-
-.hero-line {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(63, 102, 150, 0.95);
 }
 
 /* Community CTA row */
@@ -558,19 +478,13 @@ button, input { font: inherit; }
 }
 
 @media (max-width: 920px) {
-  .padelin-hero-inner { grid-template-columns: 1fr; }
   .split-head { flex-direction: column; align-items: stretch; }
   .pillars { grid-template-columns: 1fr; }
   .final-cta-inner { flex-direction: column; align-items: flex-start; }
 }
 
-/* Center all home section titles */
-.hero-lines {
-  text-align: center;
-}
 
 /* Center button containers */
-.hero-actions,
 .cta-row,
 .split-actions,
 .final-actions {
@@ -578,7 +492,6 @@ button, input { font: inherit; }
 }
 
 /* Center single buttons */
-.hero-actions a,
 .cta-row a,
 .split-actions a,
 .final-actions a {
