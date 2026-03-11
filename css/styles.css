@@ -804,7 +804,7 @@ button, input { font: inherit; }
 
 .hero-content{
   max-width: 320px;
-  min-height: 255px;
+  min-height: 200px;
   padding: 0 20px 0 22px;
 
   display: flex;
