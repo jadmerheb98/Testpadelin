@@ -690,10 +690,13 @@ button, input { font: inherit; }
   position: relative;
   overflow: hidden;
   padding: 28px 0 22px;
+
   background:
-    radial-gradient(900px 440px at 80% 18%, rgba(63,102,150,0.28), transparent 58%),
-    radial-gradient(700px 320px at 18% 78%, rgba(63,102,150,0.16), transparent 60%),
-    linear-gradient(135deg, #08101d 0%, #0b1630 42%, #10224b 100%);
+    linear-gradient(
+      rgba(8,16,29,0.65),
+      rgba(8,16,29,0.85)
+    ),
+    url("../assets/img/hero-padel.jpg") center / cover no-repeat;
 }
 
 .hero-clean-inner{
@@ -779,10 +782,10 @@ button, input { font: inherit; }
 }
 
 .hero-clean-actions .btn{
-  min-width: 190px;
-  min-height: 54px;
+  width: 260px;
+  height: 54px;
   font-size: 16px;
-  padding: 14px 22px;
+  padding: 0;
 }
 
 .hero-clean-visual{
@@ -1012,9 +1015,13 @@ button, input { font: inherit; }
     margin-top: 22px;
   }
 
-  .hero-clean-actions .btn{
-    min-width: 100%;
-  }
+  .hero-clean-actions{
+  display:flex;
+}
+
+.hero-clean-actions .btn{
+  width:260px;
+}
 
   .hero-clean-visual{
     min-height: 220px;
