@@ -696,12 +696,14 @@ button, input { font: inherit; }
   padding: 0 20px;
   border-radius: 15px;
 
+  margin-top: 8px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
 
   box-shadow: 0 10px 22px rgba(15,23,42,0.25);
