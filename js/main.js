@@ -36,16 +36,22 @@
   const auth = window.padelinAuth;
   const db = window.padelinDB; // Firestore (for staff enable/disable)
 
-  function setLocalUser(user) {
+    function setLocalUser(user) {
     if (!user) {
       localStorage.removeItem("padelinUser");
       return;
     }
 
+    let existing = {};
+    try {
+      existing = JSON.parse(localStorage.getItem("padelinUser") || "{}");
+    } catch {}
+
     const payload = {
       uid: user.uid,
       email: user.email || "",
       name: user.displayName || "",
+      phone: existing.phone || "",
       tier: localStorage.getItem("padelinTier") || "Member",
     };
 
@@ -184,13 +190,44 @@ window.location.href = "index.html";
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          const name = (form.querySelector("#name")?.value || "").trim();
+                    const name = (form.querySelector("#name")?.value || "").trim();
           const email = (form.querySelector("#email")?.value || "").trim();
+          let phone = (form.querySelector("#phone")?.value || "").trim();
           const password = form.querySelector("#password")?.value || "";
+
+          phone = phone
+            .replace(/\s+/g, "")
+            .replace(/^\+961/, "")
+            .replace(/^961/, "");
 
           try {
             const cred = await auth.createUserWithEmailAndPassword(email, password);
+
             if (name) await cred.user.updateProfile({ displayName: name });
+
+            if (db) {
+              await db.collection("users").doc(cred.user.uid).set({
+                uid: cred.user.uid,
+                name: name || "",
+                email: email || "",
+                phone: phone || "",
+                points: 0,
+                source: "website_signup",
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              }, { merge: true });
+            }
+
+            localStorage.setItem("padelinUser", JSON.stringify({
+              uid: cred.user.uid,
+              email: email || "",
+              name: name || "",
+              phone: phone || "",
+              tier: localStorage.getItem("padelinTier") || "Member",
+            }));
+
+            localStorage.setItem("padelinRewardPoints", localStorage.getItem("padelinRewardPoints") || "0");
+
             window.location.href = "index.html";
           } catch (err) {
             alert(err.message);
@@ -308,7 +345,11 @@ function renderSignedOut() {
     const membershipType = (localStorage.getItem("padelinMembershipType") || "").trim();
     const tierLine = membershipType ? `${tier} • ${membershipType}` : tier;
 
-    const points = Number(localStorage.getItem("padelinPoints") || 0);
+        const points = Number(
+      localStorage.getItem("padelinRewardPoints") ||
+      localStorage.getItem("padelinPoints") ||
+      0
+    );
 
     body.innerHTML = `
       <div class="acc-card">
