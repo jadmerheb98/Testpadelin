@@ -3167,31 +3167,3 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
     padding-left: 10px;
   }
 }
-@media (min-width: 761px){
-  .brand img{
-    height: 26px;
-    width: auto;
-    max-width: 180px;
-    object-fit: contain;
-  }
-
-  .brand{
-    min-width: auto;
-    max-width: 190px;
-    overflow: hidden;
-  }
-
-  .header-inner{
-    height: 68px;
-  }
-}
-/* Desktop logo fix */
-@media (min-width: 900px){
-
-  .brand img{
-    height: 34px;
-    max-height: 34px;
-    width: auto;
-  }
-
-}
