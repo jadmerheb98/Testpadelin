@@ -303,7 +303,7 @@
         if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
         if (employersBox) employersBox.style.display = isAdmin ? "block" : "none";
         if (reservationsBox) reservationsBox.style.display = isAdmin ? "block" : "none";
-        if (pointsBox) pointsBox.style.display = isAdmin ? "block" : "none";
+        if (pointsBox) pointsBox.style.display = u && (u.displayName || "").startsWith("STAFF:") ? "block" : "none";
       });
     })();
 
@@ -1064,7 +1064,7 @@ async function renderMembersPoints() {
         ` : ""}
       `;
 
-      if (isAdmin) {
+            if (isAdmin) {
         row.querySelector("[data-edit-points]")?.addEventListener("click", async () => {
           const current = Number(user.points || 0);
           const nextValue = prompt(`Edit points for ${user.name || user.email || "member"}`, String(current));
@@ -1081,6 +1081,22 @@ async function renderMembersPoints() {
               points: parsed,
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             }, { merge: true });
+
+            const roleLabel = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "manager";
+
+            await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                memberId: user.id,
+                memberName: user.name || "",
+                memberEmail: user.email || "",
+                memberPhone: user.phone || "",
+                previousPoints: current,
+                nextPoints: parsed,
+                actor: roleLabel
+              })
+            });
 
             await loadReservationsDashboard();
           } catch (e) {
