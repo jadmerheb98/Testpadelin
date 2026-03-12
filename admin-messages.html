@@ -1084,19 +1084,23 @@ async function renderMembersPoints() {
 
             const roleLabel = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "manager";
 
-            await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                memberId: user.id,
-                memberName: user.name || "",
-                memberEmail: user.email || "",
-                memberPhone: user.phone || "",
-                previousPoints: current,
-                nextPoints: parsed,
-                actor: roleLabel
-              })
-            });
+            const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    memberId: user.id,
+    memberName: user.name || "",
+    memberEmail: user.email || "",
+    memberPhone: user.phone || "",
+    previousPoints: current,
+    nextPoints: parsed,
+    actor: roleLabel
+  })
+});
+
+if (!historyRes.ok) {
+  console.warn("Points history log failed, but Firestore points were updated.");
+}
 
             await loadReservationsDashboard();
           } catch (e) {
