@@ -13,7 +13,7 @@
   const tabButtons = document.querySelectorAll("[data-tab-btn]");
 
   const signInBtn = document.getElementById("receptionSignInBtn");
-  const signUpBtn = document.getElementById("receptionSignUpBtn");f
+  const signUpBtn = document.getElementById("receptionSignUpBtn");
 
   const goToSignupLink = document.getElementById("goToSignupLink");
   const goToSigninLink = document.getElementById("goToSigninLink");
