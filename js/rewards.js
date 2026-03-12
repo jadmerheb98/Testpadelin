@@ -1,5 +1,6 @@
 (function () {
   const API_BASE = "https://solitary-morning-9ea4.padelin-lb.workers.dev";
+
   const DEMO_REWARDS = [
     {
       id: "rental-hour",
@@ -57,65 +58,6 @@
     }
   ];
 
-  async function claimWebsiteBookingPointsForAccount() {
-  const raw = localStorage.getItem("padelinUser");
-  if (!raw) return { ok: true, matched: 0, earnedPoints: 0 };
-
-  let user = null;
-  try {
-    user = JSON.parse(raw);
-  } catch {
-    return { ok: true, matched: 0, earnedPoints: 0 };
-  }
-
-  const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/account/claim-booking-points", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      uid: user.uid || "",
-      email: user.email || "",
-      phone: user.phone || ""
-    })
-  });
-
-  const data = await res.json();
-  if (!res.ok || !data.ok) {
-    throw new Error(data.error || "Failed to claim website booking points.");
-  }
-
-  return data;
-}
-
-async function addClaimedPointsToCurrentUser(pointsToAdd) {
-  const raw = localStorage.getItem("padelinUser");
-  if (!raw || !window.padelinDB) return 0;
-
-  let user = null;
-  try {
-    user = JSON.parse(raw);
-  } catch {
-    return 0;
-  }
-
-  if (!user?.uid) return 0;
-
-  const ref = window.padelinDB.collection("users").doc(user.uid);
-  const snap = await ref.get();
-
-  const current = snap.exists ? Number((snap.data() || {}).points || 0) : 0;
-  const nextTotal = current + Number(pointsToAdd || 0);
-
-  await ref.set({
-    points: nextTotal,
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-  }, { merge: true });
-
-  localStorage.setItem("padelinRewardPoints", String(nextTotal));
-  return nextTotal;
-}
-
   const profileUserName = document.getElementById("profileUserName");
   const profilePoints = document.getElementById("profilePoints");
   const rewardsGrid = document.getElementById("rewardsGrid");
@@ -133,33 +75,12 @@ async function addClaimedPointsToCurrentUser(pointsToAdd) {
   const redeemModalDoneBtn = document.getElementById("redeemModalDoneBtn");
   const redeemModalCloseBtn = document.getElementById("redeemModalCloseBtn");
 
-  const user = readCurrentUser();
-let currentPoints = readCurrentPoints();
-let currentFilter = "all";
-let redeemedRewards = readRedeemedRewards();
+  let user = readCurrentUser();
+  let currentPoints = 0;
+  let currentFilter = "all";
+  let redeemedRewards = readRedeemedRewards();
 
-initRewardsPage();
-
-async function initRewardsPage() {
-  try {
-    const claim = await claimWebsiteBookingPointsForAccount();
-
-    if ((claim.earnedPoints || 0) > 0) {
-      currentPoints = await addClaimedPointsToCurrentUser(claim.earnedPoints || 0);
-    } else {
-      currentPoints = readCurrentPoints();
-    }
-  } catch (err) {
-    console.error("Failed to claim booking points for account:", err);
-    currentPoints = readCurrentPoints();
-  }
-
-  renderProfile();
-  renderClosestReward();
-  renderRewards();
-}
-
-syncBookingPoints();
+  initRewardsPage();
 
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -177,21 +98,46 @@ syncBookingPoints();
     if (e.key === "Escape") closeRedeemModal();
   });
 
-  readCurrentUser() {
+  async function initRewardsPage() {
+    user = readCurrentUser();
+
+    try {
+      currentPoints = await loadCurrentPointsFromProfile();
+
+      const claim = await claimWebsiteBookingPointsForAccount();
+      if ((claim.earnedPoints || 0) > 0) {
+        currentPoints = await addClaimedPointsToCurrentUser(claim.earnedPoints || 0);
+      } else {
+        currentPoints = await loadCurrentPointsFromProfile();
+      }
+    } catch (err) {
+      console.error("Failed to initialize rewards page:", err);
+      currentPoints = readCurrentPoints();
+    }
+
+    renderProfile();
+    renderClosestReward();
+    renderRewards();
+  }
+
+  function readCurrentUser() {
     try {
       const raw = localStorage.getItem("padelinUser");
-      if (!raw) return { name: "Player", email: "" };
+      if (!raw) return { uid: "", name: "Player", email: "", phone: "" };
+
       const parsed = JSON.parse(raw);
       return {
+        uid: parsed.uid || "",
         name: parsed.name || parsed.email || "Player",
-        email: parsed.email || ""
+        email: parsed.email || "",
+        phone: parsed.phone || ""
       };
     } catch {
-      return { name: "Player", email: "" };
+      return { uid: "", name: "Player", email: "", phone: "" };
     }
   }
 
-  readCurrentPoints() {
+  function readCurrentPoints() {
     const stored = localStorage.getItem("padelinRewardPoints");
     if (stored && !Number.isNaN(Number(stored))) {
       return Number(stored);
@@ -205,7 +151,31 @@ syncBookingPoints();
     return 0;
   }
 
-  readRedeemedRewards() {
+  async function loadCurrentPointsFromProfile() {
+    const raw = localStorage.getItem("padelinUser");
+    if (!raw || !window.padelinDB) {
+      return readCurrentPoints();
+    }
+
+    let parsed = null;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return readCurrentPoints();
+    }
+
+    if (!parsed?.uid) {
+      return readCurrentPoints();
+    }
+
+    const snap = await window.padelinDB.collection("users").doc(parsed.uid).get();
+    const points = snap.exists ? Number((snap.data() || {}).points || 0) : 0;
+
+    localStorage.setItem("padelinRewardPoints", String(points));
+    return points;
+  }
+
+  function readRedeemedRewards() {
     try {
       const raw = localStorage.getItem("padelinRedeemedRewards");
       if (!raw) return [];
@@ -216,16 +186,78 @@ syncBookingPoints();
     }
   }
 
-  saveRedeemedRewards() {
+  function saveRedeemedRewards() {
     localStorage.setItem("padelinRedeemedRewards", JSON.stringify(redeemedRewards));
   }
 
-  renderProfile() {
-    if (profileUserName) profileUserName.textContent = user.name;
+  async function claimWebsiteBookingPointsForAccount() {
+    const raw = localStorage.getItem("padelinUser");
+    if (!raw) return { ok: true, matched: 0, earnedPoints: 0 };
+
+    let parsed = null;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return { ok: true, matched: 0, earnedPoints: 0 };
+    }
+
+    const res = await fetch(`${API_BASE}/account/claim-booking-points`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        uid: parsed.uid || "",
+        email: parsed.email || "",
+        phone: parsed.phone || ""
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || "Failed to claim website booking points.");
+    }
+
+    return data;
+  }
+
+  async function addClaimedPointsToCurrentUser(pointsToAdd) {
+    const raw = localStorage.getItem("padelinUser");
+    if (!raw || !window.padelinDB) return readCurrentPoints();
+
+    let parsed = null;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return readCurrentPoints();
+    }
+
+    if (!parsed?.uid) return readCurrentPoints();
+
+    const ref = window.padelinDB.collection("users").doc(parsed.uid);
+    const snap = await ref.get();
+
+    const current = snap.exists ? Number((snap.data() || {}).points || 0) : 0;
+    const nextTotal = current + Number(pointsToAdd || 0);
+
+    await ref.set(
+      {
+        points: nextTotal,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      { merge: true }
+    );
+
+    localStorage.setItem("padelinRewardPoints", String(nextTotal));
+    return nextTotal;
+  }
+
+  function renderProfile() {
+    if (profileUserName) profileUserName.textContent = user.name || "Player";
     if (profilePoints) profilePoints.textContent = String(currentPoints);
   }
 
-  getClosestReward() {
+  function getClosestReward() {
     const lockedRewards = DEMO_REWARDS
       .filter((reward) => !redeemedRewards.includes(reward.id))
       .sort((a, b) => a.pointsNeeded - b.pointsNeeded);
@@ -236,7 +268,7 @@ syncBookingPoints();
     return lockedRewards[0] || DEMO_REWARDS[0];
   }
 
-  renderClosestReward() {
+  function renderClosestReward() {
     const reward = getClosestReward();
     if (!reward) return;
 
@@ -256,7 +288,7 @@ syncBookingPoints();
     }
   }
 
-  getFilteredRewards() {
+  function getFilteredRewards() {
     const base = DEMO_REWARDS.map((reward) => {
       const isRedeemed = redeemedRewards.includes(reward.id);
       const isReady = currentPoints >= reward.pointsNeeded && !isRedeemed;
@@ -281,7 +313,7 @@ syncBookingPoints();
     return base;
   }
 
-  renderRewards() {
+  function renderRewards() {
     if (!rewardsGrid) return;
 
     const rewards = getFilteredRewards();
@@ -339,16 +371,14 @@ syncBookingPoints();
 
     rewardsGrid.querySelectorAll("[data-redeem-id]").forEach((btn) => {
       btn.addEventListener("click", () => {
-        const rewardId = btn.dataset.redeemId;
-        redeemReward(rewardId);
+        redeemReward(btn.dataset.redeemId);
       });
     });
   }
 
-  redeemReward(rewardId) {
+  function redeemReward(rewardId) {
     const reward = DEMO_REWARDS.find((item) => item.id === rewardId);
     if (!reward) return;
-
     if (redeemedRewards.includes(reward.id)) return;
     if (currentPoints < reward.pointsNeeded) return;
 
@@ -356,11 +386,10 @@ syncBookingPoints();
     saveRedeemedRewards();
     renderClosestReward();
     renderRewards();
-
     openRedeemModal(reward);
   }
 
-  openRedeemModal(reward) {
+  function openRedeemModal(reward) {
     if (!redeemModal || !redeemModalBackdrop) return;
 
     if (redeemModalCopy) {
@@ -372,49 +401,10 @@ syncBookingPoints();
     document.body.style.overflow = "hidden";
   }
 
-  closeRedeemModal() {
+  function closeRedeemModal() {
     if (!redeemModal || !redeemModalBackdrop) return;
     redeemModal.classList.remove("is-open");
     redeemModalBackdrop.classList.remove("is-open");
     document.body.style.overflow = "";
   }
-
-async syncBookingPoints() {
-  try {
-
-    const userRaw = localStorage.getItem("padelinUser");
-    if (!userRaw) return;
-
-    const user = JSON.parse(userRaw);
-
-    const response = await fetch(`${API_BASE}/account/claim-booking-points`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        uid: user.uid || "",
-        email: user.email || "",
-        phone: user.phone || ""
-      })
-    });
-
-    const result = await response.json();
-
-    if (!result.ok) return;
-
-    if (result.earnedPoints > 0) {
-
-      currentPoints += result.earnedPoints;
-
-      localStorage.setItem("padelinRewardPoints", currentPoints);
-
-      renderProfile();
-
-    }
-
-  } catch (err) {
-    console.error("Points sync failed", err);
-  }
-}
 })();
