@@ -13,7 +13,7 @@
   const tabButtons = document.querySelectorAll("[data-tab-btn]");
 
   const signInBtn = document.getElementById("receptionSignInBtn");
-  const signUpBtn = document.getElementById("receptionSignUpBtn");
+  const signUpBtn = document.getElementById("receptionSignUpBtn");f
 
   const goToSignupLink = document.getElementById("goToSignupLink");
   const goToSigninLink = document.getElementById("goToSigninLink");
@@ -110,9 +110,40 @@ function getTodayLabel() {
   localStorage.setItem("padelinUser", JSON.stringify(payload));
 }
 
+function saveReceptionPointsSummary(earnedPoints, totalPoints) {
+  localStorage.setItem("padelinReceptionPointsSummary", JSON.stringify({
+    earnedPoints: Number(earnedPoints || 0),
+    totalPoints: Number(totalPoints || 0)
+  }));
+}
+
+function readReceptionPointsSummary() {
+  try {
+    const raw = localStorage.getItem("padelinReceptionPointsSummary");
+    if (!raw) {
+      return {
+        earnedPoints: Number(localStorage.getItem("padelinReceptionEarnedPoints") || "0"),
+        totalPoints: Number(localStorage.getItem("padelinRewardPoints") || "0")
+      };
+    }
+
+    const parsed = JSON.parse(raw);
+    return {
+      earnedPoints: Number(parsed.earnedPoints || 0),
+      totalPoints: Number(parsed.totalPoints || 0)
+    };
+  } catch {
+    return {
+      earnedPoints: Number(localStorage.getItem("padelinReceptionEarnedPoints") || "0"),
+      totalPoints: Number(localStorage.getItem("padelinRewardPoints") || "0")
+    };
+  }
+}
+
 function renderRewardPopupPoints() {
-  const earned = Number(localStorage.getItem("padelinReceptionEarnedPoints") || "0");
-  const total = Number(localStorage.getItem("padelinRewardPoints") || "0");
+  const summary = readReceptionPointsSummary();
+  const earned = Number(summary.earnedPoints || 0);
+  const total = Number(summary.totalPoints || 0);
 
   const earnedEls = document.querySelectorAll("[data-earned-points]");
   earnedEls.forEach((el) => {
@@ -274,8 +305,12 @@ try {
 } catch {}
 
 if (!profilePhone) {
-  localStorage.setItem("padelinReceptionEarnedPoints", "0");
+    localStorage.setItem("padelinReceptionEarnedPoints", "0");
   localStorage.setItem("padelinRewardPoints", localStorage.getItem("padelinRewardPoints") || "0");
+  saveReceptionPointsSummary(
+    0,
+    Number(localStorage.getItem("padelinRewardPoints") || "0")
+  );
   setLocalUser(cred.user, { phone: "" });
   renderSignedInState(cred.user);
   if (rewardsSection) rewardsSection.classList.add("is-visible");
@@ -284,15 +319,17 @@ if (!profilePhone) {
 
 const claim = await claimReceptionPointsByPhone(profilePhone);
 
-localStorage.setItem("padelinReceptionEarnedPoints", String(claim.earnedPoints || 0));
+const earnedPoints = Number(claim.earnedPoints || 0);
+localStorage.setItem("padelinReceptionEarnedPoints", String(earnedPoints));
 
-const nextTotal = await addPointsToUserProfile(cred.user.uid, claim.earnedPoints || 0);
+const nextTotal = await addPointsToUserProfile(cred.user.uid, earnedPoints);
 localStorage.setItem("padelinRewardPoints", String(nextTotal));
+saveReceptionPointsSummary(earnedPoints, nextTotal);
 
 setLocalUser(cred.user, { phone: profilePhone });
 renderSignedInState(cred.user);
 
-if ((claim.earnedPoints || 0) > 0) openRewardPopup();
+if (earnedPoints > 0) openRewardPopup();
 else if (rewardsSection) rewardsSection.classList.add("is-visible");
     } catch (err) {
       showStatus(err.message || "Could not sign in.", "error");
@@ -345,16 +382,18 @@ phone = phone
 
 const claim = await claimReceptionPointsByPhone(phone);
 
-localStorage.setItem("padelinReceptionEarnedPoints", String(claim.earnedPoints || 0));
+const earnedPoints = Number(claim.earnedPoints || 0);
+localStorage.setItem("padelinReceptionEarnedPoints", String(earnedPoints));
 
 const currentUser = auth.currentUser || cred.user;
-const nextTotal = await addPointsToUserProfile(currentUser.uid, claim.earnedPoints || 0);
+const nextTotal = await addPointsToUserProfile(currentUser.uid, earnedPoints);
 localStorage.setItem("padelinRewardPoints", String(nextTotal));
+saveReceptionPointsSummary(earnedPoints, nextTotal);
 
 setLocalUser(currentUser, { phone });
 renderSignedInState(currentUser);
 
-if ((claim.earnedPoints || 0) > 0) openRewardPopup();
+if (earnedPoints > 0) openRewardPopup();
 else if (rewardsSection) rewardsSection.classList.add("is-visible");
     } catch (err) {
       showStatus(err.message || "Could not create account.", "error");
@@ -372,8 +411,9 @@ else if (rewardsSection) rewardsSection.classList.add("is-visible");
   if (signOutReceptionBtn) {
     signOutReceptionBtn.addEventListener("click", async () => {
       try {
-        await auth.signOut();
+                await auth.signOut();
         localStorage.removeItem("padelinUser");
+        localStorage.removeItem("padelinReceptionPointsSummary");
         renderSignedOutState();
       } catch (err) {
         showStatus(err.message || "Could not sign out.", "error");
