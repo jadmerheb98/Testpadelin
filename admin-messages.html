@@ -1082,7 +1082,7 @@ async function renderMembersPoints() {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             }, { merge: true });
 
-            await renderMembersPoints();
+            await loadReservationsDashboard();
           } catch (e) {
             alert(e.message || "Failed to update points.");
           }
