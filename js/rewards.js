@@ -57,6 +57,65 @@
     }
   ];
 
+  async function claimWebsiteBookingPointsForAccount() {
+  const raw = localStorage.getItem("padelinUser");
+  if (!raw) return { ok: true, matched: 0, earnedPoints: 0 };
+
+  let user = null;
+  try {
+    user = JSON.parse(raw);
+  } catch {
+    return { ok: true, matched: 0, earnedPoints: 0 };
+  }
+
+  const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/account/claim-booking-points", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      uid: user.uid || "",
+      email: user.email || "",
+      phone: user.phone || ""
+    })
+  });
+
+  const data = await res.json();
+  if (!res.ok || !data.ok) {
+    throw new Error(data.error || "Failed to claim website booking points.");
+  }
+
+  return data;
+}
+
+async function addClaimedPointsToCurrentUser(pointsToAdd) {
+  const raw = localStorage.getItem("padelinUser");
+  if (!raw || !window.padelinDB) return 0;
+
+  let user = null;
+  try {
+    user = JSON.parse(raw);
+  } catch {
+    return 0;
+  }
+
+  if (!user?.uid) return 0;
+
+  const ref = window.padelinDB.collection("users").doc(user.uid);
+  const snap = await ref.get();
+
+  const current = snap.exists ? Number((snap.data() || {}).points || 0) : 0;
+  const nextTotal = current + Number(pointsToAdd || 0);
+
+  await ref.set({
+    points: nextTotal,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  }, { merge: true });
+
+  localStorage.setItem("padelinRewardPoints", String(nextTotal));
+  return nextTotal;
+}
+
   const profileUserName = document.getElementById("profileUserName");
   const profilePoints = document.getElementById("profilePoints");
   const rewardsGrid = document.getElementById("rewardsGrid");
@@ -75,13 +134,30 @@
   const redeemModalCloseBtn = document.getElementById("redeemModalCloseBtn");
 
   const user = readCurrentUser();
-  let currentPoints = readCurrentPoints();
-  let currentFilter = "all";
-  let redeemedRewards = readRedeemedRewards();
+let currentPoints = readCurrentPoints();
+let currentFilter = "all";
+let redeemedRewards = readRedeemedRewards();
+
+initRewardsPage();
+
+async function initRewardsPage() {
+  try {
+    const claim = await claimWebsiteBookingPointsForAccount();
+
+    if ((claim.earnedPoints || 0) > 0) {
+      currentPoints = await addClaimedPointsToCurrentUser(claim.earnedPoints || 0);
+    } else {
+      currentPoints = readCurrentPoints();
+    }
+  } catch (err) {
+    console.error("Failed to claim booking points for account:", err);
+    currentPoints = readCurrentPoints();
+  }
 
   renderProfile();
-renderClosestReward();
-renderRewards();
+  renderClosestReward();
+  renderRewards();
+}
 
 syncBookingPoints();
 
@@ -126,7 +202,7 @@ syncBookingPoints();
       return Number(fallback);
     }
 
-    return 124;
+    return 0;
   }
 
   readRedeemedRewards() {
