@@ -145,7 +145,7 @@ function renderRewardPopupPoints() {
   const earned = Number(summary.earnedPoints || 0);
   const total = Number(summary.totalPoints || 0);
 
-  const earnedEls = document.querySelectorAll("[data-earned-points]");
+  const earnedEls = document.querySelectorAll("[data-earned-points], #rewardPopupEarnedPoints");
   earnedEls.forEach((el) => {
     el.textContent = `+${earned}`;
   });
@@ -188,25 +188,34 @@ function renderRewardPopupPoints() {
   });
 
   function resetRewardsUI() {
-    if (rewardsSection) rewardsSection.classList.remove("is-visible");
-    if (seeRewardsBtn) {
-      seeRewardsBtn.disabled = false;
-      seeRewardsBtn.textContent = "See rewards";
-    }
+  if (rewardsSection) rewardsSection.classList.remove("is-visible");
+  if (seeRewardsBtn) {
+    seeRewardsBtn.disabled = false;
+    seeRewardsBtn.textContent = "See rewards";
   }
+
+  localStorage.setItem("padelinReceptionEarnedPoints", "0");
+  saveReceptionPointsSummary(
+    0,
+    Number(localStorage.getItem("padelinRewardPoints") || "0")
+  );
+}
 
   function renderSignedInState(user) {
-    const name = (user && (user.displayName || user.email)) || "Member";
-    const email = (user && user.email) || "";
+  const name = (user && (user.displayName || user.email)) || "Member";
+  const email = (user && user.email) || "";
 
-    signedUserName.textContent = name;
-    signedUserEmail.textContent = email;
+  signedUserName.textContent = name;
+  signedUserEmail.textContent = email;
 
-    signedState.classList.add("is-visible");
-    if (tabsWrap) tabsWrap.style.display = "none";
-    signInForm.classList.remove("is-active");
-    signUpForm.classList.remove("is-active");
-  }
+  signedState.classList.add("is-visible");
+  if (tabsWrap) tabsWrap.style.display = "none";
+  signInForm.classList.remove("is-active");
+  signUpForm.classList.remove("is-active");
+
+  renderRewardPopupPoints();
+  if (rewardsSection) rewardsSection.classList.add("is-visible");
+}
 
   function renderSignedOutState() {
     signedState.classList.remove("is-visible");
