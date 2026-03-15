@@ -35,7 +35,7 @@
         <!-- 1) STAFF + ADMIN -->
         <article class="contact-card dash-acc-item">
   <button class="dash-acc-toggle" type="button" data-acc-toggle aria-expanded="false">
-    <span>Edit Reservation Table</span>
+    <span>Reservation Table</span>
     <span class="dash-acc-icon">⌄</span>
   </button>
 
@@ -50,6 +50,35 @@
               <div class="form-note dash-note" style="margin-top:12px;">
   Update court availability manually and keep the public reservation table accurate.
 </div>
+            </div>
+          </div>
+                </article>
+
+        <!-- 2) CLUB -->
+        <article class="contact-card dash-acc-item" id="clubBox" style="display:none;">
+          <button class="dash-acc-toggle" type="button" data-acc-toggle aria-expanded="false">
+            <span>Club</span>
+            <span class="dash-acc-icon">⌄</span>
+          </button>
+
+          <div class="dash-acc-panel">
+            <div class="contact-card-body">
+              <div class="cards" style="grid-template-columns: repeat(3, 1fr);">
+                <a href="admin-members.html" class="card" style="text-decoration:none;">
+                  <h4>Members</h4>
+                  <p>Search members, open profiles, and manage member details.</p>
+                </a>
+
+                <div class="card" style="opacity:.65;">
+                  <h4>Membership</h4>
+                  <p>Coming soon.</p>
+                </div>
+
+                <div class="card" style="opacity:.65;">
+                  <h4>Training</h4>
+                  <p>Coming soon.</p>
+                </div>
+              </div>
             </div>
           </div>
         </article>
@@ -303,10 +332,11 @@
 
     (function roleSetup(){
       const roleEyebrow = document.getElementById("roleEyebrow");
-      const staffBox = document.getElementById("staffBox");
+            const staffBox = document.getElementById("staffBox");
       const employersBox = document.getElementById("employersBox");
       const reservationsBox = document.getElementById("reservationsBox");
       const pointsBox = document.getElementById("pointsBox");
+      const clubBox = document.getElementById("clubBox");
 
       if (!window.padelinAuth) return;
 
@@ -318,6 +348,7 @@
 if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "Admin" : "Staff";
 if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
 if (employersBox) employersBox.style.display = isAdmin ? "block" : "none";
+if (clubBox) clubBox.style.display = isStaff ? "block" : "none";
 if (reservationsBox) reservationsBox.style.display = isStaff ? "block" : "none";
 if (pointsBox) pointsBox.style.display = isStaff ? "block" : "none";
       });
