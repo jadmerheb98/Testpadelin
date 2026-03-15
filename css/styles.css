@@ -3455,3 +3455,14 @@ body:has(#memberSearchInput) #logoutBtn:hover {
   border-color: rgba(15,23,42,0.16);
   transform: translateY(-1px);
 }
+body:has(#memberSearchInput) .members-back-btn {
+  padding: 9px 12px;
+  min-width: auto;
+  height: 40px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
