@@ -1234,12 +1234,14 @@ async function renderMembersPoints() {
     const filteredMembers = getFilteredMembers();
 
     if (!filteredMembers.length) {
-      membersPointsEmpty.style.display = "block";
-      membersPointsEmpty.textContent = "No members found.";
-      return;
-    } else {
-      membersPointsEmpty.textContent = "No members yet.";
-    }
+  membersPointsEmpty.style.display = "block";
+  membersPointsEmpty.textContent = "No members found.";
+  selectedMemberId = null;
+  renderSelectedMemberCard();
+  return;
+} else {
+  membersPointsEmpty.textContent = "No members yet.";
+}
 
     filteredMembers.forEach(user => {
       const row = document.createElement("article");
