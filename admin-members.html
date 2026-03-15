@@ -74,9 +74,10 @@
     const logoutBtn = document.getElementById("logoutBtn");
 
     const memberSearchInput = document.getElementById("memberSearchInput");
-    const selectedMemberCard = document.getElementById("selectedMemberCard");
-    const membersResults = document.getElementById("membersResults");
-    const membersResultsEmpty = document.getElementById("membersResultsEmpty");
+const memberSearchBtn = document.getElementById("memberSearchBtn");
+const selectedMemberCard = document.getElementById("selectedMemberCard");
+const membersResults = document.getElementById("membersResults");
+const membersResultsEmpty = document.getElementById("membersResultsEmpty");
 
     let allMembers = [];
     let selectedMemberId = null;
@@ -104,157 +105,109 @@
     }
 
     function renderSelectedMemberCard() {
-      if (!selectedMemberCard) return;
+  if (!selectedMemberCard) return;
 
-      if (!selectedMemberId) {
-        selectedMemberCard.style.display = "none";
-        selectedMemberCard.innerHTML = "";
-        return;
-      }
+  if (!selectedMemberId) {
+    selectedMemberCard.style.display = "none";
+    selectedMemberCard.innerHTML = "";
+    return;
+  }
 
-      const user = allMembers.find(m => m.id === selectedMemberId);
-      if (!user) {
-        selectedMemberCard.style.display = "none";
-        selectedMemberCard.innerHTML = "";
-        return;
-      }
+  const user = allMembers.find(m => m.id === selectedMemberId);
+  if (!user) {
+    selectedMemberCard.style.display = "none";
+    selectedMemberCard.innerHTML = "";
+    return;
+  }
 
-      selectedMemberCard.style.display = "block";
-      selectedMemberCard.innerHTML = `
-        <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
-          <div class="resdash-item-top">
-            <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
-            <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
-          </div>
+  selectedMemberCard.style.display = "block";
+  selectedMemberCard.innerHTML = `
+    <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
+      <div class="resdash-item-top">
+        <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
+        <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
+      </div>
 
-          <div class="resdash-grid">
-            <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
-            <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
-            <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
-            <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
-          </div>
+      <div class="resdash-grid">
+        <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
+        <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
+        <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
+        <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
+      </div>
 
-          <div class="staff-actions" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Back to results</button>
-            ${isAdmin ? `<button class="btn btn-ghost" type="button" id="editSelectedMemberBtn">Edit Points</button>` : ``}
-          </div>
-        </article>
-      `;
+      <div class="staff-actions" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Clear</button>
+        ${isAdmin ? `<button class="btn btn-ghost" type="button" id="editSelectedMemberBtn">Edit Points</button>` : ``}
+      </div>
+    </article>
+  `;
 
-      document.getElementById("clearSelectedMemberBtn")?.addEventListener("click", () => {
-        selectedMemberId = null;
-        renderSelectedMemberCard();
-        renderMembersResults();
-      });
+  document.getElementById("clearSelectedMemberBtn")?.addEventListener("click", () => {
+    selectedMemberId = null;
+    if (memberSearchInput) memberSearchInput.value = "";
+    membersResults.innerHTML = "";
+    membersResultsEmpty.style.display = "block";
+    membersResultsEmpty.textContent = "Search for a member by name, phone, or email.";
+    renderSelectedMemberCard();
+  });
 
-      document.getElementById("editSelectedMemberBtn")?.addEventListener("click", async () => {
-        const current = Number(user.points || 0);
-        const nextValue = prompt(`Edit points for ${user.name || user.email || "member"}`, String(current));
-        if (nextValue === null) return;
+  document.getElementById("editSelectedMemberBtn")?.addEventListener("click", async () => {
+    const current = Number(user.points || 0);
+    const nextValue = prompt(`Edit points for ${user.name || user.email || "member"}`, String(current));
+    if (nextValue === null) return;
 
-        const parsed = Number(nextValue);
-        if (!Number.isFinite(parsed) || parsed < 0) {
-          alert("Enter a valid number.");
-          return;
-        }
-
-        try {
-          await db.collection("users").doc(user.id).set({
-            points: parsed,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          }, { merge: true });
-
-          const roleLabel = isAdmin ? "admin" : "manager";
-          const currentUser = auth?.currentUser;
-          const token = currentUser ? await currentUser.getIdToken() : "";
-
-          const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              memberId: user.id,
-              memberName: user.name || "",
-              memberEmail: user.email || "",
-              memberPhone: user.phone || "",
-              previousPoints: current,
-              nextPoints: parsed,
-              actor: roleLabel
-            })
-          });
-
-          if (!historyRes.ok) {
-            console.warn("Points history log failed, but Firestore points were updated.");
-          }
-
-          allMembers = allMembers
-            .map(m => m.id === user.id ? { ...m, points: parsed } : m)
-            .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
-
-          renderSelectedMemberCard();
-          renderMembersResults();
-        } catch (e) {
-          console.error(e);
-          alert(e.message || "Failed to update points.");
-        }
-      });
+    const parsed = Number(nextValue);
+    if (!Number.isFinite(parsed) || parsed < 0) {
+      alert("Enter a valid number.");
+      return;
     }
+
+    try {
+      await db.collection("users").doc(user.id).set({
+        points: parsed,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
+
+      const roleLabel = isAdmin ? "admin" : "manager";
+      const currentUser = auth?.currentUser;
+      const token = currentUser ? await currentUser.getIdToken() : "";
+
+      const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          memberId: user.id,
+          memberName: user.name || "",
+          memberEmail: user.email || "",
+          memberPhone: user.phone || "",
+          previousPoints: current,
+          nextPoints: parsed,
+          actor: roleLabel
+        })
+      });
+
+      if (!historyRes.ok) {
+        console.warn("Points history log failed, but Firestore points were updated.");
+      }
+
+      allMembers = allMembers
+        .map(m => m.id === user.id ? { ...m, points: parsed } : m)
+        .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+
+      renderSelectedMemberCard();
+    } catch (e) {
+      console.error(e);
+      alert(e.message || "Failed to update points.");
+    }
+  });
+}
 
     function renderMembersResults() {
-      membersResults.innerHTML = "";
-
-      let filteredMembers = getFilteredMembers();
-
-      if (selectedMemberId) {
-        filteredMembers = filteredMembers.filter(user => user.id !== selectedMemberId);
-      }
-
-      if (!filteredMembers.length) {
-        membersResultsEmpty.style.display = "block";
-        membersResultsEmpty.textContent = (memberSearchInput?.value || "").trim()
-          ? "No members found."
-          : "Search for a member by name, phone, or email.";
-        if ((memberSearchInput?.value || "").trim()) {
-          renderSelectedMemberCard();
-        } else {
-          selectedMemberId = null;
-          renderSelectedMemberCard();
-        }
-        return;
-      }
-
-      membersResultsEmpty.style.display = "none";
-
-      filteredMembers.forEach(user => {
-        const row = document.createElement("article");
-        row.className = "resdash-item";
-        row.style.cursor = "pointer";
-
-        row.innerHTML = `
-          <div class="resdash-item-top">
-            <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
-            <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
-          </div>
-
-          <div class="resdash-grid">
-            <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
-            <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
-            <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
-            <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
-          </div>
-        `;
-
-        row.addEventListener("click", () => {
-          selectedMemberId = user.id;
-          renderSelectedMemberCard();
-          renderMembersResults();
-        });
-
-        membersResults.appendChild(row);
-      });
-    }
+  membersResults.innerHTML = "";
+}
 
     async function loadMembers() {
       try {
@@ -290,16 +243,36 @@
       await loadMembers();
     });
 
-    if (memberSearchInput) {
-      memberSearchInput.addEventListener("input", () => {
-        const filtered = getFilteredMembers();
-        if (!filtered.find(m => m.id === selectedMemberId)) {
-          selectedMemberId = null;
-        }
-        renderSelectedMemberCard();
-        renderMembersResults();
-      });
+    function runMemberSearch() {
+  const filtered = getFilteredMembers();
+
+  if (!filtered.length) {
+    selectedMemberId = null;
+    renderSelectedMemberCard();
+    membersResults.innerHTML = "";
+    membersResultsEmpty.style.display = "block";
+    membersResultsEmpty.textContent = "No members found.";
+    return;
+  }
+
+  selectedMemberId = filtered[0].id;
+  membersResults.innerHTML = "";
+  membersResultsEmpty.style.display = "none";
+  renderSelectedMemberCard();
+}
+
+if (memberSearchBtn) {
+  memberSearchBtn.addEventListener("click", runMemberSearch);
+}
+
+if (memberSearchInput) {
+  memberSearchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      runMemberSearch();
     }
+  });
+}
 
     if (logoutBtn) {
       logoutBtn.addEventListener("click", async () => {
