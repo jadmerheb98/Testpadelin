@@ -1090,9 +1090,15 @@ async function renderMembersPoints() {
 
             const roleLabel = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "manager";
 
-            const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
+            const currentUser = window.padelinAuth?.currentUser;
+const token = currentUser ? await currentUser.getIdToken() : "";
+
+const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
   method: "POST",
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`
+  },
   body: JSON.stringify({
     memberId: user.id,
     memberName: user.name || "",
