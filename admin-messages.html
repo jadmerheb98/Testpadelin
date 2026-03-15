@@ -299,11 +299,13 @@
       window.padelinAuth.onAuthStateChanged((u) => {
         const isAdmin = (u?.displayName || "") === "STAFF:ADMIN";
 
-        if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "Admin" : "Staff";
-        if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
-        if (employersBox) employersBox.style.display = isAdmin ? "block" : "none";
-        if (reservationsBox) reservationsBox.style.display = isAdmin ? "block" : "none";
-        if (pointsBox) pointsBox.style.display = u && (u.displayName || "").startsWith("STAFF:") ? "block" : "none";
+        const isStaff = !!u && (u.displayName || "").startsWith("STAFF:");
+
+if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "Admin" : "Staff";
+if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
+if (employersBox) employersBox.style.display = isAdmin ? "block" : "none";
+if (reservationsBox) reservationsBox.style.display = isStaff ? "block" : "none";
+if (pointsBox) pointsBox.style.display = isStaff ? "block" : "none";
       });
     })();
 
