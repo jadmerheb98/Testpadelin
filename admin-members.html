@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Members • Padelin Admin</title>
+  <title>Members | PADELIN Admin</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -11,13 +11,12 @@
   <header class="header">
     <div class="container header-inner header-gd">
       <div class="header-left">
-        <a class="brand" href="index.html" aria-label="Padelin home">
-          <img src="assets/img/logo-white.png" alt="Padelin logo" />
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
         </a>
       </div>
 
       <div class="header-right">
-        <a href="admin-messages.html" class="btn btn-ghost">Dashboard</a>
         <button id="logoutBtn" class="btn btn-ghost" type="button">Sign out</button>
       </div>
     </div>
@@ -27,9 +26,13 @@
     <div class="container">
 
       <section class="contact-hero">
-        <div class="contact-eyebrow" id="roleEyebrow">STAFF</div>
+        <div class="contact-eyebrow" id="roleEyebrow">Staff</div>
         <h1>Members</h1>
         <p>Search and view member profiles. Admin can update member details and points.</p>
+
+        <div style="margin-top:14px;">
+          <a href="admin-messages.html" class="btn btn-ghost" id="backToDashboardBtn">← Back to Dashboard</a>
+        </div>
       </section>
 
       <article class="contact-card">
@@ -61,13 +64,13 @@
   </main>
 
   <footer class="footer">
-    © 2026 Padelin | Members
+    <div class="container">© 2026 Padelin | Members</div>
   </footer>
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="firebase-init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-init.js"></script>
 
   <script>
     const auth = window.padelinAuth;
@@ -149,6 +152,60 @@
         renderSelectedMemberCard();
         renderMembersResults();
       });
+
+      document.getElementById("editSelectedMemberBtn")?.addEventListener("click", async () => {
+        const current = Number(user.points || 0);
+        const nextValue = prompt(`Edit points for ${user.name || user.email || "member"}`, String(current));
+        if (nextValue === null) return;
+
+        const parsed = Number(nextValue);
+        if (!Number.isFinite(parsed) || parsed < 0) {
+          alert("Enter a valid number.");
+          return;
+        }
+
+        try {
+          await db.collection("users").doc(user.id).set({
+            points: parsed,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          }, { merge: true });
+
+          const roleLabel = isAdmin ? "admin" : "manager";
+          const currentUser = auth?.currentUser;
+          const token = currentUser ? await currentUser.getIdToken() : "";
+
+          const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              memberId: user.id,
+              memberName: user.name || "",
+              memberEmail: user.email || "",
+              memberPhone: user.phone || "",
+              previousPoints: current,
+              nextPoints: parsed,
+              actor: roleLabel
+            })
+          });
+
+          if (!historyRes.ok) {
+            console.warn("Points history log failed, but Firestore points were updated.");
+          }
+
+          allMembers = allMembers
+            .map(m => m.id === user.id ? { ...m, points: parsed } : m)
+            .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+
+          renderSelectedMemberCard();
+          renderMembersResults();
+        } catch (e) {
+          console.error(e);
+          alert(e.message || "Failed to update points.");
+        }
+      });
     }
 
     function renderMembersResults() {
@@ -165,8 +222,12 @@
         membersResultsEmpty.textContent = (memberSearchInput?.value || "").trim()
           ? "No members found."
           : "Search for a member by name, phone, or email.";
-        selectedMemberId = null;
-        renderSelectedMemberCard();
+        if ((memberSearchInput?.value || "").trim()) {
+          renderSelectedMemberCard();
+        } else {
+          selectedMemberId = null;
+          renderSelectedMemberCard();
+        }
         return;
       }
 
@@ -204,7 +265,8 @@
     async function loadMembers() {
       try {
         const snap = await db.collection("users").get();
-        allMembers = snap.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+        allMembers = snap.docs
+          .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
           .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
       } catch (err) {
         console.error("Failed to load members:", err);
@@ -229,7 +291,7 @@
         return;
       }
 
-      if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "ADMIN" : "STAFF";
+      if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "Admin" : "Staff";
 
       await loadMembers();
     });
