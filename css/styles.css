@@ -3326,3 +3326,42 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
 }
 /* Club section cards */
 <div class="card club-card is-disabled">
+/* ===== CLUB DASHBOARD CARDS ===== */
+
+.club-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.club-item {
+  display: block;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #ffffff;
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+.club-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.club-item h4 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.club-item p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(0,0,0,0.6);
+}
+
+.club-item.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
