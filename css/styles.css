@@ -3324,3 +3324,49 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
 .resdash-date-input::-webkit-calendar-picker-indicator {
   margin-left: 8px;
 }
+/* Club section cards */
+.club-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.club-card {
+  display: block;
+  text-decoration: none;
+  min-height: 150px;
+}
+
+.club-card h4 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.club-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.club-card.is-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  .club-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .club-card {
+    min-height: auto;
+  }
+
+  .club-card h4 {
+    font-size: 18px;
+  }
+
+  .club-card p {
+    font-size: 14px;
+  }
+}
