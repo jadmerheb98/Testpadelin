@@ -1,42 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Members • Padelin Admin</title>
-
-<link rel="stylesheet" href="styles.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Members • Padelin Admin</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
 
-<header class="topbar">
-  <img src="logo.png" class="logo">
-  <button onclick="signOut()">Sign out</button>
-</header>
+  <header class="header">
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <a class="brand" href="index.html" aria-label="Padelin home">
+          <img src="assets/img/logo-white.png" alt="Padelin logo" />
+        </a>
+      </div>
 
-<main class="container">
+      <div class="header-right">
+        <a href="admin-messages.html" class="btn btn-ghost">Dashboard</a>
+        <button id="logoutBtn" class="btn btn-ghost" type="button">Sign out</button>
+      </div>
+    </div>
+  </header>
 
-<h1>Members</h1>
-<p class="subtitle">Search and manage club members.</p>
+  <main class="contact-page">
+    <div class="container">
 
-<div class="members-search">
+      <section class="contact-hero">
+        <div class="contact-eyebrow" id="roleEyebrow">STAFF</div>
+        <h1>Members</h1>
+        <p>Search and view member profiles. Admin can update member details and points.</p>
+      </section>
 
-<input
-type="text"
-id="memberSearch"
-placeholder="Search by name, phone, or email"
->
+      <article class="contact-card">
+        <div class="contact-card-head">
+          <div class="contact-card-title">Member Search</div>
+          <div class="contact-card-sub">Search by name, phone, or email</div>
+        </div>
 
-</div>
+        <div class="contact-card-body">
+          <input
+            id="memberSearchInput"
+            class="inbox-search"
+            type="text"
+            placeholder="Search by name, phone, or email"
+            autocomplete="off"
+          />
 
-<div id="membersResults"></div>
+          <div id="selectedMemberCard" style="display:none; margin-top:14px;"></div>
 
-</main>
+          <div id="membersResults" class="inbox-list" style="margin-top:14px;"></div>
 
-<script src="members.js"></script>
+          <div id="membersResultsEmpty" class="form-note dash-note" style="display:block; margin-top:14px;">
+            Search for a member by name, phone, or email.
+          </div>
+        </div>
+      </article>
 
+    </div>
+  </main>
+
+  <footer class="footer">
+    © 2026 Padelin | Members
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-init.js"></script>
+
+  <script>
+    const auth = window.padelinAuth;
+    const db = window.padelinDB;
+
+    const roleEyebrow = document.getElementById("roleEyebrow");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    const memberSearchInput = document.getElementById("memberSearchInput");
+    const selectedMemberCard = document.getElementById("selectedMemberCard");
+    const membersResults = document.getElementById("membersResults");
+    const membersResultsEmpty = document.getElementById("membersResultsEmpty");
+
+    let allMembers = [];
+    let selectedMemberId = null;
+    let isAdmin = false;
+
+    function esc(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function getFilteredMembers() {
+      const q = (memberSearchInput?.value || "").trim().toLowerCase();
+      if (!q) return [];
+
+      return allMembers.filter(user => {
+        const name = String(user.name || "").toLowerCase();
+        const phone = String(user.phone || "").toLowerCase();
+        const email = String(user.email || "").toLowerCase();
+        return name.includes(q) || phone.includes(q) || email.includes(q);
+      });
+    }
+
+    function renderSelectedMemberCard() {
+      if (!selectedMemberCard) return;
+
+      if (!selectedMemberId) {
+        selectedMemberCard.style.display = "none";
+        selectedMemberCard.innerHTML = "";
+        return;
+      }
+
+      const user = allMembers.find(m => m.id === selectedMemberId);
+      if (!user) {
+        selectedMemberCard.style.display = "none";
+        selectedMemberCard.innerHTML = "";
+        return;
+      }
+
+      selectedMemberCard.style.display = "block";
+      selectedMemberCard.innerHTML = `
+        <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
+          <div class="resdash-item-top">
+            <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
+            <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
+          </div>
+
+          <div class="resdash-grid">
+            <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
+            <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
+            <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
+            <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
+          </div>
+
+          <div class="staff-actions" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Back to results</button>
+            ${isAdmin ? `<button class="btn btn-ghost" type="button" id="editSelectedMemberBtn">Edit Points</button>` : ``}
+          </div>
+        </article>
+      `;
+
+      document.getElementById("clearSelectedMemberBtn")?.addEventListener("click", () => {
+        selectedMemberId = null;
+        renderSelectedMemberCard();
+        renderMembersResults();
+      });
+    }
+
+    function renderMembersResults() {
+      membersResults.innerHTML = "";
+
+      let filteredMembers = getFilteredMembers();
+
+      if (selectedMemberId) {
+        filteredMembers = filteredMembers.filter(user => user.id !== selectedMemberId);
+      }
+
+      if (!filteredMembers.length) {
+        membersResultsEmpty.style.display = "block";
+        membersResultsEmpty.textContent = (memberSearchInput?.value || "").trim()
+          ? "No members found."
+          : "Search for a member by name, phone, or email.";
+        selectedMemberId = null;
+        renderSelectedMemberCard();
+        return;
+      }
+
+      membersResultsEmpty.style.display = "none";
+
+      filteredMembers.forEach(user => {
+        const row = document.createElement("article");
+        row.className = "resdash-item";
+        row.style.cursor = "pointer";
+
+        row.innerHTML = `
+          <div class="resdash-item-top">
+            <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
+            <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
+          </div>
+
+          <div class="resdash-grid">
+            <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
+            <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
+            <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
+            <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
+          </div>
+        `;
+
+        row.addEventListener("click", () => {
+          selectedMemberId = user.id;
+          renderSelectedMemberCard();
+          renderMembersResults();
+        });
+
+        membersResults.appendChild(row);
+      });
+    }
+
+    async function loadMembers() {
+      try {
+        const snap = await db.collection("users").get();
+        allMembers = snap.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+          .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+      } catch (err) {
+        console.error("Failed to load members:", err);
+        membersResultsEmpty.style.display = "block";
+        membersResultsEmpty.textContent = "Could not load members.";
+      }
+    }
+
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const dn = String(user.displayName || "");
+      const isStaff = dn.startsWith("STAFF:");
+      isAdmin = dn === "STAFF:ADMIN";
+
+      if (!isStaff) {
+        await auth.signOut();
+        window.location.href = "login.html";
+        return;
+      }
+
+      if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "ADMIN" : "STAFF";
+
+      await loadMembers();
+    });
+
+    if (memberSearchInput) {
+      memberSearchInput.addEventListener("input", () => {
+        const filtered = getFilteredMembers();
+        if (!filtered.find(m => m.id === selectedMemberId)) {
+          selectedMemberId = null;
+        }
+        renderSelectedMemberCard();
+        renderMembersResults();
+      });
+    }
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", async () => {
+        await auth.signOut();
+        window.location.href = "login.html";
+      });
+    }
+  </script>
 </body>
 </html>
