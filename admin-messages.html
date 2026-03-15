@@ -1096,7 +1096,7 @@ function filterHistoryToCurrentWeekOrSelectedDate(items, selectedDateValue) {
 function getFilteredMembers() {
   const q = (membersSearchInput?.value || "").trim().toLowerCase();
 
-  if (!q) return [...allMembersPoints];
+  if (!q) return [];
 
   return allMembersPoints.filter(user => {
     const name = String(user.name || "").toLowerCase();
@@ -1235,7 +1235,9 @@ async function renderMembersPoints() {
 
     if (!filteredMembers.length) {
   membersPointsEmpty.style.display = "block";
-  membersPointsEmpty.textContent = "No members found.";
+  membersPointsEmpty.textContent = (membersSearchInput?.value || "").trim()
+    ? "No members found."
+    : "Search for a member by name, phone, or email.";
   selectedMemberId = null;
   renderSelectedMemberCard();
   return;
