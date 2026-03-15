@@ -1231,7 +1231,11 @@ async function renderMembersPoints() {
       allMembersPoints = docs;
     }
 
-    const filteredMembers = getFilteredMembers();
+    let filteredMembers = getFilteredMembers();
+
+if (selectedMemberId) {
+  filteredMembers = filteredMembers.filter(user => user.id !== selectedMemberId);
+}
 
     if (!filteredMembers.length) {
   membersPointsEmpty.style.display = "block";
