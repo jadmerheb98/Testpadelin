@@ -3466,3 +3466,24 @@ body:has(#memberSearchInput) .members-back-btn {
   align-items: center;
   justify-content: center;
 }
+body:has(#memberSearchInput) .members-searchbar {
+  display: grid;
+  grid-template-columns: 1fr 48px;
+  gap: 10px;
+  align-items: center;
+}
+
+body:has(#memberSearchInput) .members-search-btn {
+  height: 48px;
+  width: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.12);
+  background: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 6px 16px rgba(15,23,42,0.06);
+}
+
+body:has(#memberSearchInput) .members-search-btn:hover {
+  background: rgba(15,23,42,0.04);
+}
