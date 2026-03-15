@@ -3336,10 +3336,10 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
 
 .club-item {
   display: block;
-  padding: 18px 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: #ffffff;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #f9fafc;
   text-decoration: none;
   transition: all .2s ease;
 }
@@ -3350,8 +3350,8 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
 }
 
 .club-item h4 {
-  margin: 0 0 6px 0;
-  font-size: 18px;
+  margin: 0 0 4px 0;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -3364,4 +3364,16 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
 .club-item.disabled {
   opacity: 0.6;
   pointer-events: none;
+}
+
+.club-item:nth-child(1) {
+  border-left: 4px solid #3b82f6;
+}
+
+.club-item:nth-child(2) {
+  border-left: 4px solid #10b981;
+}
+
+.club-item:nth-child(3) {
+  border-left: 4px solid #f59e0b;
 }
