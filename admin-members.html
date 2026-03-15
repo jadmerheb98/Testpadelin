@@ -131,10 +131,40 @@ const membersResultsEmpty = document.getElementById("membersResultsEmpty");
     return;
   }
 
-  const createdAt = user.createdAt || "—";
-  const updatedAt = user.updatedAt || "—";
-  const source = user.source || "—";
-  const uid = user.uid || user.id || "—";
+  function formatAnyDate(value) {
+  if (!value) return "—";
+
+  if (typeof value === "string") return value;
+
+  if (value.seconds) {
+    const d = new Date(value.seconds * 1000);
+    return d.toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  }
+
+  if (value.toDate && typeof value.toDate === "function") {
+    const d = value.toDate();
+    return d.toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  }
+
+  return String(value);
+}
+
+const createdAt = formatAnyDate(user.createdAt);
+const updatedAt = formatAnyDate(user.updatedAt);
+const source = user.source || "—";
+const uid = user.uid || user.id || "—";
 
   selectedMemberCard.style.display = "block";
 
