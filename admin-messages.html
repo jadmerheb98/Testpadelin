@@ -1158,9 +1158,17 @@ function restoreOpenHistoryDays(openDays) {
 
 async function loadReservationsDashboard() {
   try {
+    const currentUser = window.padelinAuth?.currentUser;
+    const token = currentUser ? await currentUser.getIdToken() : "";
+
     const res = await fetch(
       "https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/dashboard-data?t=" + Date.now(),
-      { cache: "no-store" }
+      {
+        cache: "no-store",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      }
     );
 
     const data = await res.json();
