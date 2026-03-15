@@ -42,16 +42,27 @@
         </div>
 
         <div class="contact-card-body">
-          id="memberSearchInput"
+  <div class="members-searchbar">
+    <input
+      id="memberSearchInput"
+      class="inbox-search"
+      type="text"
+      placeholder="Search by name, phone, or email"
+      autocomplete="off"
+    />
+    <button id="memberSearchBtn" class="members-search-btn" type="button" aria-label="Search">
+      🔍
+    </button>
+  </div>
 
-          <div id="selectedMemberCard" style="display:none; margin-top:14px;"></div>
+  <div id="selectedMemberCard" style="display:none; margin-top:14px;"></div>
 
-          <div id="membersResults" class="inbox-list" style="margin-top:14px;"></div>
+  <div id="membersResults" class="inbox-list" style="margin-top:14px;"></div>
 
-          <div id="membersResultsEmpty" class="form-note dash-note" style="display:block; margin-top:14px;">
-            Search for a member by name, phone, or email.
-          </div>
-        </div>
+  <div id="membersResultsEmpty" class="form-note dash-note" style="display:block; margin-top:14px;">
+    Search for a member by name, phone, or email.
+  </div>
+</div>
       </article>
 
     </div>
