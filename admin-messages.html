@@ -197,19 +197,26 @@
       </section>
 
       <!-- MEMBERS POINTS -->
-      <section class="resdash-section" style="margin-top:18px;">
-        <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
-          <span>Members Points</span>
-          <span class="resdash-subicon">⌄</span>
-        </button>
+<section class="resdash-section" style="margin-top:18px;">
+  <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
+    <span>Members Points</span>
+    <span class="resdash-subicon">⌄</span>
+  </button>
 
-        <div class="resdash-subpanel">
-          <div id="membersPoints"></div>
-          <div id="membersPointsEmpty" class="form-note dash-note" style="display:none;">
-            No members yet.
-          </div>
-        </div>
-      </section>
+  <div class="resdash-subpanel">
+    <input
+      id="membersSearchInput"
+      type="text"
+      class="inbox-search"
+      placeholder="Search by name, phone, or email"
+      style="margin-bottom:12px;"
+    />
+    <div id="membersPoints"></div>
+    <div id="membersPointsEmpty" class="form-note dash-note" style="display:none;">
+      No members yet.
+    </div>
+  </div>
+</section>
 
     </div>
   </div>
@@ -805,12 +812,14 @@ const pointsHistoryBox = document.getElementById("pointsHistory");
 const pointsHistoryEmpty = document.getElementById("pointsHistoryEmpty");
 const membersPointsBox = document.getElementById("membersPoints");
 const membersPointsEmpty = document.getElementById("membersPointsEmpty");
+const membersSearchInput = document.getElementById("membersSearchInput");
 const pointsBox = document.getElementById("pointsBox");
 
   if (!activeBox || !activeEmpty || !historyBox || !historyEmpty || !reservationsBox) return;
 
   let dashboardData = { active: [], history: [], pointsHistory: [] };
-  let refreshTimer = null;
+let refreshTimer = null;
+let allMembersPoints = [];
 
   function esc(s){
     return String(s ?? "")
@@ -1025,6 +1034,20 @@ const pointsBox = document.getElementById("pointsBox");
   });
 }
 
+function getFilteredMembers() {
+  const q = (membersSearchInput?.value || "").trim().toLowerCase();
+
+  if (!q) return [...allMembersPoints];
+
+  return allMembersPoints.filter(user => {
+    const name = String(user.name || "").toLowerCase();
+    const phone = String(user.phone || "").toLowerCase();
+    const email = String(user.email || "").toLowerCase();
+
+    return name.includes(q) || phone.includes(q) || email.includes(q);
+  });
+}
+  
 async function renderMembersPoints() {
   if (!membersPointsBox || !membersPointsEmpty || !window.padelinDB || !window.padelinAuth) return;
 
@@ -1034,19 +1057,32 @@ async function renderMembersPoints() {
   const isAdmin = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN";
 
   try {
-    const snap = await window.padelinDB.collection("users").get();
+    if (!allMembersPoints.length) {
+      const snap = await window.padelinDB.collection("users").get();
 
-    if (snap.empty) {
-      membersPointsEmpty.style.display = "block";
-      return;
+      if (snap.empty) {
+        membersPointsEmpty.style.display = "block";
+        return;
+      }
+
+      const docs = [];
+      snap.forEach(doc => docs.push({ id: doc.id, ...(doc.data() || {}) }));
+
+      docs.sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+      allMembersPoints = docs;
     }
 
-    const docs = [];
-    snap.forEach(doc => docs.push({ id: doc.id, ...(doc.data() || {}) }));
+    const filteredMembers = getFilteredMembers();
 
-    docs.sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+    if (!filteredMembers.length) {
+      membersPointsEmpty.style.display = "block";
+      membersPointsEmpty.textContent = "No members found.";
+      return;
+    } else {
+      membersPointsEmpty.textContent = "No members yet.";
+    }
 
-    docs.forEach(user => {
+    filteredMembers.forEach(user => {
       const row = document.createElement("article");
       row.className = "resdash-item";
 
@@ -1072,7 +1108,7 @@ async function renderMembersPoints() {
         ` : ""}
       `;
 
-            if (isAdmin) {
+      if (isAdmin) {
         row.querySelector("[data-edit-points]")?.addEventListener("click", async () => {
           const current = Number(user.points || 0);
           const nextValue = prompt(`Edit points for ${user.name || user.email || "member"}`, String(current));
@@ -1093,28 +1129,33 @@ async function renderMembersPoints() {
             const roleLabel = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "manager";
 
             const currentUser = window.padelinAuth?.currentUser;
-const token = currentUser ? await currentUser.getIdToken() : "";
+            const token = currentUser ? await currentUser.getIdToken() : "";
 
-const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`
-  },
-  body: JSON.stringify({
-    memberId: user.id,
-    memberName: user.name || "",
-    memberEmail: user.email || "",
-    memberPhone: user.phone || "",
-    previousPoints: current,
-    nextPoints: parsed,
-    actor: roleLabel
-  })
-});
+            const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                memberId: user.id,
+                memberName: user.name || "",
+                memberEmail: user.email || "",
+                memberPhone: user.phone || "",
+                previousPoints: current,
+                nextPoints: parsed,
+                actor: roleLabel
+              })
+            });
 
-if (!historyRes.ok) {
-  console.warn("Points history log failed, but Firestore points were updated.");
-}
+            if (!historyRes.ok) {
+              console.warn("Points history log failed, but Firestore points were updated.");
+            }
+
+            user.points = parsed;
+            allMembersPoints = allMembersPoints.map(m =>
+              m.id === user.id ? { ...m, points: parsed } : m
+            ).sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
 
             await loadReservationsDashboard();
           } catch (e) {
@@ -1188,10 +1229,12 @@ async function loadReservationsDashboard() {
     }
 
     dashboardData = {
-      active: Array.isArray(data.active) ? data.active : [],
-      history: Array.isArray(data.history) ? data.history : [],
-      pointsHistory: Array.isArray(data.pointsHistory) ? data.pointsHistory : []
-    };
+  active: Array.isArray(data.active) ? data.active : [],
+  history: Array.isArray(data.history) ? data.history : [],
+  pointsHistory: Array.isArray(data.pointsHistory) ? data.pointsHistory : []
+};
+
+allMembersPoints = [];
 
     applyDashboardRender();
   } catch (err) {
@@ -1234,8 +1277,12 @@ async function loadReservationsDashboard() {
 }
 
   if (historySort) {
-    historySort.addEventListener("change", applyDashboardRender);
-  }
+  historySort.addEventListener("change", applyDashboardRender);
+}
+
+if (membersSearchInput) {
+  membersSearchInput.addEventListener("input", renderMembersPoints);
+}
 
   setupSubAccordions();
   startAutoRefresh();
