@@ -3438,15 +3438,15 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
 }
 /* Members page header buttons */
 body:has(#memberSearchInput) #logoutBtn {
+  padding: 8px 12px;
+  min-width: 74px;
+  height: 40px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
   background: #fff;
   color: var(--navy);
   border: 1px solid rgba(15,23,42,0.10);
-  border-radius: 12px;
-  padding: 10px 14px;
-  font-size: 14px;
-  font-weight: 800;
-  min-width: 88px;
-  height: 44px;
   box-shadow: 0 6px 16px rgba(15,23,42,0.06);
 }
 
@@ -3486,4 +3486,86 @@ body:has(#memberSearchInput) .members-search-btn {
 
 body:has(#memberSearchInput) .members-search-btn:hover {
   background: rgba(15,23,42,0.04);
+}
+body:has(#memberSearchInput) .member-result-item {
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 16px;
+  background: #fff;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+body:has(#memberSearchInput) .member-result-item:hover {
+  transform: translateY(-1px);
+  background: rgba(63,102,150,0.05);
+  border-color: rgba(63,102,150,0.22);
+}
+
+body:has(#memberSearchInput) .member-result-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+body:has(#memberSearchInput) .member-result-name {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
+body:has(#memberSearchInput) .member-result-phone {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(11,18,32,0.68);
+}
+
+body:has(#memberSearchInput) .member-detail-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+body:has(#memberSearchInput) .member-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.68);
+}
+
+body:has(#memberSearchInput) .member-field input {
+  width: 100%;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.12);
+  padding: 0 12px;
+  background: #fff;
+  color: var(--text-dark);
+  outline: none;
+}
+
+body:has(#memberSearchInput) .member-field input[readonly] {
+  background: rgba(15,23,42,0.04);
+  color: rgba(11,18,32,0.72);
+}
+
+body:has(#memberSearchInput) .member-field input:focus {
+  border-color: rgba(63,102,150,0.45);
+  box-shadow: 0 0 0 3px rgba(63,102,150,0.10);
+}
+
+body:has(#memberSearchInput) .member-detail-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+@media (max-width: 520px) {
+  body:has(#memberSearchInput) .member-detail-grid {
+    grid-template-columns: 1fr;
+  }
 }
