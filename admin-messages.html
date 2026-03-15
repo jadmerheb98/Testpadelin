@@ -1200,9 +1200,17 @@ async function loadReservationsDashboard() {
 }
 
   function startAutoRefresh() {
-    if (refreshTimer) clearInterval(refreshTimer);
-    refreshTimer = setInterval(loadReservationsDashboard, 5000);
-  }
+  if (refreshTimer) clearInterval(refreshTimer);
+
+  refreshTimer = setInterval(() => {
+    const reservationsToggle = reservationsBox?.querySelector("[data-acc-toggle]");
+    const reservationsOpen = reservationsToggle?.classList.contains("is-open");
+
+    if (reservationsOpen) {
+      loadReservationsDashboard();
+    }
+  }, 5000);
+}
 
   function setupSubAccordions() {
   document.querySelectorAll("[data-res-subtoggle]").forEach((btn) => {
