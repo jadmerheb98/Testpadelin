@@ -131,145 +131,252 @@ const membersResultsEmpty = document.getElementById("membersResultsEmpty");
     return;
   }
 
+  const createdAt = user.createdAt || "—";
+  const updatedAt = user.updatedAt || "—";
+  const source = user.source || "—";
+  const uid = user.uid || user.id || "—";
+
   selectedMemberCard.style.display = "block";
-  selectedMemberCard.innerHTML = `
-    <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
-      <div class="resdash-item-top">
-        <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
-        <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
-      </div>
 
-      <div class="resdash-grid">
-        <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
-        <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
-        <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
-        <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
-      </div>
+  if (isAdmin) {
+    selectedMemberCard.innerHTML = `
+      <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
+        <div class="resdash-item-top">
+          <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
+          <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
+        </div>
 
-      <div class="staff-actions" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Clear</button>
-        ${isAdmin ? `<button class="btn btn-ghost" type="button" id="editSelectedMemberBtn">Edit Points</button>` : ``}
-      </div>
-    </article>
-  `;
+        <div class="member-detail-grid">
+          <div class="member-field">
+            <label>Name</label>
+            <input id="editMemberName" type="text" value="${esc(user.name || "")}">
+          </div>
+
+          <div class="member-field">
+            <label>Phone</label>
+            <input id="editMemberPhone" type="text" value="${esc(user.phone || "")}">
+          </div>
+
+          <div class="member-field">
+            <label>Email</label>
+            <input id="editMemberEmail" type="text" value="${esc(user.email || "")}">
+          </div>
+
+          <div class="member-field">
+            <label>Points</label>
+            <input id="editMemberPoints" type="number" min="0" value="${esc(String(Number(user.points || 0)))}">
+          </div>
+
+          <div class="member-field">
+            <label>UID</label>
+            <input type="text" value="${esc(uid)}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Created by</label>
+            <input type="text" value="${esc(source)}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Created at</label>
+            <input type="text" value="${esc(createdAt)}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Updated at</label>
+            <input type="text" value="${esc(updatedAt)}" readonly>
+          </div>
+        </div>
+
+        <div class="member-detail-actions">
+          <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Back</button>
+          <button class="btn btn-primary" type="button" id="saveMemberBtn">Save Changes</button>
+        </div>
+      </article>
+    `;
+  } else {
+    selectedMemberCard.innerHTML = `
+      <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
+        <div class="resdash-item-top">
+          <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
+          <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
+        </div>
+
+        <div class="member-detail-grid">
+          <div class="member-field">
+            <label>Name</label>
+            <input type="text" value="${esc(user.name || "")}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Phone</label>
+            <input type="text" value="${esc(user.phone || "")}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Email</label>
+            <input type="text" value="${esc(user.email || "")}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Points</label>
+            <input type="text" value="${esc(String(Number(user.points || 0)))}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>UID</label>
+            <input type="text" value="${esc(uid)}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Created by</label>
+            <input type="text" value="${esc(source)}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Created at</label>
+            <input type="text" value="${esc(createdAt)}" readonly>
+          </div>
+
+          <div class="member-field">
+            <label>Updated at</label>
+            <input type="text" value="${esc(updatedAt)}" readonly>
+          </div>
+        </div>
+
+        <div class="member-detail-actions">
+          <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Back</button>
+        </div>
+      </article>
+    `;
+  }
 
   document.getElementById("clearSelectedMemberBtn")?.addEventListener("click", () => {
     selectedMemberId = null;
-    if (memberSearchInput) memberSearchInput.value = "";
+    selectedMemberCard.style.display = "none";
+    selectedMemberCard.innerHTML = "";
     membersResults.innerHTML = "";
     membersResultsEmpty.style.display = "block";
     membersResultsEmpty.textContent = "Search for a member by name, phone, or email.";
-    renderSelectedMemberCard();
   });
 
-  document.getElementById("editSelectedMemberBtn")?.addEventListener("click", async () => {
-    const current = Number(user.points || 0);
-    const nextValue = prompt(`Edit points for ${user.name || user.email || "member"}`, String(current));
-    if (nextValue === null) return;
+  document.getElementById("saveMemberBtn")?.addEventListener("click", async () => {
+    const nextName = (document.getElementById("editMemberName")?.value || "").trim();
+    const nextPhone = (document.getElementById("editMemberPhone")?.value || "").trim();
+    const nextEmail = (document.getElementById("editMemberEmail")?.value || "").trim().toLowerCase();
+    const nextPoints = Number(document.getElementById("editMemberPoints")?.value || 0);
 
-    const parsed = Number(nextValue);
-    if (!Number.isFinite(parsed) || parsed < 0) {
-      alert("Enter a valid number.");
+    if (!nextName || !nextPhone || !nextEmail) {
+      alert("Name, phone, and email are required.");
+      return;
+    }
+
+    if (!Number.isFinite(nextPoints) || nextPoints < 0) {
+      alert("Points must be a valid number.");
       return;
     }
 
     try {
+      const previousPoints = Number(user.points || 0);
+
       await db.collection("users").doc(user.id).set({
-        points: parsed,
+        name: nextName,
+        phone: nextPhone,
+        email: nextEmail,
+        points: nextPoints,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       }, { merge: true });
 
-      const roleLabel = isAdmin ? "admin" : "manager";
-      const currentUser = auth?.currentUser;
-      const token = currentUser ? await currentUser.getIdToken() : "";
+      if (previousPoints !== nextPoints) {
+        const currentUser = auth?.currentUser;
+        const token = currentUser ? await currentUser.getIdToken() : "";
 
-      const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          memberId: user.id,
-          memberName: user.name || "",
-          memberEmail: user.email || "",
-          memberPhone: user.phone || "",
-          previousPoints: current,
-          nextPoints: parsed,
-          actor: roleLabel
-        })
-      });
-
-      if (!historyRes.ok) {
-        console.warn("Points history log failed, but Firestore points were updated.");
+        await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            memberId: user.id,
+            memberName: nextName,
+            memberEmail: nextEmail,
+            memberPhone: nextPhone,
+            previousPoints,
+            nextPoints,
+            actor: "admin"
+          })
+        });
       }
 
-      allMembers = allMembers
-        .map(m => m.id === user.id ? { ...m, points: parsed } : m)
-        .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+      allMembers = allMembers.map(m =>
+        m.id === user.id
+          ? {
+              ...m,
+              name: nextName,
+              phone: nextPhone,
+              email: nextEmail,
+              points: nextPoints
+            }
+          : m
+      );
 
       renderSelectedMemberCard();
+      alert("Member updated.");
     } catch (e) {
       console.error(e);
-      alert(e.message || "Failed to update points.");
+      alert(e.message || "Failed to save member.");
     }
   });
 }
-
-    function renderMembersResults() {
+    function renderMembersResults(list) {
   membersResults.innerHTML = "";
-}
 
-    async function loadMembers() {
-      try {
-        const snap = await db.collection("users").get();
-        allMembers = snap.docs
-          .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
-          .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
-      } catch (err) {
-        console.error("Failed to load members:", err);
-        membersResultsEmpty.style.display = "block";
-        membersResultsEmpty.textContent = "Could not load members.";
-      }
-    }
+  if (!Array.isArray(list) || !list.length) {
+    membersResultsEmpty.style.display = "block";
+    membersResultsEmpty.textContent = "No members found.";
+    return;
+  }
 
-    auth.onAuthStateChanged(async (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-        return;
-      }
+  membersResultsEmpty.style.display = "none";
 
-      const dn = String(user.displayName || "");
-      const isStaff = dn.startsWith("STAFF:");
-      isAdmin = dn === "STAFF:ADMIN";
+  list.forEach(user => {
+    const row = document.createElement("article");
+    row.className = "member-result-item";
 
-      if (!isStaff) {
-        await auth.signOut();
-        window.location.href = "login.html";
-        return;
-      }
+    row.innerHTML = `
+      <div class="member-result-top">
+        <div class="member-result-name">${esc(user.name || user.email || "Member")}</div>
+        <div class="member-result-phone">${esc(user.phone || "—")}</div>
+      </div>
+    `;
 
-      if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "Admin" : "Staff";
-
-      await loadMembers();
+    row.addEventListener("click", () => {
+      selectedMemberId = user.id;
+      renderSelectedMemberCard();
+      membersResults.innerHTML = "";
+      membersResultsEmpty.style.display = "none";
+      selectedMemberCard.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+
+    membersResults.appendChild(row);
+  });
+}
 
     function runMemberSearch() {
   const filtered = getFilteredMembers();
 
+  selectedMemberId = null;
+  renderSelectedMemberCard();
+
   if (!filtered.length) {
-    selectedMemberId = null;
-    renderSelectedMemberCard();
     membersResults.innerHTML = "";
     membersResultsEmpty.style.display = "block";
     membersResultsEmpty.textContent = "No members found.";
     return;
   }
 
-  selectedMemberId = filtered[0].id;
-  membersResults.innerHTML = "";
-  membersResultsEmpty.style.display = "none";
-  renderSelectedMemberCard();
+  renderMembersResults(filtered);
 }
 
 if (memberSearchBtn) {
