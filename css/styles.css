@@ -3274,3 +3274,26 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
     border-radius: 16px;
   }
 }
+/* Center dashboard subtitles */
+.resdash-head p {
+  text-align: center;
+  width: 100%;
+}
+
+/* Center dashboard search bars */
+.inbox-search,
+#membersSearchInput {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  max-width: 320px;
+}
+
+/* Center date pickers */
+.resdash-date-input {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
