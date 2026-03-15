@@ -741,20 +741,26 @@ const msg = document.getElementById("tableEditorMsg");
       const [court, timeRange] = key.split("|");
       const [start, end] = timeRange.split(" - ");
 
-      await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: dateLabel,
-          court,
-          start,
-          end,
-          status,
-          updatedBy: role,
-          customerName: status === "available" ? "" : customerName,
-          customerPhone: status === "available" ? "" : customerPhone
-        })
-      });
+      const currentUser = window.padelinAuth?.currentUser;
+const token = currentUser ? await currentUser.getIdToken() : "";
+
+await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`
+  },
+  body: JSON.stringify({
+    date: dateLabel,
+    court,
+    start,
+    end,
+    status,
+    updatedBy: role,
+    customerName: status === "available" ? "" : customerName,
+    customerPhone: status === "available" ? "" : customerPhone
+  })
+});
     }
 
     setMsg("Changes saved.", true);
