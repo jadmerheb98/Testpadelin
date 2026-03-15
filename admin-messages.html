@@ -1204,9 +1204,12 @@ async function loadReservationsDashboard() {
 
   refreshTimer = setInterval(() => {
     const reservationsToggle = reservationsBox?.querySelector("[data-acc-toggle]");
-    const reservationsOpen = reservationsToggle?.classList.contains("is-open");
+    const pointsToggle = pointsBox?.querySelector("[data-acc-toggle]");
 
-    if (reservationsOpen) {
+    const reservationsOpen = reservationsToggle?.classList.contains("is-open");
+    const pointsOpen = pointsToggle?.classList.contains("is-open");
+
+    if (reservationsOpen && !pointsOpen) {
       loadReservationsDashboard();
     }
   }, 5000);
@@ -1239,7 +1242,7 @@ async function loadReservationsDashboard() {
   const reservationsVisible = reservationsBox && reservationsBox.style.display !== "none";
   const pointsVisible = pointsBox && pointsBox.style.display !== "none";
 
-  if (reservationsVisible || pointsVisible) loadReservationsDashboard();
+  if (reservationsVisible && !pointsVisible) loadReservationsDashboard();
 });
 
   if (reservationsBox) {
