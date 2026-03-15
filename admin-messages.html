@@ -146,7 +146,7 @@
       <div class="resdash-subpanel">
         <div class="resdash-toolbar resdash-toolbar-centered" style="margin-bottom:12px;">
   <div class="resdash-head">
-    <p>Current week by default. Select a date to view older reservation history.</p>
+    <p>Select a date to view reservation history.</p>
   </div>
 
   <div class="resdash-sort resdash-sort-centered">
@@ -185,7 +185,7 @@
   <div class="resdash-subpanel">
           <div class="resdash-toolbar resdash-toolbar-centered" style="margin-bottom:12px;">
   <div class="resdash-head">
-    <p>Current week by default. Select a date to view older points history.</p>
+    <p>Select a date to view points history.</p>
   </div>
 
   <div class="resdash-sort resdash-sort-centered">
@@ -875,28 +875,17 @@ function isSameDay(a, b) {
 
 function filterHistoryToCurrentWeekOrSelectedDate(items, selectedDateValue) {
   if (!Array.isArray(items)) return [];
+  if (!selectedDateValue) return [];
 
-  const selectedDate = selectedDateValue ? new Date(`${selectedDateValue}T00:00:00`) : null;
-
-  if (selectedDate && !Number.isNaN(selectedDate.getTime())) {
-    return items.filter(item => {
-      const d = new Date(item.timestamp || 0);
-      if (Number.isNaN(d.getTime())) return false;
-      return isSameDay(d, selectedDate);
-    });
-  }
-
-  const start = getStartOfCurrentWeek();
-  const end = getEndOfCurrentWeek();
+  const selectedDate = new Date(`${selectedDateValue}T00:00:00`);
+  if (Number.isNaN(selectedDate.getTime())) return [];
 
   return items.filter(item => {
     const d = new Date(item.timestamp || 0);
     if (Number.isNaN(d.getTime())) return false;
-
-    const dayOnly = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    return dayOnly.getTime() >= start.getTime() && dayOnly.getTime() <= end.getTime();
+    return isSameDay(d, selectedDate);
   });
-} 
+}
 
   function prettyDay(iso) {
     if (!iso) return "Unknown day";
