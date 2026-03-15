@@ -198,23 +198,17 @@ const uid = user.uid || user.id || "—";
           </div>
 
           <div class="member-field">
-            <label>UID</label>
-            <input type="text" value="${esc(uid)}" readonly>
-          </div>
+            <label>Member ID</label>
+<input type="text" value="${esc(uid)}" readonly>
 
-          <div class="member-field">
-            <label>Created by</label>
-            <input type="text" value="${esc(source)}" readonly>
-          </div>
+<label>Account created by</label>
+<input type="text" value="${esc(source)}" readonly>
 
-          <div class="member-field">
-            <label>Created at</label>
-            <input type="text" value="${esc(createdAt)}" readonly>
-          </div>
+<label>Account created on</label>
+<input type="text" value="${esc(createdAt)}" readonly>
 
-          <div class="member-field">
-            <label>Updated at</label>
-            <input type="text" value="${esc(updatedAt)}" readonly>
+<label>Last updated on</label>
+<input type="text" value="${esc(updatedAt)}" readonly>
           </div>
         </div>
 
