@@ -863,6 +863,29 @@ let allMembersPoints = [];
     });
   }
 
+ function isTodayOrFutureReservation(dateLabel) {
+  if (!dateLabel) return false;
+
+  const match = String(dateLabel).match(/^[A-Za-z]{3},\s([A-Za-z]{3})\s(\d{1,2}),\s(\d{4})$/);
+  if (!match) return false;
+
+  const [, monStr, dayStr, yearStr] = match;
+
+  const months = {
+    Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+    Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
+  };
+
+  const d = new Date(Number(yearStr), months[monStr], Number(dayStr));
+  if (Number.isNaN(d.getTime())) return false;
+
+  const today = new Date();
+  const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const itemOnly = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+  return itemOnly.getTime() >= todayOnly.getTime();
+} 
+  
   function makeStatusBadge(status) {
     const s = String(status || "").toLowerCase();
     const cls =
@@ -875,10 +898,13 @@ let allMembersPoints = [];
   }
 
   function renderActive(items) {
-    activeBox.innerHTML = "";
-    activeEmpty.style.display = items.length ? "none" : "block";
+  activeBox.innerHTML = "";
 
-    items.forEach(item => {
+  const filteredItems = items.filter(item => isTodayOrFutureReservation(item.date));
+
+  activeEmpty.style.display = filteredItems.length ? "none" : "block";
+
+  filteredItems.forEach(item => {
       const row = document.createElement("article");
       row.className = "resdash-item";
 
