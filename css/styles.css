@@ -3297,3 +3297,30 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
   margin-right: auto;
   text-align: center;
 }
+/* Better vertical centering for history date pickers */
+.resdash-date-input {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.resdash-date-input::-webkit-date-and-time-value {
+  text-align: center;
+}
+
+.resdash-date-input::-webkit-datetime-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  line-height: normal;
+}
+
+.resdash-date-input::-webkit-calendar-picker-indicator {
+  margin-left: 8px;
+}
