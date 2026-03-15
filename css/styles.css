@@ -3223,3 +3223,11 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
     height: 20px;
   }
 }
+/* Smaller Edit Points button */
+.edit-points-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  width: auto;
+  min-width: 120px;
+}
