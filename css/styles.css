@@ -3510,15 +3510,15 @@ body:has(#memberSearchInput) .member-result-top {
 }
 
 body:has(#memberSearchInput) .member-result-name {
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 13px;
+  font-weight: 800;
   color: var(--text-dark);
 }
 
 body:has(#memberSearchInput) .member-result-phone {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
-  color: rgba(11,18,32,0.68);
+  color: rgba(11,18,32,0.62);
 }
 
 body:has(#memberSearchInput) .member-detail-grid {
@@ -3568,4 +3568,15 @@ body:has(#memberSearchInput) .member-detail-actions {
   body:has(#memberSearchInput) .member-detail-grid {
     grid-template-columns: 1fr;
   }
+}
+body:has(#memberSearchInput) .member-detail-actions .btn {
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+body:has(#memberSearchInput) .member-detail-actions .btn-primary {
+  box-shadow: 0 10px 25px rgba(63, 102, 150, 0.22);
 }
