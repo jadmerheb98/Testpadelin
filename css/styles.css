@@ -3436,3 +3436,22 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
   padding: 6px 12px;
   font-size: 13px;
 }
+/* Members page header buttons */
+body:has(#memberSearchInput) #logoutBtn {
+  background: #fff;
+  color: var(--navy);
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  min-width: 88px;
+  height: 44px;
+  box-shadow: 0 6px 16px rgba(15,23,42,0.06);
+}
+
+body:has(#memberSearchInput) #logoutBtn:hover {
+  background: rgba(15,23,42,0.04);
+  border-color: rgba(15,23,42,0.16);
+  transform: translateY(-1px);
+}
