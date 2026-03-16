@@ -224,19 +224,16 @@ window.location.href = "index.html";
 if (name) await cred.user.updateProfile({ displayName: name });
 
 if (db) {
-  const customId = await generateNextCustomId();
-
   await db.collection("users").doc(cred.user.uid).set({
-    uid: cred.user.uid,
-    customId: customId,
-    name: name || "",
-    email: email || "",
-    phone: phone || "",
-    points: 0,
-    source: "website_signup",
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-  }, { merge: true });
+  uid: cred.user.uid,
+  name: name || "",
+  email: email || "",
+  phone: phone || "",
+  points: 0,
+  source: "website_signup",
+  updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+}, { merge: true });
 }
             localStorage.setItem("padelinUser", JSON.stringify({
               uid: cred.user.uid,
