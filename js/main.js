@@ -170,8 +170,27 @@ if (dn !== "STAFF:ADMIN") {
 // Normal login
 window.location.href = "index.html";
           } catch (err) {
-            alert(err.message);
-          }
+
+  let msg = "Unable to sign in. Please try again.";
+
+  if (err.code === "auth/user-not-found") {
+    msg = "No account found with this email.";
+  }
+
+  if (err.code === "auth/wrong-password") {
+    msg = "Incorrect password.";
+  }
+
+  if (err.code === "auth/invalid-credential") {
+    msg = "Email or password is incorrect.";
+  }
+
+  if (err.code === "auth/too-many-requests") {
+    msg = "Too many attempts. Please try again later.";
+  }
+
+  alert(msg);
+}
         });
 
         // Forgot password link is currently href="#" in your login page
