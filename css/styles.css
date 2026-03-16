@@ -3952,127 +3952,146 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 /* ===============================
    Homepage Live Event Section
-   Compact version
+   Editorial / premium version
 ================================ */
 
 .event-live{
-  padding: 26px 0 14px;
+  padding: 30px 0 8px;
   background: transparent;
+}
+
+.event-live .container{
+  position: relative;
 }
 
 .event-live-card{
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(15,23,42,0.08);
-  background: #fff;
-  box-shadow: 0 10px 26px rgba(15,23,42,0.06);
+  grid-template-columns: minmax(260px, 0.92fr) minmax(0, 1.08fr);
+  align-items: stretch;
+  gap: 18px;
+  padding: 14px;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+  border: 1px solid rgba(15,23,42,0.06);
+  box-shadow:
+    0 10px 30px rgba(15,23,42,0.05),
+    0 2px 10px rgba(15,23,42,0.03);
 }
 
 .event-live-media{
-  min-height: 200px;
+  min-height: 250px;
+  border-radius: 22px;
+  overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(15,23,42,0.18), rgba(15,23,42,0.32)),
-    rgba(63,102,150,0.12);
+    linear-gradient(180deg, rgba(15,23,42,0.16), rgba(15,23,42,0.34)),
+    rgba(63,102,150,0.14);
   background-size: cover;
   background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
 }
 
 .event-live-content{
-  padding: 20px 22px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 8px 10px 8px 2px;
 }
 
 .event-live-badge{
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  min-height: 28px;
-  padding: 5px 10px;
+  min-height: 30px;
+  padding: 6px 12px;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 900;
-  letter-spacing: .4px;
+  letter-spacing: .45px;
   text-transform: uppercase;
-  background: rgba(63,102,150,0.10);
-  border: 1px solid rgba(63,102,150,0.18);
   color: var(--navy);
+  background: rgba(63,102,150,0.10);
+  border: 1px solid rgba(63,102,150,0.16);
 }
 
 .event-live-title{
-  margin: 10px 0 6px;
-  font-size: 24px;
-  line-height: 1.08;
+  margin: 12px 0 6px;
+  font-size: 29px;
+  line-height: 1.04;
+  letter-spacing: -.02em;
   color: var(--navy);
 }
 
 .event-live-subtitle{
-  margin: 0 0 12px;
+  margin: 0 0 14px;
+  max-width: 52ch;
   font-size: 14px;
-  line-height: 1.45;
-  color: rgba(11,18,32,0.70);
+  line-height: 1.55;
+  color: rgba(11,18,32,0.68);
 }
 
 .event-live-meta{
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .event-live-price,
 .event-live-date{
   display: inline-flex;
   align-items: center;
-  min-height: 34px;
-  padding: 6px 12px;
+  min-height: 36px;
+  padding: 7px 12px;
   border-radius: 12px;
   font-size: 13px;
   font-weight: 800;
-  background: rgba(15,23,42,0.04);
-  border: 1px solid rgba(15,23,42,0.08);
   color: var(--text-dark);
+  background: rgba(15,23,42,0.035);
+  border: 1px solid rgba(15,23,42,0.07);
 }
 
 .event-live-description{
-  margin: 0 0 14px;
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: rgba(11,18,32,0.76);
+  margin: 0 0 16px;
+  max-width: 58ch;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(11,18,32,0.78);
 }
 
 #liveEventButton{
   align-self: flex-start;
-  min-height: 40px;
-  padding: 10px 14px;
+  min-height: 42px;
+  padding: 10px 16px;
   border-radius: 12px;
   font-size: 14px;
   font-weight: 800;
+  box-shadow: 0 8px 18px rgba(15,23,42,0.08);
 }
 
 @media (max-width: 900px){
   .event-live{
-    padding: 22px 0 10px;
+    padding: 24px 0 6px;
   }
 
   .event-live-card{
     grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 12px;
+    border-radius: 24px;
   }
 
   .event-live-media{
-    min-height: 180px;
+    min-height: 190px;
+    border-radius: 18px;
   }
 
   .event-live-content{
-    padding: 18px 16px;
+    padding: 2px 4px 4px;
   }
 
   .event-live-title{
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .event-live-subtitle{
