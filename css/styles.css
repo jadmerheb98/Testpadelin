@@ -3956,12 +3956,11 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 ================================ */
 
 .event-live{
-  position: relative;
-  padding: 34px 0 20px;
+  padding: 18px 0 14px;
   background:
     radial-gradient(900px 420px at 80% 10%, rgba(63,102,150,0.22), transparent 60%),
     linear-gradient(180deg, #08101d 0%, #0b1630 100%);
-}
+}   
 
 .event-live-intro{
   margin-bottom: 16px;
