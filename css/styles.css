@@ -3950,3 +3950,91 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     grid-template-columns:1fr;
   }
 }
+/* ===============================
+   Homepage Live Event Section
+================================ */
+
+.event-live{
+  background:#fff;
+}
+
+.event-live-card{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(15,23,42,0.08);
+  box-shadow:0 16px 36px rgba(15,23,42,0.08);
+}
+
+.event-live-media{
+  min-height:320px;
+  background:
+    linear-gradient(180deg, rgba(15,23,42,0.2), rgba(15,23,42,0.4)),
+    rgba(63,102,150,0.15);
+  background-size:cover;
+  background-position:center;
+}
+
+.event-live-content{
+  padding:36px;
+}
+
+.event-live-badge{
+  display:inline-flex;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.4px;
+  text-transform:uppercase;
+  background:rgba(63,102,150,0.12);
+  border:1px solid rgba(63,102,150,0.2);
+  color:var(--navy);
+}
+
+.event-live-title{
+  margin:14px 0 8px;
+  font-size:34px;
+  line-height:1.05;
+  color:var(--navy);
+}
+
+.event-live-subtitle{
+  margin-bottom:18px;
+  font-size:16px;
+  color:rgba(11,18,32,0.7);
+}
+
+.event-live-meta{
+  display:flex;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.event-live-price,
+.event-live-date{
+  padding:8px 14px;
+  border-radius:14px;
+  font-weight:800;
+  background:rgba(15,23,42,0.04);
+  border:1px solid rgba(15,23,42,0.1);
+}
+
+.event-live-description{
+  margin-bottom:20px;
+  font-size:15px;
+  line-height:1.6;
+}
+
+@media (max-width:900px){
+
+  .event-live-card{
+    grid-template-columns:1fr;
+  }
+
+  .event-live-media{
+    height:240px;
+  }
+
+}
