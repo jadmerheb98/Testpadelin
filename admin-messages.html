@@ -241,7 +241,71 @@
 
             </div>
           </div>
-        </article>        
+        </article>  
+
+ <!-- 6) ADMIN ONLY -->
+<article class="contact-card dash-acc-item" id="eventsBox" style="display:none;">
+  <button class="dash-acc-toggle" type="button" data-acc-toggle aria-expanded="false">
+    <span>Events</span>
+    <span class="dash-acc-icon">⌄</span>
+  </button>
+
+  <div class="dash-acc-panel">
+    <div class="contact-card-body">
+
+      <!-- ACTIVE -->
+      <section class="resdash-section">
+        <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
+          <span>Active</span>
+          <span class="resdash-subicon">⌄</span>
+        </button>
+
+        <div class="resdash-subpanel">
+
+          <div class="dashboard-actions">
+            <button class="btn btn-primary" type="button" id="openEventEditorBtn">
+              Create / Edit Event
+            </button>
+          </div>
+
+          <div class="form-note dash-note" style="margin-top:12px;">
+            Create an event and publish it to the home page when needed.
+          </div>
+
+        </div>
+      </section>
+
+      <!-- HISTORY -->
+      <section class="resdash-section" style="margin-top:18px;">
+        <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
+          <span>History</span>
+          <span class="resdash-subicon">⌄</span>
+        </button>
+
+        <div class="resdash-subpanel">
+
+          <div class="resdash-toolbar resdash-toolbar-centered" style="margin-bottom:12px;">
+            <div class="resdash-head">
+              <p>Select a date to view event history.</p>
+            </div>
+
+            <div class="resdash-sort resdash-sort-centered">
+              <input id="eventsHistoryDateFilter" type="date" class="resdash-date-input" />
+            </div>
+          </div>
+
+          <div id="eventsHistory"></div>
+
+          <div id="eventsHistoryEmpty" class="form-note dash-note" style="display:none;">
+            No events history yet.
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+</article>       
 
       </section>
     </div>
@@ -317,12 +381,13 @@
 
     (function roleSetup(){
       const roleEyebrow = document.getElementById("roleEyebrow");
-      const employersParentBox = document.getElementById("employersParentBox");
-      const staffBox = document.getElementById("staffBox");
-      const employersBox = document.getElementById("employersBox");
-      const reservationsBox = document.getElementById("reservationsBox");
-      const pointsBox = document.getElementById("pointsBox");
-      const clubBox = document.getElementById("clubBox");
+const employersParentBox = document.getElementById("employersParentBox");
+const staffBox = document.getElementById("staffBox");
+const employersBox = document.getElementById("employersBox");
+const reservationsBox = document.getElementById("reservationsBox");
+const pointsBox = document.getElementById("pointsBox");
+const clubBox = document.getElementById("clubBox");
+const eventsBox = document.getElementById("eventsBox");
 
       if (!window.padelinAuth) return;
 
@@ -335,6 +400,7 @@ if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "Admin" : "Staff";
 if (employersParentBox) employersParentBox.style.display = isAdmin ? "block" : "none";
 if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
 if (employersBox) employersBox.style.display = isAdmin ? "block" : "none";
+if (eventsBox) eventsBox.style.display = isAdmin ? "block" : "none";
 if (clubBox) clubBox.style.display = isStaff ? "block" : "none";
 if (reservationsBox) reservationsBox.style.display = isStaff ? "block" : "none";
 if (pointsBox) pointsBox.style.display = isStaff ? "block" : "none";
