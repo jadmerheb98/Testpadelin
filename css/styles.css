@@ -3956,9 +3956,11 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 ================================ */
 
 .event-live{
-  padding: 34px 0 14px;
+  position: relative;
+  padding: 34px 0 20px;
   background:
-    linear-gradient(180deg, rgba(63,102,150,0.05), rgba(255,255,255,0));
+    radial-gradient(900px 420px at 80% 10%, rgba(63,102,150,0.18), transparent 60%),
+    linear-gradient(180deg, #08101d 0%, #0b1630 42%, #eef4fb 100%);
 }
 
 .event-live-intro{
@@ -4055,8 +4057,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.94));
   border: 1px solid rgba(15,23,42,0.08);
   box-shadow:
-    0 14px 34px rgba(15,23,42,0.06),
-    0 3px 10px rgba(15,23,42,0.03);
+    0 18px 40px rgba(15,23,42,0.08),
+    0 4px 12px rgba(15,23,42,0.04);
 }
 
 .event-live-media{
@@ -4153,13 +4155,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     margin-bottom: 12px;
   }
 
-  .event-live-headline{
-    font-size: 22px;
-  }
-
-  .event-live-lead{
-    font-size: 13px;
-  }
 
   .event-live-card{
     grid-template-columns: 1fr;
