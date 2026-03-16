@@ -229,31 +229,6 @@
         </div>
       </section>
 
-      <!-- MEMBERS POINTS -->
-<section class="resdash-section" style="margin-top:18px;">
-  <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
-    <span>Members Points</span>
-    <span class="resdash-subicon">⌄</span>
-  </button>
-
-  <div class="resdash-subpanel">
-    <input
-  id="membersSearchInput"
-  type="text"
-  class="inbox-search"
-  placeholder="Search by name, phone, or email"
-  style="margin-bottom:12px;"
-/>
-
-<div id="selectedMemberCard" style="display:none; margin-bottom:12px;"></div>
-
-<div id="membersPoints"></div>
-<div id="membersPointsEmpty" class="form-note dash-note" style="display:none;">
-  No members yet.
-</div>
-  </div>
-</section>
-
     </div>
   </div>
 </article>
@@ -850,18 +825,12 @@ const historyDateFilter = document.getElementById("historyDateFilter");
 const pointsHistoryBox = document.getElementById("pointsHistory");
 const pointsHistoryEmpty = document.getElementById("pointsHistoryEmpty");
 const pointsHistoryDateFilter = document.getElementById("pointsHistoryDateFilter");
-const membersPointsBox = document.getElementById("membersPoints");
-const membersPointsEmpty = document.getElementById("membersPointsEmpty");
-const membersSearchInput = document.getElementById("membersSearchInput");
-const selectedMemberCard = document.getElementById("selectedMemberCard");
 const pointsBox = document.getElementById("pointsBox");
 
   if (!activeBox || !activeEmpty || !historyBox || !historyEmpty || !reservationsBox) return;
 
-  let dashboardData = { active: [], history: [], pointsHistory: [] };
-let refreshTimer = null;
-let allMembersPoints = [];
-let selectedMemberId = null;
+    let dashboardData = { active: [], history: [], pointsHistory: [] };
+  let refreshTimer = null;
 
   function esc(s){
     return String(s ?? "")
@@ -1122,205 +1091,14 @@ function filterHistoryToCurrentWeekOrSelectedDate(items, selectedDateValue) {
 
     pointsHistoryBox.appendChild(row);
   });
-}
-
-function getFilteredMembers() {
-  const q = (membersSearchInput?.value || "").trim().toLowerCase();
-
-  if (!q) return [];
-
-  return allMembersPoints.filter(user => {
-    const name = String(user.name || "").toLowerCase();
-    const phone = String(user.phone || "").toLowerCase();
-    const email = String(user.email || "").toLowerCase();
-
-    return name.includes(q) || phone.includes(q) || email.includes(q);
-  });
-}
-
-function renderSelectedMemberCard() {
-  if (!selectedMemberCard) return;
-
-  if (!selectedMemberId) {
-    selectedMemberCard.style.display = "none";
-    selectedMemberCard.innerHTML = "";
-    return;
-  }
-
-  const user = allMembersPoints.find(m => m.id === selectedMemberId);
-  if (!user) {
-    selectedMemberCard.style.display = "none";
-    selectedMemberCard.innerHTML = "";
-    return;
-  }
-
-  const isAdmin = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN";
-
-  selectedMemberCard.style.display = "block";
-  selectedMemberCard.innerHTML = `
-    <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
-      <div class="resdash-item-top">
-        <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
-        <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
-      </div>
-
-      <div class="resdash-grid">
-        <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
-        <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
-        <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
-        <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
-      </div>
-
-      <div class="staff-actions" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Back to results</button>
-        ${isAdmin ? `<button class="btn btn-ghost" type="button" id="editSelectedMemberBtn">Edit Points</button>` : ``}
-      </div>
-    </article>
-  `;
-
-  document.getElementById("clearSelectedMemberBtn")?.addEventListener("click", () => {
-    selectedMemberId = null;
-    renderSelectedMemberCard();
-  });
-
-  document.getElementById("editSelectedMemberBtn")?.addEventListener("click", async () => {
-    const current = Number(user.points || 0);
-    const nextValue = prompt(`Edit points for ${user.name || user.email || "member"}`, String(current));
-    if (nextValue === null) return;
-
-    const parsed = Number(nextValue);
-    if (!Number.isFinite(parsed) || parsed < 0) {
-      alert("Enter a valid number.");
-      return;
-    }
-
-    try {
-      await window.padelinDB.collection("users").doc(user.id).set({
-        points: parsed,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      }, { merge: true });
-
-      const roleLabel = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN" ? "admin" : "manager";
-      const currentUser = window.padelinAuth?.currentUser;
-      const token = currentUser ? await currentUser.getIdToken() : "";
-
-      const historyRes = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          memberId: user.id,
-          memberName: user.name || "",
-          memberEmail: user.email || "",
-          memberPhone: user.phone || "",
-          previousPoints: current,
-          nextPoints: parsed,
-          actor: roleLabel
-        })
-      });
-
-      if (!historyRes.ok) {
-        console.warn("Points history log failed, but Firestore points were updated.");
-      }
-
-      allMembersPoints = allMembersPoints
-        .map(m => m.id === user.id ? { ...m, points: parsed } : m)
-        .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
-
-      renderSelectedMemberCard();
-      renderMembersPoints();
-      await loadReservationsDashboard();
-    } catch (e) {
-      alert(e.message || "Failed to update points.");
-    }
-  });
-}  
-  
-async function renderMembersPoints() {
-  if (!membersPointsBox || !membersPointsEmpty || !window.padelinDB || !window.padelinAuth) return;
-
-  membersPointsBox.innerHTML = "";
-  membersPointsEmpty.style.display = "none";
-
-  const isAdmin = (window.padelinAuth.currentUser?.displayName || "") === "STAFF:ADMIN";
-
-  try {
-    if (!allMembersPoints.length) {
-      const snap = await window.padelinDB.collection("users").get();
-
-      if (snap.empty) {
-        membersPointsEmpty.style.display = "block";
-        return;
-      }
-
-      const docs = [];
-      snap.forEach(doc => docs.push({ id: doc.id, ...(doc.data() || {}) }));
-
-      docs.sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
-      allMembersPoints = docs;
-    }
-
-    let filteredMembers = getFilteredMembers();
-
-if (selectedMemberId) {
-  filteredMembers = filteredMembers.filter(user => user.id !== selectedMemberId);
-}
-
-    if (!filteredMembers.length) {
-  membersPointsEmpty.style.display = "block";
-  membersPointsEmpty.textContent = (membersSearchInput?.value || "").trim()
-    ? "No members found."
-    : "Search for a member by name, phone, or email.";
-  selectedMemberId = null;
-  renderSelectedMemberCard();
-  return;
-} else {
-  membersPointsEmpty.textContent = "No members yet.";
-}
-
-    filteredMembers.forEach(user => {
-      const row = document.createElement("article");
-      row.className = "resdash-item";
-
-            row.innerHTML = `
-        <div class="resdash-item-top">
-          <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
-          <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
-        </div>
-
-        <div class="resdash-grid">
-          <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
-          <div><strong>Email:</strong> ${esc(user.email || "—")}</div>
-          <div><strong>Phone:</strong> ${esc(user.phone || "—")}</div>
-          <div><strong>Points:</strong> ${esc(String(Number(user.points || 0)))}</div>
-        </div>
-      `;
-
-            row.style.cursor = "pointer";
-      row.addEventListener("click", () => {
-        selectedMemberId = user.id;
-        renderSelectedMemberCard();
-      });
-
-      membersPointsBox.appendChild(row);
-    });
-
-      renderSelectedMemberCard();  
-
-  } catch (e) {
-    console.error("Failed to load members points:", e);
-    membersPointsEmpty.style.display = "block";
-  }
+    
 }
   
-  function applyDashboardRender() {
-  renderActive(Array.isArray(dashboardData.active) ? dashboardData.active : []);
-  renderHistory(Array.isArray(dashboardData.history) ? dashboardData.history : []);
-  renderPointsHistory(Array.isArray(dashboardData.pointsHistory) ? dashboardData.pointsHistory : []);
-  renderMembersPoints();
-}
+    function applyDashboardRender() {
+    renderActive(Array.isArray(dashboardData.active) ? dashboardData.active : []);
+    renderHistory(Array.isArray(dashboardData.history) ? dashboardData.history : []);
+    renderPointsHistory(Array.isArray(dashboardData.pointsHistory) ? dashboardData.pointsHistory : []);
+  }
 
 async function loadReservationsDashboard() {
   try {
@@ -1350,8 +1128,6 @@ async function loadReservationsDashboard() {
   history: Array.isArray(data.history) ? data.history : [],
   pointsHistory: Array.isArray(data.pointsHistory) ? data.pointsHistory : []
 };
-
-allMembersPoints = [];
 
     applyDashboardRender();
   } catch (err) {
@@ -1403,16 +1179,6 @@ if (historyDateFilter) {
 
 if (pointsHistoryDateFilter) {
   pointsHistoryDateFilter.addEventListener("change", applyDashboardRender);
-}
-
-if (membersSearchInput) {
-  membersSearchInput.addEventListener("input", () => {
-    const filtered = getFilteredMembers();
-    if (!filtered.find(m => m.id === selectedMemberId)) {
-      selectedMemberId = null;
-    }
-    renderMembersPoints();
-  });
 }
 
   setupSubAccordions();
