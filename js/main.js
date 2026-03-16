@@ -227,16 +227,33 @@ if (!db) {
   throw new Error("Firestore is not loaded on signup page.");
 }
 
-await db.collection("users").doc(cred.user.uid).set({
-  uid: cred.user.uid,
-  name: name || "",
-  email: email || "",
-  phone: phone || "",
-  points: 0,
-  source: "website_signup",
-  updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-}, { merge: true });
+const counterRef = db.collection("system").doc("memberCounter");
+const userRef = db.collection("users").doc(cred.user.uid);
+
+await db.runTransaction(async (transaction) => {
+  const counterDoc = await transaction.get(counterRef);
+
+  let nextId = 20260001;
+
+  if (counterDoc.exists) {
+    const data = counterDoc.data() || {};
+    nextId = Number(data.lastId || 20260000) + 1;
+  }
+
+  transaction.set(counterRef, { lastId: nextId }, { merge: true });
+
+  transaction.set(userRef, {
+    uid: cred.user.uid,
+    customId: String(nextId),
+    name: name || "",
+    email: email || "",
+    phone: phone || "",
+    points: 0,
+    source: "website_signup",
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  }, { merge: true });
+});
             
             localStorage.setItem("padelinUser", JSON.stringify({
               uid: cred.user.uid,
