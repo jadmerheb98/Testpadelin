@@ -170,11 +170,14 @@ const uid = user.uid || user.id || "—";
 
   if (isAdmin) {
     selectedMemberCard.innerHTML = `
-      <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
-        <div class="resdash-item-top">
-          <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
-          <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
-        </div>
+  <article class="resdash-item member-profile-card" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
+    <div class="member-profile-head">
+      <div>
+        <div class="member-profile-name">${esc(user.name || user.email || "Member")}</div>
+        <div class="member-profile-sub">${esc(user.phone || "—")}</div>
+      </div>
+      <div class="member-profile-points">${esc(String(Number(user.points || 0)))} pts</div>
+    </div>
 
         <div class="member-detail-grid">
           <div class="member-field">
@@ -213,19 +216,21 @@ const uid = user.uid || user.id || "—";
         </div>
 
         <div class="member-detail-actions">
-          <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Back</button>
-          <button class="btn btn-primary" type="button" id="saveMemberBtn">Save Changes</button>
-        </div>
+  <button class="member-mini-btn member-mini-btn-ghost" type="button" id="clearSelectedMemberBtn">Back</button>
+  <button class="member-mini-btn member-mini-btn-primary" type="button" id="saveMemberBtn">Save Changes</button>
+</div>
       </article>
     `;
   } else {
     selectedMemberCard.innerHTML = `
-      <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
-        <div class="resdash-item-top">
-          <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
-          <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
-        </div>
-
+  <article class="resdash-item member-profile-card" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
+    <div class="member-profile-head">
+      <div>
+        <div class="member-profile-name">${esc(user.name || user.email || "Member")}</div>
+        <div class="member-profile-sub">${esc(user.phone || "—")}</div>
+      </div>
+      <div class="member-profile-points">${esc(String(Number(user.points || 0)))} pts</div>
+    </div>
         <div class="member-detail-grid">
           <div class="member-field">
             <label>Name</label>
@@ -269,8 +274,8 @@ const uid = user.uid || user.id || "—";
         </div>
 
         <div class="member-detail-actions">
-          <button class="btn btn-ghost" type="button" id="clearSelectedMemberBtn">Back</button>
-        </div>
+  <button class="member-mini-btn member-mini-btn-ghost" type="button" id="clearSelectedMemberBtn">Back</button>
+</div>
       </article>
     `;
   }
