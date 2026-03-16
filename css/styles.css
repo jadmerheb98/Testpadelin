@@ -601,7 +601,9 @@ button, input { font: inherit; }
 
 .hero-main{
   padding: 18px 0 14px;
-  background: red;
+  background:
+    radial-gradient(900px 420px at 80% 10%, rgba(63,102,150,0.22), transparent 60%),
+    linear-gradient(180deg, #08101d 0%, #0b1630 100%);
 }
 
 .hero-card{
@@ -3962,7 +3964,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     linear-gradient(
       180deg,
       #08101d 0%,
-      #0b1630 45%,
+      #0b1630 55%,
       #eef4fb 100%
     );
 }
