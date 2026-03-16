@@ -225,11 +225,43 @@
         el?.addEventListener("change", updatePreview);
       });
 
-      saveBtn?.addEventListener("click", () => {
-        msg.textContent = "Draft layout saved locally for preview only. Firestore save will be added next.";
-        msg.classList.remove("is-error");
-        msg.classList.add("is-success");
-      });
+      saveBtn?.addEventListener("click", async () => {
+  if (!window.padelinDB) return;
+
+  try {
+
+    const eventData = {
+      badge: badgeInput.value.trim(),
+      title: titleInput.value.trim(),
+      subtitle: subtitleInput.value.trim(),
+      date: dateInput.value || "",
+      price: priceInput.value.trim(),
+      cta: ctaInput.value.trim(),
+      image: imageInput.value.trim(),
+      description: descriptionInput.value.trim(),
+      published: document.getElementById("eventPublishToggle").checked,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    await window.padelinDB
+      .collection("system")
+      .doc("liveEvent")
+      .set(eventData, { merge: true });
+
+    msg.textContent = "Event saved successfully.";
+    msg.classList.remove("is-error");
+    msg.classList.add("is-success");
+
+  } catch (e) {
+
+    console.error(e);
+
+    msg.textContent = "Failed to save event.";
+    msg.classList.remove("is-success");
+    msg.classList.add("is-error");
+
+  }
+});
 
       updatePreview();
     })();
