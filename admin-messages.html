@@ -414,7 +414,7 @@ if (pointsBox) pointsBox.style.display = isStaff ? "block" : "none";
       window.location.href = "login.html";
     });
 
-    // Accordion
+        // Accordion
     (function accordionSetup(){
       document.querySelectorAll("[data-acc-toggle]").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -425,6 +425,15 @@ if (pointsBox) pointsBox.style.display = isStaff ? "block" : "none";
           btn.setAttribute("aria-expanded", String(!isOpen));
           if (panel) panel.classList.toggle("is-open", !isOpen);
         });
+      });
+    })();
+
+    (function eventEditorLinkSetup(){
+      const btn = document.getElementById("openEventEditorBtn");
+      if (!btn) return;
+
+      btn.addEventListener("click", () => {
+        window.location.href = "admin-event-editor.html";
       });
     })();
   </script>
