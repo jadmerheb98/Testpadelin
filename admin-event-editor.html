@@ -252,11 +252,11 @@
     msg.classList.remove("is-error");
     msg.classList.add("is-success");
 
-  } catch (e) {
+    } catch (e) {
 
     console.error(e);
 
-    msg.textContent = "Failed to save event.";
+    msg.textContent = e.message || "Failed to save event.";
     msg.classList.remove("is-success");
     msg.classList.add("is-error");
 
