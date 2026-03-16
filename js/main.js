@@ -36,6 +36,24 @@
   const auth = window.padelinAuth;
   const db = window.padelinDB; // Firestore (for staff enable/disable)
 
+  async function generateNextCustomId() {
+  if (!db) return "20260001";
+
+  const snap = await db.collection("users")
+    .orderBy("customId", "desc")
+    .limit(1)
+    .get();
+
+  if (snap.empty) {
+    return "20260001";
+  }
+
+  const lastCustomId = String(snap.docs[0].data().customId || "20260000");
+  const nextNumber = Number(lastCustomId) + 1;
+
+  return String(nextNumber);
+}
+
     function setLocalUser(user) {
     if (!user) {
       localStorage.removeItem("padelinUser");
@@ -203,21 +221,23 @@ window.location.href = "index.html";
           try {
             const cred = await auth.createUserWithEmailAndPassword(email, password);
 
-            if (name) await cred.user.updateProfile({ displayName: name });
+if (name) await cred.user.updateProfile({ displayName: name });
 
-            if (db) {
-              await db.collection("users").doc(cred.user.uid).set({
-                uid: cred.user.uid,
-                name: name || "",
-                email: email || "",
-                phone: phone || "",
-                points: 0,
-                source: "website_signup",
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              }, { merge: true });
-            }
+if (db) {
+  const customId = await generateNextCustomId();
 
+  await db.collection("users").doc(cred.user.uid).set({
+    uid: cred.user.uid,
+    customId: customId,
+    name: name || "",
+    email: email || "",
+    phone: phone || "",
+    points: 0,
+    source: "website_signup",
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  }, { merge: true });
+}
             localStorage.setItem("padelinUser", JSON.stringify({
               uid: cred.user.uid,
               email: email || "",
