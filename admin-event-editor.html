@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event Editor | PADELIN Admin</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
+      </div>
+      <div class="header-right">
+        <a class="btn btn-ghost" href="admin-messages.html">Back to Dashboard</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="contact-page">
+    <div class="container">
+
+      <section class="contact-hero" aria-label="Event editor hero">
+        <div class="contact-eyebrow">Admin</div>
+        <h1>Event Editor</h1>
+        <p>Create a club event layout and prepare it for homepage publishing.</p>
+      </section>
+
+      <section class="event-editor-layout">
+
+        <!-- LEFT: FORM -->
+        <article class="contact-card">
+          <div class="contact-card-head">
+            <div class="contact-card-title">Event Details</div>
+            <div class="contact-card-sub">Fill the template safely. Publishing will be connected in the next step.</div>
+          </div>
+
+          <div class="contact-card-body">
+            <div class="event-form-grid">
+
+              <div class="auth-row">
+                <label for="eventBadge">Event Label</label>
+                <input id="eventBadge" type="text" placeholder="Tournament / Birthday / Special Event" autocomplete="off" />
+              </div>
+
+              <div class="auth-row">
+                <label for="eventTitle">Title</label>
+                <input id="eventTitle" type="text" placeholder="PADELIN Birthday Night" autocomplete="off" />
+              </div>
+
+              <div class="auth-row">
+                <label for="eventSubtitle">Subtitle</label>
+                <input id="eventSubtitle" type="text" placeholder="An evening of padel, music, and fun" autocomplete="off" />
+              </div>
+
+              <div class="auth-row">
+                <label for="eventDate">Event Date</label>
+                <input id="eventDate" type="date" />
+              </div>
+
+              <div class="auth-row">
+                <label for="eventPrice">Price Box</label>
+                <input id="eventPrice" type="text" placeholder="$20 per player / Free entry / Members only" autocomplete="off" />
+              </div>
+
+              <div class="auth-row">
+                <label for="eventCta">Button Text</label>
+                <input id="eventCta" type="text" placeholder="Reserve Your Spot" autocomplete="off" />
+              </div>
+
+              <div class="auth-row">
+                <label for="eventImage">Photo URL</label>
+                <input id="eventImage" type="text" placeholder="https://..." autocomplete="off" />
+              </div>
+
+              <div class="auth-row">
+                <label for="eventDescription">Description</label>
+                <textarea id="eventDescription" rows="6" placeholder="Write a short event description..."></textarea>
+              </div>
+
+              <div class="event-toggle-row">
+                <label class="event-switch">
+                  <input id="eventPublishToggle" type="checkbox" />
+                  <span class="event-switch-slider"></span>
+                </label>
+                <div>
+                  <div class="event-toggle-title">Show on homepage</div>
+                  <div class="event-toggle-sub">This is visual only for now. We will connect it next.</div>
+                </div>
+              </div>
+
+              <div class="dashboard-actions" style="margin-top:8px;">
+                <button class="btn btn-primary" type="button" id="saveEventDraftBtn">Save Draft</button>
+              </div>
+
+              <div class="form-note" id="eventEditorMsg" style="margin-top:12px;">
+                Template page ready. Save/publish logic comes next.
+              </div>
+
+            </div>
+          </div>
+        </article>
+
+        <!-- RIGHT: PREVIEW -->
+        <article class="contact-card">
+          <div class="contact-card-head">
+            <div class="contact-card-title">Live Preview</div>
+            <div class="contact-card-sub">This is how the event block can look on the homepage.</div>
+          </div>
+
+          <div class="contact-card-body">
+            <section class="event-preview-card">
+              <div class="event-preview-media" id="eventPreviewMedia">
+                <div class="event-preview-placeholder">Event Photo</div>
+              </div>
+
+              <div class="event-preview-content">
+                <div class="event-preview-badge" id="previewBadge">Special Event</div>
+                <h2 class="event-preview-title" id="previewTitle">Your Event Title</h2>
+                <p class="event-preview-subtitle" id="previewSubtitle">Your subtitle will appear here.</p>
+
+                <div class="event-preview-meta">
+                  <div class="event-price-box" id="previewPrice">Price info</div>
+                  <div class="event-date-box" id="previewDate">Date</div>
+                </div>
+
+                <p class="event-preview-description" id="previewDescription">
+                  Your event description preview will appear here.
+                </p>
+
+                <button class="btn btn-primary" type="button" id="previewCtaBtn">Reserve Now</button>
+              </div>
+            </section>
+          </div>
+        </article>
+
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Admin</div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-init.js"></script>
+
+  <script>
+    (function staffGate(){
+      if (!window.padelinAuth) return;
+      window.padelinAuth.onAuthStateChanged((u) => {
+        const dn = (u?.displayName || "");
+        if (!u || dn !== "STAFF:ADMIN") {
+          window.location.href = "login.html";
+        }
+      });
+    })();
+
+    (function eventPreviewSetup(){
+      const badgeInput = document.getElementById("eventBadge");
+      const titleInput = document.getElementById("eventTitle");
+      const subtitleInput = document.getElementById("eventSubtitle");
+      const dateInput = document.getElementById("eventDate");
+      const priceInput = document.getElementById("eventPrice");
+      const ctaInput = document.getElementById("eventCta");
+      const imageInput = document.getElementById("eventImage");
+      const descriptionInput = document.getElementById("eventDescription");
+      const saveBtn = document.getElementById("saveEventDraftBtn");
+      const msg = document.getElementById("eventEditorMsg");
+
+      const previewBadge = document.getElementById("previewBadge");
+      const previewTitle = document.getElementById("previewTitle");
+      const previewSubtitle = document.getElementById("previewSubtitle");
+      const previewPrice = document.getElementById("previewPrice");
+      const previewDate = document.getElementById("previewDate");
+      const previewDescription = document.getElementById("previewDescription");
+      const previewCtaBtn = document.getElementById("previewCtaBtn");
+      const previewMedia = document.getElementById("eventPreviewMedia");
+
+      function formatDate(value){
+        if (!value) return "Date";
+        const d = new Date(value + "T00:00:00");
+        if (Number.isNaN(d.getTime())) return "Date";
+        return d.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        });
+      }
+
+      function updatePreview(){
+        previewBadge.textContent = badgeInput.value.trim() || "Special Event";
+        previewTitle.textContent = titleInput.value.trim() || "Your Event Title";
+        previewSubtitle.textContent = subtitleInput.value.trim() || "Your subtitle will appear here.";
+        previewPrice.textContent = priceInput.value.trim() || "Price info";
+        previewDate.textContent = formatDate(dateInput.value);
+        previewDescription.textContent = descriptionInput.value.trim() || "Your event description preview will appear here.";
+        previewCtaBtn.textContent = ctaInput.value.trim() || "Reserve Now";
+
+        const imageUrl = imageInput.value.trim();
+        if (imageUrl) {
+          previewMedia.innerHTML = '<img src="' + imageUrl.replace(/"/g, "&quot;") + '" alt="Event preview image" />';
+        } else {
+          previewMedia.innerHTML = '<div class="event-preview-placeholder">Event Photo</div>';
+        }
+      }
+
+      [
+        badgeInput,
+        titleInput,
+        subtitleInput,
+        dateInput,
+        priceInput,
+        ctaInput,
+        imageInput,
+        descriptionInput
+      ].forEach((el) => {
+        el?.addEventListener("input", updatePreview);
+        el?.addEventListener("change", updatePreview);
+      });
+
+      saveBtn?.addEventListener("click", () => {
+        msg.textContent = "Draft layout saved locally for preview only. Firestore save will be added next.";
+        msg.classList.remove("is-error");
+        msg.classList.add("is-success");
+      });
+
+      updatePreview();
+    })();
+  </script>
+
+</body>
+</html>
