@@ -83,70 +83,6 @@
           </div>
         </article>
 
-                <!-- 3) ADMIN ONLY -->
-        <article class="contact-card dash-acc-item" id="employersParentBox" style="display:none;">
-          <button class="dash-acc-toggle" type="button" data-acc-toggle aria-expanded="false">
-            <span>Employers</span>
-            <span class="dash-acc-icon">⌄</span>
-          </button>
-
-          <div class="dash-acc-panel">
-            <div class="contact-card-body">
-
-              <!-- EMPLOYERS LIST -->
-              <section class="resdash-section" id="employersBox" style="display:none;">
-                <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
-                  <span>Employers List</span>
-                  <span class="resdash-subicon">⌄</span>
-                </button>
-
-                <div class="resdash-subpanel">
-                  <div id="staffList" class="inbox-list"></div>
-                  <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
-
-                  <div class="form-note dash-note" style="margin-top:12px;">
-                    Manage employer access, password reset, and account status from this section.
-                  </div>
-                </div>
-              </section>
-
-              <!-- CREATE EMPLOYER -->
-              <section class="resdash-section" id="staffBox" style="display:none; margin-top:18px;">
-                <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
-                  <span>Create Employer</span>
-                  <span class="resdash-subicon">⌄</span>
-                </button>
-
-                <div class="resdash-subpanel">
-                  <div class="auth-row">
-                    <label for="staffFirst">First Name</label>
-                    <input id="staffFirst" type="text" placeholder="First name" autocomplete="off" />
-                  </div>
-
-                  <div class="auth-row">
-                    <label for="staffLast">Family Name</label>
-                    <input id="staffLast" type="text" placeholder="Family name" autocomplete="off" />
-                  </div>
-
-                  <div class="auth-row">
-                    <label for="staffPhone">Phone Number</label>
-                    <input id="staffPhone" type="tel" placeholder="+961..." autocomplete="off" />
-                  </div>
-
-                  <div class="auth-row">
-                    <label for="staffEmail">Employer Email</label>
-                    <input id="staffEmail" type="email" placeholder="staff@email.com" autocomplete="off" />
-                  </div>
-
-                  <button class="btn btn-primary" type="button" id="createStaffBtn">Create Employer Account</button>
-                  <div class="form-note" id="staffMsg" style="margin-top:10px;"></div>
-                </div>
-              </section>
-
-            </div>
-          </div>
-        </article>
-
         <!-- 4) ADMIN ONLY -->
         <article class="contact-card dash-acc-item" id="reservationsBox" style="display:none;">
           <button class="dash-acc-toggle" type="button" data-acc-toggle aria-expanded="false">
@@ -242,6 +178,70 @@
     </div>
   </div>
 </article>
+
+        <!-- 5) ADMIN ONLY -->
+        <article class="contact-card dash-acc-item" id="employersParentBox" style="display:none;">
+          <button class="dash-acc-toggle" type="button" data-acc-toggle aria-expanded="false">
+            <span>Employers</span>
+            <span class="dash-acc-icon">⌄</span>
+          </button>
+
+          <div class="dash-acc-panel">
+            <div class="contact-card-body">
+
+              <!-- EMPLOYERS LIST -->
+              <section class="resdash-section" id="employersBox" style="display:none;">
+                <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
+                  <span>Employers List</span>
+                  <span class="resdash-subicon">⌄</span>
+                </button>
+
+                <div class="resdash-subpanel">
+                  <div id="staffList" class="inbox-list"></div>
+                  <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
+
+                  <div class="form-note dash-note" style="margin-top:12px;">
+                    Manage employer access, password reset, and account status from this section.
+                  </div>
+                </div>
+              </section>
+
+              <!-- CREATE EMPLOYER -->
+              <section class="resdash-section" id="staffBox" style="display:none; margin-top:18px;">
+                <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
+                  <span>Create Employer</span>
+                  <span class="resdash-subicon">⌄</span>
+                </button>
+
+                <div class="resdash-subpanel">
+                  <div class="auth-row">
+                    <label for="staffFirst">First Name</label>
+                    <input id="staffFirst" type="text" placeholder="First name" autocomplete="off" />
+                  </div>
+
+                  <div class="auth-row">
+                    <label for="staffLast">Family Name</label>
+                    <input id="staffLast" type="text" placeholder="Family name" autocomplete="off" />
+                  </div>
+
+                  <div class="auth-row">
+                    <label for="staffPhone">Phone Number</label>
+                    <input id="staffPhone" type="tel" placeholder="+961..." autocomplete="off" />
+                  </div>
+
+                  <div class="auth-row">
+                    <label for="staffEmail">Employer Email</label>
+                    <input id="staffEmail" type="email" placeholder="staff@email.com" autocomplete="off" />
+                  </div>
+
+                  <button class="btn btn-primary" type="button" id="createStaffBtn">Create Employer Account</button>
+                  <div class="form-note" id="staffMsg" style="margin-top:10px;"></div>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </article>        
 
       </section>
     </div>
