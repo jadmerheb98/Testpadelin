@@ -201,8 +201,8 @@ const uid = user.uid || user.id || "—";
           </div>
 
           <div class="member-field">
-            <label>Member ID</label>
-<input type="text" value="${esc(uid)}" readonly>
+            <label>ID</label>
+<input type="text" value="${esc(user.customId || "—")}" readonly>
 
 <label>Account created by</label>
 <input type="text" value="${esc(source)}" readonly>
