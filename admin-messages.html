@@ -83,56 +83,66 @@
           </div>
         </article>
 
-        <!-- 2) ADMIN ONLY -->
-        <article class="contact-card dash-acc-item" id="staffBox" style="display:none;">
+                <!-- 3) ADMIN ONLY -->
+        <article class="contact-card dash-acc-item" id="employersParentBox" style="display:none;">
           <button class="dash-acc-toggle" type="button" data-acc-toggle aria-expanded="false">
-            <span>Create Employer</span>
+            <span>Employers</span>
             <span class="dash-acc-icon">⌄</span>
           </button>
 
           <div class="dash-acc-panel">
             <div class="contact-card-body">
-              <div class="auth-row">
-                <label for="staffFirst">First Name</label>
-                <input id="staffFirst" type="text" placeholder="First name" autocomplete="off" />
-              </div>
 
-              <div class="auth-row">
-                <label for="staffLast">Family Name</label>
-                <input id="staffLast" type="text" placeholder="Family name" autocomplete="off" />
-              </div>
+              <!-- EMPLOYERS LIST -->
+              <section class="resdash-section" id="employersBox" style="display:none;">
+                <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
+                  <span>Employers List</span>
+                  <span class="resdash-subicon">⌄</span>
+                </button>
 
-              <div class="auth-row">
-                <label for="staffPhone">Phone Number</label>
-                <input id="staffPhone" type="tel" placeholder="+961..." autocomplete="off" />
-              </div>
+                <div class="resdash-subpanel">
+                  <div id="staffList" class="inbox-list"></div>
+                  <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
 
-              <div class="auth-row">
-                <label for="staffEmail">Employer Email</label>
-                <input id="staffEmail" type="email" placeholder="staff@email.com" autocomplete="off" />
-              </div>
+                  <div class="form-note dash-note" style="margin-top:12px;">
+                    Manage employer access, password reset, and account status from this section.
+                  </div>
+                </div>
+              </section>
 
-              <button class="btn btn-primary" type="button" id="createStaffBtn">Create Employer Account</button>
-              <div class="form-note" id="staffMsg" style="margin-top:10px;"></div>
-            </div>
-          </div>
-        </article>
+              <!-- CREATE EMPLOYER -->
+              <section class="resdash-section" id="staffBox" style="display:none; margin-top:18px;">
+                <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
+                  <span>Create Employer</span>
+                  <span class="resdash-subicon">⌄</span>
+                </button>
 
-        <!-- 3) ADMIN ONLY -->
-        <article class="contact-card dash-acc-item" id="employersBox" style="display:none;">
-          <button class="dash-acc-toggle" type="button" data-acc-toggle aria-expanded="false">
-            <span>Employers List</span>
-            <span class="dash-acc-icon">⌄</span>
-          </button>
+                <div class="resdash-subpanel">
+                  <div class="auth-row">
+                    <label for="staffFirst">First Name</label>
+                    <input id="staffFirst" type="text" placeholder="First name" autocomplete="off" />
+                  </div>
 
-          <div class="dash-acc-panel">
-            <div class="contact-card-body">
-              <div id="staffList" class="inbox-list"></div>
-              <div class="form-note" id="staffEmpty" style="display:none;">No employers yet.</div>
+                  <div class="auth-row">
+                    <label for="staffLast">Family Name</label>
+                    <input id="staffLast" type="text" placeholder="Family name" autocomplete="off" />
+                  </div>
 
-              <div class="form-note dash-note" style="margin-top:12px;">
-  Manage employer access, password reset, and account status from this section.
-</div>
+                  <div class="auth-row">
+                    <label for="staffPhone">Phone Number</label>
+                    <input id="staffPhone" type="tel" placeholder="+961..." autocomplete="off" />
+                  </div>
+
+                  <div class="auth-row">
+                    <label for="staffEmail">Employer Email</label>
+                    <input id="staffEmail" type="email" placeholder="staff@email.com" autocomplete="off" />
+                  </div>
+
+                  <button class="btn btn-primary" type="button" id="createStaffBtn">Create Employer Account</button>
+                  <div class="form-note" id="staffMsg" style="margin-top:10px;"></div>
+                </div>
+              </section>
+
             </div>
           </div>
         </article>
@@ -307,7 +317,8 @@
 
     (function roleSetup(){
       const roleEyebrow = document.getElementById("roleEyebrow");
-            const staffBox = document.getElementById("staffBox");
+      const employersParentBox = document.getElementById("employersParentBox");
+      const staffBox = document.getElementById("staffBox");
       const employersBox = document.getElementById("employersBox");
       const reservationsBox = document.getElementById("reservationsBox");
       const pointsBox = document.getElementById("pointsBox");
@@ -321,6 +332,7 @@
         const isStaff = !!u && (u.displayName || "").startsWith("STAFF:");
 
 if (roleEyebrow) roleEyebrow.textContent = isAdmin ? "Admin" : "Staff";
+if (employersParentBox) employersParentBox.style.display = isAdmin ? "block" : "none";
 if (staffBox) staffBox.style.display = isAdmin ? "block" : "none";
 if (employersBox) employersBox.style.display = isAdmin ? "block" : "none";
 if (clubBox) clubBox.style.display = isStaff ? "block" : "none";
