@@ -225,45 +225,78 @@
         el?.addEventListener("change", updatePreview);
       });
 
+            async function loadSavedEvent() {
+        if (!window.padelinDB) return;
+
+        try {
+          const snap = await window.padelinDB
+            .collection("system")
+            .doc("liveEvent")
+            .get();
+
+          if (!snap.exists) {
+            updatePreview();
+            return;
+          }
+
+          const data = snap.data() || {};
+
+          badgeInput.value = data.badge || "";
+          titleInput.value = data.title || "";
+          subtitleInput.value = data.subtitle || "";
+          dateInput.value = data.date || "";
+          priceInput.value = data.price || "";
+          ctaInput.value = data.cta || "";
+          imageInput.value = data.image || "";
+          descriptionInput.value = data.description || "";
+
+          const publishToggle = document.getElementById("eventPublishToggle");
+          if (publishToggle) {
+            publishToggle.checked = data.published === true;
+          }
+
+          updatePreview();
+        } catch (e) {
+          console.error("Failed to load saved event:", e);
+          updatePreview();
+        }
+      }
+
       saveBtn?.addEventListener("click", async () => {
-  if (!window.padelinDB) return;
+        if (!window.padelinDB) return;
 
-  try {
+        try {
+          const eventData = {
+            badge: badgeInput.value.trim(),
+            title: titleInput.value.trim(),
+            subtitle: subtitleInput.value.trim(),
+            date: dateInput.value || "",
+            price: priceInput.value.trim(),
+            cta: ctaInput.value.trim(),
+            image: imageInput.value.trim(),
+            description: descriptionInput.value.trim(),
+            published: document.getElementById("eventPublishToggle").checked,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          };
 
-    const eventData = {
-      badge: badgeInput.value.trim(),
-      title: titleInput.value.trim(),
-      subtitle: subtitleInput.value.trim(),
-      date: dateInput.value || "",
-      price: priceInput.value.trim(),
-      cta: ctaInput.value.trim(),
-      image: imageInput.value.trim(),
-      description: descriptionInput.value.trim(),
-      published: document.getElementById("eventPublishToggle").checked,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
+          await window.padelinDB
+            .collection("system")
+            .doc("liveEvent")
+            .set(eventData, { merge: true });
 
-    await window.padelinDB
-      .collection("system")
-      .doc("liveEvent")
-      .set(eventData, { merge: true });
+          msg.textContent = "Event saved successfully.";
+          msg.classList.remove("is-error");
+          msg.classList.add("is-success");
+        } catch (e) {
+          console.error(e);
 
-    msg.textContent = "Event saved successfully.";
-    msg.classList.remove("is-error");
-    msg.classList.add("is-success");
+          msg.textContent = e.message || "Failed to save event.";
+          msg.classList.remove("is-success");
+          msg.classList.add("is-error");
+        }
+      });
 
-    } catch (e) {
-
-    console.error(e);
-
-    msg.textContent = e.message || "Failed to save event.";
-    msg.classList.remove("is-success");
-    msg.classList.add("is-error");
-
-  }
-});
-
-      updatePreview();
+      loadSavedEvent();
     })();
   </script>
 
