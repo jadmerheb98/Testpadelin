@@ -3958,11 +3958,15 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 .event-live{
   position: relative;
   padding: 34px 0 20px;
+
   background:
     radial-gradient(900px 420px at 80% 10%, rgba(63,102,150,0.22), transparent 60%),
-    linear-gradient(rgba(7,14,30,0.58), rgba(7,14,30,0.72)),
-    url("../assets/img/hero-bg.jpg") center center / cover no-repeat,
-    linear-gradient(180deg, #08101d 0%, #0b1630 38%, #eef4fb 100%);
+    linear-gradient(
+      180deg,
+      #08101d 0%,
+      #0b1630 45%,
+      #eef4fb 100%
+    );
 }
 
 .event-live-intro{
