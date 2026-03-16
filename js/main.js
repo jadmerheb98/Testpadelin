@@ -48,16 +48,10 @@
     return "20260001";
   }
 
-  const ids = snap.docs
-    .map(doc => String(doc.data().customId || ""))
-    .filter(v => /^\d+$/.test(v));
+  const lastCustomId = String(snap.docs[0].data().customId || "20260000");
+  const nextNumber = Number(lastCustomId) + 1;
 
-  if (!ids.length) {
-    return "20260001";
-  }
-
-  const lastCustomId = ids[0];
-  return String(Number(lastCustomId) + 1);
+  return String(nextNumber);
 }
 
     function setLocalUser(user) {
@@ -233,11 +227,8 @@ if (!db) {
   throw new Error("Firestore is not loaded on signup page.");
 }
 
-const customId = await generateNextCustomId();
-
 await db.collection("users").doc(cred.user.uid).set({
   uid: cred.user.uid,
-  customId: customId,
   name: name || "",
   email: email || "",
   phone: phone || "",
