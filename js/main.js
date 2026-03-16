@@ -524,3 +524,102 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+// =========================================
+// Homepage Live Event
+// =========================================
+(function () {
+  const section = document.getElementById("liveEventSection");
+  const badgeEl = document.getElementById("liveEventBadge");
+  const titleEl = document.getElementById("liveEventTitle");
+  const subtitleEl = document.getElementById("liveEventSubtitle");
+  const priceEl = document.getElementById("liveEventPrice");
+  const dateEl = document.getElementById("liveEventDate");
+  const descriptionEl = document.getElementById("liveEventDescription");
+  const buttonEl = document.getElementById("liveEventButton");
+  const imageEl = document.getElementById("liveEventImage");
+
+  if (
+    !section ||
+    !badgeEl ||
+    !titleEl ||
+    !subtitleEl ||
+    !priceEl ||
+    !dateEl ||
+    !descriptionEl ||
+    !buttonEl ||
+    !imageEl
+  ) {
+    return;
+  }
+
+  if (!window.padelinDB) {
+    return;
+  }
+
+  function formatDate(value) {
+    if (!value) return "Date";
+    const d = new Date(value + "T00:00:00");
+    if (Number.isNaN(d.getTime())) return "Date";
+
+    return d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
+  function esc(str) {
+    return String(str ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  async function loadLiveEvent() {
+    try {
+      const snap = await window.padelinDB.collection("system").doc("liveEvent").get();
+
+      if (!snap.exists) {
+        section.style.display = "none";
+        return;
+      }
+
+      const data = snap.data() || {};
+
+      if (data.published !== true) {
+        section.style.display = "none";
+        return;
+      }
+
+      badgeEl.textContent = data.badge || "Special Event";
+      titleEl.textContent = data.title || "Upcoming Event";
+      subtitleEl.textContent = data.subtitle || "Event details will appear here.";
+      priceEl.textContent = data.price || "Price info";
+      dateEl.textContent = formatDate(data.date || "");
+      descriptionEl.textContent = data.description || "Event description preview.";
+      buttonEl.textContent = data.cta || "Learn More";
+      buttonEl.setAttribute("href", "reservation.html");
+
+      const imageUrl = String(data.image || "").trim();
+
+      if (imageUrl) {
+        imageEl.style.backgroundImage =
+          'linear-gradient(180deg, rgba(15,23,42,0.2), rgba(15,23,42,0.4)), url("' +
+          imageUrl.replace(/"/g, "&quot;") +
+          '")';
+      } else {
+        imageEl.style.backgroundImage =
+          "linear-gradient(180deg, rgba(15,23,42,0.2), rgba(15,23,42,0.4)), linear-gradient(135deg, rgba(63,102,150,0.20), rgba(15,23,42,0.10))";
+      }
+
+      section.style.display = "block";
+    } catch (err) {
+      console.error("Failed to load live event:", err);
+      section.style.display = "none";
+    }
+  }
+
+  loadLiveEvent();
+})();
