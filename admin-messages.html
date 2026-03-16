@@ -1158,14 +1158,11 @@ function renderSelectedMemberCard() {
 
   selectedMemberCard.style.display = "block";
   selectedMemberCard.innerHTML = `
-  <article class="resdash-item member-profile-card" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
-    <div class="member-profile-head">
-      <div>
-        <div class="member-profile-name">${esc(user.name || user.email || "Member")}</div>
-        <div class="member-profile-sub">${esc(user.phone || "—")}</div>
+    <article class="resdash-item" style="border:1px solid rgba(63,102,150,0.18); box-shadow:0 8px 22px rgba(15,23,42,0.06);">
+      <div class="resdash-item-top">
+        <div class="resdash-item-title">${esc(user.name || user.email || "Member")}</div>
+        <div class="resdash-time">${esc(String(Number(user.points || 0)))} pts</div>
       </div>
-      <div class="member-profile-points">${esc(String(Number(user.points || 0)))} pts</div>
-    </div>
 
       <div class="resdash-grid">
         <div><strong>Name:</strong> ${esc(user.name || "—")}</div>
