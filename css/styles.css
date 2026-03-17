@@ -4172,3 +4172,78 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     justify-content: center;
   }
 }
+/* ===============================
+   EVENT INLINE STYLE (NEW)
+================================ */
+
+.event-live-row{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  padding:16px;
+  border-radius:18px;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* thumbnail image */
+.event-live-thumb{
+  width:110px;
+  height:110px;
+  border-radius:14px;
+  background-size:cover;
+  background-position:center;
+  flex-shrink:0;
+}
+
+/* text area */
+.event-live-info{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+/* make title tighter */
+.event-live-title{
+  font-size:20px;
+  margin:0;
+}
+
+/* reduce subtitle weight */
+.event-live-subtitle{
+  font-size:13px;
+  opacity:0.8;
+  margin:0;
+}
+
+/* meta smaller */
+.event-live-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:4px;
+}
+
+/* CTA smaller */
+.event-live-cta{
+  margin-top:8px;
+  padding:8px 14px;
+  font-size:13px;
+  align-self:flex-start;
+}
+
+/* mobile */
+@media (max-width:700px){
+
+  .event-live-row{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .event-live-thumb{
+    width:100%;
+    height:160px;
+  }
+
+}
