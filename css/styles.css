@@ -4173,8 +4173,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 }
 /* ===============================
-   EVENT STYLE C
-   Immersive live feature
+   EVENT STYLE D
+   Asymmetric overlap
 ================================ */
 
 .event-live{
@@ -4187,42 +4187,55 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   margin-bottom: 14px;
 }
 
-.event-live-feature{
+.event-live-asym{
   position: relative;
-  min-height: 420px;
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow:
-    0 22px 50px rgba(0,0,0,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.04);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding-top: 18px;
 }
 
-.event-live-visual{
-  position: absolute;
-  inset: 0;
+.event-live-photo-wrap{
+  position: relative;
+  width: min(100%, 760px);
+}
+
+.event-live-photo{
+  width: 100%;
+  height: 300px;
+  border-radius: 28px;
   background-size: cover;
   background-position: center;
-  transform: scale(1.01);
+  box-shadow:
+    0 18px 42px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
 }
 
-.event-live-overlay{
+.event-live-photo::after{
+  content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(7,14,30,0.16), rgba(7,14,30,0.72)),
-    linear-gradient(90deg, rgba(7,14,30,0.82), rgba(7,14,30,0.34) 58%, rgba(7,14,30,0.12)),
-    radial-gradient(420px 220px at 82% 18%, rgba(92,140,255,0.18), transparent 60%);
+    linear-gradient(180deg, rgba(7,14,30,0.10), rgba(7,14,30,0.24)),
+    radial-gradient(340px 180px at 78% 18%, rgba(92,140,255,0.16), transparent 60%);
+  pointer-events: none;
 }
 
-.event-live-panel{
+.event-live-copy{
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: 420px;
-  max-width: 560px;
-  padding: 28px;
+  margin-top: -58px;
+  margin-left: auto;
+  width: min(100%, 540px);
+  padding: 22px 22px 20px;
+  border-radius: 24px;
+  background: rgba(7,14,30,0.88);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 18px 42px rgba(0,0,0,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px);
 }
 
 .event-live-badge{
@@ -4239,24 +4252,21 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   color: rgba(255,255,255,0.94);
   background: rgba(255,255,255,0.10);
   border: 1px solid rgba(255,255,255,0.16);
-  backdrop-filter: blur(6px);
 }
 
 .event-live-title{
   margin: 14px 0 8px;
-  font-size: 42px;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  font-size: 34px;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
   color: #ffffff;
-  max-width: 10ch;
 }
 
 .event-live-subtitle{
   margin: 0 0 10px;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.55;
   color: rgba(255,255,255,0.86);
-  max-width: 46ch;
 }
 
 .event-live-description{
@@ -4264,7 +4274,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   font-size: 13px;
   line-height: 1.6;
   color: rgba(255,255,255,0.68);
-  max-width: 50ch;
 }
 
 .event-live-meta{
@@ -4286,7 +4295,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   color: rgba(255,255,255,0.95);
   background: rgba(255,255,255,0.10);
   border: 1px solid rgba(255,255,255,0.16);
-  backdrop-filter: blur(6px);
 }
 
 .event-live-cta{
@@ -4296,34 +4304,23 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   border-radius: 14px;
   font-size: 13px;
   font-weight: 800;
-  box-shadow: 0 10px 24px rgba(15,23,42,0.24);
-}
-
-/* small motion to make it feel alive */
-.event-live-feature:hover .event-live-visual{
-  transform: scale(1.04);
-  transition: transform 420ms ease;
-}
-
-.event-live-visual{
-  transition: transform 420ms ease;
 }
 
 @media (max-width: 900px){
-  .event-live-feature{
-    min-height: 360px;
+  .event-live-photo{
+    height: 240px;
     border-radius: 24px;
   }
 
-  .event-live-panel{
-    min-height: 360px;
-    max-width: none;
-    padding: 20px;
+  .event-live-copy{
+    margin-top: -34px;
+    width: calc(100% - 18px);
+    padding: 18px;
+    border-radius: 20px;
   }
 
   .event-live-title{
-    font-size: 30px;
-    max-width: none;
+    font-size: 28px;
   }
 
   .event-live-subtitle{
@@ -4349,17 +4346,20 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     margin-bottom: 12px;
   }
 
-  .event-live-feature{
-    min-height: 320px;
+  .event-live-photo{
+    height: 210px;
+    border-radius: 22px;
   }
 
-  .event-live-panel{
-    min-height: 320px;
-    padding: 18px;
+  .event-live-copy{
+    margin-top: -26px;
+    width: calc(100% - 10px);
+    padding: 16px;
+    border-radius: 18px;
   }
 
   .event-live-title{
-    font-size: 26px;
+    font-size: 24px;
     line-height: 1.0;
   }
 
