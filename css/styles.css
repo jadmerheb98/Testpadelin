@@ -4173,161 +4173,133 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 }
 /* ===============================
-   EVENT INLINE STYLE (NEW)
-   Live announcement rail
+   EVENT STYLE (FINAL - CLEAN INTEGRATED)
 ================================ */
 
 .event-live{
-  padding: 14px 0 18px;
+  padding: 22px 0 24px;
 }
 
 .event-live-intro{
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   text-align: center;
 }
 
+/* remove box feeling completely */
 .event-live-row{
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr) auto;
-  gap: 14px;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
   align-items: center;
-  padding: 14px 16px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
 }
 
+/* bigger, clean image */
 .event-live-thumb{
-  width: 84px;
-  height: 84px;
-  border-radius: 16px;
+  width: 100%;
+  height: 260px;
+  border-radius: 22px;
+
   background-size: cover;
   background-position: center;
-  flex-shrink: 0;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.20);
 }
 
+/* text sits directly on blue background */
 .event-live-info{
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  min-width: 0;
+  gap: 8px;
 }
 
-.event-live-info .event-live-badge{
+/* small badge */
+.event-live-badge{
   display: inline-flex;
   align-items: center;
+
   width: fit-content;
-  min-height: 24px;
-  padding: 4px 9px;
+  padding: 5px 10px;
+
   border-radius: 999px;
   font-size: 10px;
   font-weight: 900;
-  letter-spacing: .45px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.88);
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.10);
+
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
-.event-live-info .event-live-title{
+/* bigger title (important) */
+.event-live-title{
+  font-size: 34px;
+  color: #fff;
   margin: 0;
-  font-size: 18px;
-  line-height: 1.1;
-  color: #ffffff;
 }
 
-.event-live-info .event-live-subtitle{
+/* subtitle */
+.event-live-subtitle{
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
   margin: 0;
-  font-size: 12.5px;
-  line-height: 1.45;
-  color: rgba(255,255,255,0.76);
 }
 
-.event-live-info .event-live-description{
-  display: none;
+/* description */
+.event-live-description{
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
 }
 
-.event-live-info .event-live-meta{
+/* chips */
+.event-live-meta{
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
-  margin-top: 2px;
 }
 
-.event-live-info .event-live-price,
-.event-live-info .event-live-date{
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 5px 9px;
+.event-live-price,
+.event-live-date{
+  padding: 6px 12px;
   border-radius: 999px;
-  font-size: 11px;
-  font-weight: 800;
-  color: rgba(255,255,255,0.90);
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.10);
+  font-size: 12px;
+  font-weight: 700;
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
 }
 
+/* button */
 .event-live-cta{
-  margin-top: 0;
-  padding: 9px 14px;
-  min-height: 38px;
-  border-radius: 12px;
-  font-size: 12.5px;
-  align-self: center;
-  white-space: nowrap;
+  margin-top: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
 }
 
-@media (max-width: 820px){
-
-  .event-live-row{
-    grid-template-columns: 72px minmax(0, 1fr);
-    gap: 12px;
-  }
-
-  .event-live-thumb{
-    width: 72px;
-    height: 72px;
-    border-radius: 14px;
-  }
-
-  .event-live-cta{
-    grid-column: 1 / -1;
-    width: 100%;
-    justify-content: center;
-    margin-top: 4px;
-  }
-
-  .event-live-info .event-live-title{
-    font-size: 17px;
-  }
-}
-
-@media (max-width: 560px){
-
-  .event-live{
-    padding: 12px 0 16px;
-  }
+/* mobile */
+@media (max-width: 900px){
 
   .event-live-row{
     grid-template-columns: 1fr;
-    align-items: start;
   }
 
   .event-live-thumb{
+    height: 200px;
+  }
+
+  .event-live-title{
+    font-size: 26px;
+  }
+
+  .event-live-cta{
     width: 100%;
-    height: 120px;
-    border-radius: 16px;
-  }
-
-  .event-live-info .event-live-title{
-    font-size: 18px;
-  }
-
-  .event-live-info .event-live-subtitle{
-    font-size: 12.5px;
   }
 }
