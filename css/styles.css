@@ -4213,69 +4213,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 /* text sits directly on blue background */
-.event-live-info{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* small badge */
-.event-live-badge{
-  display: inline-flex;
-  align-items: center;
-
-  width: fit-content;
-  padding: 5px 10px;
-
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 900;
-  text-transform: uppercase;
-
-  color: rgba(255,255,255,0.9);
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-/* bigger title (important) */
-.event-live-title{
-  font-size: 34px;
-  color: #fff;
-  margin: 0;
-}
-
-/* subtitle */
-.event-live-subtitle{
-  font-size: 15px;
-  color: rgba(255,255,255,0.75);
-  margin: 0;
-}
-
-/* description */
-.event-live-description{
-  font-size: 14px;
-  color: rgba(255,255,255,0.7);
-  margin: 0;
-}
-
-/* chips */
-.event-live-meta{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.event-live-price,
-.event-live-date{
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: #fff;
-}
 
 /* button */
 .event-live-cta{
