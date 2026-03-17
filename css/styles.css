@@ -4173,11 +4173,12 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 }
 /* ===============================
-   EVENT STYLE (FINAL - CLEAN INTEGRATED)
+   EVENT STYLE (NEW EDITORIAL)
+   No hero box / no section box
 ================================ */
 
 .event-live{
-  padding: 22px 0 24px;
+  padding: 18px 0 26px;
 }
 
 .event-live-intro{
@@ -4185,58 +4186,134 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   text-align: center;
 }
 
-/* remove box feeling completely */
+/* whole section content: no card, no box */
 .event-live-row{
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 24px;
-  align-items: center;
-
+  display: block;
   padding: 0;
   background: transparent;
-  border: none;
+  border: 0;
   box-shadow: none;
   border-radius: 0;
 }
 
-/* bigger, clean image */
+/* big image, no surrounding box */
 .event-live-thumb{
   width: 100%;
-  height: 260px;
-  border-radius: 22px;
-
+  height: 220px;
+  border-radius: 24px;
   background-size: cover;
   background-position: center;
-
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 14px 36px rgba(0,0,0,0.20);
+  border: 0;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.20);
+  margin-bottom: 18px;
 }
 
 /* text sits directly on blue background */
+.event-live-info{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px;
+}
 
-/* button */
+/* badge */
+.event-live-badge{
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .45px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* title */
+.event-live-title{
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+/* subtitle */
+.event-live-subtitle{
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.82);
+  max-width: 52ch;
+}
+
+/* description */
+.event-live-description{
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.64);
+  max-width: 58ch;
+}
+
+/* chips */
+.event-live-meta{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.event-live-price,
+.event-live-date{
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.94);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* button smaller and cleaner */
 .event-live-cta{
-  margin-top: 8px;
-  padding: 10px 16px;
+  margin-top: 10px;
+  align-self: flex-start;
+  min-height: 40px;
+  padding: 9px 15px;
+  border-radius: 12px;
   font-size: 13px;
 }
 
 /* mobile */
 @media (max-width: 900px){
 
-  .event-live-row{
-    grid-template-columns: 1fr;
-  }
-
   .event-live-thumb{
-    height: 200px;
+    height: 190px;
+    margin-bottom: 16px;
   }
 
   .event-live-title{
     font-size: 24px;
   }
 
+  .event-live-subtitle{
+    font-size: 14px;
+  }
+
+  .event-live-description{
+    font-size: 12.5px;
+  }
+
   .event-live-cta{
     width: 100%;
+    justify-content: center;
   }
 }
