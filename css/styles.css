@@ -4337,6 +4337,43 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 }
 
+@media (max-width: 900px){
+  .event-live-photo-wrap{
+    width: 100%;
+  }
+
+  .event-live-photo{
+    height: 240px;
+    border-radius: 24px;
+  }
+
+  .event-live-copy{
+    margin-top: -70px;
+    margin-left: auto;
+    margin-right: 14px;
+    width: min(88%, 430px);
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .event-live-title{
+    font-size: 28px;
+  }
+
+  .event-live-subtitle{
+    font-size: 14px;
+  }
+
+  .event-live-description{
+    font-size: 12.5px;
+  }
+
+  .event-live-cta{
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 560px){
   .event-live{
     padding: 14px 0 22px;
@@ -4347,13 +4384,15 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 
   .event-live-photo{
-    height: 210px;
+    height: 220px;
     border-radius: 22px;
   }
 
   .event-live-copy{
-    margin-top: -26px;
-    width: calc(100% - 10px);
+    margin-top: -82px;
+    margin-left: auto;
+    margin-right: 10px;
+    width: min(90%, 360px);
     padding: 16px;
     border-radius: 18px;
   }
