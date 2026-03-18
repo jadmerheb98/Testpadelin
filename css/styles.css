@@ -3958,43 +3958,15 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 }
 /* ===============================
-   EVENT STYLE I
-   Full photo background from strip to strip
+   EVENT STYLE H
+   Full-bleed strips + full photo background
 ================================ */
 
 .event-live{
+  position: relative;
   padding: 0;
   background: transparent;
-}
-
-.event-live-shell{
-  position: relative;
   overflow: hidden;
-}
-
-.event-live-bg{
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-}
-
-.event-live-bg::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(7,14,30,0.14), rgba(7,14,30,0.34)),
-    radial-gradient(380px 220px at 78% 18%, rgba(92,140,255,0.18), transparent 60%);
-  pointer-events: none;
-}
-
-.event-live-inner{
-  position: relative;
-  z-index: 1;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 .event-live-strip{
@@ -4008,6 +3980,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   border-bottom: 1px solid rgba(255,255,255,0.10);
   background: rgba(255,255,255,0.04);
   backdrop-filter: blur(4px);
+  z-index: 3;
 }
 
 .event-live-strip-top{
@@ -4061,11 +4034,33 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 .event-live-stage{
   position: relative;
-  min-height: 520px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 260px 0 26px;
+  min-height: 430px;
+  padding: 220px 0 22px;
+  overflow: hidden;
+}
+
+/* photo is now the full background of the section */
+.event-live-photo{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background-size: cover;
+  background-position: center;
+  box-shadow: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.event-live-photo::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7,14,30,0.18), rgba(7,14,30,0.38)),
+    radial-gradient(340px 180px at 78% 18%, rgba(92,140,255,0.16), transparent 60%);
+  pointer-events: none;
 }
 
 .event-live-info-wrap{
@@ -4074,10 +4069,11 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 0;
 }
 
 .event-live-card{
-  width: min(100%, 560px);
+  width: min(100%, 540px);
   padding: 34px 18px 16px;
   border-radius: 20px;
   background: rgba(7,14,30,0.84);
@@ -4160,8 +4156,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 @media (max-width: 900px){
   .event-live-stage{
-    min-height: 470px;
-    padding: 235px 0 18px;
+    min-height: 390px;
+    padding: 200px 0 18px;
   }
 
   .event-live-card{
@@ -4191,8 +4187,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 
   .event-live-stage{
-    min-height: 430px;
-    padding: 215px 0 14px;
+    min-height: 360px;
+    padding: 185px 0 14px;
   }
 
   .event-live-card{
