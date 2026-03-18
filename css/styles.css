@@ -3958,12 +3958,16 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 }
 /* ===============================
-   EVENT STYLE F
-   Bigger photo + lower centered info
+   EVENT STYLE G
+   Full photo background + compact lower card
 ================================ */
 
 .event-live{
-  padding: 18px 0 26px;
+  position: relative;
+  padding: 0;
+  background:
+    radial-gradient(900px 420px at 80% 10%, rgba(63,102,150,0.22), transparent 60%),
+    linear-gradient(180deg, #08101d 0%, #0b1630 100%);
 }
 
 .event-live-strip{
@@ -3977,11 +3981,11 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .event-live-strip-top{
-  margin-bottom: 14px;
+  margin: 0;
 }
 
 .event-live-strip-bottom{
-  margin-top: 16px;
+  margin: 0;
 }
 
 .event-live-strip-track{
@@ -4025,19 +4029,20 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 .event-live-stage{
   position: relative;
+  padding: 18px 0;
 }
 
+/* photo is now the full background of the event section */
 .event-live-photo{
+  position: absolute;
+  inset: 18px 0 18px 0;
   width: 100%;
-  height: 320px;
-  border-radius: 28px;
+  height: auto;
+  border-radius: 0;
   background-size: cover;
   background-position: center;
-  box-shadow:
-    0 18px 40px rgba(0,0,0,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.05);
+  box-shadow: none;
   overflow: hidden;
-  position: relative;
 }
 
 .event-live-photo::after{
@@ -4045,27 +4050,28 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(7,14,30,0.14), rgba(7,14,30,0.30)),
+    linear-gradient(180deg, rgba(7,14,30,0.22), rgba(7,14,30,0.46)),
     radial-gradient(340px 180px at 78% 18%, rgba(92,140,255,0.16), transparent 60%);
   pointer-events: none;
 }
 
 .event-live-info-wrap{
   position: relative;
+  z-index: 2;
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: -18px;
+  margin-top: 180px;
 }
 
 .event-live-card{
-  width: min(100%, 620px);
-  padding: 42px 22px 20px;
-  border-radius: 24px;
-  background: rgba(7,14,30,0.82);
+  width: min(100%, 540px);
+  padding: 34px 18px 16px;
+  border-radius: 20px;
+  background: rgba(7,14,30,0.86);
   border: 1px solid rgba(255,255,255,0.10);
   box-shadow:
-    0 18px 42px rgba(0,0,0,0.24),
+    0 18px 42px rgba(0,0,0,0.22),
     inset 0 1px 0 rgba(255,255,255,0.04);
   backdrop-filter: blur(8px);
   text-align: center;
@@ -4079,6 +4085,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   z-index: 3;
 }
 
+/* solid badge, not transparent */
 .event-live-badge{
   display: inline-flex;
   align-items: center;
@@ -4090,15 +4097,15 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   font-weight: 900;
   letter-spacing: .45px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.94);
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.16);
+  color: #ffffff;
+  background: #2d3955;
+  border: 1px solid rgba(255,255,255,0.18);
 }
 
 .event-live-title{
   margin: 0;
-  font-size: 34px;
-  line-height: 0.98;
+  font-size: 30px;
+  line-height: 1.0;
   letter-spacing: -0.03em;
   color: #ffffff;
 }
@@ -4112,7 +4119,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 18px 0 16px;
+  margin: 16px 0 14px;
 }
 
 .event-live-price,
@@ -4131,8 +4138,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .event-live-cta{
-  min-height: 40px;
-  padding: 9px 16px;
+  min-height: 38px;
+  padding: 8px 14px;
   border-radius: 12px;
   font-size: 13px;
   font-weight: 800;
@@ -4141,19 +4148,26 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 @media (max-width: 900px){
+  .event-live-stage{
+    padding: 16px 0;
+  }
+
   .event-live-photo{
-    height: 280px;
-    border-radius: 24px;
+    inset: 16px 0 16px 0;
+  }
+
+  .event-live-info-wrap{
+    margin-top: 170px;
   }
 
   .event-live-card{
-    width: min(100%, 580px);
-    padding: 40px 18px 18px;
-    border-radius: 20px;
+    width: min(100%, 500px);
+    padding: 32px 16px 16px;
+    border-radius: 18px;
   }
 
   .event-live-title{
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .event-live-cta{
@@ -4164,10 +4178,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 @media (max-width: 560px){
-  .event-live{
-    padding: 14px 0 22px;
-  }
-
   .event-live-strip{
     height: 40px;
   }
@@ -4176,29 +4186,31 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     font-size: 12px;
   }
 
+  .event-live-stage{
+    padding: 14px 0;
+  }
+
   .event-live-photo{
-    height: 240px;
-    border-radius: 22px;
+    inset: 14px 0 14px 0;
   }
 
   .event-live-info-wrap{
-    margin-top: -16px;
+    margin-top: 155px;
   }
 
   .event-live-card{
-    width: min(100%, 92%);
-    padding: 38px 16px 16px;
+    width: min(100%, 88%);
+    padding: 30px 14px 14px;
     border-radius: 18px;
   }
 
   .event-live-title{
-    font-size: 24px;
-    line-height: 1.0;
+    font-size: 22px;
   }
 
   .event-live-meta{
     gap: 8px;
-    margin: 16px 0 14px;
+    margin: 14px 0 12px;
   }
 
   .event-live-price,
@@ -4206,5 +4218,10 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     font-size: 11px;
     min-height: 32px;
     padding: 6px 10px;
+  }
+
+  .event-live-cta{
+    min-width: 0;
+    width: 100%;
   }
 }
