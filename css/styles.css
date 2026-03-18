@@ -600,7 +600,14 @@ button, input { font: inherit; }
    =========================== */
 
 .hero-main{
-  padding: 18px 0 18px;
+  padding: 18px 0 14px;
+  background:
+    radial-gradient(900px 420px at 80% 10%, rgba(63,102,150,0.22), transparent 60%),
+    linear-gradient(180deg, #08101d 0%, #0b1630 100%);
+}
+
+.event-live{
+  padding: 18px 0 26px;
   background:
     radial-gradient(900px 420px at 80% 10%, rgba(63,102,150,0.22), transparent 60%),
     linear-gradient(180deg, #08101d 0%, #0b1630 100%);
