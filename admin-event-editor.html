@@ -113,29 +113,59 @@
           </div>
 
           <div class="contact-card-body">
-            <section class="event-preview-card">
-              <div class="event-preview-media" id="eventPreviewMedia">
-                <div class="event-preview-placeholder">Event Photo</div>
-              </div>
+  <section class="event-preview-shell">
 
-              <div class="event-preview-content">
-                <div class="event-preview-badge" id="previewBadge">Special Event</div>
-                <h2 class="event-preview-title" id="previewTitle">Your Event Title</h2>
-                <p class="event-preview-subtitle" id="previewSubtitle">Your subtitle will appear here.</p>
+    <div class="event-preview-strip event-preview-strip-top" aria-hidden="true">
+      <div class="event-preview-strip-track">
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+      </div>
+    </div>
 
-                <div class="event-preview-meta">
-                  <div class="event-price-box" id="previewPrice">Price info</div>
-                  <div class="event-date-box" id="previewDate">Date</div>
-                </div>
+    <div class="event-preview-stage">
+      <div class="event-preview-bg" id="eventPreviewMedia">
+        <div class="event-preview-placeholder">Event Photo</div>
+      </div>
 
-                <p class="event-preview-description" id="previewDescription">
-                  Your event description preview will appear here.
-                </p>
+      <div class="event-preview-info-wrap">
+        <div class="event-preview-badge event-preview-badge-float" id="previewBadge">Special Event</div>
 
-                <button class="btn btn-primary" type="button" id="previewCtaBtn">Reserve Now</button>
-              </div>
-            </section>
+        <div class="event-preview-card">
+          <h2 class="event-preview-title" id="previewTitle">Your Event Title</h2>
+
+          <p class="event-preview-subtitle event-preview-hidden-copy" id="previewSubtitle">
+            Your subtitle will appear here.
+          </p>
+
+          <p class="event-preview-description event-preview-hidden-copy" id="previewDescription">
+            Your event description preview will appear here.
+          </p>
+
+          <div class="event-preview-meta">
+            <div class="event-price-box" id="previewPrice">Price info</div>
+            <div class="event-date-box" id="previewDate">Date</div>
           </div>
+
+          <button class="btn btn-primary event-preview-cta" type="button" id="previewCtaBtn">
+            Reserve Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-preview-strip event-preview-strip-bottom" aria-hidden="true">
+      <div class="event-preview-strip-track">
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+      </div>
+    </div>
+
+  </section>
+</div>
         </article>
 
       </section>
@@ -204,11 +234,18 @@
         previewCtaBtn.textContent = ctaInput.value.trim() || "Reserve Now";
 
         const imageUrl = imageInput.value.trim();
-        if (imageUrl) {
-          previewMedia.innerHTML = '<img src="' + imageUrl.replace(/"/g, "&quot;") + '" alt="Event preview image" />';
-        } else {
-          previewMedia.innerHTML = '<div class="event-preview-placeholder">Event Photo</div>';
-        }
+
+if (imageUrl) {
+  previewMedia.style.backgroundImage =
+    'linear-gradient(180deg, rgba(7,14,30,0.14), rgba(7,14,30,0.34)), url("' +
+    imageUrl.replace(/"/g, "&quot;") +
+    '")';
+  previewMedia.innerHTML = "";
+} else {
+  previewMedia.style.backgroundImage =
+    "linear-gradient(180deg, rgba(15,23,42,0.08), rgba(15,23,42,0.14)), rgba(63,102,150,0.08)";
+  previewMedia.innerHTML = '<div class="event-preview-placeholder">Event Photo</div>';
+}
       }
 
       [
