@@ -3945,13 +3945,202 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   color:var(--text-dark);
 }
 
-.event-preview-description{
-  margin:0 0 18px;
-  font-size:14px;
-  line-height:1.6;
-  color:rgba(11,18,32,0.78);
+.event-preview-shell{
+  overflow: hidden;
+  border-radius: 22px;
+  background: #08101d;
+  box-shadow: 0 12px 28px rgba(15,23,42,0.10);
 }
 
+.event-preview-strip{
+  position: relative;
+  overflow: hidden;
+  height: 40px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+}
+
+.event-preview-strip-track{
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: max-content;
+  white-space: nowrap;
+  min-width: 200%;
+  height: 100%;
+  animation: liveStripMove 18s linear infinite;
+}
+
+.event-preview-strip-track span{
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.86);
+}
+
+.event-preview-strip-track span::before{
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  margin-right: 10px;
+  background: #ff4343;
+}
+
+.event-preview-stage{
+  position: relative;
+  min-height: 440px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 210px 0 16px;
+}
+
+.event-preview-bg{
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.event-preview-info-wrap{
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.event-preview-card{
+  width: min(100%, 560px);
+  padding: 34px 18px 16px;
+  border-radius: 20px;
+  background: rgba(7,14,30,0.84);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 18px 42px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px);
+  text-align: center;
+}
+
+.event-preview-badge-float{
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.event-preview-badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .45px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #2d3955;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.event-preview-title{
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.event-preview-hidden-copy{
+  display: none;
+}
+
+.event-preview-meta{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 16px 0 14px;
+}
+
+.event-price-box,
+.event-date-box{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+.event-preview-cta{
+  min-height: 38px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  min-width: 220px;
+}
+
+.event-preview-placeholder{
+  font-size: 18px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.92);
+  letter-spacing: .3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+@media (max-width: 560px){
+  .event-preview-stage{
+    min-height: 400px;
+    padding: 190px 0 14px;
+  }
+
+  .event-preview-card{
+    width: min(100%, 88%);
+    padding: 30px 14px 14px;
+    border-radius: 18px;
+  }
+
+  .event-preview-title{
+    font-size: 22px;
+  }
+
+  .event-preview-meta{
+    gap: 8px;
+    margin: 14px 0 12px;
+  }
+
+  .event-price-box,
+  .event-date-box{
+    font-size: 11px;
+    min-height: 32px;
+    padding: 6px 10px;
+  }
+
+  .event-preview-cta{
+    min-width: 0;
+    width: 100%;
+  }
+}
 @media (max-width: 920px){
   .event-editor-layout{
     grid-template-columns:1fr;
