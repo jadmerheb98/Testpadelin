@@ -3976,7 +3976,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 .event-live-bg{
   position: absolute;
   inset: 0;
-  background-image: url("../images/event-bg.jpg");
   background-size: cover;
   background-position: center;
   z-index: 0;
