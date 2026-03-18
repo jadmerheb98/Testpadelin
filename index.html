@@ -84,267 +84,73 @@
   </div>
 </section>
 
-/* ===============================
-   EVENT STYLE H
-   Full-bleed strips + full photo background
-================================ */
+<!-- LIVE EVENT (ADMIN CONTROLLED) -->
+<section class="section event-live" id="liveEventSection" style="display:none;">
+  <div class="container">
 
-.event-live{
-  position: relative;
-  padding: 0;
-  background: transparent;
-  overflow: hidden;
-}
+    <div class="event-live-strip event-live-strip-top" aria-hidden="true">
+      <div class="event-live-strip-track">
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+      </div>
+    </div>
 
-.event-live-strip{
-  position: relative;
-  overflow: hidden;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  height: 42px;
-  border-top: 1px solid rgba(255,255,255,0.10);
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(4px);
-  z-index: 3;
-}
+    <div class="event-live-stage">
 
-.event-live-strip-top{
-  margin-top: 0;
-  margin-bottom: 0;
-}
+      <div class="event-live-photo" id="liveEventImage"></div>
 
-.event-live-strip-bottom{
-  margin-top: 0;
-  margin-bottom: 0;
-}
+      <div class="event-live-info-wrap">
 
-.event-live-strip-track{
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  width: max-content;
-  white-space: nowrap;
-  min-width: 200%;
-  height: 100%;
-  animation: liveStripMove 18s linear infinite;
-}
+        <div class="event-live-badge event-live-badge-float" id="liveEventBadge">
+          Special Event
+        </div>
 
-.event-live-strip-track span{
-  display: inline-flex;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.86);
-}
+        <div class="event-live-card">
 
-.event-live-strip-track span::before{
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  margin-right: 10px;
-  background: #ff4343;
-}
+          <h2 class="event-live-title" id="liveEventTitle">
+            Upcoming Event
+          </h2>
 
-@keyframes liveStripMove{
-  from{
-    transform: translateX(0);
-  }
-  to{
-    transform: translateX(-50%);
-  }
-}
+          <p class="event-live-subtitle event-live-hidden-copy" id="liveEventSubtitle">
+            Event details will appear here.
+          </p>
 
-.event-live-stage{
-  position: relative;
-  min-height: 430px;
-  padding: 220px 0 22px;
-  overflow: hidden;
-}
+          <p class="event-live-description event-live-hidden-copy" id="liveEventDescription">
+            Event description preview.
+          </p>
 
-/* photo is now the full background of the section */
-.event-live-photo{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
-  background-size: cover;
-  background-position: center;
-  box-shadow: none;
-  overflow: hidden;
-  z-index: 0;
-}
+          <div class="event-live-meta">
+            <div class="event-live-price" id="liveEventPrice">Price info</div>
+            <div class="event-live-date" id="liveEventDate">Date</div>
+          </div>
 
-.event-live-photo::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(7,14,30,0.18), rgba(7,14,30,0.38)),
-    radial-gradient(340px 180px at 78% 18%, rgba(92,140,255,0.16), transparent 60%);
-  pointer-events: none;
-}
+          <a class="btn btn-primary event-live-cta" id="liveEventButton" href="#">
+            Learn More
+          </a>
 
-.event-live-info-wrap{
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 0;
-}
+        </div>
 
-.event-live-card{
-  width: min(100%, 540px);
-  padding: 34px 18px 16px;
-  border-radius: 20px;
-  background: rgba(7,14,30,0.84);
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow:
-    0 18px 42px rgba(0,0,0,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.04);
-  backdrop-filter: blur(8px);
-  text-align: center;
-}
+      </div>
 
-.event-live-badge-float{
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-}
+    </div>
 
-.event-live-badge{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 30px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: .45px;
-  text-transform: uppercase;
-  color: #ffffff;
-  background: #2d3955;
-  border: 1px solid rgba(255,255,255,0.18);
-}
+    <div class="event-live-strip event-live-strip-bottom" aria-hidden="true">
+      <div class="event-live-strip-track">
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+        <span>LIVE AT THE CLUB</span>
+      </div>
+    </div>
 
-.event-live-title{
-  margin: 0;
-  font-size: 30px;
-  line-height: 1.0;
-  letter-spacing: -0.03em;
-  color: #ffffff;
-}
-
-.event-live-hidden-copy{
-  display: none;
-}
-
-.event-live-meta{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 16px 0 14px;
-}
-
-.event-live-price,
-.event-live-date{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 34px;
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-  color: rgba(255,255,255,0.95);
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.16);
-}
-
-.event-live-cta{
-  min-height: 38px;
-  padding: 8px 14px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 800;
-  min-width: 220px;
-  box-shadow: 0 10px 24px rgba(15,23,42,0.24);
-}
-
-@media (max-width: 900px){
-  .event-live-stage{
-    min-height: 390px;
-    padding: 200px 0 18px;
-  }
-
-  .event-live-card{
-    width: min(100%, 500px);
-    padding: 32px 16px 16px;
-    border-radius: 18px;
-  }
-
-  .event-live-title{
-    font-size: 26px;
-  }
-
-  .event-live-cta{
-    width: 100%;
-    min-width: 0;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 560px){
-  .event-live-strip{
-    height: 40px;
-  }
-
-  .event-live-strip-track span{
-    font-size: 12px;
-  }
-
-  .event-live-stage{
-    min-height: 360px;
-    padding: 185px 0 14px;
-  }
-
-  .event-live-card{
-    width: min(100%, 88%);
-    padding: 30px 14px 14px;
-    border-radius: 18px;
-  }
-
-  .event-live-title{
-    font-size: 22px;
-  }
-
-  .event-live-meta{
-    gap: 8px;
-    margin: 14px 0 12px;
-  }
-
-  .event-live-price,
-  .event-live-date{
-    font-size: 11px;
-    min-height: 32px;
-    padding: 6px 10px;
-  }
-
-  .event-live-cta{
-    min-width: 0;
-    width: 100%;
-  }
-}
+  </div>
+</section>
    
   <!-- 2) COMMUNITY -->
   <section class="section alt">
