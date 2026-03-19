@@ -650,27 +650,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return String(rank);
   }
 
-  function renderTable(tableBody, items) {
-    if (!tableBody) return;
+  function renderTable(tableBody, items, limit = null) {
+  if (!tableBody) return;
+  if (!Array.isArray(items) || !items.length) return;
 
-    if (!Array.isArray(items) || !items.length) return;
+  const finalItems = limit ? items.slice(0, limit) : items;
 
-    tableBody.innerHTML = items.map((item, index) => {
-      const rank = Number(item.rank || index + 1);
-      const name = esc(item.name || `Player ${rank}`);
-      const wins = Number(item.wins || 0);
-      const points = Number(item.points || 0);
+  tableBody.innerHTML = finalItems.map((item, index) => {
+    const rank = Number(item.rank || index + 1);
+    const name = esc(item.name || `Player ${rank}`);
+    const wins = Number(item.wins || 0);
+    const points = Number(item.points || 0);
 
-      return `
-        <tr>
-          <td>${getRankBadge(rank)}</td>
-          <td><strong>${name}</strong></td>
-          <td>${wins}</td>
-          <td>${points}</td>
-        </tr>
-      `;
-    }).join("");
-  }
+    return `
+      <tr>
+        <td>${getRankBadge(rank)}</td>
+        <td><strong>${name}</strong></td>
+        <td>${wins}</td>
+        <td>${points}</td>
+      </tr>
+    `;
+  }).join("");
+}
 
   async function loadLeaderboard() {
     try {
@@ -680,8 +681,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = snap.data() || {};
       const items = Array.isArray(data.items) ? data.items : [];
 
-      renderTable(homepageTableBody, items);
-      renderTable(leaderboardTableBody, items);
+      renderTable(homepageTableBody, items, 5);
+renderTable(leaderboardTableBody, items);
     } catch (err) {
       console.error("Failed to load leaderboard:", err);
     }
