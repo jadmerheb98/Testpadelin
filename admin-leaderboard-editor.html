@@ -36,13 +36,22 @@
         </div>
 
         <div class="contact-card-body">
-          <div id="leaderboardRows"></div>
+  <div class="dashboard-actions" style="margin-bottom:16px;">
+    <button class="btn btn-ghost" type="button" id="addLeaderboardRowBtn">
+      + Add Player
+    </button>
+  </div>
 
-          <div class="dashboard-actions" style="margin-top:16px;">
-            <button class="btn btn-primary" type="button" id="saveLeaderboardBtn">
-              Save Leaderboard
-            </button>
-          </div>
+  <div id="leaderboardRows"></div>
+
+  <div class="dashboard-actions" style="margin-top:16px;">
+    <button class="btn btn-primary" type="button" id="saveLeaderboardBtn">
+      Save Leaderboard
+    </button>
+  </div>
+
+  <div class="form-note" id="leaderboardMsg" style="margin-top:12px;"></div>
+</div>
 
           <div class="form-note" id="leaderboardMsg" style="margin-top:12px;"></div>
         </div>
@@ -71,21 +80,156 @@
     })();
 
     (function leaderboardEditorSetup(){
-      if (!window.padelinDB) return;
+  if (!window.padelinDB) return;
 
-      const db = window.padelinDB;
-      const rowsWrap = document.getElementById("leaderboardRows");
-      const saveBtn = document.getElementById("saveLeaderboardBtn");
-      const msg = document.getElementById("leaderboardMsg");
+  const db = window.padelinDB;
+  const rowsWrap = document.getElementById("leaderboardRows");
+  const saveBtn = document.getElementById("saveLeaderboardBtn");
+  const addBtn = document.getElementById("addLeaderboardRowBtn");
+  const msg = document.getElementById("leaderboardMsg");
 
-      if (!rowsWrap || !saveBtn || !msg) return;
+  if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
 
-      function setMsg(text, ok = null) {
-        msg.textContent = text || "";
-        msg.classList.remove("is-success", "is-error");
-        if (ok === true) msg.classList.add("is-success");
-        if (ok === false) msg.classList.add("is-error");
+  function setMsg(text, ok = null) {
+    msg.textContent = text || "";
+    msg.classList.remove("is-success", "is-error");
+    if (ok === true) msg.classList.add("is-success");
+    if (ok === false) msg.classList.add("is-error");
+  }
+
+  function createRow(item = {}, index = 0) {
+    const row = document.createElement("div");
+    row.className = "leaderboard-editor-row";
+    row.style.display = "grid";
+    row.style.gridTemplateColumns = "minmax(0, 1fr) 110px 110px auto";
+    row.style.gap = "10px";
+    row.style.alignItems = "center";
+    row.style.marginBottom = "12px";
+
+    row.innerHTML = `
+      <input
+        type="text"
+        class="leaderboard-name"
+        value="${String(item.name || "").replace(/"/g, "&quot;")}"
+        placeholder="Player name"
+      />
+
+      <input
+        type="number"
+        class="leaderboard-wins"
+        min="0"
+        value="${Number(item.wins || 0)}"
+        placeholder="Wins"
+      />
+
+      <input
+        type="number"
+        class="leaderboard-points"
+        min="0"
+        value="${Number(item.points || 0)}"
+        placeholder="Points"
+      />
+
+      <button type="button" class="btn btn-ghost leaderboard-remove-btn">Remove</button>
+    `;
+
+    const removeBtn = row.querySelector(".leaderboard-remove-btn");
+    removeBtn.addEventListener("click", () => {
+      row.remove();
+      refreshRemoveButtons();
+    });
+
+    rowsWrap.appendChild(row);
+  }
+
+  function refreshRemoveButtons() {
+    const rows = Array.from(rowsWrap.querySelectorAll(".leaderboard-editor-row"));
+    rows.forEach((row, index) => {
+      const btn = row.querySelector(".leaderboard-remove-btn");
+      if (!btn) return;
+      btn.style.display = rows.length <= 5 ? "none" : "inline-flex";
+    });
+  }
+
+  function renderRows(items) {
+    rowsWrap.innerHTML = "";
+
+    const safeItems = Array.isArray(items) && items.length ? items : [];
+
+    if (safeItems.length) {
+      safeItems.forEach((item, index) => createRow(item, index));
+    } else {
+      for (let i = 0; i < 5; i++) {
+        createRow({}, i);
       }
+    }
+
+    refreshRemoveButtons();
+  }
+
+  function collectRows() {
+    const rows = Array.from(rowsWrap.querySelectorAll(".leaderboard-editor-row"));
+
+    return rows.map((row, index) => {
+      const name = (row.querySelector(".leaderboard-name")?.value || "").trim() || `Player ${index + 1}`;
+      const wins = Number(row.querySelector(".leaderboard-wins")?.value || 0);
+      const points = Number(row.querySelector(".leaderboard-points")?.value || 0);
+
+      return {
+        rank: index + 1,
+        name,
+        wins,
+        points
+      };
+    });
+  }
+
+  async function loadLeaderboard() {
+    try {
+      setMsg("Loading...");
+      const snap = await db.collection("system").doc("leaderboard").get();
+
+      if (!snap.exists) {
+        renderRows([]);
+        setMsg("");
+        return;
+      }
+
+      const data = snap.data() || {};
+      renderRows(Array.isArray(data.items) ? data.items : []);
+      setMsg("");
+    } catch (err) {
+      console.error(err);
+      setMsg("Failed to load leaderboard.", false);
+    }
+  }
+
+  async function saveLeaderboard() {
+    try {
+      setMsg("Saving...");
+
+      const items = collectRows();
+
+      await db.collection("system").doc("leaderboard").set({
+        items,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+
+      setMsg("Leaderboard saved.", true);
+    } catch (err) {
+      console.error(err);
+      setMsg("Failed to save leaderboard.", false);
+    }
+  }
+
+  addBtn.addEventListener("click", () => {
+    createRow({});
+    refreshRemoveButtons();
+  });
+
+  saveBtn.addEventListener("click", saveLeaderboard);
+  loadLeaderboard();
+})();
 
       function renderRows(items) {
         rowsWrap.innerHTML = "";
