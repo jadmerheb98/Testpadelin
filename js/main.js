@@ -623,3 +623,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadLiveEvent();
 })();
+// =========================================
+// Public Leaderboard
+// =========================================
+(function () {
+  if (!window.padelinDB) return;
+
+  const homepageTableBody = document.getElementById("homepageLeaderboardTableBody");
+  const leaderboardTableBody = document.getElementById("leaderboardTableBody");
+
+  if (!homepageTableBody && !leaderboardTableBody) return;
+
+  function esc(str) {
+    return String(str ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function getRankBadge(rank) {
+    if (rank === 1) return '<span class="rank-badge">1</span>';
+    if (rank === 2) return '<span class="rank-badge silver">2</span>';
+    if (rank === 3) return '<span class="rank-badge bronze">3</span>';
+    return String(rank);
+  }
+
+  function renderTable(tableBody, items) {
+    if (!tableBody) return;
+
+    if (!Array.isArray(items) || !items.length) return;
+
+    tableBody.innerHTML = items.map((item, index) => {
+      const rank = Number(item.rank || index + 1);
+      const name = esc(item.name || `Player ${rank}`);
+      const wins = Number(item.wins || 0);
+      const points = Number(item.points || 0);
+
+      return `
+        <tr>
+          <td>${getRankBadge(rank)}</td>
+          <td><strong>${name}</strong></td>
+          <td>${wins}</td>
+          <td>${points}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  async function loadLeaderboard() {
+    try {
+      const snap = await window.padelinDB.collection("system").doc("leaderboard").get();
+      if (!snap.exists) return;
+
+      const data = snap.data() || {};
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      renderTable(homepageTableBody, items);
+      renderTable(leaderboardTableBody, items);
+    } catch (err) {
+      console.error("Failed to load leaderboard:", err);
+    }
+  }
+
+  loadLeaderboard();
+})();
