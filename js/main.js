@@ -600,7 +600,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dateEl.textContent = formatDate(data.date || "");
       descriptionEl.textContent = data.description || "Event description preview.";
       buttonEl.textContent = data.cta || "Learn More";
-      buttonEl.setAttribute("href", "reservation.html");
+      buttonEl.setAttribute("href", "./tournaments.html");
 
       const imageUrl = String(data.image || "").trim();
 
