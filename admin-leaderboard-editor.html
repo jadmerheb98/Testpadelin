@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Edit Leaderboard | PADELIN Admin</title>
   <link rel="stylesheet" href="css/styles.css?v=20" />
+  <style>
+  .leaderboard-row-item input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .leaderboard-row-item {
+    min-width: 0;
+  }
+</style>
 </head>
 <body>
 
@@ -26,8 +36,9 @@
         <h1>Edit Leaderboard</h1>
         <p>Update the public leaderboard manually and save changes.</p>
 
-<a href="admin-messages.html" class="btn btn-ghost members-back-btn" id="backToDashboardBtn">← Back</a>
-        
+<div style="margin-top:14px;">
+  <a href="admin-messages.html" class="btn btn-ghost members-back-btn" id="backToDashboardBtn">← Back</a>
+</div>
       </section>
 
       <section class="contact-card">
@@ -37,7 +48,7 @@
         </div>
 
         <div class="contact-card-body">
-          <div class="members-searchbar" style="margin-bottom:12px; display:grid; grid-template-columns:minmax(0,1fr) 92px; gap:10px; align-items:center;">
+          <div class="members-searchbar" style="margin-bottom:18px;">
   <input
     id="leaderboardSearchInput"
     class="inbox-search"
@@ -145,41 +156,35 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
     const item = safeItems[i] || {};
     const row = document.createElement("div");
     row.className = "leaderboard-row-item";
-    row.style.marginBottom = "6px";
-    row.dataset.playerName = String(item.name || "").toLowerCase();
+    row.style.marginBottom = "8px";
 
     row.innerHTML = `
-      <div style="display:grid; gap:6px; padding:8px; border:1px solid rgba(15,23,42,0.08); border-radius:12px; background:rgba(15,23,42,0.02);">
-        <div style="display:grid; grid-template-columns:52px minmax(0,1fr) auto; gap:6px; align-items:end;">
-          <div>
-            <label style="display:block; margin-bottom:4px; font-size:12px;">Rank</label>
-            <input type="text" value="${i + 1}" readonly style="text-align:center; padding:10px 8px; min-height:auto; background:rgba(15,23,42,0.04);" />
-          </div>
-
-          <div>
-            <label for="lbName${i}" style="display:block; margin-bottom:4px; font-size:12px;">Player</label>
-            <input
-              id="lbName${i}"
-              type="text"
-              value="${String(item.name || "").replace(/"/g, "&quot;")}"
-              placeholder="Player name"
-              style="padding:10px 12px; min-height:auto;"
-            />
-          </div>
-
-          <div style="display:flex; align-items:end;">
-            <button
-              type="button"
-              class="btn btn-ghost leaderboard-remove-btn"
-              data-index="${i}"
-              style="display:${i < 5 ? "none" : "inline-flex"}; min-height:auto; padding:10px 12px;"
-            >
-              Remove
-            </button>
-          </div>
+      <div style="display:grid; gap:8px; padding:10px; border:1px solid rgba(15,23,42,0.08); border-radius:12px; background:rgba(15,23,42,0.02);">
+        
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+          <div style="font-size:14px; font-weight:700; color:#0f172a;">Rank ${i + 1}</div>
+          <button
+            type="button"
+            class="btn btn-ghost leaderboard-remove-btn"
+            data-index="${i}"
+            style="display:${i < 5 ? "none" : "inline-flex"}; padding:8px 12px; min-height:auto;"
+          >
+            Remove
+          </button>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:6px;">
+        <div>
+          <label for="lbName${i}" style="display:block; margin-bottom:4px; font-size:12px;">Player</label>
+          <input
+            id="lbName${i}"
+            type="text"
+            value="${String(item.name || "").replace(/"/g, "&quot;")}"
+            placeholder="Player name"
+            style="padding:10px 12px; min-height:auto;"
+          />
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px;">
           <div>
             <label for="lbWins${i}" style="display:block; margin-bottom:4px; font-size:12px;">Wins</label>
             <input
