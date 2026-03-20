@@ -6,13 +6,88 @@
   <title>Edit Leaderboard | PADELIN Admin</title>
   <link rel="stylesheet" href="css/styles.css?v=20" />
   <style>
-  .leaderboard-row-item input {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
   .leaderboard-row-item {
     min-width: 0;
+  }
+
+  body:has(#leaderboardSearchInput) .members-back-btn {
+    padding: 9px 12px;
+    min-width: auto;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body:has(#leaderboardSearchInput) .members-searchbar {
+    display: grid;
+    grid-template-columns: 1fr 48px;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  body:has(#leaderboardSearchInput) .members-search-btn {
+    height: 48px;
+    width: 48px;
+    border-radius: 14px;
+    border: 1px solid rgba(15,23,42,0.12);
+    background: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.06);
+  }
+
+  body:has(#leaderboardSearchInput) .members-search-btn:hover {
+    background: rgba(15,23,42,0.04);
+  }
+
+  body:has(#leaderboardSearchInput) .member-detail-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  body:has(#leaderboardSearchInput) .member-mini-btn {
+    height: 36px;
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  body:has(#leaderboardSearchInput) .member-mini-btn-ghost {
+    background: rgba(15,23,42,0.05);
+    border-color: rgba(15,23,42,0.12);
+    color: var(--text-dark);
+  }
+
+  body:has(#leaderboardSearchInput) .member-mini-btn-ghost:hover {
+    background: rgba(15,23,42,0.08);
+    transform: translateY(-1px);
+  }
+
+  body:has(#leaderboardSearchInput) .member-mini-btn-primary {
+    background: var(--accent);
+    border-color: rgba(63,102,150,0.40);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(63,102,150,0.18);
+  }
+
+  body:has(#leaderboardSearchInput) .member-mini-btn-primary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
   }
 </style>
 </head>
@@ -48,7 +123,7 @@
         </div>
 
         <div class="contact-card-body">
-          <div class="members-searchbar" style="margin-bottom:18px;">
+          <div class="members-searchbar">
   <input
     id="leaderboardSearchInput"
     class="inbox-search"
@@ -56,17 +131,19 @@
     placeholder="Search player by name"
     autocomplete="off"
   />
-  <button id="leaderboardSearchBtn" class="members-search-btn" type="button" aria-label="Search">🔍</button>
+  <button id="leaderboardSearchBtn" class="members-search-btn" type="button" aria-label="Search">
+    🔍
+  </button>
 </div>
 
 <div id="leaderboardRows"></div>
 
-          <div class="dashboard-actions" style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
-  <button class="btn btn-ghost" type="button" id="addLeaderboardRowBtn">
+          <div class="member-detail-actions" style="margin-top:14px;">
+  <button class="member-mini-btn member-mini-btn-ghost" type="button" id="addLeaderboardRowBtn">
     + Add Player
   </button>
 
-  <button class="btn btn-primary" type="button" id="saveLeaderboardBtn">
+  <button class="member-mini-btn member-mini-btn-primary" type="button" id="saveLeaderboardBtn">
     Save Leaderboard
   </button>
 </div>
@@ -165,9 +242,9 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
           <div style="font-size:14px; font-weight:700; color:#0f172a;">Rank ${i + 1}</div>
           <button
             type="button"
-            class="btn btn-ghost leaderboard-remove-btn"
+            class="member-mini-btn member-mini-btn-ghost leaderboard-remove-btn"
             data-index="${i}"
-            style="display:${i < 5 ? "none" : "inline-flex"}; padding:8px 12px; min-height:auto;"
+            style="display:${i < 5 ? "none" : "inline-flex"};"
           >
             Remove
           </button>
@@ -180,7 +257,7 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
             type="text"
             value="${String(item.name || "").replace(/"/g, "&quot;")}"
             placeholder="Player name"
-            style="padding:10px 12px; min-height:auto;"
+            style="width:100%; height:40px; min-height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(15,23,42,0.12); box-sizing:border-box;"
           />
         </div>
 
@@ -193,7 +270,7 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
               min="0"
               value="${Number(item.wins || 0)}"
               placeholder="Wins"
-              style="padding:10px 12px; min-height:auto;"
+              style="width:100%; height:40px; min-height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(15,23,42,0.12); box-sizing:border-box;"
             />
           </div>
 
@@ -205,7 +282,7 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
               min="0"
               value="${Number(item.points || 0)}"
               placeholder="Points"
-              style="padding:10px 12px; min-height:auto;"
+              style="width:100%; height:40px; min-height:40px; padding:0 12px; border-radius:12px; border:1px solid rgba(15,23,42,0.12); box-sizing:border-box;"
             />
           </div>
         </div>
