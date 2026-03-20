@@ -35,21 +35,16 @@
           <div class="contact-card-sub">Top 5 players shown on homepage and leaderboard page</div>
         </div>
 
-       <div class="contact-card-body">
-  <div id="leaderboardRows"></div>
+        <div class="contact-card-body">
+          <div id="leaderboardRows"></div>
 
-  <div class="dashboard-actions" style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
-    <button class="btn btn-ghost" type="button" id="addLeaderboardRowBtn">
-      + Add Player
-    </button>
+          <div class="dashboard-actions" style="margin-top:16px;">
+            <button class="btn btn-primary" type="button" id="saveLeaderboardBtn">
+              Save Leaderboard
+            </button>
+          </div>
 
-    <button class="btn btn-primary" type="button" id="saveLeaderboardBtn">
-      Save Leaderboard
-    </button>
-  </div>
-
-  <div class="form-note" id="leaderboardMsg" style="margin-top:12px;"></div>
-</div>
+          <div class="form-note" id="leaderboardMsg" style="margin-top:12px;"></div>
         </div>
       </section>
     </div>
@@ -75,177 +70,103 @@
       });
     })();
 
-<script>
-  (function staffGate(){
-    if (!window.padelinAuth) return;
-    window.padelinAuth.onAuthStateChanged((u) => {
-      const isAdmin = (u?.displayName || "") === "STAFF:ADMIN";
-      if (!u || !isAdmin) {
-        window.location.href = "login.html";
-      }
-    });
-  })();
+    (function leaderboardEditorSetup(){
+      if (!window.padelinDB) return;
 
-  (function leaderboardEditorSetup(){
-    if (!window.padelinDB) return;
+      const db = window.padelinDB;
+      const rowsWrap = document.getElementById("leaderboardRows");
+      const saveBtn = document.getElementById("saveLeaderboardBtn");
+      const msg = document.getElementById("leaderboardMsg");
 
-    const db = window.padelinDB;
-    const rowsWrap = document.getElementById("leaderboardRows");
-    const saveBtn = document.getElementById("saveLeaderboardBtn");
-    const addBtn = document.getElementById("addLeaderboardRowBtn");
-    const msg = document.getElementById("leaderboardMsg");
+      if (!rowsWrap || !saveBtn || !msg) return;
 
-    if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
-
-    function setMsg(text, ok = null) {
-      msg.textContent = text || "";
-      msg.classList.remove("is-success", "is-error");
-      if (ok === true) msg.classList.add("is-success");
-      if (ok === false) msg.classList.add("is-error");
-    }
-
-    function escAttr(str) {
-      return String(str ?? "").replace(/"/g, "&quot;");
-    }
-
-    function createRow(item = {}) {
-      const row = document.createElement("div");
-      row.className = "leaderboard-editor-row";
-      row.style.display = "grid";
-      row.style.gridTemplateColumns = "minmax(0, 1fr) 110px 110px auto";
-      row.style.gap = "10px";
-      row.style.alignItems = "center";
-      row.style.marginBottom = "12px";
-
-      row.innerHTML = `
-        <input
-          type="text"
-          class="leaderboard-name"
-          value="${escAttr(item.name || "")}"
-          placeholder="Player name"
-        />
-
-        <input
-          type="number"
-          class="leaderboard-wins"
-          min="0"
-          value="${Number(item.wins || 0)}"
-          placeholder="Wins"
-        />
-
-        <input
-          type="number"
-          class="leaderboard-points"
-          min="0"
-          value="${Number(item.points || 0)}"
-          placeholder="Points"
-        />
-
-        <button type="button" class="btn btn-ghost leaderboard-remove-btn">Remove</button>
-      `;
-
-      const removeBtn = row.querySelector(".leaderboard-remove-btn");
-      removeBtn.addEventListener("click", () => {
-        row.remove();
-        refreshRows();
-      });
-
-      rowsWrap.appendChild(row);
-    }
-
-    function refreshRows() {
-      const rows = Array.from(rowsWrap.querySelectorAll(".leaderboard-editor-row"));
-
-      rows.forEach((row, index) => {
-        const removeBtn = row.querySelector(".leaderboard-remove-btn");
-        if (!removeBtn) return;
-
-        removeBtn.style.display = index < 5 ? "none" : "inline-flex";
-      });
-    }
-
-    function renderRows(items) {
-      rowsWrap.innerHTML = "";
-
-      const safeItems = Array.isArray(items) ? items : [];
-      const total = Math.max(5, safeItems.length);
-
-      for (let i = 0; i < total; i++) {
-        createRow(safeItems[i] || {});
+      function setMsg(text, ok = null) {
+        msg.textContent = text || "";
+        msg.classList.remove("is-success", "is-error");
+        if (ok === true) msg.classList.add("is-success");
+        if (ok === false) msg.classList.add("is-error");
       }
 
-      refreshRows();
-    }
+      function renderRows(items) {
+        rowsWrap.innerHTML = "";
 
-    function collectRows() {
-      const rows = Array.from(rowsWrap.querySelectorAll(".leaderboard-editor-row"));
+        for (let i = 0; i < 5; i++) {
+          const item = items[i] || {};
+          const row = document.createElement("div");
+          row.className = "auth-row";
+          row.style.marginBottom = "18px";
 
-      return rows
-        .map((row, index) => {
-          const name = (row.querySelector(".leaderboard-name")?.value || "").trim();
-          const wins = Number(row.querySelector(".leaderboard-wins")?.value || 0);
-          const points = Number(row.querySelector(".leaderboard-points")?.value || 0);
+          row.innerHTML = `
+            <div class="form-note" style="margin-bottom:10px;">Rank ${i + 1}</div>
 
-          return {
-            rank: index + 1,
-            name: name || `Player ${index + 1}`,
-            wins,
-            points
-          };
-        })
-        .filter(item => item.name || item.wins > 0 || item.points > 0);
-    }
+            <label for="lbName${i}">Player Name</label>
+            <input id="lbName${i}" type="text" value="${String(item.name || "").replace(/"/g, "&quot;")}" placeholder="Player name" />
 
-    async function loadLeaderboard() {
-      try {
-        setMsg("Loading...");
-        const snap = await db.collection("system").doc("leaderboard").get();
+            <div style="height:10px;"></div>
 
-        if (!snap.exists) {
-          renderRows([]);
-          setMsg("");
-          return;
+            <label for="lbWins${i}">Wins</label>
+            <input id="lbWins${i}" type="number" min="0" value="${Number(item.wins || 0)}" placeholder="Wins" />
+
+            <div style="height:10px;"></div>
+
+            <label for="lbPoints${i}">Points</label>
+            <input id="lbPoints${i}" type="number" min="0" value="${Number(item.points || 0)}" placeholder="Points" />
+          `;
+
+          rowsWrap.appendChild(row);
         }
-
-        const data = snap.data() || {};
-        renderRows(Array.isArray(data.items) ? data.items : []);
-        setMsg("");
-      } catch (err) {
-        console.error(err);
-        setMsg("Failed to load leaderboard.", false);
       }
-    }
 
-    async function saveLeaderboard() {
-      try {
-        setMsg("Saving...");
+      async function loadLeaderboard() {
+        try {
+          setMsg("Loading...");
+          const snap = await db.collection("system").doc("leaderboard").get();
 
-        const items = collectRows();
+          if (!snap.exists) {
+            renderRows([]);
+            setMsg("");
+            return;
+          }
 
-        await db.collection("system").doc("leaderboard").set(
-          {
+          const data = snap.data() || {};
+          renderRows(Array.isArray(data.items) ? data.items : []);
+          setMsg("");
+        } catch (err) {
+          console.error(err);
+          setMsg("Failed to load leaderboard.", false);
+        }
+      }
+
+      async function saveLeaderboard() {
+        try {
+          setMsg("Saving...");
+
+          const items = [];
+
+          for (let i = 0; i < 5; i++) {
+            items.push({
+              rank: i + 1,
+              name: (document.getElementById(`lbName${i}`)?.value || "").trim() || `Player ${i + 1}`,
+              wins: Number(document.getElementById(`lbWins${i}`)?.value || 0),
+              points: Number(document.getElementById(`lbPoints${i}`)?.value || 0)
+            });
+          }
+
+          await db.collection("system").doc("leaderboard").set({
             items,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          },
-          { merge: true }
-        );
+          }, { merge: true });
 
-        setMsg("Leaderboard saved.", true);
-      } catch (err) {
-        console.error(err);
-        setMsg("Failed to save leaderboard.", false);
+          setMsg("Leaderboard saved.", true);
+        } catch (err) {
+          console.error(err);
+          setMsg("Failed to save leaderboard.", false);
+        }
       }
-    }
 
-    addBtn.addEventListener("click", () => {
-      createRow({});
-      refreshRows();
-    });
-
-    saveBtn.addEventListener("click", saveLeaderboard);
-    loadLeaderboard();
-  })();
-</script>
+      saveBtn.addEventListener("click", saveLeaderboard);
+      loadLeaderboard();
+    })();
   </script>
 </body>
 </html>
