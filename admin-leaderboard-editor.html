@@ -16,7 +16,7 @@
         </a>
       </div>
       <div class="header-right">
-        <a class="btn btn-ghost" href="admin-messages.html">Back</a>
+        <a class="btn btn-ghost members-back-btn" href="admin-messages.html" id="backToDashboardBtn">← Back</a>
       </div>
     </div>
   </header>
@@ -36,7 +36,20 @@
         </div>
 
         <div class="contact-card-body">
-          <div id="leaderboardRows"></div>
+          <div class="members-searchbar" style="margin-bottom:14px;">
+  <input
+    id="leaderboardSearchInput"
+    class="inbox-search"
+    type="text"
+    placeholder="Search player by name"
+    autocomplete="off"
+  />
+  <button id="leaderboardSearchBtn" class="members-search-btn" type="button" aria-label="Search">
+    🔍
+  </button>
+</div>
+
+<div id="leaderboardRows"></div>
 
           <div class="dashboard-actions" style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
   <button class="btn btn-ghost" type="button" id="addLeaderboardRowBtn">
@@ -82,6 +95,37 @@ const rowsWrap = document.getElementById("leaderboardRows");
 const saveBtn = document.getElementById("saveLeaderboardBtn");
 const addBtn = document.getElementById("addLeaderboardRowBtn");
 const msg = document.getElementById("leaderboardMsg");
+const leaderboardSearchInput = document.getElementById("leaderboardSearchInput");
+const leaderboardSearchBtn = document.getElementById("leaderboardSearchBtn");
+
+function runLeaderboardSearch() {
+  const q = (leaderboardSearchInput?.value || "").trim().toLowerCase();
+  const rows = Array.from(rowsWrap.querySelectorAll(".leaderboard-row-item"));
+
+  if (!q) {
+    rows.forEach((row) => {
+      row.style.display = "";
+    });
+    return;
+  }
+
+  let firstMatch = null;
+
+  rows.forEach((row, index) => {
+    const nameValue = (document.getElementById(`lbName${index}`)?.value || "").trim().toLowerCase();
+    const match = nameValue.includes(q);
+
+    row.style.display = match ? "" : "none";
+
+    if (match && !firstMatch) {
+      firstMatch = row;
+    }
+  });
+
+  if (firstMatch) {
+    firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
 
 if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
 
@@ -92,7 +136,7 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
         if (ok === false) msg.classList.add("is-error");
       }
 
-      function renderRows(items) {
+     function renderRows(items) {
   rowsWrap.innerHTML = "";
 
   const safeItems = Array.isArray(items) ? items : [];
@@ -101,49 +145,85 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
   for (let i = 0; i < total; i++) {
     const item = safeItems[i] || {};
     const row = document.createElement("div");
-    row.className = "auth-row";
-    row.style.marginBottom = "18px";
+    row.className = "auth-row leaderboard-row-item";
+    row.style.marginBottom = "8px";
+    row.dataset.playerName = String(item.name || "").toLowerCase();
 
     row.innerHTML = `
-      <div class="form-note" style="margin-bottom:10px;">Rank ${i + 1}</div>
+      <div style="display:grid; gap:8px; padding:10px; border:1px solid rgba(15,23,42,0.08); border-radius:14px; background:rgba(15,23,42,0.02);">
+        
+        <div style="display:grid; grid-template-columns:64px 1fr auto; gap:8px; align-items:end;">
+          <div>
+            <label style="display:block; margin-bottom:8px;">Rank</label>
+            <input type="text" value="${i + 1}" readonly style="text-align:center; background:rgba(15,23,42,0.04);" />
+          </div>
 
-      <label for="lbName${i}">Player Name</label>
-      <input
-        id="lbName${i}"
-        type="text"
-        value="${String(item.name || "").replace(/"/g, "&quot;")}"
-        placeholder="Player name"
-      />
+          <div>
+            <label for="lbName${i}">Player Name</label>
+            <input
+              id="lbName${i}"
+              type="text"
+              value="${String(item.name || "").replace(/"/g, "&quot;")}"
+              placeholder="Player name"
+            />
+          </div>
 
-      <div style="height:12px;"></div>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-        <div>
-          <label for="lbWins${i}">Wins</label>
-          <input
-            id="lbWins${i}"
-            type="number"
-            min="0"
-            value="${Number(item.wins || 0)}"
-            placeholder="Wins"
-          />
+          <div style="display:flex; align-items:end;">
+            <button
+              type="button"
+              class="btn btn-ghost leaderboard-remove-btn"
+              data-index="${i}"
+              style="display:${i < 5 ? "none" : "inline-flex"}; min-height:50px;"
+            >
+              Remove
+            </button>
+          </div>
         </div>
 
-        <div>
-          <label for="lbPoints${i}">Points</label>
-          <input
-            id="lbPoints${i}"
-            type="number"
-            min="0"
-            value="${Number(item.points || 0)}"
-            placeholder="Points"
-          />
+        <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px;">
+          <div>
+            <label for="lbWins${i}">Wins</label>
+            <input
+              id="lbWins${i}"
+              type="number"
+              min="0"
+              value="${Number(item.wins || 0)}"
+              placeholder="Wins"
+            />
+          </div>
+
+          <div>
+            <label for="lbPoints${i}">Points</label>
+            <input
+              id="lbPoints${i}"
+              type="number"
+              min="0"
+              value="${Number(item.points || 0)}"
+              placeholder="Points"
+            />
+          </div>
         </div>
       </div>
     `;
 
     rowsWrap.appendChild(row);
   }
+
+  rowsWrap.querySelectorAll(".leaderboard-remove-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const rows = Array.from(rowsWrap.querySelectorAll(".leaderboard-row-item"));
+      const nextItems = rows
+        .map((_, index) => ({
+          name: document.getElementById(`lbName${index}`)?.value || "",
+          wins: Number(document.getElementById(`lbWins${index}`)?.value || 0),
+          points: Number(document.getElementById(`lbPoints${index}`)?.value || 0)
+        }));
+
+      const removeIndex = Number(btn.dataset.index);
+      nextItems.splice(removeIndex, 1);
+      renderRows(nextItems);
+    });
+  });
 }
 
       async function loadLeaderboard() {
@@ -171,7 +251,7 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
     setMsg("Saving...");
 
     const items = [];
-    const rows = rowsWrap.querySelectorAll(".auth-row");
+    const rows = rowsWrap.querySelectorAll(".leaderboard-row-item");
 
     rows.forEach((row, i) => {
       items.push({
@@ -195,7 +275,7 @@ if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
 }
 
 addBtn.addEventListener("click", () => {
-  const currentRows = rowsWrap.querySelectorAll(".auth-row").length;
+  const currentRows = rowsWrap.querySelectorAll(".leaderboard-row-item").length;
   const items = [];
 
   for (let i = 0; i < currentRows; i++) {
@@ -214,6 +294,25 @@ addBtn.addEventListener("click", () => {
 
   renderRows(items);
 });
+
+if (leaderboardSearchBtn) {
+  leaderboardSearchBtn.addEventListener("click", runLeaderboardSearch);
+}
+
+if (leaderboardSearchInput) {
+  leaderboardSearchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      runLeaderboardSearch();
+    }
+  });
+
+  leaderboardSearchInput.addEventListener("input", () => {
+    if (!leaderboardSearchInput.value.trim()) {
+      runLeaderboardSearch();
+    }
+  });
+}
 
 saveBtn.addEventListener("click", saveLeaderboard);
 loadLeaderboard();
