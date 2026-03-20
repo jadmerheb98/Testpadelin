@@ -38,11 +38,15 @@
         <div class="contact-card-body">
           <div id="leaderboardRows"></div>
 
-          <div class="dashboard-actions" style="margin-top:16px;">
-            <button class="btn btn-primary" type="button" id="saveLeaderboardBtn">
-              Save Leaderboard
-            </button>
-          </div>
+          <div class="dashboard-actions" style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+  <button class="btn btn-ghost" type="button" id="addLeaderboardRowBtn">
+    + Add Player
+  </button>
+
+  <button class="btn btn-primary" type="button" id="saveLeaderboardBtn">
+    Save Leaderboard
+  </button>
+</div>
 
           <div class="form-note" id="leaderboardMsg" style="margin-top:12px;"></div>
         </div>
@@ -74,11 +78,12 @@
       if (!window.padelinDB) return;
 
       const db = window.padelinDB;
-      const rowsWrap = document.getElementById("leaderboardRows");
-      const saveBtn = document.getElementById("saveLeaderboardBtn");
-      const msg = document.getElementById("leaderboardMsg");
+const rowsWrap = document.getElementById("leaderboardRows");
+const saveBtn = document.getElementById("saveLeaderboardBtn");
+const addBtn = document.getElementById("addLeaderboardRowBtn");
+const msg = document.getElementById("leaderboardMsg");
 
-      if (!rowsWrap || !saveBtn || !msg) return;
+if (!rowsWrap || !saveBtn || !addBtn || !msg) return;
 
       function setMsg(text, ok = null) {
         msg.textContent = text || "";
@@ -88,34 +93,58 @@
       }
 
       function renderRows(items) {
-        rowsWrap.innerHTML = "";
+  rowsWrap.innerHTML = "";
 
-        for (let i = 0; i < 5; i++) {
-          const item = items[i] || {};
-          const row = document.createElement("div");
-          row.className = "auth-row";
-          row.style.marginBottom = "18px";
+  const safeItems = Array.isArray(items) ? items : [];
+  const total = Math.max(5, safeItems.length);
 
-          row.innerHTML = `
-            <div class="form-note" style="margin-bottom:10px;">Rank ${i + 1}</div>
+  for (let i = 0; i < total; i++) {
+    const item = safeItems[i] || {};
+    const row = document.createElement("div");
+    row.className = "auth-row";
+    row.style.marginBottom = "18px";
 
-            <label for="lbName${i}">Player Name</label>
-            <input id="lbName${i}" type="text" value="${String(item.name || "").replace(/"/g, "&quot;")}" placeholder="Player name" />
+    row.innerHTML = `
+      <div class="form-note" style="margin-bottom:10px;">Rank ${i + 1}</div>
 
-            <div style="height:10px;"></div>
+      <label for="lbName${i}">Player Name</label>
+      <input
+        id="lbName${i}"
+        type="text"
+        value="${String(item.name || "").replace(/"/g, "&quot;")}"
+        placeholder="Player name"
+      />
 
-            <label for="lbWins${i}">Wins</label>
-            <input id="lbWins${i}" type="number" min="0" value="${Number(item.wins || 0)}" placeholder="Wins" />
+      <div style="height:12px;"></div>
 
-            <div style="height:10px;"></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div>
+          <label for="lbWins${i}">Wins</label>
+          <input
+            id="lbWins${i}"
+            type="number"
+            min="0"
+            value="${Number(item.wins || 0)}"
+            placeholder="Wins"
+          />
+        </div>
 
-            <label for="lbPoints${i}">Points</label>
-            <input id="lbPoints${i}" type="number" min="0" value="${Number(item.points || 0)}" placeholder="Points" />
-          `;
+        <div>
+          <label for="lbPoints${i}">Points</label>
+          <input
+            id="lbPoints${i}"
+            type="number"
+            min="0"
+            value="${Number(item.points || 0)}"
+            placeholder="Points"
+          />
+        </div>
+      </div>
+    `;
 
-          rowsWrap.appendChild(row);
-        }
-      }
+    rowsWrap.appendChild(row);
+  }
+}
 
       async function loadLeaderboard() {
         try {
@@ -137,35 +166,57 @@
         }
       }
 
-      async function saveLeaderboard() {
-        try {
-          setMsg("Saving...");
+     async function saveLeaderboard() {
+  try {
+    setMsg("Saving...");
 
-          const items = [];
+    const items = [];
+    const rows = rowsWrap.querySelectorAll(".auth-row");
 
-          for (let i = 0; i < 5; i++) {
-            items.push({
-              rank: i + 1,
-              name: (document.getElementById(`lbName${i}`)?.value || "").trim() || `Player ${i + 1}`,
-              wins: Number(document.getElementById(`lbWins${i}`)?.value || 0),
-              points: Number(document.getElementById(`lbPoints${i}`)?.value || 0)
-            });
-          }
+    rows.forEach((row, i) => {
+      items.push({
+        rank: i + 1,
+        name: (document.getElementById(`lbName${i}`)?.value || "").trim() || `Player ${i + 1}`,
+        wins: Number(document.getElementById(`lbWins${i}`)?.value || 0),
+        points: Number(document.getElementById(`lbPoints${i}`)?.value || 0)
+      });
+    });
 
-          await db.collection("system").doc("leaderboard").set({
-            items,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, { merge: true });
+    await db.collection("system").doc("leaderboard").set({
+      items,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
 
-          setMsg("Leaderboard saved.", true);
-        } catch (err) {
-          console.error(err);
-          setMsg("Failed to save leaderboard.", false);
-        }
-      }
+    setMsg("Leaderboard saved.", true);
+  } catch (err) {
+    console.error(err);
+    setMsg("Failed to save leaderboard.", false);
+  }
+}
 
-      saveBtn.addEventListener("click", saveLeaderboard);
-      loadLeaderboard();
+addBtn.addEventListener("click", () => {
+  const currentRows = rowsWrap.querySelectorAll(".auth-row").length;
+  const items = [];
+
+  for (let i = 0; i < currentRows; i++) {
+    items.push({
+      name: document.getElementById(`lbName${i}`)?.value || "",
+      wins: Number(document.getElementById(`lbWins${i}`)?.value || 0),
+      points: Number(document.getElementById(`lbPoints${i}`)?.value || 0)
+    });
+  }
+
+  items.push({
+    name: "",
+    wins: 0,
+    points: 0
+  });
+
+  renderRows(items);
+});
+
+saveBtn.addEventListener("click", saveLeaderboard);
+loadLeaderboard();
     })();
   </script>
 </body>
