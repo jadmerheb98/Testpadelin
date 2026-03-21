@@ -8,187 +8,335 @@
 </head>
 <body>
 
-<!-- HEADER (same as homepage) -->
-<header class="header">
-  <div class="container header-inner header-gd">
-
-    <div class="header-left">
-      <button class="hamburger" data-hamburger>
-        <div class="hamburger-lines">
-          <span></span><span></span><span></span>
-        </div>
-      </button>
-
-      <a class="brand" href="index.html">
-        <img src="assets/img/logo.png" />
-      </a>
-    </div>
-
-    <div class="header-right">
-      <button class="icon-btn" data-auth-open>👤</button>
-    </div>
-
-  </div>
-</header>
-
-<!-- MAIN -->
-<main class="section">
-
-  <div class="container">
-
-    <!-- PAGE TITLE -->
-    <div class="section-intro">
-      <span class="section-tag">MY CAREER</span>
-      <h2 class="section-headline">Your Journey</h2>
-    </div>
-
-    <!-- =========================
-         1. MEMBERSHIP STATUS
-    ========================== -->
-    <div class="card" style="margin-bottom:20px;">
-
-      <h3 style="margin-bottom:10px;">Membership</h3>
-
-      <div id="membershipBox" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-
-        <div>
-          <div style="font-weight:900; font-size:18px;" id="membershipType">
-            Basic Player
+  <header class="header">
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+          <div class="hamburger-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
           </div>
-          <div style="font-size:13px; opacity:0.7;" id="membershipDate">
-            Valid until: —
-          </div>
-        </div>
+        </button>
 
-        <div id="membershipStatus" class="btn-ghost" style="padding:8px 12px; border-radius:10px;">
-          Active
-        </div>
-
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
       </div>
 
+      <div class="header-right">
+        <a class="icon-btn" href="contact.html" aria-label="Contact us">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
+          </svg>
+        </a>
+
+        <button class="icon-btn" type="button" aria-label="Account" data-auth-open>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+          </svg>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <!-- =========================
-         2. RESERVATION HISTORY
-    ========================== -->
-    <div class="card" style="margin-bottom:20px;">
+  <div class="overlay" data-overlay></div>
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+    </div>
+    <div class="side-links">
+      <a href="./membership.html">Membership</a>
+      <a href="./training.html">Training</a>
+      <a href="./tournaments.html">Tournaments</a>
+    </div>
+  </aside>
 
-      <h3 style="margin-bottom:12px;">Reservation History</h3>
+  <main class="career-page">
+    <div class="container">
 
-      <div id="historyList" style="display:grid; gap:10px;">
+      <section class="career-hero">
+        <div class="career-hero-card">
+          <div class="career-hero-top">
+            <div>
+              <div class="career-kicker">MY CAREER</div>
+              <h1>Track your PADELIN journey</h1>
+              <p>Your membership, reservation history, and personal stats — all in one place.</p>
+            </div>
 
-        <!-- Example item -->
-        <div class="resdash-item">
-          <div class="resdash-item-top">
-            <div class="resdash-item-title">Match Session</div>
-            <div class="resdash-time">+12 pts</div>
+            <a href="index.html" class="career-home-link">Back Home</a>
           </div>
 
-          <div class="resdash-grid">
-            <div>Date: 12 Jan</div>
-            <div>Status: Completed</div>
+          <div class="career-summary-grid">
+            <div class="career-summary-box">
+              <div class="career-summary-label">Current Membership</div>
+              <div class="career-summary-value" id="careerMembershipType">Loading...</div>
+            </div>
+
+            <div class="career-summary-box">
+              <div class="career-summary-label">Status</div>
+              <div class="career-summary-value">
+                <span class="career-status-badge" id="careerMembershipStatus">Checking...</span>
+              </div>
+            </div>
+
+            <div class="career-summary-box">
+              <div class="career-summary-label">Total Points</div>
+              <div class="career-summary-value" id="careerTotalPoints">0 pts</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="career-section">
+        <div class="career-section-head">
+          <div>
+            <div class="career-section-tag">01</div>
+            <h2>Membership Type</h2>
+            <p>See your current plan and membership status clearly.</p>
           </div>
         </div>
 
-      </div>
+        <div class="career-membership-card">
+          <div class="career-membership-main">
+            <div class="career-membership-title" id="careerMembershipCardType">Membership</div>
+            <div class="career-membership-sub" id="careerMembershipCardText">Your current membership details will appear here.</div>
+          </div>
+
+          <div class="career-membership-side">
+            <div class="career-mini-label">Status</div>
+            <div id="careerMembershipBadgeWrap">
+              <span class="career-status-badge">Checking...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="career-section">
+        <div class="career-section-head">
+          <div>
+            <div class="career-section-tag">02</div>
+            <h2>History Reservations</h2>
+            <p>Your past bookings with the points you collected from each one.</p>
+          </div>
+        </div>
+
+        <div class="career-history-shell">
+          <div class="career-history-top">
+            <input
+              type="text"
+              id="careerHistorySearch"
+              class="career-history-search"
+              placeholder="Search reservation by date, type, or status"
+              autocomplete="off"
+            />
+          </div>
+
+          <div id="careerHistoryList" class="career-history-list">
+            <div class="career-empty">Loading reservation history...</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="career-section">
+        <div class="career-section-head">
+          <div>
+            <div class="career-section-tag">03</div>
+            <h2>His Stats</h2>
+            <p>This section is ready for your future stats provider connection.</p>
+          </div>
+        </div>
+
+        <div class="career-stats-placeholder">
+          <div class="career-stats-icon">📊</div>
+          <div class="career-stats-title">Stats syncing soon</div>
+          <div class="career-stats-text">
+            Match analytics, win trends, performance insights, and player development will appear here later.
+          </div>
+        </div>
+      </section>
 
     </div>
+  </main>
 
-    <!-- =========================
-         3. MY STATS
-    ========================== -->
-    <div class="card">
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+  </footer>
 
-      <h3 style="margin-bottom:12px;">My Stats</h3>
+  <div class="acc-overlay" data-acc-overlay></div>
 
-      <div style="text-align:center; padding:20px; opacity:0.7;">
-        Stats syncing soon 🚀
-      </div>
-
+  <aside class="acc-drawer" data-acc-drawer aria-hidden="true" aria-label="Account">
+    <div class="acc-head">
+      <div class="acc-title">Account</div>
+      <button class="acc-close" type="button" aria-label="Close" data-acc-close>✕</button>
     </div>
 
-  </div>
+    <div class="acc-body" id="accBody">
+    </div>
+  </aside>
 
-</main>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-init.js"></script>
+  <script src="js/main.js?v=20"></script>
 
-<!-- ACCOUNT DRAWER (REQUIRED for your system) -->
-<div class="acc-overlay" data-acc-overlay></div>
+  <script>
+    (function careerPageSetup() {
+      if (!window.padelinAuth || !window.padelinDB) return;
 
-<aside class="acc-drawer" data-acc-drawer>
-  <div class="acc-head">
-    <div class="acc-title">Account</div>
-    <button class="acc-close" data-acc-close>✕</button>
-  </div>
-  <div class="acc-body" id="accBody"></div>
-</aside>
+      const auth = window.padelinAuth;
+      const db = window.padelinDB;
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script src="js/firebase-init.js"></script>
+      const membershipTypeEl = document.getElementById("careerMembershipType");
+      const membershipStatusEl = document.getElementById("careerMembershipStatus");
+      const totalPointsEl = document.getElementById("careerTotalPoints");
 
-<!-- Your main JS -->
-<script src="js/main.js?v=20"></script>
+      const membershipCardTypeEl = document.getElementById("careerMembershipCardType");
+      const membershipCardTextEl = document.getElementById("careerMembershipCardText");
+      const membershipBadgeWrapEl = document.getElementById("careerMembershipBadgeWrap");
 
-<!-- Career JS -->
-<script>
+      const historyListEl = document.getElementById("careerHistoryList");
+      const historySearchEl = document.getElementById("careerHistorySearch");
 
-firebase.auth().onAuthStateChanged(async (user) => {
-  if (!user) return;
+      let allReservations = [];
 
-  const db = window.padelinDB;
+      function esc(str) {
+        return String(str ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
 
-  // =========================
-  // MEMBERSHIP
-  // =========================
-  const userDoc = await db.collection("users").doc(user.uid).get();
-  const data = userDoc.data();
+      function statusClass(status) {
+        const s = String(status || "").toLowerCase();
 
-  if (data) {
-    document.getElementById("membershipType").textContent = data.membership || "Basic Player";
-    document.getElementById("membershipDate").textContent = "Valid until: " + (data.membershipEnd || "—");
+        if (s === "active") return "is-active";
+        if (s === "expired") return "is-expired";
+        if (s === "pending") return "is-pending";
+        return "is-neutral";
+      }
 
-    document.getElementById("membershipStatus").textContent =
-      data.membershipStatus || "Active";
-  }
+      function renderMembership(data) {
+        const membershipType =
+          data.membershipType ||
+          data.membership ||
+          localStorage.getItem("padelinMembershipType") ||
+          "Member";
 
-  // =========================
-  // HISTORY
-  // =========================
-  const historySnap = await db
-    .collection("reservations")
-    .where("userId", "==", user.uid)
-    .orderBy("date", "desc")
-    .get();
+        const membershipStatus =
+          data.membershipStatus ||
+          "Active";
 
-  const list = document.getElementById("historyList");
-  list.innerHTML = "";
+        const membershipEnd =
+          data.membershipEnd ||
+          data.membershipExpiry ||
+          "No end date yet";
 
-  historySnap.forEach(doc => {
-    const r = doc.data();
+        const points =
+          Number(data.points || localStorage.getItem("padelinRewardPoints") || 0);
 
-    const div = document.createElement("div");
-    div.className = "resdash-item";
+        membershipTypeEl.textContent = membershipType;
+        membershipStatusEl.textContent = membershipStatus;
+        membershipStatusEl.className = "career-status-badge " + statusClass(membershipStatus);
+        totalPointsEl.textContent = points + " pts";
 
-    div.innerHTML = `
-      <div class="resdash-item-top">
-        <div class="resdash-item-title">${r.type || "Session"}</div>
-        <div class="resdash-time">+${r.points || 0} pts</div>
-      </div>
+        membershipCardTypeEl.textContent = membershipType;
+        membershipCardTextEl.textContent = "Status: " + membershipStatus + " • Valid until: " + membershipEnd;
+        membershipBadgeWrapEl.innerHTML = '<span class="career-status-badge ' + statusClass(membershipStatus) + '">' + esc(membershipStatus) + '</span>';
+      }
 
-      <div class="resdash-grid">
-        <div>Date: ${r.date || "-"}</div>
-        <div>Status: ${r.status || "-"}</div>
-      </div>
-    `;
+      function renderReservations(items) {
+        const q = (historySearchEl?.value || "").trim().toLowerCase();
 
-    list.appendChild(div);
-  });
+        const filtered = items.filter((item) => {
+          const haystack = [
+            item.date,
+            item.type,
+            item.status,
+            item.points
+          ].join(" ").toLowerCase();
 
-});
+          return !q || haystack.includes(q);
+        });
 
-</script>
+        if (!filtered.length) {
+          historyListEl.innerHTML = '<div class="career-empty">No reservation history found.</div>';
+          return;
+        }
+
+        historyListEl.innerHTML = filtered.map((item) => {
+          return `
+            <div class="career-history-item">
+              <div class="career-history-item-top">
+                <div>
+                  <div class="career-history-title">${esc(item.type || "Reservation")}</div>
+                  <div class="career-history-date">${esc(item.date || "No date")}</div>
+                </div>
+
+                <div class="career-history-points">+${Number(item.points || 0)} pts</div>
+              </div>
+
+              <div class="career-history-meta">
+                <div class="career-history-chip">${esc(item.status || "Unknown")}</div>
+                <div class="career-history-chip">${esc(item.slot || item.time || "Time not set")}</div>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      async function loadCareer(user) {
+        try {
+          const userDoc = await db.collection("users").doc(user.uid).get();
+          const userData = userDoc.exists ? (userDoc.data() || {}) : {};
+          renderMembership(userData);
+
+          let reservationItems = [];
+
+          try {
+            const snap = await db.collection("reservations")
+              .where("userId", "==", user.uid)
+              .get();
+
+            reservationItems = snap.docs.map((doc) => {
+              const data = doc.data() || {};
+              return {
+                type: data.type || data.sessionType || "Reservation",
+                date: data.date || data.dayLabel || data.createdDate || "No date",
+                status: data.status || "Completed",
+                points: Number(data.points || data.rewardPoints || 0),
+                slot: data.slot || data.time || ""
+              };
+            });
+          } catch (err) {
+            reservationItems = [];
+          }
+
+          allReservations = reservationItems.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+          renderReservations(allReservations);
+        } catch (err) {
+          historyListEl.innerHTML = '<div class="career-empty">Could not load your career data yet.</div>';
+        }
+      }
+
+      auth.onAuthStateChanged((user) => {
+        if (!user) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        loadCareer(user);
+      });
+
+      if (historySearchEl) {
+        historySearchEl.addEventListener("input", () => {
+          renderReservations(allReservations);
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>
