@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Career | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css?v=20" />
+</head>
+<body>
+
+<!-- HEADER (same as homepage) -->
+<header class="header">
+  <div class="container header-inner header-gd">
+
+    <div class="header-left">
+      <button class="hamburger" data-hamburger>
+        <div class="hamburger-lines">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo.png" />
+      </a>
+    </div>
+
+    <div class="header-right">
+      <button class="icon-btn" data-auth-open>👤</button>
+    </div>
+
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="section">
+
+  <div class="container">
+
+    <!-- PAGE TITLE -->
+    <div class="section-intro">
+      <span class="section-tag">MY CAREER</span>
+      <h2 class="section-headline">Your Journey</h2>
+    </div>
+
+    <!-- =========================
+         1. MEMBERSHIP STATUS
+    ========================== -->
+    <div class="card" style="margin-bottom:20px;">
+
+      <h3 style="margin-bottom:10px;">Membership</h3>
+
+      <div id="membershipBox" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+
+        <div>
+          <div style="font-weight:900; font-size:18px;" id="membershipType">
+            Basic Player
+          </div>
+          <div style="font-size:13px; opacity:0.7;" id="membershipDate">
+            Valid until: —
+          </div>
+        </div>
+
+        <div id="membershipStatus" class="btn-ghost" style="padding:8px 12px; border-radius:10px;">
+          Active
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================
+         2. RESERVATION HISTORY
+    ========================== -->
+    <div class="card" style="margin-bottom:20px;">
+
+      <h3 style="margin-bottom:12px;">Reservation History</h3>
+
+      <div id="historyList" style="display:grid; gap:10px;">
+
+        <!-- Example item -->
+        <div class="resdash-item">
+          <div class="resdash-item-top">
+            <div class="resdash-item-title">Match Session</div>
+            <div class="resdash-time">+12 pts</div>
+          </div>
+
+          <div class="resdash-grid">
+            <div>Date: 12 Jan</div>
+            <div>Status: Completed</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================
+         3. MY STATS
+    ========================== -->
+    <div class="card">
+
+      <h3 style="margin-bottom:12px;">My Stats</h3>
+
+      <div style="text-align:center; padding:20px; opacity:0.7;">
+        Stats syncing soon 🚀
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<!-- ACCOUNT DRAWER (REQUIRED for your system) -->
+<div class="acc-overlay" data-acc-overlay></div>
+
+<aside class="acc-drawer" data-acc-drawer>
+  <div class="acc-head">
+    <div class="acc-title">Account</div>
+    <button class="acc-close" data-acc-close>✕</button>
+  </div>
+  <div class="acc-body" id="accBody"></div>
+</aside>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="js/firebase-init.js"></script>
+
+<!-- Your main JS -->
+<script src="js/main.js?v=20"></script>
+
+<!-- Career JS -->
+<script>
+
+firebase.auth().onAuthStateChanged(async (user) => {
+  if (!user) return;
+
+  const db = window.padelinDB;
+
+  // =========================
+  // MEMBERSHIP
+  // =========================
+  const userDoc = await db.collection("users").doc(user.uid).get();
+  const data = userDoc.data();
+
+  if (data) {
+    document.getElementById("membershipType").textContent = data.membership || "Basic Player";
+    document.getElementById("membershipDate").textContent = "Valid until: " + (data.membershipEnd || "—");
+
+    document.getElementById("membershipStatus").textContent =
+      data.membershipStatus || "Active";
+  }
+
+  // =========================
+  // HISTORY
+  // =========================
+  const historySnap = await db
+    .collection("reservations")
+    .where("userId", "==", user.uid)
+    .orderBy("date", "desc")
+    .get();
+
+  const list = document.getElementById("historyList");
+  list.innerHTML = "";
+
+  historySnap.forEach(doc => {
+    const r = doc.data();
+
+    const div = document.createElement("div");
+    div.className = "resdash-item";
+
+    div.innerHTML = `
+      <div class="resdash-item-top">
+        <div class="resdash-item-title">${r.type || "Session"}</div>
+        <div class="resdash-time">+${r.points || 0} pts</div>
+      </div>
+
+      <div class="resdash-grid">
+        <div>Date: ${r.date || "-"}</div>
+        <div>Status: ${r.status || "-"}</div>
+      </div>
+    `;
+
+    list.appendChild(div);
+  });
+
+});
+
+</script>
+
+</body>
+</html>
