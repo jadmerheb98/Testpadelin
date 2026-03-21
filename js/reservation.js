@@ -536,7 +536,7 @@ try {
 
     setStatus(
   "success",
-  "Request sent.<br>You’ll receive a WhatsApp confirmation shortly."
+  "Request sent.<br>You’ll receive a WhatsApp confirmation."
 );
 
   // Show selected slots as pending immediately
