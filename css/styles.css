@@ -4896,3 +4896,14 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     align-items:flex-start;
   }
 }
+
+
+.res-status {
+  text-align: center;
+  line-height: 1.6;
+}
+
+.res-status.is-success,
+.res-status.is-error {
+  white-space: normal;
+}
