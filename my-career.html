@@ -66,60 +66,38 @@
             <a href="index.html" class="career-home-link">Back Home</a>
           </div>
 
-          <div class="career-summary-grid">
-            <div class="career-summary-box">
-              <div class="career-summary-label">Current Membership</div>
-              <div class="career-summary-value" id="careerMembershipType">Loading...</div>
-            </div>
+<div class="career-summary-grid">
+  <div class="career-summary-box career-summary-box-wide">
+    <div class="career-summary-label">Membership</div>
+    <div class="career-summary-value" id="careerMembershipType">Loading...</div>
+  </div>
 
-            <div class="career-summary-box">
-              <div class="career-summary-label">Status</div>
-              <div class="career-summary-value">
-                <span class="career-status-badge" id="careerMembershipStatus">Checking...</span>
-              </div>
-            </div>
-
-            <div class="career-summary-box">
-              <div class="career-summary-label">Total Points</div>
-              <div class="career-summary-value" id="careerTotalPoints">0 pts</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="career-section">
-        <div class="career-section-head">
-  <div class="career-section-title-row">
-    <div class="career-section-tag">01</div>
-    <div>
-      <h2>Membership</h2>
-      <p>Your current plan and status.</p>
+  <div class="career-summary-box">
+    <div class="career-summary-label">Status</div>
+    <div class="career-summary-value">
+      <span class="career-status-badge" id="careerMembershipStatus">Checking...</span>
     </div>
   </div>
+
+  <div class="career-summary-box">
+    <div class="career-summary-label">Valid Until</div>
+    <div class="career-summary-value" id="careerMembershipValidUntil">—</div>
+  </div>
+
+  <div class="career-summary-box career-summary-box-wide">
+    <div class="career-summary-label">Points</div>
+    <div class="career-summary-value" id="careerTotalPoints">0 pts</div>
+  </div>
 </div>
-
-        <div class="career-membership-card">
-          <div class="career-membership-main">
-            <div class="career-membership-title" id="careerMembershipCardType">Membership</div>
-            <div class="career-membership-sub" id="careerMembershipCardText">Membership details.</div>
-          </div>
-
-          <div class="career-membership-side">
-            <div class="career-mini-label">Status</div>
-            <div id="careerMembershipBadgeWrap">
-              <span class="career-status-badge">Checking...</span>
-            </div>
-          </div>
         </div>
       </section>
 
       <section class="career-section">
         <div class="career-section-head">
-  <div class="career-section-title-row">
-    <div class="career-section-tag">02</div>
+  <div class="career-section-title-row no-tag">
     <div>
-      <h2>Reservations</h2>
-      <p>Your booking history and points.</p>
+      <h2>Stats</h2>
+      <p>Performance data coming soon.</p>
     </div>
   </div>
 </div>
@@ -197,10 +175,7 @@
       const membershipStatusEl = document.getElementById("careerMembershipStatus");
       const totalPointsEl = document.getElementById("careerTotalPoints");
 
-      const membershipCardTypeEl = document.getElementById("careerMembershipCardType");
-      const membershipCardTextEl = document.getElementById("careerMembershipCardText");
-      const membershipBadgeWrapEl = document.getElementById("careerMembershipBadgeWrap");
-
+      const membershipValidUntilEl = document.getElementById("careerMembershipValidUntil");
       const historyListEl = document.getElementById("careerHistoryList");
       const historySearchEl = document.getElementById("careerHistorySearch");
 
@@ -225,33 +200,30 @@
       }
 
       function renderMembership(data) {
-        const membershipType =
-          data.membershipType ||
-          data.membership ||
-          localStorage.getItem("padelinMembershipType") ||
-          "Member";
+  const membershipType =
+    data.membershipType ||
+    data.membership ||
+    localStorage.getItem("padelinMembershipType") ||
+    "Member";
 
-        const membershipStatus =
-          data.membershipStatus ||
-          "Active";
+  const membershipStatus =
+    data.membershipStatus ||
+    "Active";
 
-        const membershipEnd =
-          data.membershipEnd ||
-          data.membershipExpiry ||
-          "No end date yet";
+  const membershipEnd =
+    data.membershipEnd ||
+    data.membershipExpiry ||
+    "No end date yet";
 
-        const points =
-          Number(data.points || localStorage.getItem("padelinRewardPoints") || 0);
+  const points =
+    Number(data.points || localStorage.getItem("padelinRewardPoints") || 0);
 
-        membershipTypeEl.textContent = membershipType;
-        membershipStatusEl.textContent = membershipStatus;
-        membershipStatusEl.className = "career-status-badge " + statusClass(membershipStatus);
-        totalPointsEl.textContent = points + " pts";
-
-        membershipCardTypeEl.textContent = membershipType;
-        membershipCardTextEl.textContent = "Status: " + membershipStatus + " • Valid until: " + membershipEnd;
-        membershipBadgeWrapEl.innerHTML = '<span class="career-status-badge ' + statusClass(membershipStatus) + '">' + esc(membershipStatus) + '</span>';
-      }
+  membershipTypeEl.textContent = membershipType;
+  membershipStatusEl.textContent = membershipStatus;
+  membershipStatusEl.className = "career-status-badge " + statusClass(membershipStatus);
+  membershipValidUntilEl.textContent = membershipEnd;
+  totalPointsEl.textContent = points + " pts";
+}
 
       function renderReservations(items) {
         const q = (historySearchEl?.value || "").trim().toLowerCase();
