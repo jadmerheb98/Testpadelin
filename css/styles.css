@@ -4514,19 +4514,19 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .career-overview-kicker{
-  font-size:22px;
-  line-height:1.1;
+  font-size:26px;
+  line-height:1.05;
   font-weight:900;
-  letter-spacing:-0.3px;
+  letter-spacing:-0.6px;
   color:#fff;
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
 
 .career-overview-title{
-  font-size:14px;
-  line-height:1.4;
+  font-size:15px;
+  line-height:1.5;
   font-weight:600;
-  color: rgba(255,255,255,0.78);
+  color: rgba(255,255,255,0.82);
 }
 
 /* Summary boxes */
@@ -4564,7 +4564,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .career-summary-label{
-  font-size:10px;
+  font-size:11px;
   font-weight:800;
   color: rgba(255,255,255,0.60);
   margin-bottom:3px;
@@ -4574,7 +4574,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .career-summary-value{
-  font-size:15px;
+  font-size:17px;
   font-weight:900;
   color:#fff;
   text-align:center;
@@ -4584,10 +4584,10 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-height:32px;
-  padding:5px 12px;
+  min-height:36px;
+  padding:6px 14px;
   border-radius:999px;
-  font-size:13px;
+  font-size:14px;
   font-weight:900;
   background:#eef2f7;
   color:#334155;
