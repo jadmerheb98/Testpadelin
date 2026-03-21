@@ -55,21 +55,26 @@
     <div class="container">
 
       <section class="career-hero">
-        <div class="career-hero-card">
-          <div class="career-hero-top">
-            <div>
-              <div class="career-kicker">MY CAREER</div>
-<h1>Your PADELIN Journey</h1>
-<p>Membership, bookings, and stats.</p>
-            </div>
+  <a href="index.html" class="career-home-link career-home-link-outside">← Back Home</a>
 
-            <a href="index.html" class="career-home-link">Back Home</a>
-          </div>
+  <div class="career-hero-card">
+    <div class="career-hero-top">
+      <div>
+        <div class="career-kicker">MY CAREER</div>
+        <h1>Your PADELIN Journey</h1>
+        <p>Membership, bookings, and stats.</p>
+      </div>
+    </div>
 
 <div class="career-summary-grid">
-  <div class="career-summary-box career-summary-box-wide">
+  <div class="career-summary-box">
     <div class="career-summary-label">Membership</div>
     <div class="career-summary-value" id="careerMembershipType">Loading...</div>
+  </div>
+
+  <div class="career-summary-box">
+    <div class="career-summary-label">Points</div>
+    <div class="career-summary-value" id="careerTotalPoints">0 pts</div>
   </div>
 
   <div class="career-summary-box">
@@ -83,13 +88,7 @@
     <div class="career-summary-label">Valid Until</div>
     <div class="career-summary-value" id="careerMembershipValidUntil">—</div>
   </div>
-
-  <div class="career-summary-box career-summary-box-wide">
-    <div class="career-summary-label">Points</div>
-    <div class="career-summary-value" id="careerTotalPoints">0 pts</div>
-  </div>
 </div>
-        </div>
       </section>
 
       <section class="career-section">
@@ -104,14 +103,12 @@
 
         <div class="career-history-shell">
           <div class="career-history-top">
-            <input
-              type="text"
-              id="careerHistorySearch"
-              class="career-history-search"
-              placeholder="Search reservation by date, type, or status"
-              autocomplete="off"
-            />
-          </div>
+  <input
+    type="date"
+    id="careerHistoryDate"
+    class="career-history-date-input"
+  />
+</div>
 
           <div id="careerHistoryList" class="career-history-list">
             <div class="career-empty">Loading reservation history...</div>
@@ -177,7 +174,7 @@
 
       const membershipValidUntilEl = document.getElementById("careerMembershipValidUntil");
       const historyListEl = document.getElementById("careerHistoryList");
-      const historySearchEl = document.getElementById("careerHistorySearch");
+      const historyDateEl = document.getElementById("careerHistoryDate");
 
       let allReservations = [];
 
@@ -225,45 +222,78 @@
   totalPointsEl.textContent = points + " pts";
 }
 
-      function renderReservations(items) {
-        const q = (historySearchEl?.value || "").trim().toLowerCase();
+      function normalizeDateValue(value) {
+  if (!value) return "";
 
-        const filtered = items.filter((item) => {
-          const haystack = [
-            item.date,
-            item.type,
-            item.status,
-            item.points
-          ].join(" ").toLowerCase();
+  if (typeof value === "string") {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
 
-          return !q || haystack.includes(q);
-        });
+    const parsed = new Date(value);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed.toISOString().slice(0, 10);
+    }
 
-        if (!filtered.length) {
-          historyListEl.innerHTML = '<div class="career-empty">No reservation history found.</div>';
-          return;
-        }
+    return value;
+  }
 
-        historyListEl.innerHTML = filtered.map((item) => {
-          return `
-            <div class="career-history-item">
-              <div class="career-history-item-top">
-                <div>
-                  <div class="career-history-title">${esc(item.type || "Reservation")}</div>
-                  <div class="career-history-date">${esc(item.date || "No date")}</div>
-                </div>
+  if (value?.toDate && typeof value.toDate === "function") {
+    return value.toDate().toISOString().slice(0, 10);
+  }
 
-                <div class="career-history-points">+${Number(item.points || 0)} pts</div>
-              </div>
+  if (value?.seconds) {
+    return new Date(value.seconds * 1000).toISOString().slice(0, 10);
+  }
 
-              <div class="career-history-meta">
-                <div class="career-history-chip">${esc(item.status || "Unknown")}</div>
-                <div class="career-history-chip">${esc(item.slot || item.time || "Time not set")}</div>
-              </div>
-            </div>
-          `;
-        }).join("");
-      }
+  return "";
+}
+
+function formatDisplayDate(value) {
+  const normalized = normalizeDateValue(value);
+  if (!normalized) return "No date";
+
+  const d = new Date(normalized + "T00:00:00");
+  if (Number.isNaN(d.getTime())) return normalized;
+
+  return d.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+function renderReservations(items) {
+  const selectedDate = historyDateEl?.value || "";
+
+  const filtered = items.filter((item) => {
+    const itemDate = normalizeDateValue(item.rawDate || item.date);
+    return !selectedDate || itemDate === selectedDate;
+  });
+
+  if (!filtered.length) {
+    historyListEl.innerHTML = '<div class="career-empty">No reservations on this date.</div>';
+    return;
+  }
+
+  historyListEl.innerHTML = filtered.map((item) => {
+    return `
+      <div class="career-history-item">
+        <div class="career-history-item-top">
+          <div>
+            <div class="career-history-title">${esc(item.type || "Reservation")}</div>
+            <div class="career-history-date">${esc(formatDisplayDate(item.rawDate || item.date))}</div>
+          </div>
+
+          <div class="career-history-points">+${Number(item.points || 0)} pts</div>
+        </div>
+
+        <div class="career-history-meta">
+          <div class="career-history-chip">${esc(item.status || "Unknown")}</div>
+          <div class="career-history-chip">${esc(item.slot || item.time || "Time not set")}</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
 
       async function loadCareer(user) {
         try {
@@ -279,21 +309,32 @@
               .get();
 
             reservationItems = snap.docs.map((doc) => {
-              const data = doc.data() || {};
-              return {
-                type: data.type || data.sessionType || "Reservation",
-                date: data.date || data.dayLabel || data.createdDate || "No date",
-                status: data.status || "Completed",
-                points: Number(data.points || data.rewardPoints || 0),
-                slot: data.slot || data.time || ""
-              };
-            });
+  const data = doc.data() || {};
+  return {
+    type: data.type || data.sessionType || "Reservation",
+    date: data.date || data.dayLabel || data.createdDate || "",
+    rawDate: data.date || data.dayLabel || data.createdDate || "",
+    status: data.status || "Completed",
+    points: Number(data.points || data.rewardPoints || 0),
+    slot: data.slot || data.time || ""
+  };
+});
           } catch (err) {
             reservationItems = [];
           }
 
-          allReservations = reservationItems.sort((a, b) => String(b.date).localeCompare(String(a.date)));
-          renderReservations(allReservations);
+          allReservations = reservationItems
+  .map((item) => ({
+    ...item,
+    rawDate: item.rawDate || item.date
+  }))
+  .sort((a, b) => String(normalizeDateValue(b.rawDate || b.date)).localeCompare(String(normalizeDateValue(a.rawDate || a.date))));
+
+if (historyDateEl) {
+  historyDateEl.value = new Date().toISOString().slice(0, 10);
+}
+
+renderReservations(allReservations);
         } catch (err) {
           historyListEl.innerHTML = '<div class="career-empty">Could not load your career data yet.</div>';
         }
@@ -308,11 +349,11 @@
         loadCareer(user);
       });
 
-      if (historySearchEl) {
-        historySearchEl.addEventListener("input", () => {
-          renderReservations(allReservations);
-        });
-      }
+      if (historyDateEl) {
+  historyDateEl.addEventListener("change", () => {
+    renderReservations(allReservations);
+  });
+}
     })();
   </script>
 
