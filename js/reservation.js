@@ -539,7 +539,10 @@ try {
   return;
 }
 
-    setStatus("success", "Reservation request sent successfully.");
+    setStatus(
+  "success",
+  "Request sent.<br>You’ll receive a WhatsApp confirmation shortly."
+);
 
   // Show selected slots as pending immediately
   const courtLabel = summary.courtLabel;
