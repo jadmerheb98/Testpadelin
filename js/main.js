@@ -420,12 +420,12 @@ function renderSignedOut() {
       </div>
 
       <div class="acc-links">
-        <a class="acc-link" href="career.html">
-          <div>
-            <div class="k">My Career</div>
-            <span class="s">Reservations, membership, stats</span>
-          </div>
-        </a>
+        <a class="acc-link" href="my-career.html">
+  <div>
+    <div class="k">My Career</div>
+    <span class="s">Reservations, membership, stats</span>
+  </div>
+</a>
 
         <a class="acc-link" href="training.html">
           <div>
