@@ -167,200 +167,236 @@
   <script src="js/main.js?v=20"></script>
 
   <script>
-    (function careerPageSetup() {
-      if (!window.padelinAuth || !window.padelinDB) return;
+  (function careerPageSetup() {
+    if (!window.padelinAuth || !window.padelinDB) return;
 
-      const auth = window.padelinAuth;
-      const db = window.padelinDB;
+    const auth = window.padelinAuth;
+    const db = window.padelinDB;
+    const WORKER_BASE = "https://solitary-morning-9ea4.padelin-lb.workers.dev";
 
-      const membershipTypeEl = document.getElementById("careerMembershipType");
-      const membershipStatusEl = document.getElementById("careerMembershipStatus");
-      const totalPointsEl = document.getElementById("careerTotalPoints");
+    const nameEl = document.getElementById("careerMembershipType");
+    const statusEl = document.getElementById("careerMembershipStatus");
+    const idEl = document.getElementById("careerMembershipValidUntil");
+    const pointsEl = document.getElementById("careerTotalPoints");
 
-      const membershipValidUntilEl = document.getElementById("careerMembershipValidUntil");
-      const historyListEl = document.getElementById("careerHistoryList");
-      const historyDateEl = document.getElementById("careerHistoryDate");
+    const historyListEl = document.getElementById("careerHistoryList");
+    const historyDateEl = document.getElementById("careerHistoryDate");
 
-      let allReservations = [];
+    let allReservations = [];
 
-      function esc(str) {
-        return String(str ?? "")
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
-      }
-
-      function statusClass(status) {
-        const s = String(status || "").toLowerCase();
-
-        if (s === "active") return "is-active";
-        if (s === "expired") return "is-expired";
-        if (s === "pending") return "is-pending";
-        return "is-neutral";
-      }
-
-      function renderMembership(data) {
-  const membershipType =
-    data.membershipType ||
-    data.membership ||
-    localStorage.getItem("padelinMembershipType") ||
-    "Member";
-
-  const membershipStatus =
-    data.membershipStatus ||
-    "Active";
-
-  const membershipEnd =
-    data.membershipEnd ||
-    data.membershipExpiry ||
-    "No end date yet";
-
-  const points =
-    Number(data.points || localStorage.getItem("padelinRewardPoints") || 0);
-
-  membershipTypeEl.textContent = membershipType;
-  membershipStatusEl.textContent = membershipStatus;
-  membershipStatusEl.className = "career-status-badge " + statusClass(membershipStatus);
-  membershipValidUntilEl.textContent = membershipEnd;
-  totalPointsEl.textContent = points + " pts";
-}
-
-      function normalizeDateValue(value) {
-  if (!value) return "";
-
-  if (typeof value === "string") {
-    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
-
-    const parsed = new Date(value);
-    if (!Number.isNaN(parsed.getTime())) {
-      return parsed.toISOString().slice(0, 10);
+    function esc(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    return value;
-  }
+    function statusClass(status) {
+      const s = String(status || "").toLowerCase();
+      if (s === "active") return "is-active";
+      if (s === "expired") return "is-expired";
+      if (s === "pending") return "is-pending";
+      return "is-neutral";
+    }
 
-  if (value?.toDate && typeof value.toDate === "function") {
-    return value.toDate().toISOString().slice(0, 10);
-  }
+    function normalizeDateValue(value) {
+      if (!value) return "";
 
-  if (value?.seconds) {
-    return new Date(value.seconds * 1000).toISOString().slice(0, 10);
-  }
+      if (typeof value === "string") {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
 
-  return "";
-}
-
-function formatDisplayDate(value) {
-  const normalized = normalizeDateValue(value);
-  if (!normalized) return "No date";
-
-  const d = new Date(normalized + "T00:00:00");
-  if (Number.isNaN(d.getTime())) return normalized;
-
-  return d.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  });
-}
-
-function renderReservations(items) {
-  const selectedDate = historyDateEl?.value || "";
-
-  const filtered = items.filter((item) => {
-    const itemDate = normalizeDateValue(item.rawDate || item.date);
-    return !selectedDate || itemDate === selectedDate;
-  });
-
-  if (!filtered.length) {
-    historyListEl.innerHTML = '<div class="career-empty">No reservations on this date.</div>';
-    return;
-  }
-
-  historyListEl.innerHTML = filtered.map((item) => {
-    return `
-      <div class="career-history-item">
-        <div class="career-history-item-top">
-          <div>
-            <div class="career-history-title">${esc(item.type || "Reservation")}</div>
-            <div class="career-history-date">${esc(formatDisplayDate(item.rawDate || item.date))}</div>
-          </div>
-
-          <div class="career-history-points">+${Number(item.points || 0)} pts</div>
-        </div>
-
-        <div class="career-history-meta">
-          <div class="career-history-chip">${esc(item.status || "Unknown")}</div>
-          <div class="career-history-chip">${esc(item.slot || item.time || "Time not set")}</div>
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-      async function loadCareer(user) {
-        try {
-          const userDoc = await db.collection("users").doc(user.uid).get();
-          const userData = userDoc.exists ? (userDoc.data() || {}) : {};
-          renderMembership(userData);
-
-          let reservationItems = [];
-
-          try {
-            const snap = await db.collection("reservations")
-              .where("userId", "==", user.uid)
-              .get();
-
-            reservationItems = snap.docs.map((doc) => {
-  const data = doc.data() || {};
-  return {
-    type: data.type || data.sessionType || "Reservation",
-    date: data.date || data.dayLabel || data.createdDate || "",
-    rawDate: data.date || data.dayLabel || data.createdDate || "",
-    status: data.status || "Completed",
-    points: Number(data.points || data.rewardPoints || 0),
-    slot: data.slot || data.time || ""
-  };
-});
-          } catch (err) {
-            reservationItems = [];
-          }
-
-          allReservations = reservationItems
-  .map((item) => ({
-    ...item,
-    rawDate: item.rawDate || item.date
-  }))
-  .sort((a, b) => String(normalizeDateValue(b.rawDate || b.date)).localeCompare(String(normalizeDateValue(a.rawDate || a.date))));
-
-if (historyDateEl) {
-  historyDateEl.value = new Date().toISOString().slice(0, 10);
-}
-
-renderReservations(allReservations);
-        } catch (err) {
-          historyListEl.innerHTML = '<div class="career-empty">Could not load your career data yet.</div>';
+        const parsed = new Date(value);
+        if (!Number.isNaN(parsed.getTime())) {
+          return parsed.toISOString().slice(0, 10);
         }
+
+        const m = String(value).match(/^[A-Za-z]{3},\s([A-Za-z]{3})\s(\d{1,2}),\s(\d{4})$/);
+        if (m) {
+          const monthMap = {
+            Jan: "01", Feb: "02", Mar: "03", Apr: "04", May: "05", Jun: "06",
+            Jul: "07", Aug: "08", Sep: "09", Oct: "10", Nov: "11", Dec: "12"
+          };
+          const mm = monthMap[m[1]] || "01";
+          const dd = String(m[2]).padStart(2, "0");
+          return `${m[3]}-${mm}-${dd}`;
+        }
+
+        return "";
       }
 
-      auth.onAuthStateChanged((user) => {
-        if (!user) {
-          window.location.href = "login.html";
-          return;
-        }
+      if (value?.toDate && typeof value.toDate === "function") {
+        return value.toDate().toISOString().slice(0, 10);
+      }
 
-        loadCareer(user);
+      if (value?.seconds) {
+        return new Date(value.seconds * 1000).toISOString().slice(0, 10);
+      }
+
+      return "";
+    }
+
+    function formatDisplayDate(value) {
+      const normalized = normalizeDateValue(value);
+      if (!normalized) return "No date";
+
+      const d = new Date(normalized + "T00:00:00");
+      if (Number.isNaN(d.getTime())) return normalized;
+
+      return d.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+    function prettyStatus(status) {
+      const s = String(status || "").trim();
+      if (!s) return "Unknown";
+      return s.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+
+    function renderTopCard(userData, authUser) {
+      const accountName =
+        userData.name ||
+        authUser?.displayName ||
+        authUser?.email ||
+        "Member";
+
+      const accountId =
+        userData.customId ||
+        "—";
+
+      const accountPoints =
+        Number(userData.points || 0);
+
+      const accountStatus =
+        userData.status ||
+        userData.membershipStatus ||
+        "Active";
+
+      nameEl.textContent = accountName;
+      idEl.textContent = accountId;
+      pointsEl.textContent = accountPoints + " pts";
+      statusEl.textContent = accountStatus;
+      statusEl.className = "career-status-badge " + statusClass(accountStatus);
+    }
+
+    function renderReservations(items) {
+      const selectedDate = historyDateEl?.value || "";
+
+      const filtered = items.filter((item) => {
+        const itemDate = normalizeDateValue(item.date);
+        return !selectedDate || itemDate === selectedDate;
       });
 
-      if (historyDateEl) {
-  historyDateEl.addEventListener("change", () => {
-    renderReservations(allReservations);
-  });
-}
-    })();
-  </script>
+      if (!filtered.length) {
+        historyListEl.innerHTML = '<div class="career-empty">No reservations on this date.</div>';
+        return;
+      }
+
+      historyListEl.innerHTML = filtered.map((item) => {
+        const pointsText = Number(item.rewardPoints || 0) > 0
+          ? `+${Number(item.rewardPoints || 0)} pts`
+          : "0 pts";
+
+        const statusText = prettyStatus(item.status || "");
+        const timeText = item.start && item.end
+          ? `${esc(item.start)} - ${esc(item.end)}`
+          : "Time not set";
+
+        const courtText = item.court || "Court";
+
+        return `
+          <div class="career-history-item">
+            <div class="career-history-item-top">
+              <div>
+                <div class="career-history-title">${esc(courtText)}</div>
+                <div class="career-history-date">${esc(formatDisplayDate(item.date))}</div>
+              </div>
+
+              <div class="career-history-points">${pointsText}</div>
+            </div>
+
+            <div class="career-history-meta">
+              <div class="career-history-chip">${esc(statusText)}</div>
+              <div class="career-history-chip">${timeText}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function loadCareer(user) {
+      try {
+        let userData = {};
+        const userDoc = await db.collection("users").doc(user.uid).get();
+
+        if (userDoc.exists) {
+          userData = userDoc.data() || {};
+        } else {
+          const byEmail = await db.collection("users")
+            .where("email", "==", user.email || "")
+            .limit(1)
+            .get();
+
+          if (!byEmail.empty) {
+            userData = byEmail.docs[0].data() || {};
+          }
+        }
+
+        renderTopCard(userData, user);
+
+        const workerRes = await fetch(`${WORKER_BASE}/account/history`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            uid: user.uid || "",
+            email: user.email || "",
+            phone: userData.phone || ""
+          })
+        });
+
+        const workerJson = await workerRes.json().catch(() => ({ ok: false }));
+
+        if (!workerRes.ok || !workerJson.ok) {
+          throw new Error(workerJson.error || "Could not load history");
+        }
+
+        allReservations = Array.isArray(workerJson.reservations)
+          ? workerJson.reservations
+          : [];
+
+        if (historyDateEl) {
+          historyDateEl.value = new Date().toISOString().slice(0, 10);
+        }
+
+        renderReservations(allReservations);
+      } catch (err) {
+        console.error(err);
+        historyListEl.innerHTML = '<div class="career-empty">Could not load your career data yet.</div>';
+      }
+    }
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      loadCareer(user);
+    });
+
+    if (historyDateEl) {
+      historyDateEl.addEventListener("change", () => {
+        renderReservations(allReservations);
+      });
+    }
+  })();
+</script>
 
 </body>
 </html>
