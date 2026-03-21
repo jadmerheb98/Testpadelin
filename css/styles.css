@@ -4429,82 +4429,88 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .career-hero-card{
-  border-radius: 24px;
-  padding: 22px;
+  border-radius: 22px;
+  padding: 18px;
   background:
-    radial-gradient(500px 220px at 85% 20%, rgba(63,102,150,0.18), transparent 60%),
+    radial-gradient(420px 180px at 85% 20%, rgba(63,102,150,0.16), transparent 60%),
     linear-gradient(180deg, rgba(15,23,42,0.98), rgba(11,18,32,0.96));
   color: #fff;
   border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 50px rgba(15,23,42,0.24);
+  box-shadow: 0 16px 38px rgba(15,23,42,0.20);
 }
-
+   
 .career-hero-top{
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
-  gap:16px;
-  margin-bottom:18px;
+  gap:14px;
+  margin-bottom:14px;
 }
 
 .career-kicker{
-  font-size:12px;
+  font-size:11px;
   font-weight:900;
-  letter-spacing:2.4px;
+  letter-spacing:2.8px;
   color: rgba(255,255,255,0.68);
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .career-hero-card h1{
-  margin:0 0 8px;
-  font-size:30px;
-  line-height:1.05;
+  margin:0 0 6px;
+  font-size:25px;
+  line-height:1.06;
 }
 
 .career-hero-card p{
   margin:0;
   max-width:58ch;
   color: rgba(255,255,255,0.76);
+  font-size:14px;
 }
 
 .career-home-link{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-height:42px;
-  padding:0 14px;
-  border-radius:12px;
+  min-height:38px;
+  padding:0 12px;
+  border-radius:11px;
   background: rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.10);
   color:#fff;
+  font-size:13px;
   font-weight:800;
   white-space:nowrap;
 }
 
 .career-summary-grid{
   display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap:12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:10px;
 }
 
 .career-summary-box{
-  padding:14px;
-  border-radius:16px;
+  padding:12px;
+  border-radius:15px;
   border:1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.06);
 }
 
+.career-summary-box-wide{
+  grid-column: 1 / -1;
+}   
+
 .career-summary-label{
-  font-size:12px;
+  font-size:11px;
   font-weight:800;
   color: rgba(255,255,255,0.64);
-  margin-bottom:6px;
+  margin-bottom:5px;
   text-transform:uppercase;
-  letter-spacing:1px;
+  letter-spacing:1.2px;
 }
 
 .career-summary-value{
-  font-size:18px;
+  font-size:16px;
   font-weight:900;
   color:#fff;
 }
@@ -4525,25 +4531,20 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   gap:12px;
 }
 
+.career-section-title-row.no-tag{
+  display:block;
+}
+
 .career-section-tag{
-  width:40px;
-  height:40px;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  flex: 0 0 40px;
-  background: rgba(63,102,150,0.10);
-  border:1px solid rgba(63,102,150,0.18);
-  color: var(--accent);
-  font-size:13px;
-  font-weight:900;
+  display:none;
 }
 
 .career-section-head h2{
   margin:0 0 4px;
-  font-size:24px;
-  line-height:1.05;
+  font-size:26px;
+  line-height:1.04;
   color: var(--navy);
+  letter-spacing:-0.4px;
 }
 
 .career-section-head p{
@@ -4747,61 +4748,35 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   font-weight:700;
 }
 
-@media (max-width: 820px){
-  .career-hero-top{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .career-summary-grid{
-    grid-template-columns:1fr;
-  }
-
-  .career-membership-card{
-    grid-template-columns:1fr;
-  }
-}
-
 @media (max-width: 520px){
   .career-page{
     padding: 22px 0 40px;
   }
 
   .career-hero-card{
-    padding:18px;
+    padding:16px;
     border-radius:20px;
   }
 
   .career-hero-card h1{
-    font-size:26px;
+    font-size:23px;
+  }
+
+  .career-summary-grid{
+    grid-template-columns: 1fr 1fr;
+    gap:8px;
   }
 
   .career-summary-value{
-    font-size:17px;
-  }
-
-  .career-section-title-row{
-    gap:10px;
-  }
-
-  .career-section-tag{
-    width:36px;
-    height:36px;
-    flex-basis:36px;
-    border-radius:12px;
-    font-size:12px;
+    font-size:15px;
   }
 
   .career-section-head h2{
-    font-size:21px;
+    font-size:22px;
   }
 
   .career-section-head p{
     font-size:13px;
-  }
-
-  .career-membership-title{
-    font-size:21px;
   }
 
   .career-history-item-top{
@@ -4810,6 +4785,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 
   .career-home-link{
-    min-height:40px;
+    min-height:38px;
   }
 }
