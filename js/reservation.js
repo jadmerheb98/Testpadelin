@@ -425,28 +425,33 @@ const liveStatus = liveStatuses[liveKey] || null;
     ].join("\n");
   }
 
-  function ensureStatusEl() {
-  let el = document.querySelector("[data-res-status]");
-  if (el) return el;
-
-  el = document.createElement("div");
-  el.className = "res-status";
-  el.setAttribute("data-res-status", "");
-  el.setAttribute("role", "status");
-  el.setAttribute("aria-live", "polite");
-
-  const actions = document.querySelector(".booking-actions");
-  if (actions) actions.insertAdjacentElement("afterend", el);
-  return el;
-}
-
 function setStatus(type, text) {
-  const el = ensureStatusEl();
-  el.innerHTML = text;
-  el.classList.remove("is-success", "is-error");
-  if (type === "success") el.classList.add("is-success");
-  if (type === "error") el.classList.add("is-error");
+  showReservationPopup(text, type);
 }
+
+function showReservationPopup(message, type = "success") {
+  const oldPopup = document.querySelector(".res-popup");
+  if (oldPopup) oldPopup.remove();
+
+  const popup = document.createElement("div");
+  popup.className = `res-popup ${type}`;
+  popup.setAttribute("role", "status");
+  popup.setAttribute("aria-live", "polite");
+  popup.innerHTML = message;
+
+  document.body.appendChild(popup);
+
+  requestAnimationFrame(() => {
+    popup.classList.add("show");
+  });
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+    setTimeout(() => {
+      if (popup.parentNode) popup.remove();
+    }, 250);
+  }, 3000);
+}  
 
 confirmBtn.addEventListener("click", async () => {
   if (isAdmin) return;
