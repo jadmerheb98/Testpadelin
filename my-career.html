@@ -183,6 +183,7 @@
     const historyDateEl = document.getElementById("careerHistoryDate");
 
     let allReservations = [];
+    let currentUserData = {};
 
     function esc(str) {
       return String(str ?? "")
@@ -201,18 +202,18 @@
       return "is-neutral";
     }
 
+    // IMPORTANT: do NOT use toISOString() for plain booking dates
     function normalizeDateValue(value) {
       if (!value) return "";
 
       if (typeof value === "string") {
-        if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+        const v = value.trim();
 
-        const parsed = new Date(value);
-        if (!Number.isNaN(parsed.getTime())) {
-          return parsed.toISOString().slice(0, 10);
-        }
+        // already normalized
+        if (/^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
 
-        const m = String(value).match(/^[A-Za-z]{3},\s([A-Za-z]{3})\s(\d{1,2}),\s(\d{4})$/);
+        // label like: Fri, Mar 20, 2026
+        const m = v.match(/^[A-Za-z]{3},\s([A-Za-z]{3})\s(\d{1,2}),\s(\d{4})$/);
         if (m) {
           const monthMap = {
             Jan: "01", Feb: "02", Mar: "03", Apr: "04", May: "05", Jun: "06",
@@ -223,15 +224,36 @@
           return `${m[3]}-${mm}-${dd}`;
         }
 
+        // ISO datetime string like 2026-03-20T...
+        const isoMatch = v.match(/^(\d{4})-(\d{2})-(\d{2})T/);
+        if (isoMatch) return `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
+
+        // fallback for plain parseable date strings WITHOUT UTC shifting
+        const parsed = new Date(v);
+        if (!Number.isNaN(parsed.getTime())) {
+          const y = parsed.getFullYear();
+          const m2 = String(parsed.getMonth() + 1).padStart(2, "0");
+          const d2 = String(parsed.getDate()).padStart(2, "0");
+          return `${y}-${m2}-${d2}`;
+        }
+
         return "";
       }
 
       if (value?.toDate && typeof value.toDate === "function") {
-        return value.toDate().toISOString().slice(0, 10);
+        const d = value.toDate();
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
       }
 
       if (value?.seconds) {
-        return new Date(value.seconds * 1000).toISOString().slice(0, 10);
+        const d = new Date(value.seconds * 1000);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
       }
 
       return "";
@@ -241,7 +263,8 @@
       const normalized = normalizeDateValue(value);
       if (!normalized) return "No date";
 
-      const d = new Date(normalized + "T00:00:00");
+      const [year, month, day] = normalized.split("-");
+      const d = new Date(Number(year), Number(month) - 1, Number(day));
       if (Number.isNaN(d.getTime())) return normalized;
 
       return d.toLocaleDateString("en-GB", {
@@ -257,7 +280,13 @@
       return s.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase());
     }
 
-    function renderTopCard(userData, authUser) {
+    function getHistoryPointsTotal(items) {
+      return items.reduce((sum, item) => {
+        return sum + Number(item.rewardPoints || 0);
+      }, 0);
+    }
+
+    function renderTopCard(userData, authUser, reservations) {
       const accountName =
         userData.name ||
         authUser?.displayName ||
@@ -268,8 +297,9 @@
         userData.customId ||
         "—";
 
-      const accountPoints =
-        Number(userData.points || 0);
+      const firestorePoints = Number(userData.points || 0);
+      const historyPoints = getHistoryPointsTotal(reservations || []);
+      const accountPoints = Math.max(firestorePoints, historyPoints);
 
       const accountStatus =
         userData.status ||
@@ -330,11 +360,12 @@
 
     async function loadCareer(user) {
       try {
-        let userData = {};
+        currentUserData = {};
+
         const userDoc = await db.collection("users").doc(user.uid).get();
 
         if (userDoc.exists) {
-          userData = userDoc.data() || {};
+          currentUserData = userDoc.data() || {};
         } else {
           const byEmail = await db.collection("users")
             .where("email", "==", user.email || "")
@@ -342,11 +373,9 @@
             .get();
 
           if (!byEmail.empty) {
-            userData = byEmail.docs[0].data() || {};
+            currentUserData = byEmail.docs[0].data() || {};
           }
         }
-
-        renderTopCard(userData, user);
 
         const workerRes = await fetch(`${WORKER_BASE}/account/history`, {
           method: "POST",
@@ -356,7 +385,7 @@
           body: JSON.stringify({
             uid: user.uid || "",
             email: user.email || "",
-            phone: userData.phone || ""
+            phone: currentUserData.phone || ""
           })
         });
 
@@ -370,10 +399,16 @@
           ? workerJson.reservations
           : [];
 
+        // default filter = today
         if (historyDateEl) {
-          historyDateEl.value = new Date().toISOString().slice(0, 10);
+          const today = new Date();
+          const y = today.getFullYear();
+          const m = String(today.getMonth() + 1).padStart(2, "0");
+          const d = String(today.getDate()).padStart(2, "0");
+          historyDateEl.value = `${y}-${m}-${d}`;
         }
 
+        renderTopCard(currentUserData, user, allReservations);
         renderReservations(allReservations);
       } catch (err) {
         console.error(err);
