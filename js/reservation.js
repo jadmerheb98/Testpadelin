@@ -453,8 +453,22 @@ confirmBtn.addEventListener("click", async () => {
 
   // ✅ Require sign-in before confirming reservation
   const userRaw = localStorage.getItem("padelinUser");
-  let user = null;
-  try { user = userRaw ? JSON.parse(userRaw) : null; } catch { user = null; }
+let user = null;
+try { user = userRaw ? JSON.parse(userRaw) : null; } catch { user = null; }
+
+let bookingPhone = user?.phone || "";
+
+if ((!bookingPhone || bookingPhone === "Unknown") && user?.uid && window.padelinDB) {
+  try {
+    const userDoc = await window.padelinDB.collection("users").doc(user.uid).get();
+    if (userDoc.exists) {
+      const userData = userDoc.data() || {};
+      bookingPhone = userData.phone || "";
+    }
+  } catch (err) {
+    console.error("Failed to load phone from Firestore:", err);
+  }
+}
 
   if (!user || (!user.uid && !user.email)) {
     alert("Please sign in before confirming your reservation.");
@@ -491,7 +505,7 @@ try {
   end: summary.end,
   name: name,
   email: email,
-  phone: user.phone || user.phoneNumber || "Unknown",
+  phone: bookingPhone || "Unknown",
   uid: user.uid || ""
 })
   });
