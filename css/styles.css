@@ -4426,7 +4426,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 /* Page intro */
 .career-page-head{
-  margin: 8px 0 14px;
+  margin: 8px 0 12px;
 }
 
 .career-page-kicker{
@@ -4464,6 +4464,31 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   margin: 0;
   font-size: 15px;
   color: rgba(11,18,32,0.68);
+}
+
+/* Back button */
+.career-home-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:0 16px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:800;
+  white-space:nowrap;
+  text-decoration:none;
+}
+
+.career-home-link-outside{
+  margin: 0 0 14px;
+  background: rgba(15,23,42,0.06);
+  border:1px solid rgba(15,23,42,0.12);
+  color: var(--navy);
+}
+
+.career-home-link-outside:hover{
+  background: rgba(63,102,150,0.08);
 }
 
 /* Overview card */
@@ -4504,31 +4529,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   color: rgba(255,255,255,0.78);
 }
 
-.career-home-link{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:44px;
-  padding:0 16px;
-  border-radius:14px;
-  font-size:14px;
-  font-weight:800;
-  white-space:nowrap;
-  text-decoration:none;
-}
-
-.career-home-link-outside{
-  margin: 0 0 14px;
-  background: rgba(15,23,42,0.06);
-  border:1px solid rgba(15,23,42,0.12);
-  color: var(--navy);
-}
-
-.career-home-link-outside:hover{
-  background: rgba(63,102,150,0.08);
-}
-
-/* Summary grid */
+/* Summary boxes */
 .career-summary-grid{
   display:grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4537,8 +4538,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 .career-summary-box-membership{
   grid-column: 1 / -1;
-  text-align:center;
-  padding:12px;
 }
 
 .career-summary-box-points{
@@ -4546,22 +4545,22 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .career-summary-box{
-  padding:12px;
-  border-radius:18px;
+  padding:10px 12px;
+  border-radius:16px;
   border:1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.05);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
   text-align:center;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  min-height:92px;
+  min-height:82px;
 }
 
 .career-summary-box-membership,
 .career-summary-box-points{
-  min-height:78px;
+  min-height:72px;
 }
 
 .career-summary-label{
@@ -4571,11 +4570,14 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   margin-bottom:3px;
   text-transform:uppercase;
   letter-spacing:1px;
+  text-align:center;
 }
+
 .career-summary-value{
   font-size:15px;
   font-weight:900;
   color:#fff;
+  text-align:center;
 }
 
 .career-status-badge{
@@ -4821,29 +4823,29 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     font-size:14px;
   }
 
+  .career-home-link{
+    min-height:44px;
+    padding:0 16px;
+    border-radius:14px;
+    font-size:14px;
+  }
+
   .career-overview-card{
     padding:14px;
     border-radius:20px;
   }
 
   .career-overview-top{
-  margin-bottom:10px;
-}
+    margin-bottom:10px;
+  }
 
-.career-overview-title{
-  font-size:13px;
-  max-width:none;
-}
+  .career-overview-kicker{
+    font-size:17px;
+  }
 
-.career-overview-kicker{
-  font-size:17px;
-}
-
-.career-home-link{
-  min-height:32px;
-  font-size:12px;
-  padding:0 10px;
-}
+  .career-overview-title{
+    font-size:13px;
+  }
 
   .career-summary-grid{
     grid-template-columns: 1fr 1fr;
@@ -4851,11 +4853,10 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 
   .career-summary-box{
-  padding:10px 12px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.05);
-}
+    padding:10px;
+    border-radius:16px;
+    min-height:82px;
+  }
 
   .career-summary-box-membership,
   .career-summary-box-points{
