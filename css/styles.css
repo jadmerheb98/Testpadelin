@@ -4907,3 +4907,39 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 .res-status.is-error {
   white-space: normal;
 }
+.res-popup {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(16px);
+  width: min(92vw, 420px);
+  padding: 14px 18px;
+  border-radius: 16px;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 12px 28px rgba(11, 18, 32, 0.16);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  white-space: normal;
+}
+
+.res-popup.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.res-popup.success {
+  background: #eaf7ef;
+  color: #0a7a3d;
+  border: 1px solid #a9d8b8;
+}
+
+.res-popup.error {
+  background: #fff1f1;
+  color: #c62828;
+  border: 1px solid #efb3b3;
+}
