@@ -4510,35 +4510,47 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .career-section{
-  margin-top:18px;
+  margin-top:24px;
 }
 
 .career-section-head{
-  margin-bottom:12px;
+  margin-bottom:14px;
+  padding-bottom:10px;
+  border-bottom: 1px solid rgba(15,23,42,0.08);
+}
+
+.career-section-title-row{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
 }
 
 .career-section-tag{
-  width:36px;
-  height:36px;
-  border-radius:12px;
+  width:40px;
+  height:40px;
+  border-radius:14px;
   display:grid;
   place-items:center;
-  background: rgba(63,102,150,0.12);
-  border:1px solid rgba(63,102,150,0.20);
+  flex: 0 0 40px;
+  background: rgba(63,102,150,0.10);
+  border:1px solid rgba(63,102,150,0.18);
   color: var(--accent);
-  font-size:12px;
+  font-size:13px;
   font-weight:900;
-  margin-bottom:8px;
 }
 
 .career-section-head h2{
-  margin:0 0 6px;
-  font-size:22px;
+  margin:0 0 4px;
+  font-size:24px;
+  line-height:1.05;
+  color: var(--navy);
 }
 
 .career-section-head p{
   margin:0;
-  color: rgba(11,18,32,0.66);
+  color: rgba(11,18,32,0.62);
+  font-size:14px;
+  line-height:1.4;
 }
 
 .career-membership-card{
@@ -4768,8 +4780,24 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     font-size:17px;
   }
 
+  .career-section-title-row{
+    gap:10px;
+  }
+
+  .career-section-tag{
+    width:36px;
+    height:36px;
+    flex-basis:36px;
+    border-radius:12px;
+    font-size:12px;
+  }
+
   .career-section-head h2{
-    font-size:20px;
+    font-size:21px;
+  }
+
+  .career-section-head p{
+    font-size:13px;
   }
 
   .career-membership-title{
