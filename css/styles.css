@@ -4856,7 +4856,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 
   .career-overview-kicker{
-    font-size:32px;
+    font-size:26px;
   }
 
   .career-overview-title{
@@ -4871,7 +4871,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   .career-summary-box{
     padding:10px;
     border-radius:16px;
-    min-height:82px;
+    min-height:65px;
   }
 
   .career-summary-box-membership,
