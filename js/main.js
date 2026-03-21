@@ -391,8 +391,36 @@ function renderSignedOut() {
   }
 }
 
-  function renderSignedIn(user) {
+ async function renderSignedIn(user) {
+    const db = window.padelinDB;
+    const WORKER_BASE = "https://solitary-morning-9ea4.padelin-lb.workers.dev";
+
+    let userData = {};
+    let points = 0;
+
+    try {
+      if (db && user?.uid) {
+        const userDoc = await db.collection("users").doc(user.uid).get();
+
+        if (userDoc.exists) {
+          userData = userDoc.data() || {};
+        } else if (user?.email) {
+          const byEmail = await db.collection("users")
+            .where("email", "==", user.email)
+            .limit(1)
+            .get();
+
+          if (!byEmail.empty) {
+            userData = byEmail.docs[0].data() || {};
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Failed to load user profile for drawer:", err);
+    }
+
     const name =
+      userData.name ||
       (user && (user.displayName || user.email)) ||
       (JSON.parse(localStorage.getItem("padelinUser") || "{}").email) ||
       "Member";
@@ -401,11 +429,37 @@ function renderSignedOut() {
     const membershipType = (localStorage.getItem("padelinMembershipType") || "").trim();
     const tierLine = membershipType ? `${tier} • ${membershipType}` : tier;
 
-        const points = Number(
-      localStorage.getItem("padelinRewardPoints") ||
-      localStorage.getItem("padelinPoints") ||
-      0
-    );
+    const firestorePoints = Number(userData.points || 0);
+    let historyPoints = 0;
+
+    try {
+      const workerRes = await fetch(`${WORKER_BASE}/account/history`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          uid: user?.uid || "",
+          email: user?.email || "",
+          phone: userData.phone || ""
+        })
+      });
+
+      const workerJson = await workerRes.json().catch(() => ({ ok: false }));
+
+      if (workerRes.ok && workerJson.ok && Array.isArray(workerJson.reservations)) {
+        historyPoints = workerJson.reservations.reduce((sum, item) => {
+          return sum + Number(item.rewardPoints || 0);
+        }, 0);
+      }
+    } catch (err) {
+      console.error("Failed to load worker history for drawer:", err);
+    }
+
+    points = Math.max(firestorePoints, historyPoints);
+
+    localStorage.setItem("padelinRewardPoints", String(points));
+    localStorage.setItem("padelinPoints", String(points));
 
     body.innerHTML = `
       <div class="acc-card">
@@ -421,11 +475,11 @@ function renderSignedOut() {
 
       <div class="acc-links">
         <a class="acc-link" href="my-career.html">
-  <div>
-    <div class="k">My Career</div>
-    <span class="s">Reservations, membership, stats</span>
-  </div>
-</a>
+          <div>
+            <div class="k">My Career</div>
+            <span class="s">Reservations, membership, stats</span>
+          </div>
+        </a>
 
         <a class="acc-link" href="training.html">
           <div>
@@ -460,7 +514,7 @@ function renderSignedOut() {
         try {
           if (window.padelinAuth) await window.padelinAuth.signOut();
           localStorage.removeItem("padelinUser");
-          openBtn.classList.remove("has-auth-dot"); // green dot OFF
+          openBtn.classList.remove("has-auth-dot");
           closeDrawer();
           renderSignedOut();
         } catch (err) {
@@ -481,13 +535,13 @@ function renderSignedOut() {
 
   // Hook into Firebase auth if present (also toggles green dot)
   if (window.padelinAuth && typeof window.padelinAuth.onAuthStateChanged === "function") {
-    window.padelinAuth.onAuthStateChanged((user) => {
+    window.padelinAuth.onAuthStateChanged(async (user) => {
       if (user) {
-        renderSignedIn(user);
-        openBtn.classList.add("has-auth-dot"); // green dot ON
+        await renderSignedIn(user);
+        openBtn.classList.add("has-auth-dot");
       } else {
         renderSignedOut();
-        openBtn.classList.remove("has-auth-dot"); // green dot OFF
+        openBtn.classList.remove("has-auth-dot");
       }
     });
   } else {
