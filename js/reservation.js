@@ -456,11 +456,14 @@ confirmBtn.addEventListener("click", async () => {
 let user = null;
 try { user = userRaw ? JSON.parse(userRaw) : null; } catch { user = null; }
 
+const authUser = window.padelinAuth?.currentUser || null;
+const userUid = user?.uid || authUser?.uid || "";
+
 let bookingPhone = user?.phone || "";
 
-if ((!bookingPhone || bookingPhone === "Unknown") && user?.uid && window.padelinDB) {
+if ((!bookingPhone || bookingPhone === "Unknown") && userUid && window.padelinDB) {
   try {
-    const userDoc = await window.padelinDB.collection("users").doc(user.uid).get();
+    const userDoc = await window.padelinDB.collection("users").doc(userUid).get();
     if (userDoc.exists) {
       const userData = userDoc.data() || {};
       bookingPhone = userData.phone || "";
@@ -469,6 +472,8 @@ if ((!bookingPhone || bookingPhone === "Unknown") && user?.uid && window.padelin
     console.error("Failed to load phone from Firestore:", err);
   }
 }
+
+bookingPhone = String(bookingPhone || "").trim();
 
   if (!user || (!user.uid && !user.email)) {
     alert("Please sign in before confirming your reservation.");
@@ -488,8 +493,13 @@ if ((!bookingPhone || bookingPhone === "Unknown") && user?.uid && window.padelin
 if (!summary) return;
 
 // Build user info
-const name = user.name || user.displayName || "Unknown";
-const email = user.email || "Unknown";
+const name = user?.name || user?.displayName || authUser?.displayName || "Unknown";
+const email = user?.email || authUser?.email || "Unknown";
+
+if (!bookingPhone) {
+  setStatus("error", "Your phone number is missing from your account. Please sign out and sign in again, or update your account phone number first.");
+  return;
+}
 
 // Send booking to Cloudflare Worker
 try {
@@ -505,8 +515,8 @@ try {
   end: summary.end,
   name: name,
   email: email,
-  phone: bookingPhone || "Unknown",
-  uid: user.uid || ""
+  phone: bookingPhone,
+  uid: userUid
 })
   });
 
