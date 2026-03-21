@@ -4489,40 +4489,38 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .career-overview-kicker{
-  font-size:18px;
-  line-height:1.15;
+  font-size:22px;
+  line-height:1.1;
   font-weight:900;
-  letter-spacing:0.3px;
+  letter-spacing:-0.3px;
   color:#fff;
-  margin-bottom:4px;
-  text-transform:none;
+  margin-bottom:6px;
 }
 
 .career-overview-title{
-  font-size:13px;
+  font-size:14px;
   line-height:1.4;
-  font-weight:700;
-  color: rgba(255,255,255,0.72);
-  max-width:none;
+  font-weight:600;
+  color: rgba(255,255,255,0.78);
 }
 
 .career-home-link{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-height:34px;
-  padding:0 12px;
-  border-radius:11px;
-  font-size:12px;
+  min-height:44px;
+  padding:0 16px;
+  border-radius:14px;
+  font-size:14px;
   font-weight:800;
   white-space:nowrap;
   text-decoration:none;
 }
 
 .career-home-link-outside{
-  margin: 0 0 10px;
-  background: rgba(15,23,42,0.05);
-  border:1px solid rgba(15,23,42,0.10);
+  margin: 0 0 14px;
+  background: rgba(15,23,42,0.06);
+  border:1px solid rgba(15,23,42,0.12);
   color: var(--navy);
 }
 
@@ -4539,6 +4537,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 .career-summary-box-membership{
   grid-column: 1 / -1;
+  text-align:center;
+  padding:12px;
 }
 
 .career-summary-box-points{
@@ -4565,20 +4565,17 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .career-summary-label{
-  font-size:11px;
-  font-weight:900;
-  color: rgba(255,255,255,0.64);
+  font-size:10px;
+  font-weight:800;
+  color: rgba(255,255,255,0.60);
+  margin-bottom:3px;
   text-transform:uppercase;
-  letter-spacing:1.8px;
-  margin-bottom:6px;
-  text-align:center;
+  letter-spacing:1px;
 }
-
 .career-summary-value{
-  font-size:17px;
+  font-size:15px;
   font-weight:900;
   color:#fff;
-  text-align:center;
 }
 
 .career-status-badge{
@@ -4854,10 +4851,11 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 
   .career-summary-box{
-    padding:10px;
-    border-radius:16px;
-    min-height:82px;
-  }
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.05);
+}
 
   .career-summary-box-membership,
   .career-summary-box-points{
