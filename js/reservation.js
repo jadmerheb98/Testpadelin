@@ -442,7 +442,7 @@ const liveStatus = liveStatuses[liveKey] || null;
 
 function setStatus(type, text) {
   const el = ensureStatusEl();
-  el.textContent = text;
+  el.innerHTML = text;
   el.classList.remove("is-success", "is-error");
   if (type === "success") el.classList.add("is-success");
   if (type === "error") el.classList.add("is-error");
@@ -495,11 +495,6 @@ if (!summary) return;
 // Build user info
 const name = user?.name || user?.displayName || authUser?.displayName || "Unknown";
 const email = user?.email || authUser?.email || "Unknown";
-
-console.log("padelinUser localStorage =", user);
-console.log("auth currentUser uid =", authUser?.uid);
-console.log("resolved userUid =", userUid);
-console.log("bookingPhone before final check =", bookingPhone);  
 
 if (!bookingPhone) {
   setStatus("error", "Your phone number is missing from your account. Please sign out and sign in again, or update your account phone number first.");
