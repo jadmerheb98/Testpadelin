@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile — PADELIN</title>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <main class="profile-page container">
+
+    <div class="profile-header">
+      <h1>My Profile</h1>
+      <p>Your personal information and account details</p>
+    </div>
+
+    <div class="profile-card">
+
+      <div class="profile-row">
+        <span class="k">Full Name</span>
+        <span class="v" id="profileName">—</span>
+      </div>
+
+      <div class="profile-row">
+        <span class="k">Member ID</span>
+        <span class="v" id="profileId">—</span>
+      </div>
+
+      <div class="profile-row">
+        <span class="k">Phone Number</span>
+        <span class="v" id="profilePhone">—</span>
+      </div>
+
+      <div class="profile-row">
+        <span class="k">Email</span>
+        <span class="v" id="profileEmail">—</span>
+      </div>
+
+      <div class="profile-row">
+        <span class="k">Member Since</span>
+        <span class="v" id="profileDate">—</span>
+      </div>
+
+    </div>
+
+    <!-- PASSWORD SECTION -->
+    <div class="profile-card">
+      <h3 class="profile-section-title">Security</h3>
+
+      <button class="btn btn-primary" id="resetPasswordBtn">
+        Send Password Reset Email
+      </button>
+
+      <div id="resetMsg" class="profile-note"></div>
+    </div>
+
+    <!-- HELP NOTE -->
+    <div class="profile-help">
+      To change your personal information, please contact the PADELIN team.
+    </div>
+
+  </main>
+
+  <script src="main.js"></script>
+
+  <script>
+    (function () {
+      const auth = window.padelinAuth;
+      const db = window.padelinDB;
+
+      if (!auth) return;
+
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        let data = {};
+
+        try {
+          if (db) {
+            const doc = await db.collection("users").doc(user.uid).get();
+            if (doc.exists) data = doc.data();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
+        document.getElementById("profileName").textContent =
+          data.name || user.displayName || "—";
+
+        document.getElementById("profileId").textContent =
+          data.customId || "—";
+
+        document.getElementById("profilePhone").textContent =
+          data.phone || "—";
+
+        document.getElementById("profileEmail").textContent =
+          user.email || "—";
+
+        if (data.createdAt?.toDate) {
+          const d = data.createdAt.toDate();
+          document.getElementById("profileDate").textContent =
+            d.toLocaleDateString();
+        }
+
+        // PASSWORD RESET
+        document.getElementById("resetPasswordBtn").onclick = async () => {
+          const msg = document.getElementById("resetMsg");
+
+          try {
+            await auth.sendPasswordResetEmail(user.email);
+            msg.textContent = "Password reset email sent.";
+            msg.classList.add("success");
+          } catch (err) {
+            msg.textContent = "Failed to send email.";
+            msg.classList.add("error");
+          }
+        };
+      });
+    })();
+  </script>
+
+</body>
+</html>
