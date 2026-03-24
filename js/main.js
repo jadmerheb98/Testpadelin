@@ -495,7 +495,7 @@ function renderSignedOut() {
           </div>
         </a>
 
-        <a class="acc-link" href="#">
+        <a class="acc-link" href="profile.html">
           <div>
             <div class="k">My Profile</div>
             <span class="s">Name, password, settings</span>
