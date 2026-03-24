@@ -1,76 +1,191 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Profile — PADELIN</title>
-
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Profile | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css?v=20" />
 </head>
 <body>
 
-  <main class="profile-page container">
+  <header class="header">
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+          <div class="hamburger-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
 
-    <div class="profile-header">
-      <h1>My Profile</h1>
-      <p>Your personal information and account details</p>
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
+      </div>
+
+      <div class="header-right">
+        <a class="icon-btn" href="contact.html" aria-label="Contact us">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
+          </svg>
+        </a>
+
+        <button class="icon-btn" type="button" aria-label="Account" data-auth-open>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+          </svg>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <div class="profile-card">
+  <div class="overlay" data-overlay></div>
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+    </div>
+    <div class="side-links">
+      <a href="./membership.html">Membership</a>
+      <a href="./training.html">Training</a>
+      <a href="./tournaments.html">Tournaments</a>
+    </div>
+  </aside>
 
-      <div class="profile-row">
-        <span class="k">Full Name</span>
-        <span class="v" id="profileName">—</span>
-      </div>
+  <main class="profile-page">
+    <div class="container">
 
-      <div class="profile-row">
-        <span class="k">Member ID</span>
-        <span class="v" id="profileId">—</span>
-      </div>
+      <section class="profile-hero">
+        <div class="profile-eyebrow">My Profile</div>
+        <h1>Account Details</h1>
+        <p>View your personal information and manage account security.</p>
+        <a href="index.html" class="btn btn-ghost profile-back-btn">← Back</a>
+      </section>
 
-      <div class="profile-row">
-        <span class="k">Phone Number</span>
-        <span class="v" id="profilePhone">—</span>
-      </div>
+      <section class="profile-shell">
+        <div class="profile-main-card">
+          <div class="profile-main-head">
+            <div>
+              <div class="profile-main-title">Profile Information</div>
+              <div class="profile-main-sub">Read-only details linked to your account.</div>
+            </div>
+          </div>
 
-      <div class="profile-row">
-        <span class="k">Email</span>
-        <span class="v" id="profileEmail">—</span>
-      </div>
+          <div class="profile-info-list">
+            <div class="profile-info-row">
+              <div class="profile-info-label">Full Name</div>
+              <div class="profile-info-value" id="profileName">—</div>
+            </div>
 
-      <div class="profile-row">
-        <span class="k">Member Since</span>
-        <span class="v" id="profileDate">—</span>
-      </div>
+            <div class="profile-info-row profile-id-row">
+              <div>
+                <div class="profile-info-label">Member ID</div>
+                <div class="profile-info-value" id="profileId">—</div>
+              </div>
+              <button type="button" class="btn btn-ghost profile-copy-btn" id="copyProfileIdBtn">Copy ID</button>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-label">Phone Number</div>
+              <div class="profile-info-value" id="profilePhone">—</div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-label">Email</div>
+              <div class="profile-info-value" id="profileEmail">—</div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-label">Member Since</div>
+              <div class="profile-info-value" id="profileDate">—</div>
+            </div>
+          </div>
+
+          <div class="profile-help-box">
+            To change your personal information, please contact the PADELIN team.
+          </div>
+        </div>
+
+        <div class="profile-security-card">
+          <div class="profile-main-title">Security</div>
+          <div class="profile-main-sub">Reset your password securely by email.</div>
+
+          <button class="btn btn-primary profile-reset-btn" id="resetPasswordBtn" type="button">
+            Send Password Reset Email
+          </button>
+
+          <div id="resetMsg" class="form-note profile-reset-note"></div>
+        </div>
+      </section>
 
     </div>
-
-    <!-- PASSWORD SECTION -->
-    <div class="profile-card">
-      <h3 class="profile-section-title">Security</h3>
-
-      <button class="btn btn-primary" id="resetPasswordBtn">
-        Send Password Reset Email
-      </button>
-
-      <div id="resetMsg" class="profile-note"></div>
-    </div>
-
-    <!-- HELP NOTE -->
-    <div class="profile-help">
-      To change your personal information, please contact the PADELIN team.
-    </div>
-
   </main>
 
-  <script src="main.js"></script>
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+  </footer>
+
+  <div class="acc-overlay" data-acc-overlay></div>
+
+  <aside class="acc-drawer" data-acc-drawer aria-hidden="true" aria-label="Account">
+    <div class="acc-head">
+      <div class="acc-title">Account</div>
+      <button class="acc-close" type="button" aria-label="Close" data-acc-close>✕</button>
+    </div>
+    <div class="acc-body" id="accBody"></div>
+  </aside>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-init.js"></script>
+  <script src="js/main.js?v=20"></script>
 
   <script>
-    (function () {
+    (function profilePageSetup() {
+      if (!window.padelinAuth || !window.padelinDB) return;
+
       const auth = window.padelinAuth;
       const db = window.padelinDB;
 
-      if (!auth) return;
+      const nameEl = document.getElementById("profileName");
+      const idEl = document.getElementById("profileId");
+      const phoneEl = document.getElementById("profilePhone");
+      const emailEl = document.getElementById("profileEmail");
+      const dateEl = document.getElementById("profileDate");
+      const resetBtn = document.getElementById("resetPasswordBtn");
+      const resetMsg = document.getElementById("resetMsg");
+      const copyIdBtn = document.getElementById("copyProfileIdBtn");
+
+      function formatJoinedDate(value) {
+        if (!value) return "—";
+
+        if (value?.toDate && typeof value.toDate === "function") {
+          return value.toDate().toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+          });
+        }
+
+        if (value?.seconds) {
+          return new Date(value.seconds * 1000).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+          });
+        }
+
+        const d = new Date(value);
+        if (!Number.isNaN(d.getTime())) {
+          return d.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+          });
+        }
+
+        return "—";
+      }
 
       auth.onAuthStateChanged(async (user) => {
         if (!user) {
@@ -81,48 +196,65 @@
         let data = {};
 
         try {
-          if (db) {
-            const doc = await db.collection("users").doc(user.uid).get();
-            if (doc.exists) data = doc.data();
+          const doc = await db.collection("users").doc(user.uid).get();
+
+          if (doc.exists) {
+            data = doc.data() || {};
+          } else if (user.email) {
+            const byEmail = await db.collection("users")
+              .where("email", "==", user.email)
+              .limit(1)
+              .get();
+
+            if (!byEmail.empty) {
+              data = byEmail.docs[0].data() || {};
+            }
           }
         } catch (e) {
-          console.error(e);
+          console.error("Failed loading profile data:", e);
         }
 
-        document.getElementById("profileName").textContent =
-          data.name || user.displayName || "—";
+        nameEl.textContent = data.name || user.displayName || "—";
+        idEl.textContent = data.customId || "—";
+        phoneEl.textContent = data.phone || "—";
+        emailEl.textContent = data.email || user.email || "—";
+        dateEl.textContent = formatJoinedDate(data.createdAt);
 
-        document.getElementById("profileId").textContent =
-          data.customId || "—";
+        if (copyIdBtn) {
+          copyIdBtn.onclick = async () => {
+            const value = String(data.customId || "").trim();
+            if (!value) return;
 
-        document.getElementById("profilePhone").textContent =
-          data.phone || "—";
-
-        document.getElementById("profileEmail").textContent =
-          user.email || "—";
-
-        if (data.createdAt?.toDate) {
-          const d = data.createdAt.toDate();
-          document.getElementById("profileDate").textContent =
-            d.toLocaleDateString();
+            try {
+              await navigator.clipboard.writeText(value);
+              copyIdBtn.textContent = "Copied";
+              setTimeout(() => {
+                copyIdBtn.textContent = "Copy ID";
+              }, 1400);
+            } catch (err) {
+              console.error("Copy failed:", err);
+            }
+          };
         }
 
-        // PASSWORD RESET
-        document.getElementById("resetPasswordBtn").onclick = async () => {
-          const msg = document.getElementById("resetMsg");
+        if (resetBtn) {
+          resetBtn.onclick = async () => {
+            resetMsg.textContent = "";
+            resetMsg.classList.remove("is-success", "is-error");
 
-          try {
-            await auth.sendPasswordResetEmail(user.email);
-            msg.textContent = "Password reset email sent.";
-            msg.classList.add("success");
-          } catch (err) {
-            msg.textContent = "Failed to send email.";
-            msg.classList.add("error");
-          }
-        };
+            try {
+              await auth.sendPasswordResetEmail(user.email);
+              resetMsg.textContent = "Password reset email sent.";
+              resetMsg.classList.add("is-success");
+            } catch (err) {
+              console.error(err);
+              resetMsg.textContent = "Could not send password reset email.";
+              resetMsg.classList.add("is-error");
+            }
+          };
+        }
       });
     })();
   </script>
-
 </body>
 </html>
