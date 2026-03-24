@@ -4943,3 +4943,76 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   color: #c62828;
   border: 1px solid #efb3b3;
 }
+/* ===========================
+   Profile Page
+=========================== */
+
+.profile-page {
+  padding: 34px 0 54px;
+}
+
+.profile-header h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+}
+
+.profile-header p {
+  margin: 0 0 18px;
+  color: rgba(11,18,32,0.65);
+}
+
+.profile-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(15,23,42,0.06);
+}
+
+.profile-row:last-child {
+  border-bottom: none;
+}
+
+.profile-row .k {
+  font-weight: 800;
+  color: rgba(11,18,32,0.70);
+}
+
+.profile-row .v {
+  font-weight: 900;
+  color: var(--navy);
+}
+
+.profile-section-title {
+  margin-bottom: 12px;
+  font-weight: 900;
+}
+
+.profile-note {
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(11,18,32,0.65);
+}
+
+.profile-note.success {
+  color: #059669;
+}
+
+.profile-note.error {
+  color: #dc2626;
+}
+
+.profile-help {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: rgba(11,18,32,0.55);
+}
