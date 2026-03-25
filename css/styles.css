@@ -5897,7 +5897,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   scrollbar-width: none;
   padding: 2px 0 8px;
 }
-
 .coach-carousel::-webkit-scrollbar{
   display: none;
 }
@@ -5910,15 +5909,13 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 .coach-slide{
   flex: 0 0 100%;
   min-width: 100%;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   scroll-snap-stop: always;
   padding: 0;
   box-sizing: border-box;
 }
 
 .coach-card{
-  width: min(100%, 60%);
-  margin: 0 auto;
   background: #fff;
   border: 1px solid rgba(15,23,42,0.08);
   border-radius: 16px;
