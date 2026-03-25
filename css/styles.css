@@ -5021,7 +5021,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 /* TITLES */
 .profile-main-title{
-  font-size: 18px;
+  font-size: 22px;
   line-height: 1.15;
   font-weight: 900;
   color: var(--text-dark);
@@ -5196,4 +5196,10 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   .profile-copy-btn{
     margin-top: 0 !important;
   }
+}
+.profile-section-title{
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  margin-top: 0;
 }
