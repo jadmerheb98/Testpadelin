@@ -5032,7 +5032,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   font-size: 13px;
   line-height: 1.45;
   color: rgba(11,18,32,0.62);
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 /* INFO LIST */
@@ -5200,6 +5200,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 .profile-section-title{
   font-size: 22px;
   font-weight: 900;
-  margin-bottom: 6px;
+  margin-bottom: 14px;
   margin-top: 0;
 }
