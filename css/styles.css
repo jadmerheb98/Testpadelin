@@ -5917,7 +5917,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .coach-card{
-  width: min(100%, 92%);
+  width: min(100%, 60%);
   margin: 0 auto;
   background: #fff;
   border: 1px solid rgba(15,23,42,0.08);
