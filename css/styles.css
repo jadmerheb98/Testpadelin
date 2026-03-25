@@ -5907,11 +5907,11 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .coach-slide{
-  flex: 0 0 100%;
-  min-width: 100%;
+  flex: 0 0 calc(100% - 40px);
+  min-width: calc(100% - 40px);
+  margin: 0 20px;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  padding: 0;
   box-sizing: border-box;
 }
 
