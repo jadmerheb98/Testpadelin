@@ -26,7 +26,7 @@
       font-weight: 900;
       letter-spacing: 2.6px;
       text-transform: uppercase;
-      color: rgba(63,102,150,0.90);
+      color: var(--accent);
     }
 
     .training-title{
@@ -42,7 +42,7 @@
       max-width: 40ch;
       font-size: 15px;
       line-height: 1.55;
-      color: rgba(11,18,32,0.66);
+      color: rgba(11,18,32,0.78);
     }
 
     .training-swipe-head{
@@ -55,7 +55,7 @@
       font-weight: 900;
       letter-spacing: 2.2px;
       text-transform: uppercase;
-      color: rgba(11,18,32,0.46);
+      color: rgba(11,18,32,0.52);
     }
 
     .training-swipe-title{
@@ -70,9 +70,9 @@
       align-items: center;
       gap: 10px;
       width: fit-content;
-      color: rgba(11,18,32,0.56);
+      color: rgba(11,18,32,0.78);
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .training-swipe-hint .hint-arrow{
@@ -111,7 +111,6 @@
       min-width: 100%;
       scroll-snap-align: start;
       scroll-snap-stop: always;
-      transition: transform 280ms ease, opacity 280ms ease;
       padding: 0 2px;
     }
 
@@ -149,7 +148,7 @@
       min-height: 42px;
       padding: 0 18px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.94);
+      background: rgba(255,255,255,0.96);
       color: #d45517;
       font-size: 14px;
       font-weight: 900;
@@ -168,7 +167,7 @@
       font-weight: 900;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: rgba(63,102,150,0.88);
+      color: var(--accent);
     }
 
     .coach-name{
@@ -183,8 +182,9 @@
     .coach-cert{
       margin: 8px 0 0;
       font-size: 15px;
-      font-weight: 700;
-      color: rgba(11,18,32,0.56);
+      font-weight: 750;
+      color: var(--text-dark);
+      opacity: 0.82;
     }
 
     .coach-points{
@@ -200,8 +200,8 @@
       padding-left: 18px;
       font-size: 15px;
       line-height: 1.45;
-      color: rgba(11,18,32,0.78);
-      font-weight: 700;
+      color: var(--text-dark);
+      font-weight: 750;
     }
 
     .coach-points li::before{
@@ -212,7 +212,8 @@
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: rgba(63,102,150,0.40);
+      background: var(--accent);
+      opacity: 0.45;
     }
 
     .coach-price-row{
@@ -231,9 +232,10 @@
 
     .coach-price-sub{
       font-size: 15px;
-      color: rgba(11,18,32,0.72);
-      font-weight: 700;
+      color: var(--text-dark);
+      font-weight: 750;
       padding-bottom: 2px;
+      opacity: 0.8;
     }
 
     .coach-actions{
@@ -255,8 +257,9 @@
       align-items: center;
       min-height: 24px;
       font-size: 15px;
-      font-weight: 700;
-      color: rgba(63,102,150,0.86);
+      font-weight: 800;
+      color: var(--navy);
+      opacity: 0.72;
       text-decoration: none;
     }
 
@@ -277,7 +280,7 @@
 
     .coach-dot.is-active{
       width: 20px;
-      background: rgba(63,102,150,0.88);
+      background: var(--accent);
     }
 
     @media (max-width: 640px){
@@ -416,7 +419,7 @@
                 <div class="coach-card">
                   <div class="coach-media">
                     <span class="coach-badge">🔥 Top Coach</span>
-                    <img class="coach-photo" src="assets/img/coach-1.jpg" alt="Coach Karim Haddad" />
+                    <img class="coach-photo" src="assets/img/hero-bg.jpg" alt="Coach Karim Haddad" />
                   </div>
 
                   <div class="coach-body">
@@ -448,7 +451,7 @@
                 <div class="coach-card">
                   <div class="coach-media">
                     <span class="coach-badge">⭐ Most Booked</span>
-                    <img class="coach-photo" src="assets/img/coach-2.jpg" alt="Coach Marc Saliba" />
+                    <img class="coach-photo" src="assets/img/hero-bg.jpg" alt="Coach Marc Saliba" />
                   </div>
 
                   <div class="coach-body">
@@ -480,7 +483,7 @@
                 <div class="coach-card">
                   <div class="coach-media">
                     <span class="coach-badge">🆕 New Coach</span>
-                    <img class="coach-photo" src="assets/img/coach-3.jpg" alt="Coach Lara Aoun" />
+                    <img class="coach-photo" src="assets/img/hero-bg.jpg" alt="Coach Lara Aoun" />
                   </div>
 
                   <div class="coach-body">
@@ -512,7 +515,7 @@
                 <div class="coach-card">
                   <div class="coach-media">
                     <span class="coach-badge">🔥 Elite Coach</span>
-                    <img class="coach-photo" src="assets/img/coach-4.jpg" alt="Coach Jad Khoury" />
+                    <img class="coach-photo" src="assets/img/hero-bg.jpg" alt="Coach Jad Khoury" />
                   </div>
 
                   <div class="coach-body">
@@ -564,10 +567,9 @@
   <script>
     (function coachSliderDots(){
       const carousel = document.getElementById("coachCarousel");
-      const slides = Array.from(document.querySelectorAll(".coach-slide"));
       const dots = Array.from(document.querySelectorAll(".coach-dot"));
 
-      if (!carousel || !slides.length || !dots.length) return;
+      if (!carousel || !dots.length) return;
 
       function updateDots(){
         const index = Math.round(carousel.scrollLeft / carousel.clientWidth);
