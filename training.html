@@ -3,120 +3,510 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Training | PADELIN</title>
+  <title>Live Coaches | PADELIN</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
   <header class="header">
-  <div class="container header-inner header-gd">
-    <!-- LEFT: hamburger + logo -->
-    <div class="header-left">
-      <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
-        <div class="hamburger-lines" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-      </button>
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+          <div class="hamburger-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
 
-      <a class="brand" href="index.html" aria-label="PADELIN Home">
-  <img src="assets/img/logo.png" alt="PADELIN Logo" />
-</a>
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
+      </div>
+
+      <div class="header-right">
+        <a class="icon-btn" href="contact.html" aria-label="Contact us">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
+          </svg>
+        </a>
+
+        <button class="icon-btn" type="button" aria-label="Account" data-auth-open>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+          </svg>
+        </button>
+      </div>
     </div>
-
-    <!-- RIGHT: contact + login icons -->
-    <div class="header-right">
-      <a class="icon-btn" href="contact.html" aria-label="Contact us">
-        <!-- phone icon -->
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-          <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
-        </svg>
-      </a>
-
-      <button class="icon-btn" type="button" aria-label="Account" data-auth-open>
-        <!-- user icon -->
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-          <path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-</header>
+  </header>
 
   <div class="overlay" data-overlay></div>
+
   <aside class="side-menu" data-side-menu aria-label="Mobile menu">
     <div class="side-menu-header">
       <div class="side-menu-title">Menu</div>
       <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
     </div>
+
     <div class="side-links">
       <a href="membership.html">Membership</a>
-      <a href="training.html">Training</a>
+      <a href="training.html">Live Coaches</a>
       <a href="tournaments.html">Tournaments</a>
     </div>
   </aside>
 
   <main class="section">
     <div class="container">
-      <h2 class="section-title">Training</h2>
-      <p class="section-sub">Structured programs built for performance — from fundamentals to competitive play.</p>
 
-      <div class="cards">
-        <div class="card">
-          <h4>Beginner Fundamentals</h4>
-          <p>Grip • footwork • positioning • consistency</p>
-        </div>
-        <div class="card">
-          <h4>Intermediate Progression</h4>
-          <p>Wall play • transitions • tactical patterns</p>
-        </div>
-        <div class="card">
-          <h4>Performance / Competition</h4>
-          <p>Match strategy • pressure drills • tournament readiness</p>
-        </div>
-      </div>
+      <!-- Page Intro -->
+      <section class="training-hero-block" aria-label="Live coaches intro">
+        <div class="training-hero-card">
+          <div class="training-hero-copy">
+            <div class="training-eyebrow">PADELIN TRAINING</div>
+            <h1 class="training-page-title">Live Coaches</h1>
+            <p class="training-page-sub">
+              Browse certified coaches, compare specialties, and choose the right session for your level.
+            </p>
 
-      <div class="section">
-        <h2 class="section-title">Coach</h2>
-        <p class="section-sub">
-          Add your coach profile here (experience, certifications, competitive background).
-          Designed to stay clean and readable on mobile.
-        </p>
-
-        <div class="cards">
-          <div class="card">
-            <h4>Coach Name</h4>
-            <p>Short description, style, and strengths. (Replace with real info.)</p>
+            <div class="training-hero-pills">
+              <span>Beginner</span>
+              <span>Advanced</span>
+              <span>Kids</span>
+              <span>Competitive</span>
+            </div>
           </div>
-          <div class="card">
-            <h4>Focus</h4>
-            <p>Technique • tactics • fitness • confidence under pressure</p>
-          </div>
-          <div class="card">
-            <h4>Private Sessions</h4>
-            <p>One-on-one or small groups. Schedule integration planned.</p>
+
+          <div class="training-hero-side">
+            <div class="training-hero-stat">
+              <div class="training-hero-stat-label">Featured</div>
+              <div class="training-hero-stat-value">Top Coaches</div>
+            </div>
+
+            <div class="training-hero-stat">
+              <div class="training-hero-stat-label">Booking</div>
+              <div class="training-hero-stat-value">Coming Soon</div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="section">
-        <h2 class="section-title">Schedule</h2>
-        <p class="section-sub">Example schedule section (future: backend + member booking).</p>
+      <!-- Toolbar -->
+      <section class="training-toolbar-wrap" aria-label="Coach tools">
+        <div class="training-toolbar">
+          <div class="training-filter-chips" id="coachFilters">
+            <button class="training-chip is-active" type="button" data-filter="all">All</button>
+            <button class="training-chip" type="button" data-filter="beginner">Beginner</button>
+            <button class="training-chip" type="button" data-filter="advanced">Advanced</button>
+            <button class="training-chip" type="button" data-filter="kids">Kids</button>
+            <button class="training-chip" type="button" data-filter="competitive">Competitive</button>
+          </div>
 
-        <div class="cards">
-          <div class="card">
-            <h4>Weekdays</h4>
-            <p>17:00 – 21:00 (training blocks)</p>
-          </div>
-          <div class="card">
-            <h4>Weekends</h4>
-            <p>10:00 – 14:00 (group clinics)</p>
-          </div>
-          <div class="card">
-            <h4>Custom</h4>
-            <p>Contact to arrange private sessions and prep programs.</p>
+          <div class="training-sort-wrap">
+            <label class="training-sort-label" for="coachSort">Sort</label>
+            <select id="coachSort" class="training-sort">
+              <option value="featured">Featured first</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="experience-high">Experience</option>
+              <option value="rating-high">Rating</option>
+            </select>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- Featured Coach -->
+      <section class="training-featured-section" aria-label="Featured coach">
+        <div class="training-featured-card" data-featured-card>
+          <div class="training-featured-media">
+            <img
+              src="assets/img/coach-featured.jpg"
+              alt="Featured coach"
+              data-featured-image
+            />
+          </div>
+
+          <div class="training-featured-body">
+            <div class="training-badges">
+              <span class="training-badge training-badge-hot">🔥 Top Coach</span>
+              <span class="training-badge">⭐ Most Booked</span>
+            </div>
+
+            <div class="training-label">Featured Coach</div>
+            <h2 class="training-featured-name" data-featured-name>Karim Haddad</h2>
+
+            <p class="training-featured-cert" data-featured-cert>
+              ITF Certified Coach
+            </p>
+
+            <div class="training-featured-meta">
+              <div class="training-meta-item">
+                <span class="training-meta-k">Specialization</span>
+                <span class="training-meta-v" data-featured-specialization>Competitive / Advanced</span>
+              </div>
+              <div class="training-meta-item">
+                <span class="training-meta-k">Experience</span>
+                <span class="training-meta-v" data-featured-experience>8 years</span>
+              </div>
+              <div class="training-meta-item">
+                <span class="training-meta-k">Languages</span>
+                <span class="training-meta-v" data-featured-languages>English, Arabic, French</span>
+              </div>
+              <div class="training-meta-item">
+                <span class="training-meta-k">Location</span>
+                <span class="training-meta-v" data-featured-location>Byblos Club</span>
+              </div>
+            </div>
+
+            <div class="training-skill-tags" data-featured-tags>
+              <span>Match Strategy</span>
+              <span>Power Training</span>
+              <span>Pressure Drills</span>
+            </div>
+
+            <div class="training-featured-bottom">
+              <div class="training-rating-line">
+                <span class="training-stars" aria-label="5 star rating">★★★★★</span>
+                <span class="training-rating-text" data-featured-rating>4.9 rating</span>
+              </div>
+
+              <div class="training-price-block">
+                <span class="training-price-label">Session</span>
+                <span class="training-price-value" data-featured-price>$40</span>
+              </div>
+            </div>
+
+            <div class="training-actions">
+              <button class="btn btn-primary" type="button" data-book-featured>
+                Book Session
+              </button>
+              <button class="btn btn-ghost" type="button" data-view-featured>
+                View Profile
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coaches Grid -->
+      <section class="training-list-section" aria-label="Available coaches">
+        <div class="training-section-head">
+          <div>
+            <div class="training-label">Available Coaches</div>
+            <h2 class="section-title">Choose Your Coach</h2>
+          </div>
+          <p class="section-sub">
+            This section is ready to be controlled from the admin dashboard and later synced with Firestore.
+          </p>
+        </div>
+
+        <div class="training-grid" id="coachList">
+
+          <article
+            class="training-coach-card"
+            data-coach-card
+            data-specialization="beginner"
+            data-price="25"
+            data-experience="3"
+            data-rating="4.7"
+            data-featured="false"
+          >
+            <div class="training-coach-media">
+              <img src="assets/img/coach-1.jpg" alt="Coach Elie Nassar" />
+            </div>
+
+            <div class="training-coach-body">
+              <div class="training-card-top">
+                <div>
+                  <div class="training-label">Coach</div>
+                  <h3 class="training-coach-name">Elie Nassar</h3>
+                </div>
+                <div class="training-mini-badges">
+                  <span class="training-badge">🆕 New</span>
+                </div>
+              </div>
+
+              <p class="training-coach-cert">ITF Certified Coach</p>
+
+              <div class="training-coach-meta-grid">
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Specialization</span>
+                  <span class="training-meta-v">Beginner</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Experience</span>
+                  <span class="training-meta-v">3 years</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Languages</span>
+                  <span class="training-meta-v">English, Arabic</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Location</span>
+                  <span class="training-meta-v">Byblos Club</span>
+                </div>
+              </div>
+
+              <div class="training-skill-tags">
+                <span>Basics</span>
+                <span>Footwork</span>
+                <span>Consistency</span>
+              </div>
+
+              <div class="training-card-bottom">
+                <div class="training-card-rating">
+                  <span class="training-stars">★★★★★</span>
+                  <span class="training-rating-text">4.7</span>
+                </div>
+
+                <div class="training-price-block">
+                  <span class="training-price-label">Session</span>
+                  <span class="training-price-value">$25</span>
+                </div>
+              </div>
+
+              <div class="training-actions">
+                <button class="btn btn-primary" type="button">Book Session</button>
+                <button class="btn btn-ghost" type="button">View Profile</button>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="training-coach-card"
+            data-coach-card
+            data-specialization="advanced"
+            data-price="35"
+            data-experience="6"
+            data-rating="4.8"
+            data-featured="false"
+          >
+            <div class="training-coach-media">
+              <img src="assets/img/coach-2.jpg" alt="Coach Marc Saliba" />
+            </div>
+
+            <div class="training-coach-body">
+              <div class="training-card-top">
+                <div>
+                  <div class="training-label">Coach</div>
+                  <h3 class="training-coach-name">Marc Saliba</h3>
+                </div>
+                <div class="training-mini-badges">
+                  <span class="training-badge">⭐ Most Booked</span>
+                </div>
+              </div>
+
+              <p class="training-coach-cert">Padel Pro Certified</p>
+
+              <div class="training-coach-meta-grid">
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Specialization</span>
+                  <span class="training-meta-v">Advanced</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Experience</span>
+                  <span class="training-meta-v">6 years</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Languages</span>
+                  <span class="training-meta-v">English, French</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Location</span>
+                  <span class="training-meta-v">Court Arena</span>
+                </div>
+              </div>
+
+              <div class="training-skill-tags">
+                <span>Tactics</span>
+                <span>Transition Play</span>
+                <span>Defense</span>
+              </div>
+
+              <div class="training-card-bottom">
+                <div class="training-card-rating">
+                  <span class="training-stars">★★★★★</span>
+                  <span class="training-rating-text">4.8</span>
+                </div>
+
+                <div class="training-price-block">
+                  <span class="training-price-label">Session</span>
+                  <span class="training-price-value">$35</span>
+                </div>
+              </div>
+
+              <div class="training-actions">
+                <button class="btn btn-primary" type="button">Book Session</button>
+                <button class="btn btn-ghost" type="button">View Profile</button>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="training-coach-card"
+            data-coach-card
+            data-specialization="kids"
+            data-price="22"
+            data-experience="4"
+            data-rating="4.6"
+            data-featured="false"
+          >
+            <div class="training-coach-media">
+              <img src="assets/img/coach-3.jpg" alt="Coach Lara Aoun" />
+            </div>
+
+            <div class="training-coach-body">
+              <div class="training-card-top">
+                <div>
+                  <div class="training-label">Coach</div>
+                  <h3 class="training-coach-name">Lara Aoun</h3>
+                </div>
+                <div class="training-mini-badges">
+                  <span class="training-badge">Kids</span>
+                </div>
+              </div>
+
+              <p class="training-coach-cert">Youth Development Coach</p>
+
+              <div class="training-coach-meta-grid">
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Specialization</span>
+                  <span class="training-meta-v">Kids</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Experience</span>
+                  <span class="training-meta-v">4 years</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Languages</span>
+                  <span class="training-meta-v">English, Arabic</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Location</span>
+                  <span class="training-meta-v">Junior Court</span>
+                </div>
+              </div>
+
+              <div class="training-skill-tags">
+                <span>Confidence</span>
+                <span>Movement</span>
+                <span>Fun Drills</span>
+              </div>
+
+              <div class="training-card-bottom">
+                <div class="training-card-rating">
+                  <span class="training-stars">★★★★★</span>
+                  <span class="training-rating-text">4.6</span>
+                </div>
+
+                <div class="training-price-block">
+                  <span class="training-price-label">Session</span>
+                  <span class="training-price-value">$22</span>
+                </div>
+              </div>
+
+              <div class="training-actions">
+                <button class="btn btn-primary" type="button">Book Session</button>
+                <button class="btn btn-ghost" type="button">View Profile</button>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="training-coach-card"
+            data-coach-card
+            data-specialization="competitive"
+            data-price="50"
+            data-experience="10"
+            data-rating="5.0"
+            data-featured="false"
+          >
+            <div class="training-coach-media">
+              <img src="assets/img/coach-4.jpg" alt="Coach Jad Khoury" />
+            </div>
+
+            <div class="training-coach-body">
+              <div class="training-card-top">
+                <div>
+                  <div class="training-label">Coach</div>
+                  <h3 class="training-coach-name">Jad Khoury</h3>
+                </div>
+                <div class="training-mini-badges">
+                  <span class="training-badge">🔥 Elite</span>
+                </div>
+              </div>
+
+              <p class="training-coach-cert">High Performance Coach</p>
+
+              <div class="training-coach-meta-grid">
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Specialization</span>
+                  <span class="training-meta-v">Competitive</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Experience</span>
+                  <span class="training-meta-v">10 years</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Languages</span>
+                  <span class="training-meta-v">English, Arabic, French</span>
+                </div>
+                <div class="training-meta-item">
+                  <span class="training-meta-k">Location</span>
+                  <span class="training-meta-v">Center Court</span>
+                </div>
+              </div>
+
+              <div class="training-skill-tags">
+                <span>Match Strategy</span>
+                <span>Mental Game</span>
+                <span>Tournament Prep</span>
+              </div>
+
+              <div class="training-card-bottom">
+                <div class="training-card-rating">
+                  <span class="training-stars">★★★★★</span>
+                  <span class="training-rating-text">5.0</span>
+                </div>
+
+                <div class="training-price-block">
+                  <span class="training-price-label">Session</span>
+                  <span class="training-price-value">$50</span>
+                </div>
+              </div>
+
+              <div class="training-actions">
+                <button class="btn btn-primary" type="button">Book Session</button>
+                <button class="btn btn-ghost" type="button">View Profile</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="training-empty" id="coachEmpty" hidden>
+          No coaches match this filter right now.
+        </div>
+      </section>
+
+      <!-- Future Ready Admin / Booking Hook -->
+      <section class="training-info-section" aria-label="Training info">
+        <div class="training-info-grid">
+          <article class="training-info-card">
+            <div class="training-label">Admin Ready</div>
+            <h3>Live Dashboard Control</h3>
+            <p>
+              Coach cards are structured to be fully managed from the admin dashboard with featured status, pricing, badges, visibility, and ordering.
+            </p>
+          </article>
+
+          <article class="training-info-card">
+            <div class="training-label">Future Booking</div>
+            <h3>Booking Integration Ready</h3>
+            <p>
+              Session booking, availability preview, and coach messaging can be added without changing the page layout.
+            </p>
+          </article>
+        </div>
+      </section>
+
     </div>
   </main>
 
@@ -125,5 +515,85 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <script>
+    (function trainingFiltersAndSort(){
+      const list = document.getElementById("coachList");
+      const cards = Array.from(document.querySelectorAll("[data-coach-card]"));
+      const chips = Array.from(document.querySelectorAll("[data-filter]"));
+      const sort = document.getElementById("coachSort");
+      const empty = document.getElementById("coachEmpty");
+
+      if (!list || !cards.length || !chips.length || !sort) return;
+
+      let currentFilter = "all";
+
+      function getVisibleCards() {
+        return cards.filter((card) => {
+          const type = (card.dataset.specialization || "").toLowerCase();
+          return currentFilter === "all" || type === currentFilter;
+        });
+      }
+
+      function applyFilter() {
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const type = (card.dataset.specialization || "").toLowerCase();
+          const show = currentFilter === "all" || type === currentFilter;
+          card.hidden = !show;
+          if (show) visibleCount += 1;
+        });
+
+        if (empty) empty.hidden = visibleCount !== 0;
+      }
+
+      function applySort() {
+        const visibleCards = getVisibleCards();
+
+        visibleCards.sort((a, b) => {
+          const aPrice = Number(a.dataset.price || 0);
+          const bPrice = Number(b.dataset.price || 0);
+          const aExp = Number(a.dataset.experience || 0);
+          const bExp = Number(b.dataset.experience || 0);
+          const aRating = Number(a.dataset.rating || 0);
+          const bRating = Number(b.dataset.rating || 0);
+
+          switch (sort.value) {
+            case "price-low":
+              return aPrice - bPrice;
+            case "price-high":
+              return bPrice - aPrice;
+            case "experience-high":
+              return bExp - aExp;
+            case "rating-high":
+              return bRating - aRating;
+            case "featured":
+            default:
+              return 0;
+          }
+        });
+
+        visibleCards.forEach((card) => list.appendChild(card));
+      }
+
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chips.forEach((item) => item.classList.remove("is-active"));
+          chip.classList.add("is-active");
+          currentFilter = chip.dataset.filter || "all";
+          applyFilter();
+          applySort();
+        });
+      });
+
+      sort.addEventListener("change", () => {
+        applySort();
+      });
+
+      applyFilter();
+      applySort();
+    })();
+  </script>
 </body>
 </html>
