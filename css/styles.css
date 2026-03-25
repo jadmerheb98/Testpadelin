@@ -5218,3 +5218,76 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     width: 100%;
   }
 }
+.profile-id-row{
+  align-items: center;
+}
+
+.profile-id-left{
+  min-width: 0;
+}
+
+.profile-copy-btn{
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.profile-security-form{
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.profile-security-row label{
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.82);
+  margin-bottom: 8px;
+}
+
+.profile-security-row input{
+  width: 100%;
+  height: 50px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  outline: none;
+  background: #fff;
+  color: var(--text-dark);
+  transition: border 160ms ease, box-shadow 160ms ease;
+}
+
+.profile-security-row input:focus{
+  border-color: rgba(63,102,150,0.65);
+  box-shadow: 0 0 0 3px rgba(63,102,150,0.14);
+}
+
+.profile-security-row input::placeholder{
+  color: rgba(11,18,32,0.35);
+}
+
+.profile-reset-btn{
+  min-height: 52px;
+  border-radius: 14px;
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.profile-reset-note{
+  margin-top: 2px;
+}
+
+@media (max-width: 520px){
+  .profile-id-row{
+    align-items: flex-start;
+  }
+
+  .profile-copy-btn{
+    margin-top: 2px;
+  }
+}
