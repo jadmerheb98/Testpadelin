@@ -5910,9 +5910,10 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 .coach-slide{
   flex: 0 0 100%;
   min-width: 100%;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   scroll-snap-stop: always;
-  padding: 0 2px;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .coach-card{
