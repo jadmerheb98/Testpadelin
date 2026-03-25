@@ -5805,7 +5805,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 /* ===========================
    LIVE COACHES PAGE
-   training.html
    =========================== */
 
 .training-hero-block{
@@ -5813,45 +5812,42 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .training-hero-card{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
   background:
     radial-gradient(900px 280px at 0% 0%, rgba(63,102,150,0.12), transparent 60%),
     #ffffff;
   border: 1px solid rgba(15,23,42,0.08);
   border-radius: 18px;
-  padding: 16px;
+  padding: 18px;
   box-shadow: 0 12px 30px rgba(15,23,42,0.08);
 }
 
 .training-hero-copy{
   display: grid;
-  gap: 8px;
-  align-content: start;
+  gap: 10px;
 }
 
 .training-eyebrow{
   font-size: 11px;
   font-weight: 900;
-  letter-spacing: 2px;
+  letter-spacing: 2.6px;
   text-transform: uppercase;
   color: rgba(63,102,150,0.92);
 }
 
 .training-page-title{
   margin: 0;
-  font-size: 30px;
+  font-size: 32px;
   line-height: 1.02;
-  letter-spacing: -0.8px;
+  letter-spacing: -1px;
   color: var(--navy);
 }
 
 .training-page-sub{
   margin: 0;
   color: rgba(11,18,32,0.68);
-  font-size: 14px;
-  max-width: 48ch;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 54ch;
 }
 
 .training-hero-pills{
@@ -5865,8 +5861,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 30px;
-  padding: 6px 10px;
+  min-height: 31px;
+  padding: 6px 11px;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 800;
@@ -5875,16 +5871,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   border: 1px solid rgba(63,102,150,0.18);
 }
 
-.training-toolbar-wrap{
-  display: none;
-}
-
-.training-label{
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  color: rgba(11,18,32,0.48);
+.training-slider-section{
+  padding-top: 6px;
 }
 
 .training-section-head{
@@ -5895,19 +5883,54 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   margin-bottom: 14px;
 }
 
-.training-section-head .section-title{
-  margin-bottom: 0;
+.training-label{
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: rgba(11,18,32,0.48);
 }
 
-.training-slider-section{
-  padding-bottom: 12px;
+.training-section-head .section-title{
+  margin: 0;
+}
+
+.training-swipe-note{
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(11,18,32,0.52);
+  text-align: right;
+}
+
+.coach-slider-wrap{
+  position: relative;
+}
+
+.coach-slider-fade{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.coach-slider-fade-left{
+  left: -1px;
+  background: linear-gradient(90deg, var(--light) 0%, rgba(248,250,252,0) 100%);
+}
+
+.coach-slider-fade-right{
+  right: -1px;
+  background: linear-gradient(270deg, var(--light) 0%, rgba(248,250,252,0) 100%);
 }
 
 .coach-slider{
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  padding: 2px 14px 8px 0;
+  padding: 8px 22px 14px 0;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -5919,181 +5942,214 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 .coach-slider::after{
   content: "";
-  min-width: 20px;
-  flex: 0 0 20px;
+  flex: 0 0 14px;
 }
 
 .coach-slide{
   flex: 0 0 84%;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
+  transform: scale(0.94);
+  opacity: 0.72;
+  transition:
+    transform 320ms cubic-bezier(.2,.8,.2,1),
+    opacity 320ms ease,
+    filter 320ms ease;
+  filter: saturate(0.92);
+}
+
+.coach-slide.is-active{
+  transform: scale(1);
+  opacity: 1;
+  filter: saturate(1);
 }
 
 .coach-card{
   background: #fff;
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: hidden;
   border: 1px solid rgba(15,23,42,0.08);
   box-shadow:
-    0 12px 30px rgba(15,23,42,0.08),
-    0 3px 10px rgba(15,23,42,0.04);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+    0 18px 38px rgba(15,23,42,0.10),
+    0 4px 12px rgba(15,23,42,0.05);
 }
 
-.coach-card:active{
-  transform: scale(0.985);
+.coach-image-wrap{
+  position: relative;
 }
 
-.coach-card img{
+.coach-image-wrap img{
   width: 100%;
-  height: 220px;
+  height: 240px;
   object-fit: cover;
   background: rgba(15,23,42,0.04);
 }
 
-.coach-card-body{
-  padding: 15px;
-}
-
-.coach-top{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.coach-top h3{
-  margin: 0;
-  font-size: 22px;
-  line-height: 1.05;
-  letter-spacing: -0.4px;
-  color: var(--navy);
-}
-
-.coach-sub{
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(11,18,32,0.60);
-  margin-top: 6px;
-}
-
 .coach-badge{
-  font-size: 11px;
-  font-weight: 900;
-  padding: 5px 9px;
-  border-radius: 999px;
-  background: rgba(15,23,42,0.06);
-  color: var(--navy);
-  border: 1px solid rgba(15,23,42,0.08);
-  white-space: nowrap;
-}
-
-.coach-badge.hot{
-  background: rgba(255,107,0,0.10);
-  color: #d9480f;
-  border-color: rgba(255,107,0,0.16);
-}
-
-.coach-meta{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 12px 0 10px;
-}
-
-.coach-meta span{
+  position: absolute;
+  top: 12px;
+  left: 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 30px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(15,23,42,0.04);
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--navy);
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(255,255,255,0.75);
+  backdrop-filter: blur(10px);
+}
+
+.coach-badge-hot{
+  color: #d9480f;
+}
+
+.coach-card-body{
+  padding: 16px;
+}
+
+.coach-header{
+  margin-bottom: 12px;
+}
+
+.coach-kicker{
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(63,102,150,0.9);
+  margin-bottom: 6px;
+}
+
+.coach-name{
+  margin: 0;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.9px;
+  color: var(--navy);
+  font-weight: 950;
+}
+
+.coach-cert{
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(11,18,32,0.62);
+}
+
+.coach-stats{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.coach-stat{
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(15,23,42,0.03);
   border: 1px solid rgba(15,23,42,0.08);
-  font-size: 12px;
-  font-weight: 800;
-  color: rgba(11,18,32,0.78);
+}
+
+.coach-stat-label{
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: rgba(11,18,32,0.48);
+}
+
+.coach-stat-value{
+  font-size: 13px;
+  font-weight: 850;
+  color: var(--text-dark);
 }
 
 .coach-tags{
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 14px;
 }
 
 .coach-tags span{
-  font-size: 11px;
-  padding: 5px 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(63,102,150,0.12);
-  color: var(--navy);
-  border: 1px solid rgba(63,102,150,0.14);
+  font-size: 11px;
   font-weight: 800;
+  color: var(--navy);
+  background: rgba(63,102,150,0.10);
+  border: 1px solid rgba(63,102,150,0.16);
 }
 
-.coach-bottom{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.coach-footer{
+  display: grid;
   gap: 12px;
 }
 
-.coach-price{
-  font-size: 24px;
+.coach-price-wrap{
+  display: grid;
+  gap: 3px;
+}
+
+.coach-price-label{
+  font-size: 10px;
   font-weight: 900;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: rgba(11,18,32,0.46);
+}
+
+.coach-price{
+  font-size: 26px;
+  font-weight: 950;
   line-height: 1;
   color: var(--navy);
 }
 
-.training-info-section{
-  padding-top: 18px;
-}
-
-.training-info-grid{
+.coach-actions{
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.training-info-card{
-  background: #fff;
-  border: 1px solid rgba(15,23,42,0.08);
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 10px 24px rgba(15,23,42,0.06);
+.coach-actions .btn{
+  width: 100%;
+  min-height: 46px;
+  border-radius: 14px;
 }
 
-.training-info-card h3{
-  margin: 6px 0 8px;
-  font-size: 20px;
-  line-height: 1.08;
-  color: var(--navy);
-}
-
-.training-info-card p{
-  margin: 0;
-  font-size: 14px;
-  color: rgba(11,18,32,0.70);
-}
-
+/* responsive */
 @media (max-width: 920px){
-  .training-info-grid{
-    grid-template-columns: 1fr;
-  }
-
   .training-section-head{
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .training-swipe-note{
+    text-align: left;
   }
 }
 
 @media (max-width: 560px){
   .training-page-title{
-    font-size: 26px;
+    font-size: 28px;
+  }
+
+  .training-page-sub{
+    font-size: 14px;
   }
 
   .training-hero-card{
-    padding: 14px;
+    padding: 16px;
     border-radius: 16px;
   }
 
@@ -6102,26 +6158,22 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 
   .coach-card{
-    border-radius: 18px;
+    border-radius: 20px;
   }
 
-  .coach-card img{
-    height: 210px;
+  .coach-image-wrap img{
+    height: 220px;
   }
 
-  .coach-top{
-    align-items: start;
+  .coach-name{
+    font-size: 24px;
   }
 
-  .coach-top h3{
-    font-size: 20px;
+  .coach-stats{
+    grid-template-columns: 1fr 1fr;
   }
 
-  .coach-bottom{
-    gap: 10px;
-  }
-
-  .coach-bottom .btn{
-    padding: 11px 14px;
+  .coach-actions{
+    grid-template-columns: 1fr;
   }
 }
