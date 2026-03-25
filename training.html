@@ -5,6 +5,340 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Live Coaches | PADELIN</title>
   <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    .training-page{
+      padding: 40px 0 56px;
+    }
+
+    .training-shell{
+      display: grid;
+      gap: 18px;
+    }
+
+    .training-intro{
+      display: grid;
+      gap: 10px;
+    }
+
+    .training-eyebrow{
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2.6px;
+      text-transform: uppercase;
+      color: rgba(63,102,150,0.90);
+    }
+
+    .training-title{
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.02;
+      letter-spacing: -1px;
+      color: var(--navy);
+    }
+
+    .training-sub{
+      margin: 0;
+      max-width: 40ch;
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(11,18,32,0.66);
+    }
+
+    .training-swipe-head{
+      display: grid;
+      gap: 6px;
+    }
+
+    .training-label{
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: rgba(11,18,32,0.46);
+    }
+
+    .training-swipe-title{
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.1;
+      color: var(--navy);
+    }
+
+    .training-swipe-hint{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      color: rgba(11,18,32,0.56);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .training-swipe-hint .hint-arrow{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+      animation: coachSwipeHint 1.6s ease-in-out infinite;
+    }
+
+    @keyframes coachSwipeHint{
+      0%, 100% { transform: translateX(0); opacity: .65; }
+      50% { transform: translateX(8px); opacity: 1; }
+    }
+
+    .coach-carousel{
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 4px 0 10px;
+    }
+
+    .coach-carousel::-webkit-scrollbar{
+      display: none;
+    }
+
+    .coach-track{
+      display: flex;
+      gap: 0;
+    }
+
+    .coach-slide{
+      flex: 0 0 100%;
+      min-width: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      transition: transform 280ms ease, opacity 280ms ease;
+      padding: 0 2px;
+    }
+
+    .coach-card{
+      background: #fff;
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 28px;
+      box-shadow:
+        0 18px 46px rgba(15,23,42,0.08),
+        0 3px 10px rgba(15,23,42,0.04);
+      overflow: hidden;
+    }
+
+    .coach-media{
+      position: relative;
+      padding: 16px 16px 0;
+    }
+
+    .coach-photo{
+      width: 100%;
+      height: 245px;
+      object-fit: cover;
+      display: block;
+      border-radius: 22px;
+      background: rgba(15,23,42,0.04);
+    }
+
+    .coach-badge{
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.94);
+      color: #d45517;
+      font-size: 14px;
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.10);
+    }
+
+    .coach-body{
+      padding: 18px 18px 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .coach-kicker{
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(63,102,150,0.88);
+    }
+
+    .coach-name{
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.02;
+      letter-spacing: -0.9px;
+      color: var(--navy);
+      font-weight: 950;
+    }
+
+    .coach-cert{
+      margin: 8px 0 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(11,18,32,0.56);
+    }
+
+    .coach-points{
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .coach-points li{
+      position: relative;
+      padding-left: 18px;
+      font-size: 15px;
+      line-height: 1.45;
+      color: rgba(11,18,32,0.78);
+      font-weight: 700;
+    }
+
+    .coach-points li::before{
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(63,102,150,0.40);
+    }
+
+    .coach-price-row{
+      display: flex;
+      align-items: end;
+      gap: 8px;
+    }
+
+    .coach-price{
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 950;
+      color: var(--navy);
+      letter-spacing: -1px;
+    }
+
+    .coach-price-sub{
+      font-size: 15px;
+      color: rgba(11,18,32,0.72);
+      font-weight: 700;
+      padding-bottom: 2px;
+    }
+
+    .coach-actions{
+      display: grid;
+      gap: 10px;
+    }
+
+    .coach-actions .btn{
+      width: 100%;
+      min-height: 54px;
+      border-radius: 18px;
+      font-size: 16px;
+      font-weight: 850;
+    }
+
+    .coach-link{
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 24px;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(63,102,150,0.86);
+      text-decoration: none;
+    }
+
+    .coach-dots{
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .coach-dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.16);
+      transition: transform 220ms ease, background 220ms ease, width 220ms ease;
+    }
+
+    .coach-dot.is-active{
+      width: 20px;
+      background: rgba(63,102,150,0.88);
+    }
+
+    @media (max-width: 640px){
+      .training-page{
+        padding: 28px 0 42px;
+      }
+
+      .training-title{
+        font-size: 30px;
+      }
+
+      .training-sub{
+        font-size: 14px;
+      }
+
+      .coach-card{
+        border-radius: 24px;
+      }
+
+      .coach-media{
+        padding: 14px 14px 0;
+      }
+
+      .coach-photo{
+        height: 212px;
+        border-radius: 20px;
+      }
+
+      .coach-badge{
+        top: 24px;
+        left: 24px;
+        min-height: 38px;
+        padding: 0 15px;
+        font-size: 13px;
+      }
+
+      .coach-body{
+        padding: 16px 16px 18px;
+        gap: 12px;
+      }
+
+      .coach-name{
+        font-size: 25px;
+      }
+
+      .coach-cert,
+      .coach-points li,
+      .coach-price-sub,
+      .coach-link{
+        font-size: 14px;
+      }
+
+      .coach-price{
+        font-size: 28px;
+      }
+
+      .coach-actions .btn{
+        min-height: 52px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -53,263 +387,171 @@
     </div>
   </aside>
 
-  <main class="section">
+  <main class="training-page">
     <div class="container">
+      <div class="training-shell">
 
-      <section class="training-hero-block" aria-label="Live coaches intro">
-        <div class="training-hero-card">
-          <div class="training-hero-copy">
-            <div class="training-eyebrow">PADELIN TRAINING</div>
-            <h1 class="training-page-title">Live Coaches</h1>
-            <p class="training-page-sub">
-              Discover certified coaches, compare styles, and swipe through premium session profiles built for every level of play.
-            </p>
+        <section class="training-intro" aria-label="Live coaches intro">
+          <div class="training-eyebrow">PADELIN TRAINING</div>
+          <h1 class="training-title">Live Coaches</h1>
+          <p class="training-sub">
+            Discover certified coaches, compare coaching styles, and swipe through premium session profiles built for every level of play.
+          </p>
+        </section>
 
-            <div class="training-hero-pills">
-              <span>Beginner</span>
-              <span>Advanced</span>
-              <span>Kids</span>
-              <span>Competitive</span>
+        <section class="training-swipe-head" aria-label="Swipe hint">
+          <div class="training-label">Available Coaches</div>
+          <h2 class="training-swipe-title">Swipe to Explore</h2>
+          <div class="training-swipe-hint">
+            <span>Swipe to explore coaches</span>
+            <span class="hint-arrow" aria-hidden="true">→</span>
+          </div>
+        </section>
+
+        <section aria-label="Coach cards">
+          <div class="coach-carousel" id="coachCarousel">
+            <div class="coach-track">
+
+              <article class="coach-slide">
+                <div class="coach-card">
+                  <div class="coach-media">
+                    <span class="coach-badge">🔥 Top Coach</span>
+                    <img class="coach-photo" src="assets/img/coach-1.jpg" alt="Coach Karim Haddad" />
+                  </div>
+
+                  <div class="coach-body">
+                    <div>
+                      <div class="coach-kicker">Competitive Coach</div>
+                      <h3 class="coach-name">Karim Haddad</h3>
+                      <p class="coach-cert">ITF Certified Coach</p>
+                    </div>
+
+                    <ul class="coach-points">
+                      <li>8 years experience</li>
+                      <li>Competitive training</li>
+                    </ul>
+
+                    <div class="coach-price-row">
+                      <div class="coach-price">$40</div>
+                      <div class="coach-price-sub">/ session</div>
+                    </div>
+
+                    <div class="coach-actions">
+                      <button class="btn btn-primary" type="button">Book Session</button>
+                      <a class="coach-link" href="#">View Profile</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="coach-slide">
+                <div class="coach-card">
+                  <div class="coach-media">
+                    <span class="coach-badge">⭐ Most Booked</span>
+                    <img class="coach-photo" src="assets/img/coach-2.jpg" alt="Coach Marc Saliba" />
+                  </div>
+
+                  <div class="coach-body">
+                    <div>
+                      <div class="coach-kicker">Advanced Coach</div>
+                      <h3 class="coach-name">Marc Saliba</h3>
+                      <p class="coach-cert">Padel Pro Certified</p>
+                    </div>
+
+                    <ul class="coach-points">
+                      <li>6 years experience</li>
+                      <li>Advanced tactical sessions</li>
+                    </ul>
+
+                    <div class="coach-price-row">
+                      <div class="coach-price">$35</div>
+                      <div class="coach-price-sub">/ session</div>
+                    </div>
+
+                    <div class="coach-actions">
+                      <button class="btn btn-primary" type="button">Book Session</button>
+                      <a class="coach-link" href="#">View Profile</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="coach-slide">
+                <div class="coach-card">
+                  <div class="coach-media">
+                    <span class="coach-badge">🆕 New Coach</span>
+                    <img class="coach-photo" src="assets/img/coach-3.jpg" alt="Coach Lara Aoun" />
+                  </div>
+
+                  <div class="coach-body">
+                    <div>
+                      <div class="coach-kicker">Kids Coach</div>
+                      <h3 class="coach-name">Lara Aoun</h3>
+                      <p class="coach-cert">Youth Development Coach</p>
+                    </div>
+
+                    <ul class="coach-points">
+                      <li>4 years experience</li>
+                      <li>Kids confidence training</li>
+                    </ul>
+
+                    <div class="coach-price-row">
+                      <div class="coach-price">$22</div>
+                      <div class="coach-price-sub">/ session</div>
+                    </div>
+
+                    <div class="coach-actions">
+                      <button class="btn btn-primary" type="button">Book Session</button>
+                      <a class="coach-link" href="#">View Profile</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="coach-slide">
+                <div class="coach-card">
+                  <div class="coach-media">
+                    <span class="coach-badge">🔥 Elite Coach</span>
+                    <img class="coach-photo" src="assets/img/coach-4.jpg" alt="Coach Jad Khoury" />
+                  </div>
+
+                  <div class="coach-body">
+                    <div>
+                      <div class="coach-kicker">Elite Coach</div>
+                      <h3 class="coach-name">Jad Khoury</h3>
+                      <p class="coach-cert">High Performance Coach</p>
+                    </div>
+
+                    <ul class="coach-points">
+                      <li>10 years experience</li>
+                      <li>Tournament preparation</li>
+                    </ul>
+
+                    <div class="coach-price-row">
+                      <div class="coach-price">$50</div>
+                      <div class="coach-price-sub">/ session</div>
+                    </div>
+
+                    <div class="coach-actions">
+                      <button class="btn btn-primary" type="button">Book Session</button>
+                      <a class="coach-link" href="#">View Profile</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
             </div>
           </div>
-        </div>
-      </section>
 
-      <section class="training-slider-section" aria-label="Available coaches">
-        <div class="training-section-head">
-          <div>
-            <div class="training-label">Available Coaches</div>
-            <h2 class="section-title">Swipe to Explore</h2>
+          <div class="coach-dots" id="coachDots" aria-label="Coach slider pagination">
+            <span class="coach-dot is-active"></span>
+            <span class="coach-dot"></span>
+            <span class="coach-dot"></span>
+            <span class="coach-dot"></span>
           </div>
-          <p class="training-swipe-note">Swipe left or right to discover more coaches</p>
-        </div>
+        </section>
 
-        <div class="coach-slider-wrap">
-          <div class="coach-slider-fade coach-slider-fade-left" aria-hidden="true"></div>
-          <div class="coach-slider-fade coach-slider-fade-right" aria-hidden="true"></div>
-
-          <div class="coach-slider" id="coachSlider">
-
-            <article class="coach-slide is-active">
-              <div class="coach-card">
-                <div class="coach-image-wrap">
-                  <img src="assets/img/coach-1.jpg" alt="Coach Karim Haddad" />
-                  <span class="coach-badge coach-badge-hot">🔥 Top Coach</span>
-                </div>
-
-                <div class="coach-card-body">
-                  <div class="coach-header">
-                    <div class="coach-kicker">Competitive Coach</div>
-                    <h3 class="coach-name">Karim Haddad</h3>
-                    <p class="coach-cert">ITF Certified Coach</p>
-                  </div>
-
-                  <div class="coach-stats">
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Focus</span>
-                      <span class="coach-stat-value">Competitive</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Experience</span>
-                      <span class="coach-stat-value">8 Years</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Languages</span>
-                      <span class="coach-stat-value">EN / AR / FR</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Rating</span>
-                      <span class="coach-stat-value">4.9</span>
-                    </div>
-                  </div>
-
-                  <div class="coach-tags">
-                    <span>Match Strategy</span>
-                    <span>Power Training</span>
-                    <span>Pressure Drills</span>
-                  </div>
-
-                  <div class="coach-footer">
-                    <div class="coach-price-wrap">
-                      <span class="coach-price-label">Per Session</span>
-                      <span class="coach-price">$40</span>
-                    </div>
-
-                    <div class="coach-actions">
-                      <button class="btn btn-primary" type="button">Book Session</button>
-                      <button class="btn btn-ghost" type="button">View Profile</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="coach-slide">
-              <div class="coach-card">
-                <div class="coach-image-wrap">
-                  <img src="assets/img/coach-2.jpg" alt="Coach Marc Saliba" />
-                  <span class="coach-badge">⭐ Most Booked</span>
-                </div>
-
-                <div class="coach-card-body">
-                  <div class="coach-header">
-                    <div class="coach-kicker">Advanced Coach</div>
-                    <h3 class="coach-name">Marc Saliba</h3>
-                    <p class="coach-cert">Padel Pro Certified</p>
-                  </div>
-
-                  <div class="coach-stats">
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Focus</span>
-                      <span class="coach-stat-value">Advanced</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Experience</span>
-                      <span class="coach-stat-value">6 Years</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Languages</span>
-                      <span class="coach-stat-value">EN / FR</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Rating</span>
-                      <span class="coach-stat-value">4.8</span>
-                    </div>
-                  </div>
-
-                  <div class="coach-tags">
-                    <span>Tactics</span>
-                    <span>Defense</span>
-                    <span>Control Play</span>
-                  </div>
-
-                  <div class="coach-footer">
-                    <div class="coach-price-wrap">
-                      <span class="coach-price-label">Per Session</span>
-                      <span class="coach-price">$35</span>
-                    </div>
-
-                    <div class="coach-actions">
-                      <button class="btn btn-primary" type="button">Book Session</button>
-                      <button class="btn btn-ghost" type="button">View Profile</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="coach-slide">
-              <div class="coach-card">
-                <div class="coach-image-wrap">
-                  <img src="assets/img/coach-3.jpg" alt="Coach Lara Aoun" />
-                  <span class="coach-badge">🆕 New</span>
-                </div>
-
-                <div class="coach-card-body">
-                  <div class="coach-header">
-                    <div class="coach-kicker">Kids Coach</div>
-                    <h3 class="coach-name">Lara Aoun</h3>
-                    <p class="coach-cert">Youth Development Coach</p>
-                  </div>
-
-                  <div class="coach-stats">
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Focus</span>
-                      <span class="coach-stat-value">Kids</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Experience</span>
-                      <span class="coach-stat-value">4 Years</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Languages</span>
-                      <span class="coach-stat-value">EN / AR</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Rating</span>
-                      <span class="coach-stat-value">4.6</span>
-                    </div>
-                  </div>
-
-                  <div class="coach-tags">
-                    <span>Confidence</span>
-                    <span>Movement</span>
-                    <span>Fun Drills</span>
-                  </div>
-
-                  <div class="coach-footer">
-                    <div class="coach-price-wrap">
-                      <span class="coach-price-label">Per Session</span>
-                      <span class="coach-price">$22</span>
-                    </div>
-
-                    <div class="coach-actions">
-                      <button class="btn btn-primary" type="button">Book Session</button>
-                      <button class="btn btn-ghost" type="button">View Profile</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="coach-slide">
-              <div class="coach-card">
-                <div class="coach-image-wrap">
-                  <img src="assets/img/coach-4.jpg" alt="Coach Jad Khoury" />
-                  <span class="coach-badge coach-badge-hot">🔥 Elite</span>
-                </div>
-
-                <div class="coach-card-body">
-                  <div class="coach-header">
-                    <div class="coach-kicker">Elite Coach</div>
-                    <h3 class="coach-name">Jad Khoury</h3>
-                    <p class="coach-cert">High Performance Coach</p>
-                  </div>
-
-                  <div class="coach-stats">
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Focus</span>
-                      <span class="coach-stat-value">Competitive</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Experience</span>
-                      <span class="coach-stat-value">10 Years</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Languages</span>
-                      <span class="coach-stat-value">EN / AR / FR</span>
-                    </div>
-                    <div class="coach-stat">
-                      <span class="coach-stat-label">Rating</span>
-                      <span class="coach-stat-value">5.0</span>
-                    </div>
-                  </div>
-
-                  <div class="coach-tags">
-                    <span>Mental Game</span>
-                    <span>Tournament Prep</span>
-                    <span>Strategy</span>
-                  </div>
-
-                  <div class="coach-footer">
-                    <div class="coach-price-wrap">
-                      <span class="coach-price-label">Per Session</span>
-                      <span class="coach-price">$50</span>
-                    </div>
-
-                    <div class="coach-actions">
-                      <button class="btn btn-primary" type="button">Book Session</button>
-                      <button class="btn btn-ghost" type="button">View Profile</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-          </div>
-        </div>
-      </section>
-
+      </div>
     </div>
   </main>
 
@@ -320,52 +562,35 @@
   <script src="js/main.js"></script>
 
   <script>
-    (function coachSliderActiveCard(){
-      const slider = document.getElementById("coachSlider");
-      if (!slider) return;
+    (function coachSliderDots(){
+      const carousel = document.getElementById("coachCarousel");
+      const slides = Array.from(document.querySelectorAll(".coach-slide"));
+      const dots = Array.from(document.querySelectorAll(".coach-dot"));
 
-      const slides = Array.from(slider.querySelectorAll(".coach-slide"));
+      if (!carousel || !slides.length || !dots.length) return;
 
-      function updateActiveCard() {
-        const sliderRect = slider.getBoundingClientRect();
-        const sliderCenter = sliderRect.left + (sliderRect.width / 2);
-
-        let closestSlide = null;
-        let closestDistance = Infinity;
-
-        slides.forEach((slide) => {
-          const rect = slide.getBoundingClientRect();
-          const slideCenter = rect.left + (rect.width / 2);
-          const distance = Math.abs(sliderCenter - slideCenter);
-
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestSlide = slide;
-          }
-        });
-
-        slides.forEach((slide) => {
-          slide.classList.toggle("is-active", slide === closestSlide);
+      function updateDots(){
+        const index = Math.round(carousel.scrollLeft / carousel.clientWidth);
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("is-active", i === index);
         });
       }
 
       let ticking = false;
 
-      function onScroll() {
+      carousel.addEventListener("scroll", () => {
         if (!ticking) {
-          window.requestAnimationFrame(() => {
-            updateActiveCard();
+          requestAnimationFrame(() => {
+            updateDots();
             ticking = false;
           });
           ticking = true;
         }
-      }
+      }, { passive: true });
 
-      slider.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", updateActiveCard);
-      window.addEventListener("load", updateActiveCard);
-
-      updateActiveCard();
+      window.addEventListener("resize", updateDots);
+      window.addEventListener("load", updateDots);
+      updateDots();
     })();
   </script>
 </body>
