@@ -77,12 +77,15 @@
             </div>
 
             <div class="profile-info-row profile-id-row">
-              <div>
-                <div class="profile-info-label">Member ID</div>
-                <div class="profile-info-value" id="profileId">—</div>
-              </div>
-              <button type="button" class="btn btn-ghost profile-copy-btn" id="copyProfileIdBtn">Copy ID</button>
-            </div>
+  <div class="profile-id-left">
+    <div class="profile-info-label">Member ID</div>
+    <div class="profile-info-value" id="profileId">—</div>
+  </div>
+
+  <button type="button" class="btn btn-ghost profile-copy-btn" id="copyProfileIdBtn">
+    Copy ID
+  </button>
+</div>
 
             <div class="profile-info-row">
               <div class="profile-info-label">Phone Number</div>
@@ -106,15 +109,32 @@
         </div>
 
         <div class="profile-security-card">
-          <div class="profile-main-title">Security</div>
-          <div class="profile-main-sub">Reset your password securely by email.</div>
+  <div class="profile-main-title">Password & Security</div>
+  <div class="profile-main-sub">Change your password securely using your current password.</div>
 
-          <button class="btn btn-primary profile-reset-btn" id="resetPasswordBtn" type="button">
-            Send Password Reset Email
-          </button>
+  <div class="profile-security-form">
+    <div class="profile-security-row">
+      <label for="currentPassword">Current Password</label>
+      <input type="password" id="currentPassword" placeholder="Enter current password" autocomplete="current-password" />
+    </div>
 
-          <div id="resetMsg" class="form-note profile-reset-note"></div>
-        </div>
+    <div class="profile-security-row">
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" placeholder="Enter new password" autocomplete="new-password" />
+    </div>
+
+    <div class="profile-security-row">
+      <label for="confirmNewPassword">Confirm New Password</label>
+      <input type="password" id="confirmNewPassword" placeholder="Confirm new password" autocomplete="new-password" />
+    </div>
+
+    <button class="btn btn-primary profile-reset-btn" id="changePasswordBtn" type="button">
+      Update Password
+    </button>
+
+    <div id="resetMsg" class="form-note profile-reset-note"></div>
+  </div>
+</div>
       </section>
 
     </div>
@@ -221,38 +241,93 @@
         dateEl.textContent = formatJoinedDate(data.createdAt);
 
         if (copyIdBtn) {
-          copyIdBtn.onclick = async () => {
-            const value = String(data.customId || "").trim();
-            if (!value) return;
+  copyIdBtn.onclick = async () => {
+    const value = String(data.customId || "").trim();
+    if (!value) return;
 
-            try {
-              await navigator.clipboard.writeText(value);
-              copyIdBtn.textContent = "Copied";
-              setTimeout(() => {
-                copyIdBtn.textContent = "Copy ID";
-              }, 1400);
-            } catch (err) {
-              console.error("Copy failed:", err);
-            }
-          };
-        }
+    try {
+      await navigator.clipboard.writeText(value);
+      copyIdBtn.textContent = "Copied";
+      setTimeout(() => {
+        copyIdBtn.textContent = "Copy ID";
+      }, 1400);
+    } catch (err) {
+      console.error("Copy failed:", err);
+    }
+  };
+}
 
-        if (resetBtn) {
-          resetBtn.onclick = async () => {
-            resetMsg.textContent = "";
-            resetMsg.classList.remove("is-success", "is-error");
+const changePasswordBtn = document.getElementById("changePasswordBtn");
+const currentPasswordEl = document.getElementById("currentPassword");
+const newPasswordEl = document.getElementById("newPassword");
+const confirmNewPasswordEl = document.getElementById("confirmNewPassword");
 
-            try {
-              await auth.sendPasswordResetEmail(user.email);
-              resetMsg.textContent = "Password reset email sent.";
-              resetMsg.classList.add("is-success");
-            } catch (err) {
-              console.error(err);
-              resetMsg.textContent = "Could not send password reset email.";
-              resetMsg.classList.add("is-error");
-            }
-          };
-        }
+if (changePasswordBtn) {
+  changePasswordBtn.onclick = async () => {
+    resetMsg.textContent = "";
+    resetMsg.classList.remove("is-success", "is-error");
+
+    const currentPassword = (currentPasswordEl?.value || "").trim();
+    const newPassword = (newPasswordEl?.value || "").trim();
+    const confirmNewPassword = (confirmNewPasswordEl?.value || "").trim();
+
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      resetMsg.textContent = "Please fill all password fields.";
+      resetMsg.classList.add("is-error");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      resetMsg.textContent = "New password must be at least 8 characters.";
+      resetMsg.classList.add("is-error");
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      resetMsg.textContent = "New passwords do not match.";
+      resetMsg.classList.add("is-error");
+      return;
+    }
+
+    if (!user.email) {
+      resetMsg.textContent = "This account cannot change password right now.";
+      resetMsg.classList.add("is-error");
+      return;
+    }
+
+    try {
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        currentPassword
+      );
+
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(newPassword);
+
+      if (currentPasswordEl) currentPasswordEl.value = "";
+      if (newPasswordEl) newPasswordEl.value = "";
+      if (confirmNewPasswordEl) confirmNewPasswordEl.value = "";
+
+      resetMsg.textContent = "Password updated successfully.";
+      resetMsg.classList.add("is-success");
+    } catch (err) {
+      console.error(err);
+
+      let msg = "Could not update password.";
+
+      if (err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") {
+        msg = "Current password is incorrect.";
+      } else if (err.code === "auth/weak-password") {
+        msg = "Choose a stronger password.";
+      } else if (err.code === "auth/too-many-requests") {
+        msg = "Too many attempts. Please try again later.";
+      }
+
+      resetMsg.textContent = msg;
+      resetMsg.classList.add("is-error");
+    }
+  };
+}
       });
     })();
   </script>
