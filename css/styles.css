@@ -5369,12 +5369,12 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 /* Card */
 .coach-card{
   position: relative;
-  background: rgba(255,255,255,0.96);
-  border: 1px solid rgba(15,23,42,0.05);
+  background: linear-gradient(180deg, #16233f 0%, #1b2d52 100%);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 24px;
   box-shadow:
-    0 16px 32px rgba(15,23,42,0.07),
-    0 4px 14px rgba(15,23,42,0.04);
+    0 18px 34px rgba(11,18,32,0.18),
+    0 6px 18px rgba(11,18,32,0.10);
   padding: 14px;
   overflow: hidden;
 }
@@ -5407,8 +5407,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   min-height: 38px;
   padding: 8px 16px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.94);
-  box-shadow: 0 8px 18px rgba(15,23,42,0.07);
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 8px 18px rgba(11,18,32,0.12);
   color: #c26031;
   font-size: 12px;
   font-weight: 900;
@@ -5430,22 +5430,22 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   font-weight: 900;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(63,79,119,0.78);
+  color: rgba(214,225,245,0.78);
 }
-
+   
 .coach-name{
   margin: 0;
   font-size: 28px;
   line-height: 1.03;
   letter-spacing: -1px;
-  color: #10162b;
+  color: #ffffff;
 }
 
 .coach-cert{
   margin: 0;
   font-size: 14px;
   line-height: 1.4;
-  color: rgba(11,18,32,0.62);
+  color: rgba(226,234,247,0.82);
   font-weight: 500;
 }
 
@@ -5454,13 +5454,13 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   padding-left: 24px;
   display: grid;
   gap: 4px;
-  color: rgba(11,18,32,0.84);
+  color: rgba(245,248,255,0.94);
   font-size: 15px;
   line-height: 1.45;
 }
 
 .coach-points li::marker{
-  color: rgba(11,18,32,0.34);
+  color: rgba(197,214,242,0.70);
 }
 
 .coach-price-row{
@@ -5470,16 +5470,16 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 }
 
 .coach-price{
-  font-size: 34px;
+  font-size: 30px;
   line-height: 1;
   font-weight: 950;
   letter-spacing: -1px;
-  color: var(--navy);
+  color: #ffffff;
 }
 
 .coach-price-sub{
   font-size: 15px;
-  color: rgba(11,18,32,0.82);
+  color: rgba(226,234,247,0.88);
 }
 
 .coach-actions{
@@ -5504,12 +5504,12 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   min-height: 26px;
   font-size: 14px;
   font-weight: 500;
-  color: rgba(11,18,32,0.42);
+  color: rgba(226,234,247,0.76);
   transition: color 160ms ease;
 }
 
 .coach-link:hover{
-  color: var(--navy);
+  color: #ffffff;
 }
 
 /* Dots */
