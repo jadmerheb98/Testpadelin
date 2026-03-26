@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Coach Profile | PADELIN</title>
-  <link rel="stylesheet" href="css/styles.css?v=3" />
+  <link rel="stylesheet" href="css/styles.css?v=8" />
 </head>
 <body>
 
@@ -17,7 +17,7 @@
       </div>
 
       <div class="header-right">
-        <a class="icon-btn" href="training.html" aria-label="Back to coaches">
+        <a class="icon-btn" href="training.html" aria-label="Back to Live Coaches">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
             <path fill="currentColor" d="M15.4 5.4L9.8 11l5.6 5.6L14 18l-7-7 7-7z"/>
           </svg>
@@ -29,6 +29,7 @@
   <main class="coach-profile-page">
     <div class="container">
       <section class="coach-profile-card" id="coachProfileCard">
+
         <div class="coach-profile-media">
           <img id="coachProfileImage" class="coach-profile-image" src="" alt="" />
           <span id="coachProfileBadge" class="coach-profile-badge"></span>
@@ -68,6 +69,7 @@
             <a class="coach-profile-back" href="training.html">Back to Live Coaches</a>
           </div>
         </div>
+
       </section>
     </div>
   </main>
@@ -145,16 +147,24 @@
     } else {
       document.title = coach.name + " | PADELIN";
 
-      document.getElementById("coachProfileImage").src = coach.image;
-      document.getElementById("coachProfileImage").alt = coach.name + " profile photo";
-      document.getElementById("coachProfileBadge").textContent = coach.badge;
-      document.getElementById("coachProfileName").textContent = coach.name;
-      document.getElementById("coachProfileRole").textContent = coach.role;
-      document.getElementById("coachProfileCert").textContent = coach.cert;
-      document.getElementById("coachProfilePrice").textContent = coach.price;
-      document.getElementById("coachProfileBio").textContent = coach.bio;
-
+      const image = document.getElementById("coachProfileImage");
+      const badge = document.getElementById("coachProfileBadge");
+      const name = document.getElementById("coachProfileName");
+      const role = document.getElementById("coachProfileRole");
+      const cert = document.getElementById("coachProfileCert");
+      const price = document.getElementById("coachProfilePrice");
+      const bio = document.getElementById("coachProfileBio");
       const pointsList = document.getElementById("coachProfilePoints");
+
+      image.src = coach.image;
+      image.alt = coach.name + " profile photo";
+      badge.textContent = coach.badge;
+      name.textContent = coach.name;
+      role.textContent = coach.role;
+      cert.textContent = coach.cert;
+      price.textContent = coach.price;
+      bio.textContent = coach.bio;
+
       coach.points.forEach(point => {
         const li = document.createElement("li");
         li.textContent = point;
