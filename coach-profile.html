@@ -47,58 +47,69 @@
   </aside>
 
   <main class="coach-profile-page">
-    <div class="container">
+  <div class="container">
 
-      <section class="coach-profile-hero" aria-label="Coach profile intro">
-        <div class="coach-profile-eyebrow">PADELIN TRAINING</div>
-        <h1 id="coachProfileTitle">Coach Profile</h1>
-        <p id="coachProfileSubtitle">Discover your coach’s style, focus areas, and session details.</p>
-      </section>
+    <!-- HERO -->
+    <section class="coach-profile-hero">
+      <div class="coach-profile-eyebrow">PADELIN TRAINING</div>
+      <h1 id="coachProfileTitle"></h1>
+      <p id="coachProfileSubtitle"></p>
+    </section>
 
-      <section class="coach-profile-card" id="coachProfileCard">
-        <div class="coach-profile-media">
-          <span id="coachProfileBadge" class="coach-profile-badge"></span>
-          <img id="coachProfileImage" class="coach-profile-image" src="" alt="" />
+    <!-- PROFILE CARD -->
+    <section class="coach-profile-card">
+
+      <!-- IMAGE -->
+      <div class="coach-profile-media">
+        <img id="coachProfileImage" class="coach-profile-image" src="" alt="" />
+        <div id="coachProfileBadge" class="coach-profile-badge"></div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="coach-profile-body">
+
+        <!-- HEAD -->
+        <div class="coach-profile-head">
+          <div id="coachProfileKicker" class="coach-profile-kicker"></div>
+          <h2 id="coachProfileName"></h2>
+          <p id="coachProfileRole"></p>
         </div>
 
-        <div class="coach-profile-body">
-          <div class="coach-profile-head">
-            <div id="coachProfileKicker" class="coach-profile-kicker"></div>
-            <h2 id="coachProfileName" class="coach-profile-name"></h2>
-            <p id="coachProfileRole" class="coach-profile-role"></p>
+        <!-- STATS STRIP -->
+        <div class="coach-profile-stats">
+          <div class="stat">
+            <span>Certification</span>
+            <strong id="coachProfileCert"></strong>
           </div>
-
-          <div class="coach-profile-meta">
-            <div class="coach-profile-meta-item">
-              <div class="coach-profile-meta-label">Certification</div>
-              <div id="coachProfileCert" class="coach-profile-meta-value"></div>
-            </div>
-
-            <div class="coach-profile-meta-item">
-              <div class="coach-profile-meta-label">Price</div>
-              <div id="coachProfilePrice" class="coach-profile-meta-value"></div>
-            </div>
-          </div>
-
-          <div class="coach-profile-section">
-            <div class="coach-profile-section-title">About</div>
-            <p id="coachProfileBio" class="coach-profile-bio"></p>
-          </div>
-
-          <div class="coach-profile-section">
-            <div class="coach-profile-section-title">Focus Areas</div>
-            <ul id="coachProfilePoints" class="coach-profile-points"></ul>
-          </div>
-
-          <div class="coach-profile-actions">
-            <button class="btn btn-primary coach-profile-book-btn" type="button">Book Session</button>
-            <a class="coach-profile-back" href="training.html">Back to Live Coaches</a>
+          <div class="stat highlight">
+            <span>Session</span>
+            <strong id="coachProfilePrice"></strong>
           </div>
         </div>
-      </section>
 
-    </div>
-  </main>
+        <!-- ABOUT -->
+        <div class="coach-profile-section">
+          <h3>About Coach</h3>
+          <p id="coachProfileBio"></p>
+        </div>
+
+        <!-- FOCUS -->
+        <div class="coach-profile-section">
+          <h3>Focus Areas</h3>
+          <ul id="coachProfilePoints"></ul>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="coach-profile-actions">
+          <button class="btn btn-primary">Book Session</button>
+          <a href="training.html" class="btn btn-ghost">Back</a>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</main>
 
   <footer class="footer">
     <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
