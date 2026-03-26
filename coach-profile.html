@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Coach Profile | PADELIN</title>
-  <link rel="stylesheet" href="css/styles.css?v=8" />
+  <link rel="stylesheet" href="css/styles.css?v=12" />
 </head>
 <body>
 
@@ -27,46 +27,47 @@
   </header>
 
   <main class="coach-profile-page">
-    <div class="container">
-      <section class="coach-profile-card" id="coachProfileCard">
+    <div class="container coach-profile-container">
+      <section class="coach-profile-shell" id="coachProfileShell">
 
-        <div class="coach-profile-media">
-          <img id="coachProfileImage" class="coach-profile-image" src="" alt="" />
-          <span id="coachProfileBadge" class="coach-profile-badge"></span>
+        <div class="coach-profile-hero">
+          <div class="coach-profile-media">
+            <img id="coachProfileImage" class="coach-profile-image" src="" alt="" />
+            <span id="coachProfileBadge" class="coach-profile-badge"></span>
+          </div>
         </div>
 
-        <div class="coach-profile-body">
-          <div class="coach-profile-top">
-            <div class="coach-profile-eyebrow">PADELIN COACH</div>
+        <div class="coach-profile-content">
+          <div class="coach-profile-head">
+            <div class="coach-profile-kicker" id="coachProfileKicker">PADELIN COACH</div>
             <h1 id="coachProfileName" class="coach-profile-name"></h1>
             <p id="coachProfileRole" class="coach-profile-role"></p>
           </div>
 
-          <div class="coach-profile-meta">
-            <div class="coach-profile-meta-item">
-              <span class="coach-profile-meta-label">Certification</span>
+          <div class="coach-profile-stats">
+            <div class="coach-profile-stat">
+              <span class="coach-profile-stat-label">Certification</span>
               <strong id="coachProfileCert"></strong>
             </div>
-
-            <div class="coach-profile-meta-item">
-              <span class="coach-profile-meta-label">Price</span>
+            <div class="coach-profile-stat">
+              <span class="coach-profile-stat-label">Price</span>
               <strong id="coachProfilePrice"></strong>
             </div>
           </div>
 
-          <div class="coach-profile-section">
-            <div class="coach-profile-section-title">About</div>
+          <div class="coach-profile-panel">
+            <div class="coach-profile-panel-title">About Coach</div>
             <p id="coachProfileBio" class="coach-profile-bio"></p>
           </div>
 
-          <div class="coach-profile-section">
-            <div class="coach-profile-section-title">Focus Areas</div>
+          <div class="coach-profile-panel">
+            <div class="coach-profile-panel-title">Focus Areas</div>
             <ul id="coachProfilePoints" class="coach-profile-points"></ul>
           </div>
 
-          <div class="coach-profile-actions">
+          <div class="coach-profile-cta">
             <button class="btn btn-primary coach-profile-book-btn" type="button">Book Session</button>
-            <a class="coach-profile-back" href="training.html">Back to Live Coaches</a>
+            <a class="coach-profile-back-link" href="training.html">Back to Live Coaches</a>
           </div>
         </div>
 
@@ -79,11 +80,12 @@
       "karim-haddad": {
         name: "Karim Haddad",
         role: "Competitive Coach",
+        kicker: "Competitive Specialist",
         cert: "ITF Certified Coach",
         price: "$40 / session",
         badge: "🔥 Top Coach",
         image: "assets/img/coaches/karim-haddad.jpg",
-        bio: "Karim focuses on building strong match habits, sharper control, and competitive confidence for players ready to level up their game.",
+        bio: "Karim focuses on helping players sharpen control, improve match confidence, and build stronger competitive habits through structured premium sessions.",
         points: [
           "8 years of coaching experience",
           "Competitive training sessions",
@@ -94,45 +96,48 @@
       "maya-khoury": {
         name: "Maya Khoury",
         role: "Advanced Coach",
+        kicker: "Elite Tactical Coach",
         cert: "Padel Pro Certified",
         price: "$35 / session",
         badge: "⭐ Most Booked",
         image: "assets/img/coaches/maya-khoury.jpg",
-        bio: "Maya delivers structured sessions for players who want a more tactical, high-discipline approach to training and match preparation.",
+        bio: "Maya delivers disciplined, tactical sessions for players who want stronger structure, cleaner technique, and better pressure management during competitive play.",
         points: [
           "Advanced tactical coaching",
           "Pressure handling in matches",
           "Technical correction and repetition",
-          "Strong focus on consistency"
+          "Consistency-focused training"
         ]
       },
       "nicolas-saad": {
         name: "Nicolas Saad",
         role: "Performance Coach",
+        kicker: "Dynamic Development Coach",
         cert: "Performance Training Certified",
         price: "$38 / session",
         badge: "⚡ Popular Coach",
         image: "assets/img/coaches/nicolas-saad.jpg",
-        bio: "Nicolas brings energy, rhythm, and confidence to every session, making him a strong fit for players who want intensity without losing enjoyment.",
+        bio: "Nicolas brings energy, rhythm, and confidence into every session, making him a strong choice for players who want a more dynamic path to improvement.",
         points: [
-          "Dynamic high-energy sessions",
-          "Perfect for improving confidence",
-          "Fast-paced drills and movement",
-          "Great for intermediate players"
+          "High-energy premium sessions",
+          "Fast-paced movement drills",
+          "Confidence-building progression",
+          "Great fit for intermediate players"
         ]
       },
       "jad-khoury": {
         name: "Jad Khoury",
         role: "Head Coach",
+        kicker: "Elite Performance Coach",
         cert: "High Performance Coach",
         price: "$50 / session",
         badge: "🏆 Head Coach",
         image: "assets/img/coaches/jad-khoury.jpg",
-        bio: "Jad is built for serious players looking for elite structure, sharper match intelligence, and long-term improvement under experienced guidance.",
+        bio: "Jad is built for serious players looking for elite structure, sharper match intelligence, and long-term improvement under experienced high-level guidance.",
         points: [
           "10+ years of experience",
-          "Tournament and match preparation",
-          "Elite-level training approach",
+          "Tournament preparation",
+          "Elite-level training structure",
           "Strategic player development"
         ]
       }
@@ -147,24 +152,17 @@
     } else {
       document.title = coach.name + " | PADELIN";
 
-      const image = document.getElementById("coachProfileImage");
-      const badge = document.getElementById("coachProfileBadge");
-      const name = document.getElementById("coachProfileName");
-      const role = document.getElementById("coachProfileRole");
-      const cert = document.getElementById("coachProfileCert");
-      const price = document.getElementById("coachProfilePrice");
-      const bio = document.getElementById("coachProfileBio");
+      document.getElementById("coachProfileImage").src = coach.image;
+      document.getElementById("coachProfileImage").alt = coach.name + " profile photo";
+      document.getElementById("coachProfileBadge").textContent = coach.badge;
+      document.getElementById("coachProfileKicker").textContent = coach.kicker;
+      document.getElementById("coachProfileName").textContent = coach.name;
+      document.getElementById("coachProfileRole").textContent = coach.role;
+      document.getElementById("coachProfileCert").textContent = coach.cert;
+      document.getElementById("coachProfilePrice").textContent = coach.price;
+      document.getElementById("coachProfileBio").textContent = coach.bio;
+
       const pointsList = document.getElementById("coachProfilePoints");
-
-      image.src = coach.image;
-      image.alt = coach.name + " profile photo";
-      badge.textContent = coach.badge;
-      name.textContent = coach.name;
-      role.textContent = coach.role;
-      cert.textContent = coach.cert;
-      price.textContent = coach.price;
-      bio.textContent = coach.bio;
-
       coach.points.forEach(point => {
         const li = document.createElement("li");
         li.textContent = point;
