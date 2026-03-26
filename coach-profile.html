@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Coach Profile | PADELIN</title>
-  <link rel="stylesheet" href="css/styles.css?v=30" />
+  <link rel="stylesheet" href="css/styles.css?v=21" />
 </head>
 <body>
 
@@ -23,11 +23,17 @@
       </div>
 
       <div class="header-right">
-        <a class="icon-btn" href="training.html" aria-label="Back to Live Coaches">
+        <a class="icon-btn" href="contact.html" aria-label="Contact us">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-            <path fill="currentColor" d="M15.4 5.4L9.8 11l5.6 5.6L14 18l-7-7 7-7z"/>
+            <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
           </svg>
         </a>
+
+        <button class="icon-btn" type="button" aria-label="Account" data-auth-open>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
@@ -39,188 +45,125 @@
       <div class="side-menu-title">Menu</div>
       <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
     </div>
+
     <div class="side-links">
-      <a href="./membership.html">Membership</a>
-      <a href="./training.html" class="active">Training</a>
-      <a href="./tournaments.html">Tournaments</a>
+      <a href="membership.html">Membership</a>
+      <a href="training.html" class="active">Live Coaches</a>
+      <a href="tournaments.html">Tournaments</a>
     </div>
   </aside>
 
   <main class="coach-profile-page">
-  <div class="container">
+    <div class="container">
+      <div class="coach-profile-shell">
 
-    <!-- HERO -->
-    <section class="coach-profile-hero">
-      <div class="coach-profile-eyebrow">PADELIN TRAINING</div>
-      <h1 id="coachProfileTitle"></h1>
-      <p id="coachProfileSubtitle"></p>
-    </section>
+        <section class="coach-profile-hero" aria-label="Coach profile">
+          <div class="coach-profile-grid">
 
-    <!-- PROFILE CARD -->
-    <section class="coach-profile-card">
+            <div class="coach-profile-media-card">
+              <div class="coach-profile-media-wrap">
+                <span class="coach-profile-badge" id="coachBadge">Top Coach</span>
+                <img
+                  id="coachImage"
+                  class="coach-profile-image"
+                  src="assets/img/coaches/karim-haddad.jpg"
+                  alt="Coach portrait"
+                />
+              </div>
+            </div>
 
-      <!-- IMAGE -->
-      <div class="coach-profile-media">
-        <img id="coachProfileImage" class="coach-profile-image" src="" alt="" />
-        <div id="coachProfileBadge" class="coach-profile-badge"></div>
-      </div>
+            <div class="coach-profile-main-card">
+              <div class="coach-profile-kicker" id="coachKicker">PADELIN COACH</div>
 
-      <!-- CONTENT -->
-      <div class="coach-profile-body">
+              <div class="coach-profile-head">
+                <div>
+                  <h1 class="coach-profile-name" id="coachName">Karim Haddad</h1>
+                  <p class="coach-profile-role" id="coachRole">Competitive Coach</p>
+                </div>
 
-        <!-- HEAD -->
-        <div class="coach-profile-head">
-          <div id="coachProfileKicker" class="coach-profile-kicker"></div>
-          <h2 id="coachProfileName"></h2>
-          <p id="coachProfileRole"></p>
-        </div>
+                <div class="coach-profile-price-card">
+                  <div class="coach-profile-price-label">Session</div>
+                  <div class="coach-profile-price" id="coachPrice">$40</div>
+                </div>
+              </div>
 
-        <!-- STATS STRIP -->
-        <div class="coach-profile-stats">
-          <div class="stat">
-            <span>Certification</span>
-            <strong id="coachProfileCert"></strong>
+              <div class="coach-profile-meta">
+                <div class="coach-meta-pill">
+                  <span class="coach-meta-label">Certification</span>
+                  <strong id="coachCertification">ITF Certified Coach</strong>
+                </div>
+                <div class="coach-meta-pill">
+                  <span class="coach-meta-label">Role</span>
+                  <strong id="coachRoleMini">Competitive Coach</strong>
+                </div>
+                <div class="coach-meta-pill">
+                  <span class="coach-meta-label">Experience</span>
+                  <strong id="coachExperience">8 Years</strong>
+                </div>
+              </div>
+
+              <div class="coach-profile-copy-block">
+                <div class="coach-section-mini-title">About Coach</div>
+                <p class="coach-profile-about" id="coachAbout">
+                  Karim brings competitive structure, sharp fundamentals, and energetic on-court coaching designed to help players build confidence under pressure.
+                </p>
+              </div>
+
+              <div class="coach-profile-copy-block">
+                <div class="coach-section-mini-title">Focus Areas</div>
+                <ul class="coach-focus-list" id="coachFocusList">
+                  <li>Competitive match preparation</li>
+                  <li>Shot selection and consistency</li>
+                  <li>Footwork and court positioning</li>
+                  <li>Pressure-based live drills</li>
+                </ul>
+              </div>
+
+              <div class="coach-profile-actions">
+                <a class="btn btn-primary coach-profile-cta" id="coachBookLink" href="reservation.html">
+                  Book Session
+                </a>
+                <a class="btn btn-ghost coach-profile-back" href="training.html">
+                  Back to Live Coaches
+                </a>
+              </div>
+            </div>
+
           </div>
-          <div class="stat highlight">
-            <span>Session</span>
-            <strong id="coachProfilePrice"></strong>
+        </section>
+
+        <section class="coach-profile-lower-grid" aria-label="Coach highlights">
+          <div class="coach-profile-info-card">
+            <div class="coach-card-title">Session Style</div>
+            <p class="coach-card-text" id="coachSessionStyle">
+              Structured, premium, and performance-focused sessions with clear progression from warm-up to live play.
+            </p>
           </div>
-        </div>
 
-        <!-- ABOUT -->
-        <div class="coach-profile-section">
-          <h3>About Coach</h3>
-          <p id="coachProfileBio"></p>
-        </div>
+          <div class="coach-profile-info-card">
+            <div class="coach-card-title">Best For</div>
+            <p class="coach-card-text" id="coachBestFor">
+              Players looking to improve their level, sharpen decision-making, and train with more purpose.
+            </p>
+          </div>
 
-        <!-- FOCUS -->
-        <div class="coach-profile-section">
-          <h3>Focus Areas</h3>
-          <ul id="coachProfilePoints"></ul>
-        </div>
-
-        <!-- ACTIONS -->
-        <div class="coach-profile-actions">
-          <button class="btn btn-primary">Book Session</button>
-          <a href="training.html" class="btn btn-ghost">Back</a>
-        </div>
+          <div class="coach-profile-info-card coach-profile-info-card--accent">
+            <div class="coach-card-title">Why Players Book</div>
+            <p class="coach-card-text" id="coachReason">
+              Clear corrections, polished structure, and a premium on-court coaching experience.
+            </p>
+          </div>
+        </section>
 
       </div>
-    </section>
-
-  </div>
-</main>
+    </div>
+  </main>
 
   <footer class="footer">
     <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
   </footer>
 
   <script src="js/main.js"></script>
-
-  <script>
-    const coaches = {
-      "karim-haddad": {
-        name: "Karim Haddad",
-        title: "Karim Haddad",
-        subtitle: "Competitive coaching built for sharper match confidence and stronger control.",
-        kicker: "Competitive Specialist",
-        role: "Competitive Coach",
-        cert: "ITF Certified Coach",
-        price: "$40 / session",
-        badge: "🔥 Top Coach",
-        image: "assets/img/coaches/karim-haddad.jpg",
-        bio: "Karim focuses on helping players build stronger match habits, sharper control, and competitive confidence through structured premium sessions.",
-        points: [
-          "8 years of coaching experience",
-          "Competitive training sessions",
-          "Match strategy and point construction",
-          "Advanced footwork development"
-        ]
-      },
-      "maya-khoury": {
-        name: "Maya Khoury",
-        title: "Maya Khoury",
-        subtitle: "Advanced tactical coaching for players who want discipline, consistency, and structure.",
-        kicker: "Elite Tactical Coach",
-        role: "Advanced Coach",
-        cert: "Padel Pro Certified",
-        price: "$35 / session",
-        badge: "⭐ Most Booked",
-        image: "assets/img/coaches/maya-khoury.jpg",
-        bio: "Maya delivers disciplined, tactical sessions for players who want cleaner technique, better pressure management, and stronger match structure.",
-        points: [
-          "Advanced tactical coaching",
-          "Pressure handling in matches",
-          "Technical correction and repetition",
-          "Consistency-focused training"
-        ]
-      },
-      "nicolas-saad": {
-        name: "Nicolas Saad",
-        title: "Nicolas Saad",
-        subtitle: "Dynamic sessions with confidence, rhythm, and fast-paced player development.",
-        kicker: "Dynamic Development Coach",
-        role: "Performance Coach",
-        cert: "Performance Training Certified",
-        price: "$38 / session",
-        badge: "⚡ Popular Coach",
-        image: "assets/img/coaches/nicolas-saad.jpg",
-        bio: "Nicolas brings energy and rhythm into every session, making him a strong fit for players who want intensity without losing enjoyment.",
-        points: [
-          "High-energy premium sessions",
-          "Fast-paced movement drills",
-          "Confidence-building progression",
-          "Great fit for intermediate players"
-        ]
-      },
-      "jad-khoury": {
-        name: "Jad Khoury",
-        title: "Jad Khoury",
-        subtitle: "High-level coaching for serious players seeking elite progression and match intelligence.",
-        kicker: "Elite Performance Coach",
-        role: "Head Coach",
-        cert: "High Performance Coach",
-        price: "$50 / session",
-        badge: "🏆 Head Coach",
-        image: "assets/img/coaches/jad-khoury.jpg",
-        bio: "Jad is built for serious players looking for elite structure, sharper match intelligence, and long-term improvement under experienced guidance.",
-        points: [
-          "10+ years of experience",
-          "Tournament preparation",
-          "Elite-level training structure",
-          "Strategic player development"
-        ]
-      }
-    };
-
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get("coach");
-    const coach = coaches[slug];
-
-    if (!coach) {
-      window.location.href = "training.html";
-    } else {
-      document.title = coach.name + " | PADELIN";
-
-      document.getElementById("coachProfileTitle").textContent = coach.title;
-      document.getElementById("coachProfileSubtitle").textContent = coach.subtitle;
-      document.getElementById("coachProfileBadge").textContent = coach.badge;
-      document.getElementById("coachProfileImage").src = coach.image;
-      document.getElementById("coachProfileImage").alt = coach.name + " profile photo";
-      document.getElementById("coachProfileKicker").textContent = coach.kicker;
-      document.getElementById("coachProfileName").textContent = coach.name;
-      document.getElementById("coachProfileRole").textContent = coach.role;
-      document.getElementById("coachProfileCert").textContent = coach.cert;
-      document.getElementById("coachProfilePrice").textContent = coach.price;
-      document.getElementById("coachProfileBio").textContent = coach.bio;
-
-      const pointsList = document.getElementById("coachProfilePoints");
-      coach.points.forEach(point => {
-        const li = document.createElement("li");
-        li.textContent = point;
-        pointsList.appendChild(li);
-      });
-    }
-  </script>
+  <script src="js/coach-profile.js"></script>
 </body>
 </html>
