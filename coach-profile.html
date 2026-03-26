@@ -4,13 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Coach Profile | PADELIN</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=30" />
 </head>
 <body>
 
   <header class="header">
     <div class="container header-inner header-gd">
       <div class="header-left">
+        <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+          <div class="hamburger-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+
         <a class="brand" href="index.html" aria-label="PADELIN Home">
           <img src="assets/img/logo.png" alt="PADELIN Logo" />
         </a>
@@ -26,66 +32,93 @@
     </div>
   </header>
 
-  <main class="coach-profile-page">
-    <div class="container coach-profile-container">
-      <section class="coach-profile-shell" id="coachProfileShell">
+  <div class="overlay" data-overlay></div>
 
-        <div class="coach-profile-hero">
-          <div class="coach-profile-media">
-            <img id="coachProfileImage" class="coach-profile-image" src="" alt="" />
-            <span id="coachProfileBadge" class="coach-profile-badge"></span>
-          </div>
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+    </div>
+    <div class="side-links">
+      <a href="./membership.html">Membership</a>
+      <a href="./training.html" class="active">Training</a>
+      <a href="./tournaments.html">Tournaments</a>
+    </div>
+  </aside>
+
+  <main class="coach-profile-page">
+    <div class="container">
+
+      <section class="coach-profile-hero" aria-label="Coach profile intro">
+        <div class="coach-profile-eyebrow">PADELIN TRAINING</div>
+        <h1 id="coachProfileTitle">Coach Profile</h1>
+        <p id="coachProfileSubtitle">Discover your coach’s style, focus areas, and session details.</p>
+      </section>
+
+      <section class="coach-profile-card" id="coachProfileCard">
+        <div class="coach-profile-media">
+          <span id="coachProfileBadge" class="coach-profile-badge"></span>
+          <img id="coachProfileImage" class="coach-profile-image" src="" alt="" />
         </div>
 
-        <div class="coach-profile-content">
+        <div class="coach-profile-body">
           <div class="coach-profile-head">
-            <div class="coach-profile-kicker" id="coachProfileKicker">PADELIN COACH</div>
-            <h1 id="coachProfileName" class="coach-profile-name"></h1>
+            <div id="coachProfileKicker" class="coach-profile-kicker"></div>
+            <h2 id="coachProfileName" class="coach-profile-name"></h2>
             <p id="coachProfileRole" class="coach-profile-role"></p>
           </div>
 
-          <div class="coach-profile-stats">
-            <div class="coach-profile-stat">
-              <span class="coach-profile-stat-label">Certification</span>
-              <strong id="coachProfileCert"></strong>
+          <div class="coach-profile-meta">
+            <div class="coach-profile-meta-item">
+              <div class="coach-profile-meta-label">Certification</div>
+              <div id="coachProfileCert" class="coach-profile-meta-value"></div>
             </div>
-            <div class="coach-profile-stat">
-              <span class="coach-profile-stat-label">Price</span>
-              <strong id="coachProfilePrice"></strong>
+
+            <div class="coach-profile-meta-item">
+              <div class="coach-profile-meta-label">Price</div>
+              <div id="coachProfilePrice" class="coach-profile-meta-value"></div>
             </div>
           </div>
 
-          <div class="coach-profile-panel">
-            <div class="coach-profile-panel-title">About Coach</div>
+          <div class="coach-profile-section">
+            <div class="coach-profile-section-title">About</div>
             <p id="coachProfileBio" class="coach-profile-bio"></p>
           </div>
 
-          <div class="coach-profile-panel">
-            <div class="coach-profile-panel-title">Focus Areas</div>
+          <div class="coach-profile-section">
+            <div class="coach-profile-section-title">Focus Areas</div>
             <ul id="coachProfilePoints" class="coach-profile-points"></ul>
           </div>
 
-          <div class="coach-profile-cta">
+          <div class="coach-profile-actions">
             <button class="btn btn-primary coach-profile-book-btn" type="button">Book Session</button>
-            <a class="coach-profile-back-link" href="training.html">Back to Live Coaches</a>
+            <a class="coach-profile-back" href="training.html">Back to Live Coaches</a>
           </div>
         </div>
-
       </section>
+
     </div>
   </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
+  </footer>
+
+  <script src="js/main.js"></script>
 
   <script>
     const coaches = {
       "karim-haddad": {
         name: "Karim Haddad",
-        role: "Competitive Coach",
+        title: "Karim Haddad",
+        subtitle: "Competitive coaching built for sharper match confidence and stronger control.",
         kicker: "Competitive Specialist",
+        role: "Competitive Coach",
         cert: "ITF Certified Coach",
         price: "$40 / session",
         badge: "🔥 Top Coach",
         image: "assets/img/coaches/karim-haddad.jpg",
-        bio: "Karim focuses on helping players sharpen control, improve match confidence, and build stronger competitive habits through structured premium sessions.",
+        bio: "Karim focuses on helping players build stronger match habits, sharper control, and competitive confidence through structured premium sessions.",
         points: [
           "8 years of coaching experience",
           "Competitive training sessions",
@@ -95,13 +128,15 @@
       },
       "maya-khoury": {
         name: "Maya Khoury",
-        role: "Advanced Coach",
+        title: "Maya Khoury",
+        subtitle: "Advanced tactical coaching for players who want discipline, consistency, and structure.",
         kicker: "Elite Tactical Coach",
+        role: "Advanced Coach",
         cert: "Padel Pro Certified",
         price: "$35 / session",
         badge: "⭐ Most Booked",
         image: "assets/img/coaches/maya-khoury.jpg",
-        bio: "Maya delivers disciplined, tactical sessions for players who want stronger structure, cleaner technique, and better pressure management during competitive play.",
+        bio: "Maya delivers disciplined, tactical sessions for players who want cleaner technique, better pressure management, and stronger match structure.",
         points: [
           "Advanced tactical coaching",
           "Pressure handling in matches",
@@ -111,13 +146,15 @@
       },
       "nicolas-saad": {
         name: "Nicolas Saad",
-        role: "Performance Coach",
+        title: "Nicolas Saad",
+        subtitle: "Dynamic sessions with confidence, rhythm, and fast-paced player development.",
         kicker: "Dynamic Development Coach",
+        role: "Performance Coach",
         cert: "Performance Training Certified",
         price: "$38 / session",
         badge: "⚡ Popular Coach",
         image: "assets/img/coaches/nicolas-saad.jpg",
-        bio: "Nicolas brings energy, rhythm, and confidence into every session, making him a strong choice for players who want a more dynamic path to improvement.",
+        bio: "Nicolas brings energy and rhythm into every session, making him a strong fit for players who want intensity without losing enjoyment.",
         points: [
           "High-energy premium sessions",
           "Fast-paced movement drills",
@@ -127,13 +164,15 @@
       },
       "jad-khoury": {
         name: "Jad Khoury",
-        role: "Head Coach",
+        title: "Jad Khoury",
+        subtitle: "High-level coaching for serious players seeking elite progression and match intelligence.",
         kicker: "Elite Performance Coach",
+        role: "Head Coach",
         cert: "High Performance Coach",
         price: "$50 / session",
         badge: "🏆 Head Coach",
         image: "assets/img/coaches/jad-khoury.jpg",
-        bio: "Jad is built for serious players looking for elite structure, sharper match intelligence, and long-term improvement under experienced high-level guidance.",
+        bio: "Jad is built for serious players looking for elite structure, sharper match intelligence, and long-term improvement under experienced guidance.",
         points: [
           "10+ years of experience",
           "Tournament preparation",
@@ -152,9 +191,11 @@
     } else {
       document.title = coach.name + " | PADELIN";
 
+      document.getElementById("coachProfileTitle").textContent = coach.title;
+      document.getElementById("coachProfileSubtitle").textContent = coach.subtitle;
+      document.getElementById("coachProfileBadge").textContent = coach.badge;
       document.getElementById("coachProfileImage").src = coach.image;
       document.getElementById("coachProfileImage").alt = coach.name + " profile photo";
-      document.getElementById("coachProfileBadge").textContent = coach.badge;
       document.getElementById("coachProfileKicker").textContent = coach.kicker;
       document.getElementById("coachProfileName").textContent = coach.name;
       document.getElementById("coachProfileRole").textContent = coach.role;
