@@ -243,53 +243,126 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script>
-    (function coachSlider() {
-      const carousel = document.getElementById("coachCarousel");
-      const slides = Array.from(document.querySelectorAll(".coach-slide"));
-      const dots = Array.from(document.querySelectorAll(".coach-dot"));
+ <script>
+  (function coachSlider() {
+    const carousel = document.getElementById("coachCarousel");
+    const slides = Array.from(document.querySelectorAll(".coach-slide"));
+    const dots = Array.from(document.querySelectorAll(".coach-dot"));
 
-      if (!carousel || !slides.length || !dots.length) return;
+    if (!carousel || !slides.length) return;
 
-      function getActiveIndex() {
-        const slideWidth = slides[0].offsetWidth;
-        if (!slideWidth) return 0;
-        return Math.round(carousel.scrollLeft / slideWidth);
-      }
+    let autoTimer = null;
+    let resumeTimer = null;
+    let isInteracting = false;
+    let currentIndex = 0;
 
-      function updateDots() {
-        const activeIndex = getActiveIndex();
-        dots.forEach((dot, index) => {
-          dot.classList.toggle("is-active", index === activeIndex);
-          dot.setAttribute("aria-current", index === activeIndex ? "true" : "false");
-        });
-      }
+    function getSlideWidth() {
+      return slides[0].offsetWidth;
+    }
 
+    function getActiveIndex() {
+      const slideWidth = getSlideWidth();
+      if (!slideWidth) return 0;
+      return Math.round(carousel.scrollLeft / slideWidth);
+    }
+
+    function updateDots() {
+      currentIndex = getActiveIndex();
       dots.forEach((dot, index) => {
-        dot.addEventListener("click", () => {
-          slides[index].scrollIntoView({
-            behavior: "smooth",
-            inline: "start",
-            block: "nearest"
-          });
-        });
+        dot.classList.toggle("is-active", index === currentIndex);
+        dot.setAttribute("aria-current", index === currentIndex ? "true" : "false");
+      });
+    }
+
+    function goToSlide(index, behavior = "smooth") {
+      const slideWidth = getSlideWidth();
+      if (!slideWidth) return;
+
+      currentIndex = index;
+      carousel.scrollTo({
+        left: slideWidth * index,
+        behavior
       });
 
-      let ticking = false;
-
-      carousel.addEventListener("scroll", () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          updateDots();
-          ticking = false;
-        });
-      }, { passive: true });
-
-      window.addEventListener("resize", updateDots);
-      window.addEventListener("load", updateDots);
       updateDots();
-    })();
-  </script>
+    }
+
+    function nextSlide() {
+      const nextIndex = (getActiveIndex() + 1) % slides.length;
+      goToSlide(nextIndex, "smooth");
+    }
+
+    function stopAutoScroll() {
+      if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+    }
+
+    function startAutoScroll() {
+      stopAutoScroll();
+      autoTimer = setInterval(() => {
+        if (!isInteracting) {
+          nextSlide();
+        }
+      }, 4200); // slow pace
+    }
+
+    function pauseAndResume() {
+      stopAutoScroll();
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        isInteracting = false;
+        startAutoScroll();
+      }, 5000);
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        isInteracting = true;
+        goToSlide(index, "smooth");
+        pauseAndResume();
+      });
+    });
+
+    let ticking = false;
+    carousel.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateDots();
+        ticking = false;
+      });
+    }, { passive: true });
+
+    carousel.addEventListener("touchstart", () => {
+      isInteracting = true;
+      stopAutoScroll();
+    }, { passive: true });
+
+    carousel.addEventListener("touchend", pauseAndResume, { passive: true });
+    carousel.addEventListener("mousedown", () => {
+      isInteracting = true;
+      stopAutoScroll();
+    });
+    carousel.addEventListener("mouseup", pauseAndResume);
+    carousel.addEventListener("mouseleave", () => {
+      if (isInteracting) pauseAndResume();
+    });
+
+    window.addEventListener("resize", () => {
+      updateDots();
+      goToSlide(getActiveIndex(), "auto");
+    });
+
+    window.addEventListener("load", () => {
+      updateDots();
+      startAutoScroll();
+    });
+
+    updateDots();
+    startAutoScroll();
+  })();
+</script>
 </body>
 </html>
