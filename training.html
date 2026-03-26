@@ -48,7 +48,7 @@
 
     <div class="side-links">
       <a href="membership.html">Membership</a>
-      <a href="training.html">Live Coaches</a>
+      <a href="training.html" class="active">Live Coaches</a>
       <a href="tournaments.html">Tournaments</a>
     </div>
   </aside>
@@ -59,10 +59,20 @@
 
         <section class="training-intro" aria-label="Live coaches intro">
           <div class="training-eyebrow">PADELIN TRAINING</div>
-          <h1 class="training-title">Live Coaches</h1>
-          <p class="training-sub">
-            Discover certified coaches, compare coaching styles, and swipe through premium session profiles built for every level of play.
-          </p>
+
+          <div class="training-intro-copy">
+            <h1 class="training-title">Live Coaches</h1>
+            <p class="training-sub">
+              Browse premium coaching profiles built for every level, from first-time players to competitive athletes.
+            </p>
+          </div>
+
+          <div class="training-tags" aria-label="Training categories">
+            <span class="training-tag">Beginner</span>
+            <span class="training-tag">Advanced</span>
+            <span class="training-tag">Kids</span>
+            <span class="training-tag">Competitive</span>
+          </div>
         </section>
 
         <section class="training-swipe-head" aria-label="Swipe hint">
@@ -74,19 +84,23 @@
           </div>
         </section>
 
-        <section aria-label="Coach cards">
-          <div class="coach-carousel" id="coachCarousel">
+        <section class="training-carousel-section" aria-label="Coach cards">
+          <div class="coach-carousel" id="coachCarousel" tabindex="0">
             <div class="coach-track">
 
               <article class="coach-slide">
                 <div class="coach-card">
                   <div class="coach-media">
                     <span class="coach-badge">🔥 Top Coach</span>
-                    <img class="coach-photo" src="assets/img/hero-1bg.jpg" alt="Coach Karim Haddad" />
+                    <img
+                      class="coach-photo"
+                      src="assets/img/coaches/karim-haddad.jpg"
+                      alt="Karim Haddad holding a padel racket on court"
+                    />
                   </div>
 
                   <div class="coach-body">
-                    <div>
+                    <div class="coach-copy">
                       <div class="coach-kicker">Competitive Coach</div>
                       <h3 class="coach-name">Karim Haddad</h3>
                       <p class="coach-cert">ITF Certified Coach</p>
@@ -103,8 +117,8 @@
                     </div>
 
                     <div class="coach-actions">
-                      <button class="btn btn-primary" type="button">Book Session</button>
-                      <a class="coach-link" href="#">View Profile</a>
+                      <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
+                      <a class="coach-link" href="coach-profile.html?coach=karim-haddad">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -114,11 +128,15 @@
                 <div class="coach-card">
                   <div class="coach-media">
                     <span class="coach-badge">⭐ Most Booked</span>
-                    <img class="coach-photo" src="assets/img/hero-bg.jpg" alt="Coach Marc Saliba" />
+                    <img
+                      class="coach-photo"
+                      src="assets/img/coaches/marc-saliba.jpg"
+                      alt="Marc Saliba standing on an outdoor padel court"
+                    />
                   </div>
 
                   <div class="coach-body">
-                    <div>
+                    <div class="coach-copy">
                       <div class="coach-kicker">Advanced Coach</div>
                       <h3 class="coach-name">Marc Saliba</h3>
                       <p class="coach-cert">Padel Pro Certified</p>
@@ -135,8 +153,8 @@
                     </div>
 
                     <div class="coach-actions">
-                      <button class="btn btn-primary" type="button">Book Session</button>
-                      <a class="coach-link" href="#">View Profile</a>
+                      <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
+                      <a class="coach-link" href="coach-profile.html?coach=marc-saliba">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -145,12 +163,16 @@
               <article class="coach-slide">
                 <div class="coach-card">
                   <div class="coach-media">
-                    <span class="coach-badge">🆕 New Coach</span>
-                    <img class="coach-photo" src="assets/img/hero-bg.jpg" alt="Coach Lara Aoun" />
+                    <span class="coach-badge">🆕 New</span>
+                    <img
+                      class="coach-photo"
+                      src="assets/img/coaches/lara-aoun.jpg"
+                      alt="Lara Aoun smiling on a padel court"
+                    />
                   </div>
 
                   <div class="coach-body">
-                    <div>
+                    <div class="coach-copy">
                       <div class="coach-kicker">Kids Coach</div>
                       <h3 class="coach-name">Lara Aoun</h3>
                       <p class="coach-cert">Youth Development Coach</p>
@@ -167,8 +189,8 @@
                     </div>
 
                     <div class="coach-actions">
-                      <button class="btn btn-primary" type="button">Book Session</button>
-                      <a class="coach-link" href="#">View Profile</a>
+                      <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
+                      <a class="coach-link" href="coach-profile.html?coach=lara-aoun">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -178,11 +200,15 @@
                 <div class="coach-card">
                   <div class="coach-media">
                     <span class="coach-badge">🔥 Elite Coach</span>
-                    <img class="coach-photo" src="assets/img/hero-bg.jpg" alt="Coach Jad Khoury" />
+                    <img
+                      class="coach-photo"
+                      src="assets/img/coaches/jad-khoury.jpg"
+                      alt="Jad Khoury during a training session"
+                    />
                   </div>
 
                   <div class="coach-body">
-                    <div>
+                    <div class="coach-copy">
                       <div class="coach-kicker">Elite Coach</div>
                       <h3 class="coach-name">Jad Khoury</h3>
                       <p class="coach-cert">High Performance Coach</p>
@@ -199,8 +225,8 @@
                     </div>
 
                     <div class="coach-actions">
-                      <button class="btn btn-primary" type="button">Book Session</button>
-                      <a class="coach-link" href="#">View Profile</a>
+                      <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
+                      <a class="coach-link" href="coach-profile.html?coach=jad-khoury">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -210,10 +236,10 @@
           </div>
 
           <div class="coach-dots" id="coachDots" aria-label="Coach slider pagination">
-            <span class="coach-dot is-active"></span>
-            <span class="coach-dot"></span>
-            <span class="coach-dot"></span>
-            <span class="coach-dot"></span>
+            <button class="coach-dot is-active" type="button" aria-label="Go to coach 1"></button>
+            <button class="coach-dot" type="button" aria-label="Go to coach 2"></button>
+            <button class="coach-dot" type="button" aria-label="Go to coach 3"></button>
+            <button class="coach-dot" type="button" aria-label="Go to coach 4"></button>
           </div>
         </section>
 
@@ -222,35 +248,51 @@
   </main>
 
   <footer class="footer">
-    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+    <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
   </footer>
 
   <script src="js/main.js"></script>
-
   <script>
-    (function coachSliderDots(){
+    (function coachSlider() {
       const carousel = document.getElementById("coachCarousel");
+      const slides = Array.from(document.querySelectorAll(".coach-slide"));
       const dots = Array.from(document.querySelectorAll(".coach-dot"));
 
-      if (!carousel || !dots.length) return;
+      if (!carousel || !slides.length || !dots.length) return;
 
-      function updateDots(){
-        const index = Math.round(carousel.scrollLeft / carousel.clientWidth);
-        dots.forEach((dot, i) => {
-          dot.classList.toggle("is-active", i === index);
+      function getActiveIndex() {
+        const slideWidth = slides[0].offsetWidth;
+        if (!slideWidth) return 0;
+        return Math.round(carousel.scrollLeft / slideWidth);
+      }
+
+      function updateDots() {
+        const activeIndex = getActiveIndex();
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("is-active", index === activeIndex);
+          dot.setAttribute("aria-current", index === activeIndex ? "true" : "false");
         });
       }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          slides[index].scrollIntoView({
+            behavior: "smooth",
+            inline: "start",
+            block: "nearest"
+          });
+        });
+      });
 
       let ticking = false;
 
       carousel.addEventListener("scroll", () => {
-        if (!ticking) {
-          requestAnimationFrame(() => {
-            updateDots();
-            ticking = false;
-          });
-          ticking = true;
-        }
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          updateDots();
+          ticking = false;
+        });
       }, { passive: true });
 
       window.addEventListener("resize", updateDots);
