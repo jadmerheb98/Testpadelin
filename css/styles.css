@@ -5583,3 +5583,95 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     font-size: 42px;
   }
 }
+.training-intro--hero{
+  gap: 10px;
+}
+
+.training-swipe-hint--dynamic{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  margin-top: 2px;
+  padding: 6px 0 0;
+  color: rgba(11,18,32,0.52);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.training-swipe-hint-text{
+  letter-spacing: -0.1px;
+}
+
+.training-swipe-gesture{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 72px;
+  height: 20px;
+}
+
+.training-swipe-line{
+  position: absolute;
+  left: 0;
+  right: 16px;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(76,114,170,0.08) 0%,
+    rgba(76,114,170,0.24) 30%,
+    rgba(76,114,170,0.08) 100%
+  );
+}
+
+.training-swipe-dot{
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  background: rgba(76,114,170,0.95);
+  box-shadow: 0 0 0 6px rgba(76,114,170,0.10);
+  animation: trainingSwipeDot 1.8s ease-in-out infinite;
+}
+
+.training-swipe-arrow{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: rgba(76,114,170,0.92);
+  animation: trainingSwipeArrow 1.8s ease-in-out infinite;
+}
+
+@keyframes trainingSwipeDot{
+  0%{
+    left: 0;
+    opacity: 0.85;
+  }
+  55%{
+    left: 42px;
+    opacity: 1;
+  }
+  100%{
+    left: 0;
+    opacity: 0.85;
+  }
+}
+
+@keyframes trainingSwipeArrow{
+  0%, 100%{
+    transform: translateY(-50%) translateX(0);
+    opacity: 0.7;
+  }
+  50%{
+    transform: translateY(-50%) translateX(4px);
+    opacity: 1;
+  }
+}
