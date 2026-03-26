@@ -5340,7 +5340,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 .coach-carousel{
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -5363,7 +5363,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   scroll-snap-align: start;
   scroll-snap-stop: always;
   padding: 0;
-  background: transparent;
+  background: var(--light);
 }
 
 /* Card */
@@ -5376,6 +5376,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     0 16px 32px rgba(15,23,42,0.07),
     0 4px 14px rgba(15,23,42,0.04);
   padding: 14px;
+  overflow: hidden;
 }
 
 .coach-card::after{
