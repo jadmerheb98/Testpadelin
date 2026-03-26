@@ -5392,7 +5392,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   height: 220px;
   object-fit: cover;
   border-radius: 22px;
-  background: rgba(15,23,42,0.04);
+  background: transparent;
   display: block;
 }
 
