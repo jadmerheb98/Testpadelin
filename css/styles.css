@@ -5203,3 +5203,487 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   margin-bottom: 14px;
   margin-top: 0;
 }
+/* ===========================
+   Live Coaches page
+   =========================== */
+
+.training-page{
+  padding: 28px 0 42px;
+  background:
+    radial-gradient(1100px 420px at 14% -6%, rgba(63,102,150,0.12), transparent 58%),
+    radial-gradient(880px 420px at 96% 10%, rgba(15,23,42,0.06), transparent 60%),
+    var(--light);
+}
+
+.training-shell{
+  display: grid;
+  gap: 18px;
+}
+
+/* Intro */
+.training-intro{
+  display: grid;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.training-eyebrow{
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: rgba(11,18,32,0.56);
+  position: relative;
+  padding-left: 12px;
+}
+
+.training-eyebrow::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(63,102,150,0.78);
+}
+
+.training-intro-copy{
+  display: grid;
+  gap: 6px;
+}
+
+.training-title{
+  margin: 0;
+  font-size: 29px;
+  line-height: 1.03;
+  letter-spacing: -0.5px;
+  color: var(--navy);
+}
+
+.training-sub{
+  margin: 0;
+  max-width: 34ch;
+  color: rgba(11,18,32,0.70);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.training-tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.training-tag{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(15,23,42,0.08);
+  box-shadow: 0 6px 16px rgba(15,23,42,0.04);
+  color: rgba(11,18,32,0.72);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+}
+
+/* Swipe head */
+.training-swipe-head{
+  display: grid;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.training-label{
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.38);
+  letter-spacing: 0.2px;
+}
+
+.training-swipe-title{
+  margin: 0;
+  font-size: 34px;
+  line-height: 0.98;
+  letter-spacing: -1.1px;
+  color: var(--navy);
+}
+
+.training-swipe-hint{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: rgba(11,18,32,0.48);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.hint-arrow{
+  display: inline-block;
+  font-size: 24px;
+  line-height: 1;
+  animation: trainingHintArrow 1.8s ease-in-out infinite;
+}
+
+@keyframes trainingHintArrow{
+  0%, 100%{ transform: translateX(0); opacity: 0.7; }
+  50%{ transform: translateX(4px); opacity: 1; }
+}
+
+/* Carousel */
+.training-carousel-section{
+  display: grid;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.coach-carousel{
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-padding-left: 0;
+}
+
+.coach-carousel::-webkit-scrollbar{
+  display: none;
+}
+
+.coach-track{
+  display: flex;
+  gap: 0;
+}
+
+.coach-slide{
+  flex: 0 0 100%;
+  min-width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding: 0;
+}
+
+/* Card */
+.coach-card{
+  position: relative;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(15,23,42,0.05);
+  border-radius: 26px;
+  box-shadow:
+    0 20px 38px rgba(15,23,42,0.08),
+    0 6px 18px rgba(15,23,42,0.04);
+  padding: 18px;
+}
+
+.coach-card::after{
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: -14px;
+  height: 42px;
+  border-radius: 0 0 24px 24px;
+  background: linear-gradient(180deg, rgba(63,102,150,0.08), rgba(63,102,150,0.02));
+  filter: blur(12px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.coach-media{
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.coach-badge{
+  position: absolute;
+  top: -6px;
+  left: -4px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 10px 24px rgba(15,23,42,0.08);
+  color: #c26031;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+.coach-photo{
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 24px;
+  background: rgba(15,23,42,0.06);
+}
+
+.coach-body{
+  display: grid;
+  gap: 14px;
+}
+
+.coach-copy{
+  display: grid;
+  gap: 4px;
+}
+
+.coach-kicker{
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(63,79,119,0.78);
+}
+
+.coach-name{
+  margin: 0;
+  font-size: 31px;
+  line-height: 1.02;
+  letter-spacing: -1.1px;
+  color: #11162a;
+}
+
+.coach-cert{
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: rgba(11,18,32,0.62);
+  font-weight: 500;
+}
+
+.coach-points{
+  margin: 0;
+  padding-left: 26px;
+  display: grid;
+  gap: 4px;
+  color: rgba(11,18,32,0.86);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.coach-points li::marker{
+  color: rgba(11,18,32,0.42);
+}
+
+.coach-price-row{
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.coach-price{
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: -1px;
+  color: var(--navy);
+}
+
+.coach-price-sub{
+  font-size: 16px;
+  color: rgba(11,18,32,0.82);
+}
+
+.coach-actions{
+  display: grid;
+  gap: 10px;
+}
+
+.training-book-btn{
+  width: 100%;
+  min-height: 54px;
+  border-radius: 18px;
+  font-size: 16px;
+  font-weight: 850;
+  background: linear-gradient(180deg, #4b76b1, var(--accent));
+  box-shadow: 0 12px 28px rgba(63,102,150,0.24);
+}
+
+.coach-link{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(11,18,32,0.46);
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.coach-link:hover{
+  color: var(--navy);
+  transform: translateY(-1px);
+}
+
+/* Dots */
+.coach-dots{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.coach-dot{
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(15,23,42,0.14);
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, width 160ms ease;
+}
+
+.coach-dot.is-active{
+  width: 24px;
+  background: rgba(63,102,150,0.95);
+}
+
+.coach-dot:hover{
+  transform: scale(1.05);
+}
+
+/* Tablet / desktop */
+@media (min-width: 761px){
+  .training-page{
+    padding: 34px 0 52px;
+  }
+
+  .training-title{
+    font-size: 34px;
+  }
+
+  .training-sub{
+    max-width: 54ch;
+  }
+
+  .training-swipe-title{
+    font-size: 42px;
+  }
+
+  .coach-slide{
+    padding-right: 0;
+  }
+
+  .coach-card{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 22px;
+    border-radius: 30px;
+  }
+
+  .coach-photo{
+    height: 340px;
+  }
+
+  .coach-name{
+    font-size: 38px;
+  }
+
+  .coach-points{
+    font-size: 18px;
+  }
+
+  .coach-price{
+    font-size: 46px;
+  }
+
+  .training-book-btn{
+    max-width: none;
+  }
+}
+
+/* Small phones */
+@media (max-width: 520px){
+  .training-page{
+    padding: 24px 0 38px;
+  }
+
+  .training-shell{
+    gap: 16px;
+  }
+
+  .training-title{
+    font-size: 27px;
+  }
+
+  .training-sub{
+    font-size: 14px;
+  }
+
+  .training-swipe-title{
+    font-size: 32px;
+  }
+
+  .training-swipe-hint{
+    font-size: 14px;
+  }
+
+  .coach-card{
+    padding: 16px;
+    border-radius: 24px;
+  }
+
+  .coach-card::after{
+    left: 14px;
+    right: 14px;
+    bottom: -12px;
+  }
+
+  .coach-badge{
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .coach-photo{
+    height: 210px;
+    border-radius: 22px;
+  }
+
+  .coach-kicker{
+    letter-spacing: 3px;
+    font-size: 10px;
+  }
+
+  .coach-name{
+    font-size: 28px;
+  }
+
+  .coach-cert{
+    font-size: 14px;
+  }
+
+  .coach-points{
+    font-size: 15px;
+    padding-left: 24px;
+  }
+
+  .coach-price{
+    font-size: 34px;
+  }
+
+  .coach-price-sub{
+    font-size: 15px;
+  }
+
+  .training-book-btn{
+    min-height: 52px;
+    border-radius: 16px;
+  }
+
+  .coach-link{
+    font-size: 14px;
+  }
+}
