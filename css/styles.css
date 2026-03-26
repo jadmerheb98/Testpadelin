@@ -5385,7 +5385,7 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 .coach-media{
   position: relative;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .coach-photo{
@@ -5422,21 +5422,22 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
 
 .coach-copy{
   display: grid;
-  gap: 3px;
+  gap: 6px;
+  margin-top: 6px;
 }
 
 .coach-kicker{
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(214,225,245,0.78);
+  color: rgba(214,225,245,0.65);
 }
    
 .coach-name{
-  margin: 0;
+  margin: 4px 0 6px;
   font-size: 28px;
-  line-height: 1.03;
+  line-height: 1.05;
   letter-spacing: -1px;
   color: #ffffff;
 }
@@ -5567,9 +5568,8 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   }
 
   .coach-photo{
-    height: 320px;
-    border-radius: 24px;
-  }
+  width: 100%;
+  height: 250px;
 
   .coach-badge{
     top: 14px;
