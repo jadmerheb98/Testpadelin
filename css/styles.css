@@ -5675,3 +5675,6 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
     opacity: 1;
   }
 }
+.coach-slide--clone{
+  /* no special styling needed */
+}
