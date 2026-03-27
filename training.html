@@ -7,12 +7,18 @@
   <link rel="stylesheet" href="css/styles.css" />
 
   <style>
+    .training-book-btn{
+      min-height: 52px !important;
+      font-size: 15px !important;
+      padding: 0 18px !important;
+    }
+
     .coach-profile-trigger{
       border: 0 !important;
       background: transparent !important;
       color: rgba(255,255,255,0.62) !important;
       font-weight: 700 !important;
-      font-size: 13px !important;
+      font-size: 12px !important;
       line-height: 1 !important;
       letter-spacing: .1px !important;
       padding: 6px 0 0 !important;
@@ -35,11 +41,13 @@
     .coach-modal-overlay{
       position: fixed !important;
       inset: 0 !important;
-      background: rgba(7, 12, 24, 0.64) !important;
-      backdrop-filter: blur(10px) saturate(115%) !important;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(63,102,150,0.12), transparent 36%),
+        rgba(7,12,24,0.72) !important;
+      backdrop-filter: blur(12px) saturate(118%) !important;
       opacity: 0 !important;
       pointer-events: none !important;
-      transition: opacity .36s ease !important;
+      transition: opacity .42s ease !important;
       z-index: 99997 !important;
     }
 
@@ -51,48 +59,95 @@
       padding: 18px !important;
       opacity: 0 !important;
       pointer-events: none !important;
-      transition: opacity .28s ease !important;
       z-index: 99998 !important;
-      perspective: 1400px !important;
+      perspective: 1800px !important;
     }
 
     .coach-modal.is-open,
-    .coach-modal-overlay.is-open{
+    .coach-modal.is-closing,
+    .coach-modal-overlay.is-open,
+    .coach-modal-overlay.is-closing{
       opacity: 1 !important;
       pointer-events: auto !important;
     }
 
+    .coach-modal.is-closing{
+      pointer-events: none !important;
+    }
+
+    .coach-modal-overlay.is-closing{
+      opacity: 0 !important;
+      transition: opacity .28s ease !important;
+    }
+
     .coach-modal-dialog{
-      width: min(520px, 100%) !important;
-      max-height: 76vh !important;
-      background:
-        radial-gradient(700px 260px at 15% -10%, rgba(63,102,150,0.12), transparent 52%),
-        linear-gradient(180deg, #ffffff, #fbfcff) !important;
-      border: 1px solid rgba(15, 23, 42, 0.08) !important;
-      border-radius: 26px !important;
-      box-shadow:
-        0 36px 90px rgba(15,23,42,0.26),
-        0 10px 26px rgba(15,23,42,0.10) !important;
+      width: min(560px, 100%) !important;
+      max-height: 78vh !important;
       position: relative !important;
       overflow: hidden !important;
-      transform-origin: 50% 22% !important;
-      transform: translateY(70px) scale(.86) rotateX(14deg) !important;
+      border-radius: 28px !important;
+      border: 1px solid rgba(15, 23, 42, 0.08) !important;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,252,255,0.98)) !important;
+      box-shadow:
+        0 44px 120px rgba(7,12,24,0.34),
+        0 14px 34px rgba(15,23,42,0.10) !important;
+      transform-origin: 50% 18% !important;
       opacity: 0 !important;
-      transition:
-        transform .52s cubic-bezier(.18,1,.22,1),
-        opacity .30s ease !important;
+      transform: translateY(110px) scale(.78) rotateX(18deg) !important;
+      will-change: transform, opacity !important;
+    }
+
+    .coach-modal-dialog::before{
+      content: "" !important;
+      position: absolute !important;
+      inset: 0 !important;
+      background:
+        linear-gradient(135deg, rgba(63,102,150,0.10), transparent 40%),
+        radial-gradient(circle at 82% 16%, rgba(63,102,150,0.12), transparent 22%),
+        linear-gradient(transparent 96%, rgba(15,23,42,0.03) 96%);
+      background-size: auto, auto, 100% 30px !important;
+      pointer-events: none !important;
     }
 
     .coach-modal.is-open .coach-modal-dialog{
-      transform: translateY(0) scale(1) rotateX(0deg) !important;
-      opacity: 1 !important;
+      animation: coachModalIn .62s cubic-bezier(.16,1,.22,1) forwards !important;
+    }
+
+    .coach-modal.is-closing .coach-modal-dialog{
+      animation: coachModalOut .34s cubic-bezier(.64,0,.78,0) forwards !important;
+    }
+
+    @keyframes coachModalIn{
+      0%{
+        opacity: 0;
+        transform: translateY(110px) scale(.78) rotateX(18deg);
+      }
+      55%{
+        opacity: 1;
+        transform: translateY(-8px) scale(1.02) rotateX(-1deg);
+      }
+      100%{
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0deg);
+      }
+    }
+
+    @keyframes coachModalOut{
+      0%{
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0deg);
+      }
+      100%{
+        opacity: 0;
+        transform: translateY(70px) scale(.88) rotateX(10deg);
+      }
     }
 
     .coach-modal-close{
       position: absolute !important;
       top: 14px !important;
       right: 14px !important;
-      left: auto !important;
       z-index: 7 !important;
       min-height: 38px !important;
       padding: 0 14px !important;
@@ -116,11 +171,12 @@
 
     .coach-modal-scroll{
       overflow: auto !important;
-      max-height: 76vh !important;
+      max-height: 78vh !important;
       display: block !important;
     }
 
     .coach-modal-content{
+      position: relative !important;
       padding: 56px 18px 18px !important;
       background: transparent !important;
     }
@@ -191,31 +247,31 @@
       line-height: 1.2 !important;
     }
 
-    .coach-modal-blueprint{
+    .coach-modal-map{
       margin-top: 16px !important;
-      padding: 14px !important;
-      border-radius: 20px !important;
+      padding: 16px !important;
+      border-radius: 22px !important;
       border: 1px solid rgba(63,102,150,0.16) !important;
       background:
         linear-gradient(180deg, rgba(63,102,150,0.10), rgba(63,102,150,0.04)) !important;
     }
 
-    .coach-modal-blueprint-head{
+    .coach-modal-map-head{
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
       gap: 10px !important;
-      margin-bottom: 12px !important;
+      margin-bottom: 14px !important;
     }
 
-    .coach-modal-blueprint-title{
+    .coach-modal-map-title{
       font-size: 15px !important;
       font-weight: 900 !important;
       color: #0f172a !important;
       margin: 0 !important;
     }
 
-    .coach-modal-blueprint-note{
+    .coach-modal-map-note{
       font-size: 11px !important;
       font-weight: 800 !important;
       color: rgba(11,18,32,0.50) !important;
@@ -224,122 +280,195 @@
       letter-spacing: 1px !important;
     }
 
-    .coach-blueprint-grid{
-      display: grid !important;
-      gap: 10px !important;
-    }
-
-    .coach-blueprint-node{
+    .coach-orbit{
       position: relative !important;
-      padding: 12px 12px 12px 40px !important;
-      border-radius: 16px !important;
-      background: rgba(255,255,255,0.82) !important;
-      border: 1px solid rgba(15,23,42,0.08) !important;
+      height: 190px !important;
+      border-radius: 22px !important;
+      border: 1px dashed rgba(63,102,150,0.22) !important;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.9) 0 58px, transparent 59px),
+        radial-gradient(circle at center, rgba(63,102,150,0.08) 0 82px, transparent 83px),
+        radial-gradient(circle at center, rgba(63,102,150,0.08) 0 110px, transparent 111px),
+        rgba(255,255,255,0.52) !important;
+      overflow: hidden !important;
     }
 
-    .coach-blueprint-node::before{
-      content: "" !important;
+    .coach-orbit-center{
       position: absolute !important;
-      left: 14px !important;
       top: 50% !important;
-      transform: translateY(-50%) !important;
-      width: 14px !important;
-      height: 14px !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 118px !important;
+      min-height: 118px !important;
       border-radius: 999px !important;
-      background: rgba(63,102,150,0.16) !important;
-      border: 1px solid rgba(63,102,150,0.30) !important;
-      box-shadow: inset 0 0 0 3px rgba(63,102,150,0.55) !important;
+      border: 1px solid rgba(63,102,150,0.22) !important;
+      background: #fff !important;
+      display: grid !important;
+      place-items: center !important;
+      text-align: center !important;
+      padding: 14px !important;
+      box-shadow: 0 10px 26px rgba(15,23,42,0.08) !important;
     }
 
-    .coach-blueprint-label{
+    .coach-orbit-center small{
       display: block !important;
       font-size: 10px !important;
       font-weight: 900 !important;
-      text-transform: uppercase !important;
       letter-spacing: 1px !important;
+      text-transform: uppercase !important;
       color: rgba(11,18,32,0.42) !important;
       margin-bottom: 4px !important;
     }
 
-    .coach-blueprint-value{
+    .coach-orbit-center strong{
       display: block !important;
-      font-size: 14px !important;
+      font-size: 15px !important;
+      line-height: 1.25 !important;
+      color: #0f172a !important;
+    }
+
+    .coach-orbit-node{
+      position: absolute !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 38px !important;
+      padding: 0 12px !important;
+      border-radius: 999px !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      background: rgba(255,255,255,0.90) !important;
+      box-shadow: 0 8px 22px rgba(15,23,42,0.06) !important;
+      font-size: 12px !important;
       font-weight: 800 !important;
       color: #0f172a !important;
-      line-height: 1.45 !important;
+      white-space: nowrap !important;
     }
 
-    .coach-modal-sections{
+    .coach-orbit-node.node-a{ top: 14px !important; left: 50% !important; transform: translateX(-50%) !important; }
+    .coach-orbit-node.node-b{ right: 16px !important; top: 50% !important; transform: translateY(-50%) !important; }
+    .coach-orbit-node.node-c{ bottom: 14px !important; left: 50% !important; transform: translateX(-50%) !important; }
+    .coach-orbit-node.node-d{ left: 16px !important; top: 50% !important; transform: translateY(-50%) !important; }
+
+    .coach-modal-grid{
       display: grid !important;
-      gap: 12px !important;
+      gap: 10px !important;
       margin-top: 14px !important;
+      grid-template-columns: 1fr 1fr !important;
     }
 
-    .coach-modal-section{
-      padding: 15px !important;
+    .coach-mini-card{
+      padding: 14px !important;
       border-radius: 18px !important;
       border: 1px solid rgba(15,23,42,0.08) !important;
       background: rgba(15,23,42,0.022) !important;
     }
 
-    .coach-modal-section h3{
-      margin: 0 0 10px !important;
-      font-size: 15px !important;
+    .coach-mini-card h3{
+      margin: 0 0 8px !important;
+      font-size: 14px !important;
       font-weight: 900 !important;
       color: #0f172a !important;
     }
 
-    .coach-modal-section p{
+    .coach-mini-card p{
       margin: 0 !important;
-      font-size: 14px !important;
-      line-height: 1.65 !important;
-      color: rgba(11,18,32,0.74) !important;
+      font-size: 13px !important;
+      line-height: 1.6 !important;
+      color: rgba(11,18,32,0.72) !important;
     }
 
-    .coach-modal-focus{
-      list-style: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
+    .coach-flow{
       display: grid !important;
       gap: 8px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
     }
 
-    .coach-modal-focus li{
+    .coach-flow li{
       position: relative !important;
-      padding: 10px 12px 10px 34px !important;
-      border-radius: 14px !important;
+      padding: 12px 12px 12px 42px !important;
+      border-radius: 16px !important;
       border: 1px solid rgba(15,23,42,0.08) !important;
       background: #fff !important;
       font-size: 13px !important;
       font-weight: 700 !important;
-      color: rgba(11,18,32,0.82) !important;
-      line-height: 1.4 !important;
+      color: rgba(11,18,32,0.80) !important;
+      line-height: 1.45 !important;
     }
 
-    .coach-modal-focus li::before{
-      content: "" !important;
+    .coach-flow li::before{
+      content: attr(data-step) !important;
       position: absolute !important;
-      left: 13px !important;
+      left: 12px !important;
       top: 50% !important;
       transform: translateY(-50%) !important;
-      width: 10px !important;
-      height: 10px !important;
+      width: 22px !important;
+      height: 22px !important;
       border-radius: 999px !important;
-      background: rgba(63,102,150,0.14) !important;
-      border: 1px solid rgba(63,102,150,0.30) !important;
-      box-shadow: inset 0 0 0 2px rgba(63,102,150,0.56) !important;
+      display: grid !important;
+      place-items: center !important;
+      font-size: 10px !important;
+      font-weight: 900 !important;
+      color: #fff !important;
+      background: #3F6696 !important;
+      box-shadow: 0 6px 14px rgba(63,102,150,0.24) !important;
+    }
+
+    .coach-focus-chips{
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      margin-top: 10px !important;
+    }
+
+    .coach-focus-chip{
+      display: inline-flex !important;
+      align-items: center !important;
+      min-height: 34px !important;
+      padding: 0 12px !important;
+      border-radius: 999px !important;
+      background: rgba(255,255,255,0.88) !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      color: #0f172a !important;
     }
 
     .coach-modal-scroll > *{
       opacity: 0 !important;
-      transform: translateY(14px) !important;
-      transition: transform .34s ease, opacity .28s ease !important;
+      transform: translateY(18px) scale(.98) !important;
     }
 
     .coach-modal.is-open .coach-modal-scroll > *{
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-      transition-delay: .10s !important;
+      animation: coachContentRise .46s cubic-bezier(.22,1,.36,1) forwards !important;
+      animation-delay: .16s !important;
+    }
+
+    .coach-modal.is-closing .coach-modal-scroll > *{
+      animation: coachContentFall .18s ease forwards !important;
+    }
+
+    @keyframes coachContentRise{
+      0%{
+        opacity: 0;
+        transform: translateY(18px) scale(.98);
+      }
+      100%{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes coachContentFall{
+      0%{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100%{
+        opacity: 0;
+        transform: translateY(10px) scale(.98);
+      }
     }
 
     body.modal-open{
@@ -347,8 +476,13 @@
     }
 
     @media (max-width: 520px){
+      .training-book-btn{
+        min-height: 50px !important;
+        font-size: 14px !important;
+      }
+
       .coach-profile-trigger{
-        font-size: 12px !important;
+        font-size: 11px !important;
       }
 
       .coach-modal{
@@ -357,12 +491,12 @@
 
       .coach-modal-dialog{
         width: min(430px, 100%) !important;
-        max-height: 72vh !important;
-        border-radius: 22px !important;
+        max-height: 74vh !important;
+        border-radius: 24px !important;
       }
 
       .coach-modal-scroll{
-        max-height: 72vh !important;
+        max-height: 74vh !important;
       }
 
       .coach-modal-content{
@@ -379,6 +513,25 @@
 
       .coach-modal-stats{
         grid-template-columns: 1fr !important;
+      }
+
+      .coach-modal-grid{
+        grid-template-columns: 1fr !important;
+      }
+
+      .coach-orbit{
+        height: 220px !important;
+      }
+
+      .coach-orbit-center{
+        width: 112px !important;
+        min-height: 112px !important;
+      }
+
+      .coach-orbit-node{
+        font-size: 11px !important;
+        min-height: 34px !important;
+        padding: 0 10px !important;
       }
 
       .coach-modal-close{
@@ -620,6 +773,7 @@
 
       <div class="coach-modal-scroll">
         <div class="coach-modal-content">
+
           <div class="coach-modal-header">
             <div class="coach-modal-kicker">PADELIN COMPETITIVE</div>
             <h2 class="coach-modal-name">Karim Haddad</h2>
@@ -641,47 +795,64 @@
             </div>
           </div>
 
-          <section class="coach-modal-blueprint" aria-label="Coach blueprint">
-            <div class="coach-modal-blueprint-head">
-              <h3 class="coach-modal-blueprint-title">Training Blueprint</h3>
-              <p class="coach-modal-blueprint-note">What players get</p>
+          <section class="coach-modal-map" aria-label="Coach profile map">
+            <div class="coach-modal-map-head">
+              <h3 class="coach-modal-map-title">Performance Map</h3>
+              <p class="coach-modal-map-note">Catchy summary</p>
             </div>
 
-            <div class="coach-blueprint-grid">
-              <div class="coach-blueprint-node">
-                <span class="coach-blueprint-label">Rhythm</span>
-                <span class="coach-blueprint-value">Fast, competitive sessions with real-match intensity.</span>
+            <div class="coach-orbit">
+              <div class="coach-orbit-center">
+                <div>
+                  <small>Core Style</small>
+                  <strong>Competitive Control</strong>
+                </div>
               </div>
 
-              <div class="coach-blueprint-node">
-                <span class="coach-blueprint-label">Decision-Making</span>
-                <span class="coach-blueprint-value">Sharper choices under pressure and cleaner point construction.</span>
-              </div>
+              <div class="coach-orbit-node node-a">Match Rhythm</div>
+              <div class="coach-orbit-node node-b">Decision Making</div>
+              <div class="coach-orbit-node node-c">Pressure Drills</div>
+              <div class="coach-orbit-node node-d">Court Positioning</div>
+            </div>
 
-              <div class="coach-blueprint-node">
-                <span class="coach-blueprint-label">Progress</span>
-                <span class="coach-blueprint-value">Structured coaching that turns good habits into repeatable performance.</span>
-              </div>
+            <div class="coach-focus-chips">
+              <span class="coach-focus-chip">High-energy sessions</span>
+              <span class="coach-focus-chip">Direct corrections</span>
+              <span class="coach-focus-chip">Structured progression</span>
             </div>
           </section>
 
-          <div class="coach-modal-sections">
-            <div class="coach-modal-section">
-              <h3>About Coach</h3>
-              <p>
-                Karim delivers high-energy sessions built around competitive rhythm, sharper decision-making, and reliable match habits. His coaching style is direct, polished, and ideal for players who want to raise their level with structure.
-              </p>
-            </div>
+          <div class="coach-modal-grid">
+            <section class="coach-mini-card">
+              <h3>Why members like him</h3>
+              <p>Fast pace, sharp corrections, and training that feels serious without being overloaded.</p>
+            </section>
 
-            <div class="coach-modal-section">
+            <section class="coach-mini-card">
+              <h3>Best for</h3>
+              <p>Players who want cleaner decisions, stronger habits, and a more match-ready version of their game.</p>
+            </section>
+          </div>
+
+          <div class="coach-modal-grid">
+            <section class="coach-mini-card">
+              <h3>Session Flow</h3>
+              <ol class="coach-flow">
+                <li data-step="1">Activation and rhythm setup</li>
+                <li data-step="2">Competitive pattern work</li>
+                <li data-step="3">Pressure-based point play</li>
+              </ol>
+            </section>
+
+            <section class="coach-mini-card">
               <h3>Focus Areas</h3>
-              <ul class="coach-modal-focus">
-                <li>Competitive match preparation</li>
-                <li>Shot selection and consistency</li>
-                <li>Footwork and court positioning</li>
-                <li>Pressure-based live drills</li>
-              </ul>
-            </div>
+              <div class="coach-focus-chips">
+                <span class="coach-focus-chip">Shot selection</span>
+                <span class="coach-focus-chip">Consistency</span>
+                <span class="coach-focus-chip">Footwork</span>
+                <span class="coach-focus-chip">Positioning</span>
+              </div>
+            </section>
           </div>
 
         </div>
@@ -823,10 +994,15 @@
       const overlay = document.getElementById("coachModalOverlay");
       const modal = document.getElementById("coachModal");
       const closeBtn = document.getElementById("coachModalClose");
+      const closeDuration = 340;
+      let isClosing = false;
 
       if (!trigger || !overlay || !modal || !closeBtn) return;
 
       function openModal() {
+        if (isClosing) return;
+        overlay.classList.remove("is-closing");
+        modal.classList.remove("is-closing");
         overlay.classList.add("is-open");
         modal.classList.add("is-open");
         modal.setAttribute("aria-hidden", "false");
@@ -834,11 +1010,22 @@
       }
 
       function closeModal() {
-        overlay.classList.remove("is-open");
+        if (isClosing || !modal.classList.contains("is-open")) return;
+        isClosing = true;
+
         modal.classList.remove("is-open");
-        modal.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("modal-open");
-        trigger.focus();
+        overlay.classList.remove("is-open");
+        modal.classList.add("is-closing");
+        overlay.classList.add("is-closing");
+
+        window.setTimeout(() => {
+          modal.classList.remove("is-closing");
+          overlay.classList.remove("is-closing");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.classList.remove("modal-open");
+          isClosing = false;
+          trigger.focus();
+        }, closeDuration);
       }
 
       trigger.addEventListener("click", openModal);
@@ -846,7 +1033,7 @@
       closeBtn.addEventListener("click", closeModal);
 
       document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && modal.classList.contains("is-open")) {
+        if (e.key === "Escape" && (modal.classList.contains("is-open") || modal.classList.contains("is-closing"))) {
           closeModal();
         }
       });
