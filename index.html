@@ -313,6 +313,14 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script src="js/firebase-init.js"></script>
 <script src="js/main.js?v=20"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".home-reveal").forEach(el => {
+    el.classList.add("is-visible");
+  });
+});
+</script>  
   
 </body>
 </html>
