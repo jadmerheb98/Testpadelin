@@ -775,6 +775,8 @@ button, input { font: inherit; }
 
 .hero-card{
   min-height: 300px;
+}
+
 }   
 
 /* ===========================
@@ -3332,7 +3334,7 @@ body:has(.dashboard-accordion) .resdash-daytoggle .resdash-subicon {
   margin-left: 8px;
 }
 /* Club section cards */
-<div class="card club-card is-disabled">
+
 /* ===== CLUB DASHBOARD CARDS ===== */
 
 .club-menu {
