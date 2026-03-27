@@ -744,3 +744,16 @@ renderTable(leaderboardTableBody, items);
 
   loadLeaderboard();
 })();
+// =========================================
+// Homepage sequential intro animation
+// =========================================
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll(".home-reveal");
+  if (!sections.length) return;
+
+  sections.forEach((section, index) => {
+    setTimeout(() => {
+      section.classList.add("is-visible");
+    }, 250 + index * 350);
+  });
+});
