@@ -5842,66 +5842,94 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   flex-wrap:wrap;
 }
 /* ===========================
-   Coach Profile Page
+   Coach Profile Modal
    =========================== */
 
-.coach-profile-page{
-  padding: 26px 0 54px;
-  background:
-    radial-gradient(1200px 520px at 18% -10%, rgba(63,102,150,0.16), transparent 60%),
-    radial-gradient(900px 420px at 95% 12%, rgba(15,23,42,0.08), transparent 60%),
-    var(--light);
+.coach-profile-trigger{
+  border: 0;
+  cursor: pointer;
 }
 
-.coach-profile-shell{
+.coach-modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(11,18,32,0.46);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 9997;
+}
+
+.coach-modal{
+  position: fixed;
+  inset: 0;
   display: grid;
-  gap: 16px;
+  place-items: center;
+  padding: 18px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 9998;
 }
 
-.coach-profile-hero{
-  margin-top: 8px;
+.coach-modal.is-open,
+.coach-modal-overlay.is-open{
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.coach-profile-grid{
-  display: grid;
-  gap: 14px;
-}
-
-.coach-profile-media-card,
-.coach-profile-main-card,
-.coach-profile-info-card{
+.coach-modal-dialog{
+  width: min(920px, 100%);
+  max-height: min(88vh, 920px);
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 20px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.coach-profile-media-card{
-  padding: 14px;
-}
-
-.coach-profile-media-wrap{
+  border-radius: 26px;
+  box-shadow: 0 30px 80px rgba(15,23,42,0.22);
   position: relative;
-  border-radius: 18px;
   overflow: hidden;
-  min-height: 360px;
-  background:
-    linear-gradient(180deg, rgba(15,23,42,0.08), rgba(15,23,42,0.20)),
-    rgba(63,102,150,0.08);
 }
 
-.coach-profile-image{
-  width: 100%;
-  height: 360px;
-  object-fit: cover;
-}
-
-.coach-profile-badge{
+.coach-modal-close{
   position: absolute;
   top: 14px;
   left: 14px;
-  z-index: 2;
+  z-index: 5;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(15,23,42,0.74);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.coach-modal-scroll{
+  overflow: auto;
+  max-height: min(88vh, 920px);
+  display: grid;
+}
+
+.coach-modal-media{
+  position: relative;
+  background: #eef3f9;
+}
+
+.coach-modal-media img{
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  display: block;
+}
+
+.coach-modal-badge{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
   display: inline-flex;
   align-items: center;
   min-height: 34px;
@@ -5911,152 +5939,112 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   color: #fff;
   font-size: 12px;
   font-weight: 900;
-  letter-spacing: .3px;
-  border: 1px solid rgba(255,255,255,0.14);
-  backdrop-filter: blur(8px);
+  letter-spacing: .2px;
 }
 
-.coach-profile-main-card{
-  padding: 18px;
+.coach-modal-content{
+  padding: 20px;
 }
 
-.coach-profile-kicker{
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 2.4px;
-  text-transform: uppercase;
-  color: rgba(11,18,32,0.55);
-  margin-bottom: 10px;
-  position: relative;
-  padding-left: 12px;
-}
-
-.coach-profile-kicker::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:50%;
-  transform: translateY(-50%);
-  width:6px;
-  height:6px;
-  border-radius:999px;
-  background: rgba(63,102,150,0.75);
-}
-
-.coach-profile-head{
-  display: grid;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.coach-profile-name{
-  margin: 0 0 4px;
-  font-size: 30px;
-  line-height: 1.04;
-  letter-spacing: -0.6px;
-  color: var(--navy);
-}
-
-.coach-profile-role{
-  margin: 0;
-  font-size: 15px;
-  font-weight: 750;
-  color: rgba(11,18,32,0.66);
-}
-
-.coach-profile-price-card{
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-  padding: 12px 14px;
-  border-radius: 16px;
-  border: 1px solid rgba(63,102,150,0.18);
-  background: rgba(63,102,150,0.08);
-  width: fit-content;
-}
-
-.coach-profile-price-label{
+.coach-modal-kicker{
   font-size: 11px;
   font-weight: 900;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
-  color: rgba(11,18,32,0.50);
+  color: rgba(11,18,32,0.52);
+  margin-bottom: 10px;
 }
 
-.coach-profile-price{
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 1;
+.coach-modal-name{
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.02;
+  letter-spacing: -0.8px;
   color: var(--navy);
 }
 
-.coach-profile-meta{
+.coach-modal-role{
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(11,18,32,0.68);
+}
+
+.coach-modal-stats{
   display: grid;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-top: 18px;
 }
 
-.coach-meta-pill{
-  display: grid;
-  gap: 3px;
-  padding: 12px 13px;
+.coach-modal-stat{
+  padding: 13px 14px;
   border-radius: 16px;
   border: 1px solid rgba(15,23,42,0.08);
-  background: rgba(15,23,42,0.03);
+  background: rgba(15,23,42,0.035);
+  display: grid;
+  gap: 4px;
 }
 
-.coach-meta-label{
+.coach-modal-stat span{
   font-size: 11px;
   font-weight: 900;
-  letter-spacing: 1.1px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: rgba(11,18,32,0.48);
 }
 
-.coach-meta-pill strong{
-  font-size: 14px;
+.coach-modal-stat strong{
+  font-size: 15px;
   color: var(--navy);
 }
 
-.coach-profile-copy-block + .coach-profile-copy-block{
+.coach-modal-section{
   margin-top: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(15,23,42,0.08);
+  background: rgba(15,23,42,0.025);
 }
 
-.coach-section-mini-title{
-  font-size: 13px;
-  font-weight: 900;
+.coach-modal-section-accent{
+  background: linear-gradient(180deg, rgba(63,102,150,0.10), rgba(63,102,150,0.04));
+  border-color: rgba(63,102,150,0.18);
+}
+
+.coach-modal-section h3{
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: 850;
   color: var(--navy);
-  margin-bottom: 8px;
 }
 
-.coach-profile-about{
+.coach-modal-section p{
   margin: 0;
-  font-size: 14px;
-  line-height: 1.65;
-  color: rgba(11,18,32,0.76);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(11,18,32,0.75);
 }
 
-.coach-focus-list{
+.coach-modal-focus{
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
   display: grid;
   gap: 8px;
 }
 
-.coach-focus-list li{
+.coach-modal-focus li{
   position: relative;
   padding: 11px 12px 11px 38px;
   border-radius: 14px;
   border: 1px solid rgba(15,23,42,0.08);
-  background: rgba(15,23,42,0.03);
+  background: #fff;
   font-size: 14px;
   font-weight: 700;
   color: rgba(11,18,32,0.82);
 }
 
-.coach-focus-list li::before{
+.coach-modal-focus li::before{
   content: "";
   position: absolute;
   left: 14px;
@@ -6066,129 +6054,80 @@ body:has(#memberSearchInput) .member-mini-btn-primary:hover{
   height: 14px;
   border-radius: 999px;
   background: rgba(63,102,150,0.14);
-  border: 1px solid rgba(63,102,150,0.32);
-  box-shadow: inset 0 0 0 3px rgba(63,102,150,0.55);
+  border: 1px solid rgba(63,102,150,0.30);
+  box-shadow: inset 0 0 0 3px rgba(63,102,150,0.56);
 }
 
-.coach-profile-actions{
+.coach-modal-actions{
   display: grid;
   gap: 10px;
   margin-top: 18px;
 }
 
-.coach-profile-cta,
-.coach-profile-back{
+.coach-modal-book,
+.coach-modal-back-btn{
   min-height: 50px;
-  border-radius: 14px;
-  justify-content: center;
+  border-radius: 15px;
+  width: 100%;
 }
 
-.coach-profile-lower-grid{
-  display: grid;
-  gap: 14px;
-}
-
-.coach-profile-info-card{
-  padding: 16px;
-}
-
-.coach-profile-info-card--accent{
-  background: linear-gradient(180deg, rgba(63,102,150,0.10), rgba(63,102,150,0.05));
-  border-color: rgba(63,102,150,0.22);
-}
-
-.coach-card-title{
-  font-size: 16px;
-  font-weight: 900;
-  color: var(--navy);
-  margin-bottom: 8px;
-}
-
-.coach-card-text{
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: rgba(11,18,32,0.72);
+body.modal-open{
+  overflow: hidden;
 }
 
 @media (min-width: 760px){
-  .coach-profile-actions{
+  .coach-modal-stats{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .coach-modal-actions{
     grid-template-columns: 1fr 1fr;
-  }
-
-  .coach-profile-meta{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .coach-profile-lower-grid{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 980px){
-  .coach-profile-grid{
+  .coach-modal-scroll{
     grid-template-columns: 0.92fr 1.08fr;
-    align-items: start;
   }
 
-  .coach-profile-main-card{
-    padding: 22px;
-  }
-
-  .coach-profile-head{
-    grid-template-columns: 1fr auto;
-    align-items: start;
-  }
-
-  .coach-profile-media-wrap,
-  .coach-profile-image{
+  .coach-modal-media img{
     height: 100%;
     min-height: 100%;
   }
 
-  .coach-profile-media-card{
-    height: 100%;
+  .coach-modal-media{
+    min-height: 100%;
+  }
+
+  .coach-modal-content{
+    padding: 24px;
   }
 }
 
 @media (max-width: 520px){
-  .coach-profile-page{
-    padding: 22px 0 38px;
-  }
-
-  .coach-profile-media-card{
+  .coach-modal{
     padding: 12px;
   }
 
-  .coach-profile-main-card{
+  .coach-modal-dialog{
+    border-radius: 22px;
+    max-height: 90vh;
+  }
+
+  .coach-modal-media img{
+    height: 280px;
+  }
+
+  .coach-modal-content{
     padding: 16px;
   }
 
-  .coach-profile-name{
-    font-size: 26px;
+  .coach-modal-name{
+    font-size: 28px;
   }
 
-  .coach-profile-role{
-    font-size: 14px;
-  }
-
-  .coach-profile-image{
-    height: 320px;
-  }
-
-  .coach-profile-media-wrap{
-    min-height: 320px;
-  }
-
-  .coach-profile-badge{
+  .coach-modal-close{
     top: 12px;
     left: 12px;
-    min-height: 32px;
-    padding: 6px 11px;
-    font-size: 11px;
-  }
-
-  .coach-profile-price{
-    font-size: 22px;
   }
 }
