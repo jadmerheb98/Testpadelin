@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Live Coaches | PADELIN</title>
-  <link rel="stylesheet" href="css/styles.css?V=100" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
@@ -102,9 +102,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <button class="coach-link coach-profile-trigger" type="button" id="karimProfileTrigger">
-  View Profile
-</button>
+                      <a class="coach-link" href="coach-profile.html?coach=karim-haddad">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -230,73 +228,6 @@
       </div>
     </div>
   </main>
-<div class="coach-modal-overlay" id="coachModalOverlay"></div>
-
-<section class="coach-modal" id="coachModal" aria-hidden="true" aria-label="Coach Profile Popup">
-  <div class="coach-modal-dialog">
-    <button class="coach-modal-close" id="coachModalClose" type="button" aria-label="Close profile">
-      Back
-    </button>
-
-    <div class="coach-modal-scroll">
-      <div class="coach-modal-media">
-        <span class="coach-modal-badge">🔥 Top Coach</span>
-        <img
-          src="assets/img/coaches/karim-haddad.jpg"
-          alt="Karim Haddad holding a padel racket on court"
-        />
-      </div>
-
-      <div class="coach-modal-content">
-        <div class="coach-modal-kicker">PADELIN COMPETITIVE</div>
-        <h2 class="coach-modal-name">Karim Haddad</h2>
-        <p class="coach-modal-role">Competitive Coach</p>
-
-        <div class="coach-modal-stats">
-          <div class="coach-modal-stat">
-            <span>Certification</span>
-            <strong>ITF Certified Coach</strong>
-          </div>
-          <div class="coach-modal-stat">
-            <span>Experience</span>
-            <strong>8 Years</strong>
-          </div>
-          <div class="coach-modal-stat">
-            <span>Session</span>
-            <strong>$40</strong>
-          </div>
-        </div>
-
-        <div class="coach-modal-section">
-          <h3>About Coach</h3>
-          <p>
-            Karim delivers high-energy sessions built around competitive rhythm, sharper decision-making, and reliable match habits. His coaching style is direct, polished, and ideal for players who want to raise their level with structure.
-          </p>
-        </div>
-
-        <div class="coach-modal-section">
-          <h3>Focus Areas</h3>
-          <ul class="coach-modal-focus">
-            <li>Competitive match preparation</li>
-            <li>Shot selection and consistency</li>
-            <li>Footwork and court positioning</li>
-            <li>Pressure-based live drills</li>
-          </ul>
-        </div>
-
-        <div class="coach-modal-actions">
-          <button class="btn btn-primary coach-modal-book" type="button">
-            Book Session
-          </button>
-          <button class="btn btn-ghost coach-modal-back-btn" id="coachModalBackBtn" type="button">
-            Back
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-  
 
   <footer class="footer">
     <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
@@ -424,43 +355,5 @@
     startAutoScroll();
   })();
 </script>
-
-<script>
-  (function karimModalOnly() {
-    const trigger = document.getElementById("karimProfileTrigger");
-    const overlay = document.getElementById("coachModalOverlay");
-    const modal = document.getElementById("coachModal");
-    const closeBtn = document.getElementById("coachModalClose");
-    const backBtn = document.getElementById("coachModalBackBtn");
-
-    if (!trigger || !overlay || !modal || !closeBtn || !backBtn) return;
-
-    function openModal() {
-      overlay.classList.add("is-open");
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("modal-open");
-    }
-
-    function closeModal() {
-      overlay.classList.remove("is-open");
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("modal-open");
-      trigger.focus();
-    }
-
-    trigger.addEventListener("click", openModal);
-    overlay.addEventListener("click", closeModal);
-    closeBtn.addEventListener("click", closeModal);
-    backBtn.addEventListener("click", closeModal);
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && modal.classList.contains("is-open")) {
-        closeModal();
-      }
-    });
-  })();
-</script>  
 </body>
 </html>
