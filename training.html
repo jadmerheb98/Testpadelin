@@ -10,14 +10,19 @@
     .coach-profile-trigger{
       border: 0 !important;
       background: transparent !important;
-      color: rgba(255,255,255,0.72) !important;
+      color: rgba(255,255,255,0.62) !important;
       font-weight: 700 !important;
-      font-size: 15px !important;
+      font-size: 13px !important;
       line-height: 1 !important;
-      padding: 8px 0 2px !important;
+      letter-spacing: .1px !important;
+      padding: 6px 0 0 !important;
       min-height: auto !important;
       border-radius: 0 !important;
       cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
       transition: color .18s ease, transform .18s ease, opacity .18s ease !important;
     }
 
@@ -30,11 +35,11 @@
     .coach-modal-overlay{
       position: fixed !important;
       inset: 0 !important;
-      background: rgba(11,18,32,0.58) !important;
-      backdrop-filter: blur(8px) !important;
+      background: rgba(7, 12, 24, 0.64) !important;
+      backdrop-filter: blur(10px) saturate(115%) !important;
       opacity: 0 !important;
       pointer-events: none !important;
-      transition: opacity .34s ease !important;
+      transition: opacity .36s ease !important;
       z-index: 99997 !important;
     }
 
@@ -43,11 +48,12 @@
       inset: 0 !important;
       display: grid !important;
       place-items: center !important;
-      padding: 20px !important;
+      padding: 18px !important;
       opacity: 0 !important;
       pointer-events: none !important;
-      transition: opacity .32s ease !important;
+      transition: opacity .28s ease !important;
       z-index: 99998 !important;
+      perspective: 1400px !important;
     }
 
     .coach-modal.is-open,
@@ -57,23 +63,28 @@
     }
 
     .coach-modal-dialog{
-      width: min(560px, 100%) !important;
-      max-height: 78vh !important;
-      background: #fff !important;
-      border: 1px solid rgba(15, 23, 42, 0.10) !important;
-      border-radius: 24px !important;
-      box-shadow: 0 34px 90px rgba(15,23,42,0.28) !important;
+      width: min(520px, 100%) !important;
+      max-height: 76vh !important;
+      background:
+        radial-gradient(700px 260px at 15% -10%, rgba(63,102,150,0.12), transparent 52%),
+        linear-gradient(180deg, #ffffff, #fbfcff) !important;
+      border: 1px solid rgba(15, 23, 42, 0.08) !important;
+      border-radius: 26px !important;
+      box-shadow:
+        0 36px 90px rgba(15,23,42,0.26),
+        0 10px 26px rgba(15,23,42,0.10) !important;
       position: relative !important;
       overflow: hidden !important;
-      transform: translateY(42px) scale(.90) !important;
+      transform-origin: 50% 22% !important;
+      transform: translateY(70px) scale(.86) rotateX(14deg) !important;
       opacity: 0 !important;
       transition:
-        transform .42s cubic-bezier(.18,1,.22,1),
-        opacity .28s ease !important;
+        transform .52s cubic-bezier(.18,1,.22,1),
+        opacity .30s ease !important;
     }
 
     .coach-modal.is-open .coach-modal-dialog{
-      transform: translateY(0) scale(1) !important;
+      transform: translateY(0) scale(1) rotateX(0deg) !important;
       opacity: 1 !important;
     }
 
@@ -82,77 +93,92 @@
       top: 14px !important;
       right: 14px !important;
       left: auto !important;
-      z-index: 5 !important;
-      min-height: 40px !important;
+      z-index: 7 !important;
+      min-height: 38px !important;
       padding: 0 14px !important;
       border-radius: 999px !important;
-      border: 1px solid rgba(15,23,42,0.10) !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
       background: rgba(15,23,42,0.05) !important;
       color: #0f172a !important;
-      font-size: 13px !important;
-      font-weight: 800 !important;
+      font-size: 12px !important;
+      font-weight: 900 !important;
+      letter-spacing: .2px !important;
       cursor: pointer !important;
-      transition: transform .18s ease, background .18s ease !important;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease !important;
     }
 
     .coach-modal-close:hover,
     .coach-modal-close:active{
       transform: translateY(-1px) !important;
       background: rgba(15,23,42,0.09) !important;
+      border-color: rgba(15,23,42,0.14) !important;
     }
 
     .coach-modal-scroll{
       overflow: auto !important;
-      max-height: 78vh !important;
+      max-height: 76vh !important;
       display: block !important;
     }
 
     .coach-modal-content{
-      padding: 56px 20px 20px !important;
-      background: #fff !important;
+      padding: 56px 18px 18px !important;
+      background: transparent !important;
+    }
+
+    .coach-modal-header{
+      display: grid !important;
+      gap: 12px !important;
     }
 
     .coach-modal-kicker{
-      font-size: 11px !important;
+      display: inline-flex !important;
+      width: fit-content !important;
+      font-size: 10px !important;
       font-weight: 900 !important;
       letter-spacing: 2px !important;
       text-transform: uppercase !important;
-      color: rgba(11,18,32,0.48) !important;
-      margin-bottom: 10px !important;
+      color: rgba(11,18,32,0.52) !important;
+      padding: 7px 10px !important;
+      border-radius: 999px !important;
+      background: rgba(15,23,42,0.04) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+      margin-bottom: 2px !important;
     }
 
     .coach-modal-name{
       margin: 0 !important;
-      font-size: 34px !important;
+      font-size: 32px !important;
       line-height: 1.02 !important;
       letter-spacing: -1px !important;
       color: #0f172a !important;
     }
 
     .coach-modal-role{
-      margin: 8px 0 0 !important;
-      font-size: 16px !important;
+      margin: -2px 0 0 !important;
+      font-size: 15px !important;
       font-weight: 700 !important;
-      color: rgba(11,18,32,0.66) !important;
+      color: rgba(11,18,32,0.62) !important;
     }
 
     .coach-modal-stats{
       display: grid !important;
       gap: 10px !important;
-      margin-top: 18px !important;
+      margin-top: 16px !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
 
     .coach-modal-stat{
-      padding: 12px 13px !important;
-      border-radius: 15px !important;
+      padding: 12px !important;
+      border-radius: 16px !important;
       border: 1px solid rgba(15,23,42,0.08) !important;
-      background: rgba(15,23,42,0.035) !important;
+      background: rgba(15,23,42,0.03) !important;
       display: grid !important;
       gap: 4px !important;
+      text-align: center !important;
     }
 
     .coach-modal-stat span{
-      font-size: 11px !important;
+      font-size: 10px !important;
       font-weight: 900 !important;
       letter-spacing: 1px !important;
       text-transform: uppercase !important;
@@ -160,30 +186,114 @@
     }
 
     .coach-modal-stat strong{
-      font-size: 15px !important;
+      font-size: 14px !important;
       color: #0f172a !important;
+      line-height: 1.2 !important;
+    }
+
+    .coach-modal-blueprint{
+      margin-top: 16px !important;
+      padding: 14px !important;
+      border-radius: 20px !important;
+      border: 1px solid rgba(63,102,150,0.16) !important;
+      background:
+        linear-gradient(180deg, rgba(63,102,150,0.10), rgba(63,102,150,0.04)) !important;
+    }
+
+    .coach-modal-blueprint-head{
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 10px !important;
+      margin-bottom: 12px !important;
+    }
+
+    .coach-modal-blueprint-title{
+      font-size: 15px !important;
+      font-weight: 900 !important;
+      color: #0f172a !important;
+      margin: 0 !important;
+    }
+
+    .coach-modal-blueprint-note{
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      color: rgba(11,18,32,0.50) !important;
+      margin: 0 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+    }
+
+    .coach-blueprint-grid{
+      display: grid !important;
+      gap: 10px !important;
+    }
+
+    .coach-blueprint-node{
+      position: relative !important;
+      padding: 12px 12px 12px 40px !important;
+      border-radius: 16px !important;
+      background: rgba(255,255,255,0.82) !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+    }
+
+    .coach-blueprint-node::before{
+      content: "" !important;
+      position: absolute !important;
+      left: 14px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      width: 14px !important;
+      height: 14px !important;
+      border-radius: 999px !important;
+      background: rgba(63,102,150,0.16) !important;
+      border: 1px solid rgba(63,102,150,0.30) !important;
+      box-shadow: inset 0 0 0 3px rgba(63,102,150,0.55) !important;
+    }
+
+    .coach-blueprint-label{
+      display: block !important;
+      font-size: 10px !important;
+      font-weight: 900 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      color: rgba(11,18,32,0.42) !important;
+      margin-bottom: 4px !important;
+    }
+
+    .coach-blueprint-value{
+      display: block !important;
+      font-size: 14px !important;
+      font-weight: 800 !important;
+      color: #0f172a !important;
+      line-height: 1.45 !important;
+    }
+
+    .coach-modal-sections{
+      display: grid !important;
+      gap: 12px !important;
+      margin-top: 14px !important;
     }
 
     .coach-modal-section{
-      margin-top: 14px !important;
       padding: 15px !important;
-      border-radius: 16px !important;
+      border-radius: 18px !important;
       border: 1px solid rgba(15,23,42,0.08) !important;
-      background: rgba(15,23,42,0.025) !important;
+      background: rgba(15,23,42,0.022) !important;
     }
 
     .coach-modal-section h3{
       margin: 0 0 10px !important;
-      font-size: 16px !important;
-      font-weight: 850 !important;
+      font-size: 15px !important;
+      font-weight: 900 !important;
       color: #0f172a !important;
     }
 
     .coach-modal-section p{
       margin: 0 !important;
-      font-size: 15px !important;
-      line-height: 1.68 !important;
-      color: rgba(11,18,32,0.75) !important;
+      font-size: 14px !important;
+      line-height: 1.65 !important;
+      color: rgba(11,18,32,0.74) !important;
     }
 
     .coach-modal-focus{
@@ -196,64 +306,79 @@
 
     .coach-modal-focus li{
       position: relative !important;
-      padding: 10px 12px 10px 36px !important;
-      border-radius: 13px !important;
+      padding: 10px 12px 10px 34px !important;
+      border-radius: 14px !important;
       border: 1px solid rgba(15,23,42,0.08) !important;
       background: #fff !important;
-      font-size: 14px !important;
+      font-size: 13px !important;
       font-weight: 700 !important;
       color: rgba(11,18,32,0.82) !important;
+      line-height: 1.4 !important;
     }
 
     .coach-modal-focus li::before{
       content: "" !important;
       position: absolute !important;
-      left: 14px !important;
+      left: 13px !important;
       top: 50% !important;
       transform: translateY(-50%) !important;
-      width: 12px !important;
-      height: 12px !important;
+      width: 10px !important;
+      height: 10px !important;
       border-radius: 999px !important;
       background: rgba(63,102,150,0.14) !important;
       border: 1px solid rgba(63,102,150,0.30) !important;
-      box-shadow: inset 0 0 0 3px rgba(63,102,150,0.56) !important;
+      box-shadow: inset 0 0 0 2px rgba(63,102,150,0.56) !important;
+    }
+
+    .coach-modal-scroll > *{
+      opacity: 0 !important;
+      transform: translateY(14px) !important;
+      transition: transform .34s ease, opacity .28s ease !important;
+    }
+
+    .coach-modal.is-open .coach-modal-scroll > *{
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      transition-delay: .10s !important;
     }
 
     body.modal-open{
       overflow: hidden !important;
     }
 
-    @media (min-width: 760px){
-      .coach-modal-stats{
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-      }
-    }
-
     @media (max-width: 520px){
+      .coach-profile-trigger{
+        font-size: 12px !important;
+      }
+
       .coach-modal{
         padding: 14px !important;
       }
 
       .coach-modal-dialog{
-        width: min(440px, 100%) !important;
-        max-height: 74vh !important;
+        width: min(430px, 100%) !important;
+        max-height: 72vh !important;
         border-radius: 22px !important;
       }
 
       .coach-modal-scroll{
-        max-height: 74vh !important;
+        max-height: 72vh !important;
       }
 
       .coach-modal-content{
-        padding: 54px 16px 16px !important;
+        padding: 52px 16px 16px !important;
       }
 
       .coach-modal-name{
-        font-size: 28px !important;
+        font-size: 27px !important;
       }
 
       .coach-modal-role{
-        font-size: 15px !important;
+        font-size: 14px !important;
+      }
+
+      .coach-modal-stats{
+        grid-template-columns: 1fr !important;
       }
 
       .coach-modal-close{
@@ -392,7 +517,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <button class="coach-link coach-profile-trigger" type="button">View Profile</button>
+                      <a class="coach-link coach-profile-trigger" href="coach-profile.html?coach=marc-saliba">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -428,7 +553,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <button class="coach-link coach-profile-trigger" type="button">View Profile</button>
+                      <a class="coach-link coach-profile-trigger" href="coach-profile.html?coach=lara-aoun">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -464,7 +589,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <button class="coach-link coach-profile-trigger" type="button">View Profile</button>
+                      <a class="coach-link coach-profile-trigger" href="coach-profile.html?coach=jad-khoury">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -495,14 +620,16 @@
 
       <div class="coach-modal-scroll">
         <div class="coach-modal-content">
-          <div class="coach-modal-kicker">PADELIN COMPETITIVE</div>
-          <h2 class="coach-modal-name">Karim Haddad</h2>
-          <p class="coach-modal-role">Competitive Coach</p>
+          <div class="coach-modal-header">
+            <div class="coach-modal-kicker">PADELIN COMPETITIVE</div>
+            <h2 class="coach-modal-name">Karim Haddad</h2>
+            <p class="coach-modal-role">Competitive Coach</p>
+          </div>
 
           <div class="coach-modal-stats">
             <div class="coach-modal-stat">
               <span>Certification</span>
-              <strong>ITF Certified Coach</strong>
+              <strong>ITF Certified</strong>
             </div>
             <div class="coach-modal-stat">
               <span>Experience</span>
@@ -514,22 +641,49 @@
             </div>
           </div>
 
-          <div class="coach-modal-section">
-            <h3>About Coach</h3>
-            <p>
-              Karim delivers high-energy sessions built around competitive rhythm, sharper decision-making, and reliable match habits. His coaching style is direct, polished, and ideal for players who want to raise their level with structure.
-            </p>
+          <section class="coach-modal-blueprint" aria-label="Coach blueprint">
+            <div class="coach-modal-blueprint-head">
+              <h3 class="coach-modal-blueprint-title">Training Blueprint</h3>
+              <p class="coach-modal-blueprint-note">What players get</p>
+            </div>
+
+            <div class="coach-blueprint-grid">
+              <div class="coach-blueprint-node">
+                <span class="coach-blueprint-label">Rhythm</span>
+                <span class="coach-blueprint-value">Fast, competitive sessions with real-match intensity.</span>
+              </div>
+
+              <div class="coach-blueprint-node">
+                <span class="coach-blueprint-label">Decision-Making</span>
+                <span class="coach-blueprint-value">Sharper choices under pressure and cleaner point construction.</span>
+              </div>
+
+              <div class="coach-blueprint-node">
+                <span class="coach-blueprint-label">Progress</span>
+                <span class="coach-blueprint-value">Structured coaching that turns good habits into repeatable performance.</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="coach-modal-sections">
+            <div class="coach-modal-section">
+              <h3>About Coach</h3>
+              <p>
+                Karim delivers high-energy sessions built around competitive rhythm, sharper decision-making, and reliable match habits. His coaching style is direct, polished, and ideal for players who want to raise their level with structure.
+              </p>
+            </div>
+
+            <div class="coach-modal-section">
+              <h3>Focus Areas</h3>
+              <ul class="coach-modal-focus">
+                <li>Competitive match preparation</li>
+                <li>Shot selection and consistency</li>
+                <li>Footwork and court positioning</li>
+                <li>Pressure-based live drills</li>
+              </ul>
+            </div>
           </div>
 
-          <div class="coach-modal-section">
-            <h3>Focus Areas</h3>
-            <ul class="coach-modal-focus">
-              <li>Competitive match preparation</li>
-              <li>Shot selection and consistency</li>
-              <li>Footwork and court positioning</li>
-              <li>Pressure-based live drills</li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
