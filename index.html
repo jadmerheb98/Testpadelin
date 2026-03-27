@@ -7,18 +7,29 @@
   <link rel="stylesheet" href="css/styles.css?v=20" />
 
 <style>
-/* Homepage animation (inline test) */
+/* Homepage premium intro */
 .home-reveal {
   opacity: 0;
-  transform: translateX(-60px);
-  transition: opacity 800ms ease, transform 800ms ease;
+  transform: translate3d(-40px, 0, 0);
+  transition:
+    opacity 1100ms ease,
+    transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .home-reveal.is-visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
-</style>  
+
+@media (prefers-reduced-motion: reduce) {
+  .home-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+</style>
   
 </head>
 <body>
@@ -316,11 +327,16 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".home-reveal").forEach(el => {
-    el.classList.add("is-visible");
+  const sections = document.querySelectorAll(".home-reveal");
+  if (!sections.length) return;
+
+  sections.forEach((section, index) => {
+    setTimeout(() => {
+      section.classList.add("is-visible");
+    }, 700 + index * 800);
   });
 });
-</script>  
+</script> 
   
 </body>
 </html>
