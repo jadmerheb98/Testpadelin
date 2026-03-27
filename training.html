@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Live Coaches | PADELIN</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
 </head>
 <body>
 
@@ -58,15 +58,12 @@
       <div class="training-shell">
 
         <section class="training-intro training-intro--hero" aria-label="Live coaches intro">
-  <div class="training-eyebrow">PADELIN TRAINING</div>
-
-  <h1 class="training-title">Live Coaches</h1>
-
-  <p class="training-sub">
-    Premium coaches for every level.
-  </p>
-          
-</section>
+          <div class="training-eyebrow">PADELIN TRAINING</div>
+          <h1 class="training-title">Live Coaches</h1>
+          <p class="training-sub">
+            Premium coaches for every level.
+          </p>
+        </section>
 
         <section class="training-carousel-section" aria-label="Coach cards">
           <div class="coach-carousel" id="coachCarousel" tabindex="0">
@@ -102,7 +99,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link" href="coach-profile.html?coach=karim-haddad">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button" data-coach="karim-haddad">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -114,31 +111,31 @@
                     <span class="coach-badge">⭐ Most Booked</span>
                     <img
                       class="coach-photo"
-                      src="assets/img/coaches/marc-saliba.jpg"
-                      alt="Marc Saliba standing on an outdoor padel court"
+                      src="assets/img/coaches/maya-khoury.jpg"
+                      alt="Maya Khoury standing on a padel court"
                     />
                   </div>
 
                   <div class="coach-body">
                     <div class="coach-copy">
-                      <div class="coach-kicker">Advanced Coach</div>
-                      <h3 class="coach-name">Marc Saliba</h3>
+                      <div class="coach-kicker">Performance Coach</div>
+                      <h3 class="coach-name">Maya Khoury</h3>
                       <p class="coach-cert">Padel Pro Certified</p>
                     </div>
 
                     <ul class="coach-points">
-                      <li>6 years experience</li>
-                      <li>Advanced tactical sessions</li>
+                      <li>7 years experience</li>
+                      <li>Confidence & technical refinement</li>
                     </ul>
 
                     <div class="coach-price-row">
-                      <div class="coach-price">$35</div>
+                      <div class="coach-price">$38</div>
                       <div class="coach-price-sub">/ session</div>
                     </div>
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link" href="coach-profile.html?coach=marc-saliba">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button" data-coach="maya-khoury">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -147,33 +144,34 @@
               <article class="coach-slide">
                 <div class="coach-card">
                   <div class="coach-media">
-                    <span class="coach-badge">🆕 New</span>
+                    <span class="coach-badge">🎯 Popular Coach</span>
                     <img
                       class="coach-photo"
-                      src="assets/img/coaches/lara-aoun.jpg"
+                      src="assets/img/coaches/nicolas-saad.jpg"
+                      alt="Nicolas Saad on a padel court"
                     />
                   </div>
 
                   <div class="coach-body">
                     <div class="coach-copy">
-                      <div class="coach-kicker">Kids Coach</div>
-                      <h3 class="coach-name">Lara Aoun</h3>
-                      <p class="coach-cert">Youth Development Coach</p>
+                      <div class="coach-kicker">Tactical Coach</div>
+                      <h3 class="coach-name">Nicolas Saad</h3>
+                      <p class="coach-cert">International Padel Certified</p>
                     </div>
 
                     <ul class="coach-points">
-                      <li>4 years experience</li>
-                      <li>Kids confidence training</li>
+                      <li>6 years experience</li>
+                      <li>Tactical match sessions</li>
                     </ul>
 
                     <div class="coach-price-row">
-                      <div class="coach-price">$22</div>
+                      <div class="coach-price">$36</div>
                       <div class="coach-price-sub">/ session</div>
                     </div>
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link" href="coach-profile.html?coach=lara-aoun">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button" data-coach="nicolas-saad">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -182,16 +180,17 @@
               <article class="coach-slide">
                 <div class="coach-card">
                   <div class="coach-media">
-                    <span class="coach-badge">🔥 Elite Coach</span>
+                    <span class="coach-badge">👑 Head Coach</span>
                     <img
                       class="coach-photo"
                       src="assets/img/coaches/jad-khoury.jpg"
+                      alt="Jad Khoury on a padel court"
                     />
                   </div>
 
                   <div class="coach-body">
                     <div class="coach-copy">
-                      <div class="coach-kicker">Elite Coach</div>
+                      <div class="coach-kicker">Head Coach</div>
                       <h3 class="coach-name">Jad Khoury</h3>
                       <p class="coach-cert">High Performance Coach</p>
                     </div>
@@ -208,7 +207,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link" href="coach-profile.html?coach=jad-khoury">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button" data-coach="jad-khoury">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -229,131 +228,368 @@
     </div>
   </main>
 
+  <div class="coach-modal-overlay" id="coachModalOverlay"></div>
+
+  <section class="coach-modal" id="coachModal" aria-hidden="true" aria-label="Coach Profile Popup">
+    <div class="coach-modal-dialog">
+      <button class="coach-modal-close" id="coachModalClose" type="button" aria-label="Close profile">
+        Back
+      </button>
+
+      <div class="coach-modal-scroll">
+        <div class="coach-modal-media">
+          <span class="coach-modal-badge" id="coachModalBadge">Top Coach</span>
+          <img id="coachModalImage" src="assets/img/coaches/karim-haddad.jpg" alt="Coach portrait">
+        </div>
+
+        <div class="coach-modal-content">
+          <div class="coach-modal-kicker" id="coachModalKicker">PADELIN COMPETITIVE</div>
+          <h2 class="coach-modal-name" id="coachModalName">Karim Haddad</h2>
+          <p class="coach-modal-role" id="coachModalRole">Competitive Coach</p>
+
+          <div class="coach-modal-stats">
+            <div class="coach-modal-stat">
+              <span>Certification</span>
+              <strong id="coachModalCertification">ITF Certified Coach</strong>
+            </div>
+            <div class="coach-modal-stat">
+              <span>Experience</span>
+              <strong id="coachModalExperience">8 Years</strong>
+            </div>
+            <div class="coach-modal-stat">
+              <span>Session</span>
+              <strong id="coachModalPrice">$40</strong>
+            </div>
+          </div>
+
+          <div class="coach-modal-section">
+            <h3>About Coach</h3>
+            <p id="coachModalAbout">
+              Karim delivers high-energy sessions built around competitive rhythm, sharper decision-making, and reliable match habits.
+            </p>
+          </div>
+
+          <div class="coach-modal-section">
+            <h3>Focus Areas</h3>
+            <ul class="coach-modal-focus" id="coachModalFocus">
+              <li>Competitive match preparation</li>
+              <li>Shot selection and consistency</li>
+              <li>Footwork and court positioning</li>
+              <li>Pressure-based live drills</li>
+            </ul>
+          </div>
+
+          <div class="coach-modal-section coach-modal-section-accent">
+            <h3>Why Players Book</h3>
+            <p id="coachModalReason">
+              Clear corrections, premium structure, and a competitive coaching feel.
+            </p>
+          </div>
+
+          <div class="coach-modal-actions">
+            <a class="btn btn-primary coach-modal-book" id="coachModalBook" href="reservation.html">
+              Book Session
+            </a>
+            <button class="btn btn-ghost coach-modal-back-btn" id="coachModalBackBtn" type="button">
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="footer">
     <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
   </footer>
 
   <script src="js/main.js"></script>
- <script>
-  (function coachSlider() {
-    const carousel = document.getElementById("coachCarousel");
-    const slides = Array.from(document.querySelectorAll(".coach-slide"));
-    const dots = Array.from(document.querySelectorAll(".coach-dot"));
 
-    if (!carousel || !slides.length) return;
+  <script>
+    (function coachSlider() {
+      const carousel = document.getElementById("coachCarousel");
+      const slides = Array.from(document.querySelectorAll(".coach-slide"));
+      const dots = Array.from(document.querySelectorAll(".coach-dot"));
 
-    let autoTimer = null;
-    let resumeTimer = null;
-    let isInteracting = false;
-    let currentIndex = 0;
+      if (!carousel || !slides.length) return;
 
-    function getSlideWidth() {
-      return slides[0].offsetWidth;
-    }
+      let autoTimer = null;
+      let resumeTimer = null;
+      let isInteracting = false;
+      let currentIndex = 0;
 
-    function getActiveIndex() {
-      const slideWidth = getSlideWidth();
-      if (!slideWidth) return 0;
-      return Math.round(carousel.scrollLeft / slideWidth);
-    }
-
-    function updateDots() {
-      currentIndex = getActiveIndex();
-      dots.forEach((dot, index) => {
-        dot.classList.toggle("is-active", index === currentIndex);
-        dot.setAttribute("aria-current", index === currentIndex ? "true" : "false");
-      });
-    }
-
-    function goToSlide(index, behavior = "smooth") {
-      const slideWidth = getSlideWidth();
-      if (!slideWidth) return;
-
-      currentIndex = index;
-      carousel.scrollTo({
-        left: slideWidth * index,
-        behavior
-      });
-
-      updateDots();
-    }
-
-    function nextSlide() {
-      const nextIndex = (getActiveIndex() + 1) % slides.length;
-      goToSlide(nextIndex, "smooth");
-    }
-
-    function stopAutoScroll() {
-      if (autoTimer) {
-        clearInterval(autoTimer);
-        autoTimer = null;
+      function getSlideWidth() {
+        return slides[0].offsetWidth;
       }
-    }
 
-    function startAutoScroll() {
-      stopAutoScroll();
-      autoTimer = setInterval(() => {
-        if (!isInteracting) {
-          nextSlide();
-        }
-      }, 4200); // slow pace
-    }
+      function getActiveIndex() {
+        const slideWidth = getSlideWidth();
+        if (!slideWidth) return 0;
+        return Math.round(carousel.scrollLeft / slideWidth);
+      }
 
-    function pauseAndResume() {
-      stopAutoScroll();
-      clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => {
-        isInteracting = false;
-        startAutoScroll();
-      }, 5000);
-    }
+      function updateDots() {
+        currentIndex = getActiveIndex();
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("is-active", index === currentIndex);
+          dot.setAttribute("aria-current", index === currentIndex ? "true" : "false");
+        });
+      }
 
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", () => {
-        isInteracting = true;
-        goToSlide(index, "smooth");
-        pauseAndResume();
-      });
-    });
+      function goToSlide(index, behavior = "smooth") {
+        const slideWidth = getSlideWidth();
+        if (!slideWidth) return;
 
-    let ticking = false;
-    carousel.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
+        currentIndex = index;
+        carousel.scrollTo({
+          left: slideWidth * index,
+          behavior
+        });
+
         updateDots();
-        ticking = false;
+      }
+
+      function nextSlide() {
+        const nextIndex = (getActiveIndex() + 1) % slides.length;
+        goToSlide(nextIndex, "smooth");
+      }
+
+      function stopAutoScroll() {
+        if (autoTimer) {
+          clearInterval(autoTimer);
+          autoTimer = null;
+        }
+      }
+
+      function startAutoScroll() {
+        stopAutoScroll();
+        autoTimer = setInterval(() => {
+          if (!isInteracting) {
+            nextSlide();
+          }
+        }, 4200);
+      }
+
+      function pauseAndResume() {
+        stopAutoScroll();
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(() => {
+          isInteracting = false;
+          startAutoScroll();
+        }, 5000);
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          isInteracting = true;
+          goToSlide(index, "smooth");
+          pauseAndResume();
+        });
       });
-    }, { passive: true });
 
-    carousel.addEventListener("touchstart", () => {
-      isInteracting = true;
-      stopAutoScroll();
-    }, { passive: true });
+      let ticking = false;
+      carousel.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          updateDots();
+          ticking = false;
+        });
+      }, { passive: true });
 
-    carousel.addEventListener("touchend", pauseAndResume, { passive: true });
-    carousel.addEventListener("mousedown", () => {
-      isInteracting = true;
-      stopAutoScroll();
-    });
-    carousel.addEventListener("mouseup", pauseAndResume);
-    carousel.addEventListener("mouseleave", () => {
-      if (isInteracting) pauseAndResume();
-    });
+      carousel.addEventListener("touchstart", () => {
+        isInteracting = true;
+        stopAutoScroll();
+      }, { passive: true });
 
-    window.addEventListener("resize", () => {
-      updateDots();
-      goToSlide(getActiveIndex(), "auto");
-    });
+      carousel.addEventListener("touchend", pauseAndResume, { passive: true });
+      carousel.addEventListener("mousedown", () => {
+        isInteracting = true;
+        stopAutoScroll();
+      });
+      carousel.addEventListener("mouseup", pauseAndResume);
+      carousel.addEventListener("mouseleave", () => {
+        if (isInteracting) pauseAndResume();
+      });
 
-    window.addEventListener("load", () => {
+      window.addEventListener("resize", () => {
+        updateDots();
+        goToSlide(getActiveIndex(), "auto");
+      });
+
+      window.addEventListener("load", () => {
+        updateDots();
+        startAutoScroll();
+      });
+
       updateDots();
       startAutoScroll();
-    });
+    })();
 
-    updateDots();
-    startAutoScroll();
-  })();
-</script>
+    (function coachModal() {
+      const coaches = {
+        "karim-haddad": {
+          name: "Karim Haddad",
+          badge: "🔥 Top Coach",
+          kicker: "PADELIN COMPETITIVE",
+          role: "Competitive Coach",
+          certification: "ITF Certified Coach",
+          price: "$40",
+          experience: "8 Years",
+          image: "assets/img/coaches/karim-haddad.jpg",
+          about:
+            "Karim delivers high-energy sessions built around competitive rhythm, sharper decision-making, and reliable match habits. His coaching style is direct, polished, and ideal for players who want to raise their level with structure.",
+          focus: [
+            "Competitive match preparation",
+            "Shot selection and consistency",
+            "Footwork and court positioning",
+            "Pressure-based live drills"
+          ],
+          reason:
+            "Players book Karim for his pace, clarity, and premium competitive coaching feel."
+        },
+
+        "maya-khoury": {
+          name: "Maya Khoury",
+          badge: "⭐ Most Booked",
+          kicker: "PADELIN PERFORMANCE",
+          role: "Performance Coach",
+          certification: "Padel Pro Certified",
+          price: "$38",
+          experience: "7 Years",
+          image: "assets/img/coaches/maya-khoury.jpg",
+          about:
+            "Maya blends technical precision with calm, confidence-building coaching. Her sessions help players improve mechanics while making the game feel simpler, cleaner, and more repeatable under real match conditions.",
+          focus: [
+            "Stroke refinement",
+            "Confidence and consistency",
+            "Transition play",
+            "Game-reading fundamentals"
+          ],
+          reason:
+            "Players return to Maya for her clarity, calm coaching energy, and highly repeatable training structure."
+        },
+
+        "nicolas-saad": {
+          name: "Nicolas Saad",
+          badge: "🎯 Popular Coach",
+          kicker: "PADELIN TACTICAL",
+          role: "Tactical Coach",
+          certification: "International Padel Certified",
+          price: "$36",
+          experience: "6 Years",
+          image: "assets/img/coaches/nicolas-saad.jpg",
+          about:
+            "Nicolas focuses on smart padel: positioning, patterns, anticipation, and game awareness. His sessions are ideal for players who want to stop reacting late and start understanding the court at a higher level.",
+          focus: [
+            "Tactical court positioning",
+            "Defensive decision-making",
+            "Building points with intention",
+            "Partner communication"
+          ],
+          reason:
+            "Players choose Nicolas for his tactical lens and his ability to make padel feel more organized."
+        },
+
+        "jad-khoury": {
+          name: "Jad Khoury",
+          badge: "👑 Head Coach",
+          kicker: "PADELIN ELITE",
+          role: "Head Coach",
+          certification: "High Performance Coach",
+          price: "$50",
+          experience: "10 Years",
+          image: "assets/img/coaches/jad-khoury.jpg",
+          about:
+            "Jad leads high-level training with a premium, performance-first approach. His sessions are built for ambitious players who want a stronger competitive identity, sharper habits, and more disciplined execution.",
+          focus: [
+            "Tournament preparation",
+            "High-performance live drills",
+            "Advanced offensive patterns",
+            "Match intensity and discipline"
+          ],
+          reason:
+            "Players book Jad for elite-level standards, sharp feedback, and a more serious performance environment."
+        }
+      };
+
+      const overlay = document.getElementById("coachModalOverlay");
+      const modal = document.getElementById("coachModal");
+      const closeBtn = document.getElementById("coachModalClose");
+      const backBtn = document.getElementById("coachModalBackBtn");
+      const triggers = document.querySelectorAll(".coach-profile-trigger");
+
+      const els = {
+        badge: document.getElementById("coachModalBadge"),
+        image: document.getElementById("coachModalImage"),
+        kicker: document.getElementById("coachModalKicker"),
+        name: document.getElementById("coachModalName"),
+        role: document.getElementById("coachModalRole"),
+        certification: document.getElementById("coachModalCertification"),
+        experience: document.getElementById("coachModalExperience"),
+        price: document.getElementById("coachModalPrice"),
+        about: document.getElementById("coachModalAbout"),
+        focus: document.getElementById("coachModalFocus"),
+        reason: document.getElementById("coachModalReason"),
+        book: document.getElementById("coachModalBook")
+      };
+
+      let lastTrigger = null;
+
+      function openModal(coachKey, triggerEl) {
+        const coach = coaches[coachKey];
+        if (!coach) return;
+
+        lastTrigger = triggerEl || null;
+
+        els.badge.textContent = coach.badge;
+        els.image.src = coach.image;
+        els.image.alt = coach.name + " coach portrait";
+        els.kicker.textContent = coach.kicker;
+        els.name.textContent = coach.name;
+        els.role.textContent = coach.role;
+        els.certification.textContent = coach.certification;
+        els.experience.textContent = coach.experience;
+        els.price.textContent = coach.price;
+        els.about.textContent = coach.about;
+        els.reason.textContent = coach.reason;
+        els.book.href = "reservation.html?coach=" + coachKey;
+
+        els.focus.innerHTML = coach.focus.map(function (item) {
+          return "<li>" + item + "</li>";
+        }).join("");
+
+        overlay.classList.add("is-open");
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+      }
+
+      function closeModal() {
+        overlay.classList.remove("is-open");
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+
+        if (lastTrigger) lastTrigger.focus();
+      }
+
+      triggers.forEach(function (trigger) {
+        trigger.addEventListener("click", function () {
+          openModal(trigger.dataset.coach, trigger);
+        });
+      });
+
+      overlay.addEventListener("click", closeModal);
+      closeBtn.addEventListener("click", closeModal);
+      backBtn.addEventListener("click", closeModal);
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.classList.contains("is-open")) {
+          closeModal();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
