@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PADELIN | Byblos, Lebanon</title>
   <link rel="stylesheet" href="css/styles.css?v=20" />
+
+<style>
+/* Homepage animation (inline test) */
+.home-reveal {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 800ms ease, transform 800ms ease;
+}
+
+.home-reveal.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+</style>  
+  
 </head>
 <body>
 
