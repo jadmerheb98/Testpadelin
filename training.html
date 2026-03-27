@@ -424,5 +424,43 @@
     startAutoScroll();
   })();
 </script>
+
+<script>
+  (function karimModalOnly() {
+    const trigger = document.getElementById("karimProfileTrigger");
+    const overlay = document.getElementById("coachModalOverlay");
+    const modal = document.getElementById("coachModal");
+    const closeBtn = document.getElementById("coachModalClose");
+    const backBtn = document.getElementById("coachModalBackBtn");
+
+    if (!trigger || !overlay || !modal || !closeBtn || !backBtn) return;
+
+    function openModal() {
+      overlay.classList.add("is-open");
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+    }
+
+    function closeModal() {
+      overlay.classList.remove("is-open");
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      trigger.focus();
+    }
+
+    trigger.addEventListener("click", openModal);
+    overlay.addEventListener("click", closeModal);
+    closeBtn.addEventListener("click", closeModal);
+    backBtn.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.classList.contains("is-open")) {
+        closeModal();
+      }
+    });
+  })();
+</script>  
 </body>
 </html>
