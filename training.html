@@ -13,28 +13,27 @@
   }
 
   .coach-modal-overlay{
-    position: fixed !important;
-    inset: 0 !important;
-    background: rgba(11,18,32,0.46) !important;
-    backdrop-filter: blur(6px) !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transition: opacity .25s ease !important;
-    z-index: 99997 !important;
-  }
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(11,18,32,0.46) !important;
+  backdrop-filter: blur(6px) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity .28s ease !important;
+  z-index: 99997 !important;
+}
 
   .coach-modal{
-    position: fixed !important;
-    inset: 0 !important;
-    display: grid !important;
-    place-items: center !important;
-    padding: 18px !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transition: opacity .25s ease !important;
-    z-index: 99998 !important;
-  }
-
+  position: fixed !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 18px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity .28s ease !important;
+  z-index: 99998 !important;
+}
   .coach-modal.is-open,
   .coach-modal-overlay.is-open{
     opacity: 1 !important;
@@ -42,15 +41,23 @@
   }
 
   .coach-modal-dialog{
-    width: min(920px, 100%) !important;
-    max-height: 88vh !important;
-    background: #fff !important;
-    border: 1px solid rgba(15, 23, 42, 0.12) !important;
-    border-radius: 26px !important;
-    box-shadow: 0 30px 80px rgba(15,23,42,0.22) !important;
-    position: relative !important;
-    overflow: hidden !important;
-  }
+  width: min(920px, 100%) !important;
+  max-height: 88vh !important;
+  background: #fff !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  border-radius: 26px !important;
+  box-shadow: 0 30px 80px rgba(15,23,42,0.22) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transform: translateY(18px) scale(.96) !important;
+  opacity: 0 !important;
+  transition: transform .32s cubic-bezier(.22,1,.36,1), opacity .24s ease !important;
+}
+
+.coach-modal.is-open .coach-modal-dialog{
+  transform: translateY(0) scale(1) !important;
+  opacity: 1 !important;
+}  
 
   .coach-modal-close{
     position: absolute !important;
@@ -279,6 +286,32 @@
     }
   }
 </style>
+
+<style>
+  .coach-link-secondary{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+    padding: 0 18px !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    background: rgba(255,255,255,0.10) !important;
+    color: #fff !important;
+    font-weight: 800 !important;
+    font-size: 15px !important;
+    text-align: center !important;
+    transition: transform .18s ease, background .18s ease, border-color .18s ease !important;
+  }
+
+  .coach-link-secondary:hover,
+  .coach-link-secondary:active{
+    background: rgba(255,255,255,0.16) !important;
+    border-color: rgba(255,255,255,0.24) !important;
+    transform: translateY(-1px) !important;
+  }
+</style>  
+  
   
 </head>
 <body>
@@ -413,7 +446,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link" href="coach-profile.html?coach=marc-saliba">View Profile</a>
+                      <a class="coach-link coach-link-secondary" href="coach-profile.html?coach=marc-saliba">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -448,7 +481,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link" href="coach-profile.html?coach=lara-aoun">View Profile</a>
+                      <a class="coach-link coach-link-secondary" href="coach-profile.html?coach=lara-aoun">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -483,7 +516,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link" href="coach-profile.html?coach=jad-khoury">View Profile</a>
+                      <a class="coach-link coach-link-secondary" href="coach-profile.html?coach=jad-khoury">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -509,8 +542,8 @@
 <section class="coach-modal" id="coachModal" aria-hidden="true" aria-label="Coach Profile Popup">
   <div class="coach-modal-dialog">
     <button class="coach-modal-close" id="coachModalClose" type="button" aria-label="Close profile">
-      Back
-    </button>
+  Close
+</button>
 
     <div class="coach-modal-scroll">
       <div class="coach-modal-media">
@@ -556,15 +589,6 @@
             <li>Footwork and court positioning</li>
             <li>Pressure-based live drills</li>
           </ul>
-        </div>
-
-        <div class="coach-modal-actions">
-          <button class="btn btn-primary coach-modal-book" type="button">
-            Book Session
-          </button>
-          <button class="btn btn-ghost coach-modal-back-btn" id="coachModalBackBtn" type="button">
-            Back
-          </button>
         </div>
       </div>
     </div>
@@ -704,9 +728,9 @@
     const overlay = document.getElementById("coachModalOverlay");
     const modal = document.getElementById("coachModal");
     const closeBtn = document.getElementById("coachModalClose");
-    const backBtn = document.getElementById("coachModalBackBtn");
+    const backBtn = null;
 
-    if (!trigger || !overlay || !modal || !closeBtn || !backBtn) return;
+    if (!trigger || !overlay || !modal || !closeBtn) return;
 
     function openModal() {
       overlay.classList.add("is-open");
@@ -726,7 +750,6 @@
     trigger.addEventListener("click", openModal);
     overlay.addEventListener("click", closeModal);
     closeBtn.addEventListener("click", closeModal);
-    backBtn.addEventListener("click", closeModal);
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && modal.classList.contains("is-open")) {
