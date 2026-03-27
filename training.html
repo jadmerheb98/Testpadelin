@@ -7,28 +7,36 @@
   <link rel="stylesheet" href="css/styles.css" />
 
   <style>
+    .coach-actions{
+      display: flex !important;
+      justify-content: center !important;
+      margin-top: 10px !important;
+    }
+
     .coach-profile-trigger{
-      border: 0 !important;
-      background: transparent !important;
-      color: rgba(255,255,255,0.76) !important;
+      border: 1px solid rgba(255,255,255,0.14) !important;
+      background: rgba(255,255,255,0.08) !important;
+      color: #ffffff !important;
       font-weight: 800 !important;
-      font-size: 13px !important;
+      font-size: 14px !important;
       line-height: 1 !important;
       letter-spacing: .1px !important;
-      padding: 10px 0 2px !important;
-      min-height: auto !important;
-      border-radius: 0 !important;
+      padding: 12px 18px !important;
+      min-height: 44px !important;
+      border-radius: 14px !important;
       cursor: pointer !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
-      transition: color .18s ease, transform .18s ease, opacity .18s ease !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease !important;
     }
 
     .coach-profile-trigger:hover,
     .coach-profile-trigger:active{
-      color: #fff !important;
+      background: rgba(255,255,255,0.14) !important;
+      border-color: rgba(255,255,255,0.22) !important;
       transform: translateY(-1px) !important;
     }
 
@@ -170,23 +178,24 @@
       margin-bottom: 4px !important;
     }
 
+    .coach-modal-name{
+      margin: 0 !important;
+      font-size: 34px !important;
+      line-height: 1.02 !important;
+      letter-spacing: -1px !important;
+      color: #3F6696 !important;
+      font-weight: 900 !important;
+    }
+
     .coach-modal-avatar{
-      width: 82px !important;
-      height: 82px !important;
+      width: 104px !important;
+      height: 104px !important;
       border-radius: 999px !important;
       border: 1px solid rgba(15,23,42,0.08) !important;
       background: linear-gradient(180deg, rgba(63,102,150,0.12), rgba(15,23,42,0.04)) !important;
-      box-shadow: 0 10px 24px rgba(15,23,42,0.08) !important;
-      padding: 12px !important;
+      box-shadow: 0 12px 28px rgba(15,23,42,0.10) !important;
+      padding: 14px !important;
       object-fit: cover !important;
-    }
-
-    .coach-modal-name{
-      margin: 0 !important;
-      font-size: 32px !important;
-      line-height: 1.02 !important;
-      letter-spacing: -1px !important;
-      color: #0f172a !important;
     }
 
     .coach-modal-role{
@@ -304,7 +313,9 @@
 
     @media (max-width: 520px){
       .coach-profile-trigger{
-        font-size: 12px !important;
+        font-size: 13px !important;
+        min-height: 42px !important;
+        padding: 11px 16px !important;
       }
 
       .coach-modal{
@@ -326,7 +337,7 @@
       }
 
       .coach-modal-name{
-        font-size: 27px !important;
+        font-size: 28px !important;
       }
 
       .coach-modal-role{
@@ -334,8 +345,8 @@
       }
 
       .coach-modal-avatar{
-        width: 74px !important;
-        height: 74px !important;
+        width: 92px !important;
+        height: 92px !important;
       }
 
       .coach-modal-stats{
@@ -563,13 +574,13 @@
         <div class="coach-modal-content">
 
           <div class="coach-modal-header">
+            <h2 class="coach-modal-name" id="coachModalName">Karim Haddad</h2>
             <img
               id="coachModalAvatar"
               class="coach-modal-avatar"
               alt="Coach profile avatar"
               src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Ccircle cx='48' cy='48' r='48' fill='%23e9eef6'/%3E%3Ccircle cx='48' cy='36' r='16' fill='%233F6696' opacity='0.9'/%3E%3Cpath d='M22 78c4-13 15-20 26-20s22 7 26 20' fill='%233F6696' opacity='0.9'/%3E%3C/svg%3E"
             />
-            <h2 class="coach-modal-name" id="coachModalName">Karim Haddad</h2>
             <p class="coach-modal-role" id="coachModalRole">Competitive Coach</p>
           </div>
 
