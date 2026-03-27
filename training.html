@@ -111,12 +111,15 @@
     }
 
     .coach-modal.is-open .coach-modal-dialog{
-      animation: coachModalIn .62s cubic-bezier(.16,1,.22,1) forwards !important;
-    }
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) rotateX(0deg) !important;
+  animation: coachModalIn .62s cubic-bezier(.16,1,.22,1) forwards !important;
+}
 
     .coach-modal.is-closing .coach-modal-dialog{
-      animation: coachModalOut .34s cubic-bezier(.64,0,.78,0) forwards !important;
-    }
+  opacity: 1 !important;
+  animation: coachModalOut .34s cubic-bezier(.64,0,.78,0) forwards !important;
+}
 
     @keyframes coachModalIn{
       0%{
@@ -436,14 +439,9 @@
     }
 
     .coach-modal-scroll > *{
-      opacity: 0 !important;
-      transform: translateY(18px) scale(.98) !important;
-    }
-
-    .coach-modal.is-open .coach-modal-scroll > *{
-      animation: coachContentRise .46s cubic-bezier(.22,1,.36,1) forwards !important;
-      animation-delay: .16s !important;
-    }
+  opacity: 1 !important;
+  transform: none !important;
+}
 
     .coach-modal.is-closing .coach-modal-scroll > *{
       animation: coachContentFall .18s ease forwards !important;
