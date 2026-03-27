@@ -16,12 +16,12 @@
     .coach-profile-trigger{
       border: 0 !important;
       background: transparent !important;
-      color: rgba(255,255,255,0.62) !important;
-      font-weight: 700 !important;
-      font-size: 12px !important;
+      color: rgba(255,255,255,0.72) !important;
+      font-weight: 800 !important;
+      font-size: 13px !important;
       line-height: 1 !important;
       letter-spacing: .1px !important;
-      padding: 6px 0 0 !important;
+      padding: 8px 0 0 !important;
       min-height: auto !important;
       border-radius: 0 !important;
       cursor: pointer !important;
@@ -234,143 +234,6 @@
       line-height: 1.2 !important;
     }
 
-    .coach-modal-court{
-      margin-top: 16px !important;
-      padding: 14px !important;
-      border-radius: 22px !important;
-      border: 1px solid rgba(63,102,150,0.12) !important;
-      background:
-        linear-gradient(180deg, rgba(63,102,150,0.08), rgba(63,102,150,0.03)) !important;
-    }
-
-    .coach-modal-court-head{
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      gap: 10px !important;
-      margin-bottom: 12px !important;
-    }
-
-    .coach-modal-court-title{
-      font-size: 15px !important;
-      font-weight: 900 !important;
-      color: #0f172a !important;
-      margin: 0 !important;
-    }
-
-    .coach-modal-court-note{
-      font-size: 11px !important;
-      font-weight: 800 !important;
-      color: rgba(11,18,32,0.50) !important;
-      margin: 0 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1px !important;
-    }
-
-    .padel-court{
-      position: relative !important;
-      height: 220px !important;
-      border-radius: 20px !important;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.80), rgba(255,255,255,0.92)) !important;
-      border: 2px solid rgba(63,102,150,0.18) !important;
-      overflow: hidden !important;
-    }
-
-    .padel-court::before{
-      content: "" !important;
-      position: absolute !important;
-      inset: 14px !important;
-      border: 2px solid rgba(63,102,150,0.16) !important;
-      border-radius: 14px !important;
-      pointer-events: none !important;
-    }
-
-    .padel-court::after{
-      content: "" !important;
-      position: absolute !important;
-      top: 50% !important;
-      left: 14px !important;
-      right: 14px !important;
-      height: 2px !important;
-      background: rgba(63,102,150,0.16) !important;
-      transform: translateY(-50%) !important;
-      pointer-events: none !important;
-    }
-
-    .padel-net{
-      position: absolute !important;
-      top: 50% !important;
-      left: 14px !important;
-      right: 14px !important;
-      height: 10px !important;
-      transform: translateY(-50%) !important;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(63,102,150,0.20) 0 8px,
-          transparent 8px 14px
-        ) !important;
-      opacity: .7 !important;
-      pointer-events: none !important;
-    }
-
-    .court-zone{
-      position: absolute !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      min-height: 34px !important;
-      padding: 0 12px !important;
-      border-radius: 999px !important;
-      background: #ffffff !important;
-      border: 1px solid rgba(15,23,42,0.08) !important;
-      box-shadow: 0 8px 18px rgba(15,23,42,0.06) !important;
-      font-size: 12px !important;
-      font-weight: 800 !important;
-      color: #0f172a !important;
-      white-space: nowrap !important;
-    }
-
-    .zone-top-left{ top: 28px !important; left: 28px !important; }
-    .zone-top-right{ top: 28px !important; right: 28px !important; }
-    .zone-bottom-left{ bottom: 28px !important; left: 28px !important; }
-    .zone-bottom-right{ bottom: 28px !important; right: 28px !important; }
-
-    .court-core{
-      position: absolute !important;
-      left: 50% !important;
-      top: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: 130px !important;
-      min-height: 130px !important;
-      border-radius: 999px !important;
-      background: #ffffff !important;
-      border: 2px solid rgba(63,102,150,0.16) !important;
-      box-shadow: 0 10px 28px rgba(15,23,42,0.08) !important;
-      display: grid !important;
-      place-items: center !important;
-      text-align: center !important;
-      padding: 16px !important;
-    }
-
-    .court-core small{
-      display: block !important;
-      font-size: 10px !important;
-      font-weight: 900 !important;
-      letter-spacing: 1px !important;
-      text-transform: uppercase !important;
-      color: rgba(11,18,32,0.42) !important;
-      margin-bottom: 4px !important;
-    }
-
-    .court-core strong{
-      display: block !important;
-      font-size: 15px !important;
-      line-height: 1.22 !important;
-      color: #0f172a !important;
-    }
-
     .coach-modal-grid{
       display: grid !important;
       gap: 10px !important;
@@ -437,26 +300,6 @@
       box-shadow: 0 6px 14px rgba(63,102,150,0.24) !important;
     }
 
-    .coach-focus-chips{
-      display: flex !important;
-      flex-wrap: wrap !important;
-      gap: 8px !important;
-      margin-top: 10px !important;
-    }
-
-    .coach-focus-chip{
-      display: inline-flex !important;
-      align-items: center !important;
-      min-height: 34px !important;
-      padding: 0 12px !important;
-      border-radius: 999px !important;
-      background: rgba(255,255,255,0.88) !important;
-      border: 1px solid rgba(15,23,42,0.08) !important;
-      font-size: 12px !important;
-      font-weight: 800 !important;
-      color: #0f172a !important;
-    }
-
     .coach-modal-scroll > *{
       opacity: 1 !important;
       transform: none !important;
@@ -473,7 +316,7 @@
       }
 
       .coach-profile-trigger{
-        font-size: 11px !important;
+        font-size: 12px !important;
       }
 
       .coach-modal{
@@ -508,26 +351,6 @@
 
       .coach-modal-grid{
         grid-template-columns: 1fr !important;
-      }
-
-      .padel-court{
-        height: 250px !important;
-      }
-
-      .court-zone{
-        font-size: 11px !important;
-        min-height: 32px !important;
-        padding: 0 10px !important;
-      }
-
-      .zone-top-left{ top: 24px !important; left: 20px !important; }
-      .zone-top-right{ top: 24px !important; right: 20px !important; }
-      .zone-bottom-left{ bottom: 24px !important; left: 20px !important; }
-      .zone-bottom-right{ bottom: 24px !important; right: 20px !important; }
-
-      .court-core{
-        width: 116px !important;
-        min-height: 116px !important;
       }
 
       .coach-modal-close{
@@ -630,7 +453,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <button class="coach-link coach-profile-trigger" type="button" id="karimProfileTrigger">View Profile</button>
+                      <button class="coach-link coach-profile-trigger" type="button" data-coach="karim">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -666,7 +489,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link coach-profile-trigger" href="coach-profile.html?coach=marc-saliba">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button" data-coach="marc">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -702,7 +525,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link coach-profile-trigger" href="coach-profile.html?coach=lara-aoun">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button" data-coach="lara">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -738,7 +561,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link coach-profile-trigger" href="coach-profile.html?coach=jad-khoury">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button" data-coach="jad">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -771,42 +594,42 @@
         <div class="coach-modal-content">
 
           <div class="coach-modal-header">
-            <div class="coach-modal-kicker">PADELIN COMPETITIVE</div>
-            <h2 class="coach-modal-name">Karim Haddad</h2>
-            <p class="coach-modal-role">Competitive Coach</p>
+            <div class="coach-modal-kicker" id="coachModalKicker">PADELIN COMPETITIVE</div>
+            <h2 class="coach-modal-name" id="coachModalName">Karim Haddad</h2>
+            <p class="coach-modal-role" id="coachModalRole">Competitive Coach</p>
           </div>
 
           <div class="coach-modal-stats">
             <div class="coach-modal-stat">
               <span>Certification</span>
-              <strong>ITF Certified</strong>
+              <strong id="coachModalCertification">ITF Certified</strong>
             </div>
             <div class="coach-modal-stat">
               <span>Experience</span>
-              <strong>8 Years</strong>
+              <strong id="coachModalExperience">8 Years</strong>
             </div>
             <div class="coach-modal-stat">
               <span>Session</span>
-              <strong>$40</strong>
+              <strong id="coachModalPrice">$40</strong>
             </div>
           </div>
 
           <div class="coach-modal-grid">
             <section class="coach-mini-card">
-              <h3>Why members like him</h3>
-              <p>Fast pace, sharp feedback, and sessions that feel serious without being overloaded.</p>
+              <h3>Why members like this coach</h3>
+              <p id="coachModalWhy">Fast pace, sharp feedback, and sessions that feel serious without being overloaded.</p>
             </section>
 
             <section class="coach-mini-card">
               <h3>Best for</h3>
-              <p>Players who want better choices, stronger habits, and more control in live points.</p>
+              <p id="coachModalBestFor">Players who want better choices, stronger habits, and more control in live points.</p>
             </section>
           </div>
 
           <div class="coach-modal-grid">
             <section class="coach-mini-card">
               <h3>Session Flow</h3>
-              <ol class="coach-flow">
+              <ol class="coach-flow" id="coachModalFlow">
                 <li data-step="1">Activation and rhythm setup</li>
                 <li data-step="2">Competitive pattern work</li>
                 <li data-step="3">Pressure-based point play</li>
@@ -815,7 +638,7 @@
 
             <section class="coach-mini-card">
               <h3>Focus Areas</h3>
-              <ol class="coach-flow">
+              <ol class="coach-flow" id="coachModalFocus">
                 <li data-step="1">Shot selection</li>
                 <li data-step="2">Positioning</li>
                 <li data-step="3">Consistency</li>
@@ -958,18 +781,143 @@
   </script>
 
   <script>
-    (function karimModalOnly() {
-      const trigger = document.getElementById("karimProfileTrigger");
+    (function coachModalAll() {
       const overlay = document.getElementById("coachModalOverlay");
       const modal = document.getElementById("coachModal");
       const closeBtn = document.getElementById("coachModalClose");
+      const triggers = Array.from(document.querySelectorAll(".coach-profile-trigger"));
       const closeDuration = 340;
       let isClosing = false;
+      let lastTrigger = null;
 
-      if (!trigger || !overlay || !modal || !closeBtn) return;
+      const content = {
+        karim: {
+          kicker: "PADELIN COMPETITIVE",
+          name: "Karim Haddad",
+          role: "Competitive Coach",
+          certification: "ITF Certified",
+          experience: "8 Years",
+          price: "$40",
+          why: "Fast pace, sharp feedback, and sessions that feel serious without being overloaded.",
+          bestFor: "Players who want better choices, stronger habits, and more control in live points.",
+          flow: [
+            "Activation and rhythm setup",
+            "Competitive pattern work",
+            "Pressure-based point play"
+          ],
+          focus: [
+            "Shot selection",
+            "Positioning",
+            "Consistency",
+            "Footwork"
+          ]
+        },
+        marc: {
+          kicker: "PADELIN ADVANCED",
+          name: "Marc Saliba",
+          role: "Advanced Coach",
+          certification: "Padel Pro Certified",
+          experience: "6 Years",
+          price: "$35",
+          why: "Members like Marc for his cleaner tactical explanations and advanced on-court structure.",
+          bestFor: "Players ready to level up their tactical game and train with stronger match intention.",
+          flow: [
+            "Advanced warm-up patterns",
+            "Tactical scenario repetition",
+            "Controlled match play"
+          ],
+          focus: [
+            "Tactical sessions",
+            "Court vision",
+            "Shot variation",
+            "Point building"
+          ]
+        },
+        lara: {
+          kicker: "PADELIN YOUTH",
+          name: "Lara Aoun",
+          role: "Kids Coach",
+          certification: "Youth Development Coach",
+          experience: "4 Years",
+          price: "$22",
+          why: "Parents and members value her calm energy, clarity, and confidence-building coaching style.",
+          bestFor: "Young players who need structure, confidence, and smoother progression on court.",
+          flow: [
+            "Movement and coordination",
+            "Confidence-based drills",
+            "Fun live play finish"
+          ],
+          focus: [
+            "Confidence",
+            "Coordination",
+            "Basics",
+            "Kids progression"
+          ]
+        },
+        jad: {
+          kicker: "PADELIN ELITE",
+          name: "Jad Khoury",
+          role: "Elite Coach",
+          certification: "High Performance Coach",
+          experience: "10 Years",
+          price: "$50",
+          why: "Jad brings elite standards, sharper discipline, and a premium high-performance training feel.",
+          bestFor: "Players aiming for tournament readiness, stronger intensity, and more demanding sessions.",
+          flow: [
+            "Elite activation phase",
+            "High-pressure tactical work",
+            "Tournament-style point play"
+          ],
+          focus: [
+            "Tournament prep",
+            "Intensity",
+            "Advanced patterns",
+            "Discipline"
+          ]
+        }
+      };
 
-      function openModal() {
+      const els = {
+        kicker: document.getElementById("coachModalKicker"),
+        name: document.getElementById("coachModalName"),
+        role: document.getElementById("coachModalRole"),
+        certification: document.getElementById("coachModalCertification"),
+        experience: document.getElementById("coachModalExperience"),
+        price: document.getElementById("coachModalPrice"),
+        why: document.getElementById("coachModalWhy"),
+        bestFor: document.getElementById("coachModalBestFor"),
+        flow: document.getElementById("coachModalFlow"),
+        focus: document.getElementById("coachModalFocus")
+      };
+
+      if (!overlay || !modal || !closeBtn || !triggers.length) return;
+
+      function renderList(el, items) {
+        el.innerHTML = items.map(function(item, index) {
+          return '<li data-step="' + (index + 1) + '">' + item + '</li>';
+        }).join("");
+      }
+
+      function fillModal(key) {
+        const coach = content[key];
+        if (!coach) return;
+
+        els.kicker.textContent = coach.kicker;
+        els.name.textContent = coach.name;
+        els.role.textContent = coach.role;
+        els.certification.textContent = coach.certification;
+        els.experience.textContent = coach.experience;
+        els.price.textContent = coach.price;
+        els.why.textContent = coach.why;
+        els.bestFor.textContent = coach.bestFor;
+        renderList(els.flow, coach.flow);
+        renderList(els.focus, coach.focus);
+      }
+
+      function openModal(key, trigger) {
         if (isClosing) return;
+        fillModal(key);
+        lastTrigger = trigger || null;
         overlay.classList.remove("is-closing");
         modal.classList.remove("is-closing");
         overlay.classList.add("is-open");
@@ -993,11 +941,17 @@
           modal.setAttribute("aria-hidden", "true");
           document.body.classList.remove("modal-open");
           isClosing = false;
-          trigger.focus();
+          if (lastTrigger) lastTrigger.focus();
         }, closeDuration);
       }
 
-      trigger.addEventListener("click", openModal);
+      triggers.forEach(function(trigger) {
+        trigger.addEventListener("click", function(e) {
+          e.preventDefault();
+          openModal(trigger.getAttribute("data-coach"), trigger);
+        });
+      });
+
       overlay.addEventListener("click", closeModal);
       closeBtn.addEventListener("click", closeModal);
 
