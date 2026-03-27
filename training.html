@@ -6,313 +6,262 @@
   <title>Live Coaches | PADELIN</title>
   <link rel="stylesheet" href="css/styles.css" />
 
-<style>
-  .coach-profile-trigger{
-    border: 0;
-    cursor: pointer;
-  }
-
-  .coach-modal-overlay{
-  position: fixed !important;
-  inset: 0 !important;
-  background: rgba(11,18,32,0.46) !important;
-  backdrop-filter: blur(6px) !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: opacity .28s ease !important;
-  z-index: 99997 !important;
-}
-
-  .coach-modal{
-  position: fixed !important;
-  inset: 0 !important;
-  display: grid !important;
-  place-items: center !important;
-  padding: 18px !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: opacity .28s ease !important;
-  z-index: 99998 !important;
-}
-  .coach-modal.is-open,
-  .coach-modal-overlay.is-open{
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-
-  .coach-modal-dialog{
-  width: min(920px, 100%) !important;
-  max-height: 88vh !important;
-  background: #fff !important;
-  border: 1px solid rgba(15, 23, 42, 0.12) !important;
-  border-radius: 26px !important;
-  box-shadow: 0 30px 80px rgba(15,23,42,0.22) !important;
-  position: relative !important;
-  overflow: hidden !important;
-  transform: translateY(18px) scale(.96) !important;
-  opacity: 0 !important;
-  transition: transform .32s cubic-bezier(.22,1,.36,1), opacity .24s ease !important;
-}
-
-.coach-modal.is-open .coach-modal-dialog{
-  transform: translateY(0) scale(1) !important;
-  opacity: 1 !important;
-}  
-
-  .coach-modal-close{
-    position: absolute !important;
-    top: 14px !important;
-    left: 14px !important;
-    z-index: 5 !important;
-    min-height: 40px !important;
-    padding: 0 14px !important;
-    border-radius: 999px !important;
-    border: 1px solid rgba(255,255,255,0.18) !important;
-    background: rgba(15,23,42,0.74) !important;
-    color: #fff !important;
-    font-size: 13px !important;
-    font-weight: 800 !important;
-    cursor: pointer !important;
-  }
-
-  .coach-modal-scroll{
-    overflow: auto !important;
-    max-height: 88vh !important;
-    display: grid !important;
-  }
-
-  .coach-modal-media{
-    position: relative !important;
-    background: #eef3f9 !important;
-  }
-
-  .coach-modal-media img{
-    width: 100% !important;
-    height: 340px !important;
-    object-fit: cover !important;
-    display: block !important;
-  }
-
-  .coach-modal-badge{
-    position: absolute !important;
-    top: 14px !important;
-    right: 14px !important;
-    z-index: 4 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    min-height: 34px !important;
-    padding: 7px 12px !important;
-    border-radius: 999px !important;
-    background: rgba(15,23,42,0.78) !important;
-    color: #fff !important;
-    font-size: 12px !important;
-    font-weight: 900 !important;
-  }
-
-  .coach-modal-content{
-    padding: 20px !important;
-    background: #fff !important;
-  }
-
-  .coach-modal-kicker{
-    font-size: 11px !important;
-    font-weight: 900 !important;
-    letter-spacing: 1.8px !important;
-    text-transform: uppercase !important;
-    color: rgba(11,18,32,0.52) !important;
-    margin-bottom: 10px !important;
-  }
-
-  .coach-modal-name{
-    margin: 0 !important;
-    font-size: 34px !important;
-    line-height: 1.02 !important;
-    letter-spacing: -0.8px !important;
-    color: #0f172a !important;
-  }
-
-  .coach-modal-role{
-    margin: 8px 0 0 !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    color: rgba(11,18,32,0.68) !important;
-  }
-
-  .coach-modal-stats{
-    display: grid !important;
-    gap: 10px !important;
-    margin-top: 18px !important;
-  }
-
-  .coach-modal-stat{
-    padding: 13px 14px !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(15,23,42,0.08) !important;
-    background: rgba(15,23,42,0.035) !important;
-    display: grid !important;
-    gap: 4px !important;
-  }
-
-  .coach-modal-stat span{
-    font-size: 11px !important;
-    font-weight: 900 !important;
-    letter-spacing: 1px !important;
-    text-transform: uppercase !important;
-    color: rgba(11,18,32,0.48) !important;
-  }
-
-  .coach-modal-stat strong{
-    font-size: 15px !important;
-    color: #0f172a !important;
-  }
-
-  .coach-modal-section{
-    margin-top: 16px !important;
-    padding: 16px !important;
-    border-radius: 18px !important;
-    border: 1px solid rgba(15,23,42,0.08) !important;
-    background: rgba(15,23,42,0.025) !important;
-  }
-
-  .coach-modal-section h3{
-    margin: 0 0 10px !important;
-    font-size: 17px !important;
-    font-weight: 850 !important;
-    color: #0f172a !important;
-  }
-
-  .coach-modal-section p{
-    margin: 0 !important;
-    font-size: 15px !important;
-    line-height: 1.7 !important;
-    color: rgba(11,18,32,0.75) !important;
-  }
-
-  .coach-modal-focus{
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: grid !important;
-    gap: 8px !important;
-  }
-
-  .coach-modal-focus li{
-    position: relative !important;
-    padding: 11px 12px 11px 38px !important;
-    border-radius: 14px !important;
-    border: 1px solid rgba(15,23,42,0.08) !important;
-    background: #fff !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    color: rgba(11,18,32,0.82) !important;
-  }
-
-  .coach-modal-focus li::before{
-    content: "" !important;
-    position: absolute !important;
-    left: 14px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 14px !important;
-    height: 14px !important;
-    border-radius: 999px !important;
-    background: rgba(63,102,150,0.14) !important;
-    border: 1px solid rgba(63,102,150,0.30) !important;
-    box-shadow: inset 0 0 0 3px rgba(63,102,150,0.56) !important;
-  }
-
-  .coach-modal-actions{
-    display: grid !important;
-    gap: 10px !important;
-    margin-top: 18px !important;
-  }
-
-  .coach-modal-book,
-  .coach-modal-back-btn{
-    min-height: 50px !important;
-    border-radius: 15px !important;
-    width: 100% !important;
-  }
-
-  body.modal-open{
-    overflow: hidden !important;
-  }
-
-  @media (min-width: 760px){
-    .coach-modal-stats{
-      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  <style>
+    .coach-profile-trigger{
+      border: 0 !important;
+      background: transparent !important;
+      color: rgba(255,255,255,0.72) !important;
+      font-weight: 700 !important;
+      font-size: 15px !important;
+      line-height: 1 !important;
+      padding: 8px 0 2px !important;
+      min-height: auto !important;
+      border-radius: 0 !important;
+      cursor: pointer !important;
+      transition: color .18s ease, transform .18s ease, opacity .18s ease !important;
     }
 
-    .coach-modal-actions{
-      grid-template-columns: 1fr 1fr !important;
-    }
-  }
-
-  @media (min-width: 980px){
-    .coach-modal-scroll{
-      grid-template-columns: 0.92fr 1.08fr !important;
+    .coach-profile-trigger:hover,
+    .coach-profile-trigger:active{
+      color: #fff !important;
+      transform: translateY(-1px) !important;
     }
 
-    .coach-modal-media img{
-      height: 100% !important;
-      min-height: 100% !important;
+    .coach-modal-overlay{
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(11,18,32,0.58) !important;
+      backdrop-filter: blur(8px) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: opacity .34s ease !important;
+      z-index: 99997 !important;
     }
 
-    .coach-modal-content{
-      padding: 24px !important;
-    }
-  }
-
-  @media (max-width: 520px){
     .coach-modal{
-      padding: 12px !important;
+      position: fixed !important;
+      inset: 0 !important;
+      display: grid !important;
+      place-items: center !important;
+      padding: 20px !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: opacity .32s ease !important;
+      z-index: 99998 !important;
+    }
+
+    .coach-modal.is-open,
+    .coach-modal-overlay.is-open{
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
 
     .coach-modal-dialog{
-      border-radius: 22px !important;
-      max-height: 90vh !important;
+      width: min(560px, 100%) !important;
+      max-height: 78vh !important;
+      background: #fff !important;
+      border: 1px solid rgba(15, 23, 42, 0.10) !important;
+      border-radius: 24px !important;
+      box-shadow: 0 34px 90px rgba(15,23,42,0.28) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      transform: translateY(42px) scale(.90) !important;
+      opacity: 0 !important;
+      transition:
+        transform .42s cubic-bezier(.18,1,.22,1),
+        opacity .28s ease !important;
     }
 
-    .coach-modal-media img{
-      height: 280px !important;
+    .coach-modal.is-open .coach-modal-dialog{
+      transform: translateY(0) scale(1) !important;
+      opacity: 1 !important;
+    }
+
+    .coach-modal-close{
+      position: absolute !important;
+      top: 14px !important;
+      right: 14px !important;
+      left: auto !important;
+      z-index: 5 !important;
+      min-height: 40px !important;
+      padding: 0 14px !important;
+      border-radius: 999px !important;
+      border: 1px solid rgba(15,23,42,0.10) !important;
+      background: rgba(15,23,42,0.05) !important;
+      color: #0f172a !important;
+      font-size: 13px !important;
+      font-weight: 800 !important;
+      cursor: pointer !important;
+      transition: transform .18s ease, background .18s ease !important;
+    }
+
+    .coach-modal-close:hover,
+    .coach-modal-close:active{
+      transform: translateY(-1px) !important;
+      background: rgba(15,23,42,0.09) !important;
+    }
+
+    .coach-modal-scroll{
+      overflow: auto !important;
+      max-height: 78vh !important;
+      display: block !important;
     }
 
     .coach-modal-content{
-      padding: 16px !important;
+      padding: 56px 20px 20px !important;
+      background: #fff !important;
+    }
+
+    .coach-modal-kicker{
+      font-size: 11px !important;
+      font-weight: 900 !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: rgba(11,18,32,0.48) !important;
+      margin-bottom: 10px !important;
     }
 
     .coach-modal-name{
-      font-size: 28px !important;
+      margin: 0 !important;
+      font-size: 34px !important;
+      line-height: 1.02 !important;
+      letter-spacing: -1px !important;
+      color: #0f172a !important;
     }
-  }
-</style>
 
-<style>
-  .coach-link-secondary{
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 48px !important;
-    padding: 0 18px !important;
-    border-radius: 14px !important;
-    border: 1px solid rgba(255,255,255,0.16) !important;
-    background: rgba(255,255,255,0.10) !important;
-    color: #fff !important;
-    font-weight: 800 !important;
-    font-size: 15px !important;
-    text-align: center !important;
-    transition: transform .18s ease, background .18s ease, border-color .18s ease !important;
-  }
+    .coach-modal-role{
+      margin: 8px 0 0 !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: rgba(11,18,32,0.66) !important;
+    }
 
-  .coach-link-secondary:hover,
-  .coach-link-secondary:active{
-    background: rgba(255,255,255,0.16) !important;
-    border-color: rgba(255,255,255,0.24) !important;
-    transform: translateY(-1px) !important;
-  }
-</style>  
-  
-  
+    .coach-modal-stats{
+      display: grid !important;
+      gap: 10px !important;
+      margin-top: 18px !important;
+    }
+
+    .coach-modal-stat{
+      padding: 12px 13px !important;
+      border-radius: 15px !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      background: rgba(15,23,42,0.035) !important;
+      display: grid !important;
+      gap: 4px !important;
+    }
+
+    .coach-modal-stat span{
+      font-size: 11px !important;
+      font-weight: 900 !important;
+      letter-spacing: 1px !important;
+      text-transform: uppercase !important;
+      color: rgba(11,18,32,0.46) !important;
+    }
+
+    .coach-modal-stat strong{
+      font-size: 15px !important;
+      color: #0f172a !important;
+    }
+
+    .coach-modal-section{
+      margin-top: 14px !important;
+      padding: 15px !important;
+      border-radius: 16px !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      background: rgba(15,23,42,0.025) !important;
+    }
+
+    .coach-modal-section h3{
+      margin: 0 0 10px !important;
+      font-size: 16px !important;
+      font-weight: 850 !important;
+      color: #0f172a !important;
+    }
+
+    .coach-modal-section p{
+      margin: 0 !important;
+      font-size: 15px !important;
+      line-height: 1.68 !important;
+      color: rgba(11,18,32,0.75) !important;
+    }
+
+    .coach-modal-focus{
+      list-style: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: grid !important;
+      gap: 8px !important;
+    }
+
+    .coach-modal-focus li{
+      position: relative !important;
+      padding: 10px 12px 10px 36px !important;
+      border-radius: 13px !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      background: #fff !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      color: rgba(11,18,32,0.82) !important;
+    }
+
+    .coach-modal-focus li::before{
+      content: "" !important;
+      position: absolute !important;
+      left: 14px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      width: 12px !important;
+      height: 12px !important;
+      border-radius: 999px !important;
+      background: rgba(63,102,150,0.14) !important;
+      border: 1px solid rgba(63,102,150,0.30) !important;
+      box-shadow: inset 0 0 0 3px rgba(63,102,150,0.56) !important;
+    }
+
+    body.modal-open{
+      overflow: hidden !important;
+    }
+
+    @media (min-width: 760px){
+      .coach-modal-stats{
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      }
+    }
+
+    @media (max-width: 520px){
+      .coach-modal{
+        padding: 14px !important;
+      }
+
+      .coach-modal-dialog{
+        width: min(440px, 100%) !important;
+        max-height: 74vh !important;
+        border-radius: 22px !important;
+      }
+
+      .coach-modal-scroll{
+        max-height: 74vh !important;
+      }
+
+      .coach-modal-content{
+        padding: 54px 16px 16px !important;
+      }
+
+      .coach-modal-name{
+        font-size: 28px !important;
+      }
+
+      .coach-modal-role{
+        font-size: 15px !important;
+      }
+
+      .coach-modal-close{
+        top: 12px !important;
+        right: 12px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -366,15 +315,12 @@
       <div class="training-shell">
 
         <section class="training-intro training-intro--hero" aria-label="Live coaches intro">
-  <div class="training-eyebrow">PADELIN TRAINING</div>
-
-  <h1 class="training-title">Live Coaches</h1>
-
-  <p class="training-sub">
-    Premium coaches for every level.
-  </p>
-          
-</section>
+          <div class="training-eyebrow">PADELIN TRAINING</div>
+          <h1 class="training-title">Live Coaches</h1>
+          <p class="training-sub">
+            Premium coaches for every level.
+          </p>
+        </section>
 
         <section class="training-carousel-section" aria-label="Coach cards">
           <div class="coach-carousel" id="coachCarousel" tabindex="0">
@@ -446,7 +392,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link coach-link-secondary" href="coach-profile.html?coach=marc-saliba">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -459,6 +405,7 @@
                     <img
                       class="coach-photo"
                       src="assets/img/coaches/lara-aoun.jpg"
+                      alt="Lara Aoun portrait"
                     />
                   </div>
 
@@ -481,7 +428,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link coach-link-secondary" href="coach-profile.html?coach=lara-aoun">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -494,6 +441,7 @@
                     <img
                       class="coach-photo"
                       src="assets/img/coaches/jad-khoury.jpg"
+                      alt="Jad Khoury portrait"
                     />
                   </div>
 
@@ -516,7 +464,7 @@
 
                     <div class="coach-actions">
                       <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
-                      <a class="coach-link coach-link-secondary" href="coach-profile.html?coach=jad-khoury">View Profile</a>
+                      <button class="coach-link coach-profile-trigger" type="button">View Profile</button>
                     </div>
                   </div>
                 </div>
@@ -537,227 +485,219 @@
     </div>
   </main>
 
-<div class="coach-modal-overlay" id="coachModalOverlay"></div>
+  <div class="coach-modal-overlay" id="coachModalOverlay"></div>
 
-<section class="coach-modal" id="coachModal" aria-hidden="true" aria-label="Coach Profile Popup">
-  <div class="coach-modal-dialog">
-    <button class="coach-modal-close" id="coachModalClose" type="button" aria-label="Close profile">
-  Close
-</button>
+  <section class="coach-modal" id="coachModal" aria-hidden="true" aria-label="Coach Profile Popup">
+    <div class="coach-modal-dialog">
+      <button class="coach-modal-close" id="coachModalClose" type="button" aria-label="Close profile">
+        Close
+      </button>
 
-    <div class="coach-modal-scroll">
-      <div class="coach-modal-media">
-        <span class="coach-modal-badge">🔥 Top Coach</span>
-        <img
-          src="assets/img/coaches/karim-haddad.jpg"
-          alt="Karim Haddad holding a padel racket on court"
-        />
-      </div>
+      <div class="coach-modal-scroll">
+        <div class="coach-modal-content">
+          <div class="coach-modal-kicker">PADELIN COMPETITIVE</div>
+          <h2 class="coach-modal-name">Karim Haddad</h2>
+          <p class="coach-modal-role">Competitive Coach</p>
 
-      <div class="coach-modal-content">
-        <div class="coach-modal-kicker">PADELIN COMPETITIVE</div>
-        <h2 class="coach-modal-name">Karim Haddad</h2>
-        <p class="coach-modal-role">Competitive Coach</p>
-
-        <div class="coach-modal-stats">
-          <div class="coach-modal-stat">
-            <span>Certification</span>
-            <strong>ITF Certified Coach</strong>
+          <div class="coach-modal-stats">
+            <div class="coach-modal-stat">
+              <span>Certification</span>
+              <strong>ITF Certified Coach</strong>
+            </div>
+            <div class="coach-modal-stat">
+              <span>Experience</span>
+              <strong>8 Years</strong>
+            </div>
+            <div class="coach-modal-stat">
+              <span>Session</span>
+              <strong>$40</strong>
+            </div>
           </div>
-          <div class="coach-modal-stat">
-            <span>Experience</span>
-            <strong>8 Years</strong>
-          </div>
-          <div class="coach-modal-stat">
-            <span>Session</span>
-            <strong>$40</strong>
-          </div>
-        </div>
 
-        <div class="coach-modal-section">
-          <h3>About Coach</h3>
-          <p>
-            Karim delivers high-energy sessions built around competitive rhythm, sharper decision-making, and reliable match habits. His coaching style is direct, polished, and ideal for players who want to raise their level with structure.
-          </p>
-        </div>
+          <div class="coach-modal-section">
+            <h3>About Coach</h3>
+            <p>
+              Karim delivers high-energy sessions built around competitive rhythm, sharper decision-making, and reliable match habits. His coaching style is direct, polished, and ideal for players who want to raise their level with structure.
+            </p>
+          </div>
 
-        <div class="coach-modal-section">
-          <h3>Focus Areas</h3>
-          <ul class="coach-modal-focus">
-            <li>Competitive match preparation</li>
-            <li>Shot selection and consistency</li>
-            <li>Footwork and court positioning</li>
-            <li>Pressure-based live drills</li>
-          </ul>
+          <div class="coach-modal-section">
+            <h3>Focus Areas</h3>
+            <ul class="coach-modal-focus">
+              <li>Competitive match preparation</li>
+              <li>Shot selection and consistency</li>
+              <li>Footwork and court positioning</li>
+              <li>Pressure-based live drills</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>  
+  </section>
 
   <footer class="footer">
     <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
   </footer>
 
   <script src="js/main.js"></script>
- <script>
-  (function coachSlider() {
-    const carousel = document.getElementById("coachCarousel");
-    const slides = Array.from(document.querySelectorAll(".coach-slide"));
-    const dots = Array.from(document.querySelectorAll(".coach-dot"));
 
-    if (!carousel || !slides.length) return;
+  <script>
+    (function coachSlider() {
+      const carousel = document.getElementById("coachCarousel");
+      const slides = Array.from(document.querySelectorAll(".coach-slide"));
+      const dots = Array.from(document.querySelectorAll(".coach-dot"));
 
-    let autoTimer = null;
-    let resumeTimer = null;
-    let isInteracting = false;
-    let currentIndex = 0;
+      if (!carousel || !slides.length) return;
 
-    function getSlideWidth() {
-      return slides[0].offsetWidth;
-    }
+      let autoTimer = null;
+      let resumeTimer = null;
+      let isInteracting = false;
+      let currentIndex = 0;
 
-    function getActiveIndex() {
-      const slideWidth = getSlideWidth();
-      if (!slideWidth) return 0;
-      return Math.round(carousel.scrollLeft / slideWidth);
-    }
-
-    function updateDots() {
-      currentIndex = getActiveIndex();
-      dots.forEach((dot, index) => {
-        dot.classList.toggle("is-active", index === currentIndex);
-        dot.setAttribute("aria-current", index === currentIndex ? "true" : "false");
-      });
-    }
-
-    function goToSlide(index, behavior = "smooth") {
-      const slideWidth = getSlideWidth();
-      if (!slideWidth) return;
-
-      currentIndex = index;
-      carousel.scrollTo({
-        left: slideWidth * index,
-        behavior
-      });
-
-      updateDots();
-    }
-
-    function nextSlide() {
-      const nextIndex = (getActiveIndex() + 1) % slides.length;
-      goToSlide(nextIndex, "smooth");
-    }
-
-    function stopAutoScroll() {
-      if (autoTimer) {
-        clearInterval(autoTimer);
-        autoTimer = null;
+      function getSlideWidth() {
+        return slides[0].offsetWidth;
       }
-    }
 
-    function startAutoScroll() {
-      stopAutoScroll();
-      autoTimer = setInterval(() => {
-        if (!isInteracting) {
-          nextSlide();
-        }
-      }, 4200); // slow pace
-    }
+      function getActiveIndex() {
+        const slideWidth = getSlideWidth();
+        if (!slideWidth) return 0;
+        return Math.round(carousel.scrollLeft / slideWidth);
+      }
 
-    function pauseAndResume() {
-      stopAutoScroll();
-      clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => {
-        isInteracting = false;
-        startAutoScroll();
-      }, 5000);
-    }
+      function updateDots() {
+        currentIndex = getActiveIndex();
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("is-active", index === currentIndex);
+          dot.setAttribute("aria-current", index === currentIndex ? "true" : "false");
+        });
+      }
 
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", () => {
-        isInteracting = true;
-        goToSlide(index, "smooth");
-        pauseAndResume();
-      });
-    });
+      function goToSlide(index, behavior = "smooth") {
+        const slideWidth = getSlideWidth();
+        if (!slideWidth) return;
 
-    let ticking = false;
-    carousel.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
+        currentIndex = index;
+        carousel.scrollTo({
+          left: slideWidth * index,
+          behavior
+        });
+
         updateDots();
-        ticking = false;
+      }
+
+      function nextSlide() {
+        const nextIndex = (getActiveIndex() + 1) % slides.length;
+        goToSlide(nextIndex, "smooth");
+      }
+
+      function stopAutoScroll() {
+        if (autoTimer) {
+          clearInterval(autoTimer);
+          autoTimer = null;
+        }
+      }
+
+      function startAutoScroll() {
+        stopAutoScroll();
+        autoTimer = setInterval(() => {
+          if (!isInteracting) {
+            nextSlide();
+          }
+        }, 4200);
+      }
+
+      function pauseAndResume() {
+        stopAutoScroll();
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(() => {
+          isInteracting = false;
+          startAutoScroll();
+        }, 5000);
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          isInteracting = true;
+          goToSlide(index, "smooth");
+          pauseAndResume();
+        });
       });
-    }, { passive: true });
 
-    carousel.addEventListener("touchstart", () => {
-      isInteracting = true;
-      stopAutoScroll();
-    }, { passive: true });
+      let ticking = false;
+      carousel.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          updateDots();
+          ticking = false;
+        });
+      }, { passive: true });
 
-    carousel.addEventListener("touchend", pauseAndResume, { passive: true });
-    carousel.addEventListener("mousedown", () => {
-      isInteracting = true;
-      stopAutoScroll();
-    });
-    carousel.addEventListener("mouseup", pauseAndResume);
-    carousel.addEventListener("mouseleave", () => {
-      if (isInteracting) pauseAndResume();
-    });
+      carousel.addEventListener("touchstart", () => {
+        isInteracting = true;
+        stopAutoScroll();
+      }, { passive: true });
 
-    window.addEventListener("resize", () => {
-      updateDots();
-      goToSlide(getActiveIndex(), "auto");
-    });
+      carousel.addEventListener("touchend", pauseAndResume, { passive: true });
+      carousel.addEventListener("mousedown", () => {
+        isInteracting = true;
+        stopAutoScroll();
+      });
+      carousel.addEventListener("mouseup", pauseAndResume);
+      carousel.addEventListener("mouseleave", () => {
+        if (isInteracting) pauseAndResume();
+      });
 
-    window.addEventListener("load", () => {
+      window.addEventListener("resize", () => {
+        updateDots();
+        goToSlide(getActiveIndex(), "auto");
+      });
+
+      window.addEventListener("load", () => {
+        updateDots();
+        startAutoScroll();
+      });
+
       updateDots();
       startAutoScroll();
-    });
+    })();
+  </script>
 
-    updateDots();
-    startAutoScroll();
-  })();
-</script>
+  <script>
+    (function karimModalOnly() {
+      const trigger = document.getElementById("karimProfileTrigger");
+      const overlay = document.getElementById("coachModalOverlay");
+      const modal = document.getElementById("coachModal");
+      const closeBtn = document.getElementById("coachModalClose");
 
-<script>
-  (function karimModalOnly() {
-    const trigger = document.getElementById("karimProfileTrigger");
-    const overlay = document.getElementById("coachModalOverlay");
-    const modal = document.getElementById("coachModal");
-    const closeBtn = document.getElementById("coachModalClose");
-    const backBtn = null;
+      if (!trigger || !overlay || !modal || !closeBtn) return;
 
-    if (!trigger || !overlay || !modal || !closeBtn) return;
-
-    function openModal() {
-      overlay.classList.add("is-open");
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("modal-open");
-    }
-
-    function closeModal() {
-      overlay.classList.remove("is-open");
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("modal-open");
-      trigger.focus();
-    }
-
-    trigger.addEventListener("click", openModal);
-    overlay.addEventListener("click", closeModal);
-    closeBtn.addEventListener("click", closeModal);
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && modal.classList.contains("is-open")) {
-        closeModal();
+      function openModal() {
+        overlay.classList.add("is-open");
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
       }
-    });
-  })();
-</script>  
-  
+
+      function closeModal() {
+        overlay.classList.remove("is-open");
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+        trigger.focus();
+      }
+
+      trigger.addEventListener("click", openModal);
+      overlay.addEventListener("click", closeModal);
+      closeBtn.addEventListener("click", closeModal);
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.classList.contains("is-open")) {
+          closeModal();
+        }
+      });
+    })();
+  </script>
+
 </body>
 </html>
