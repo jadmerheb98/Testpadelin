@@ -7,21 +7,15 @@
   <link rel="stylesheet" href="css/styles.css" />
 
   <style>
-    .training-book-btn{
-      min-height: 52px !important;
-      font-size: 15px !important;
-      padding: 0 18px !important;
-    }
-
     .coach-profile-trigger{
       border: 0 !important;
       background: transparent !important;
-      color: rgba(255,255,255,0.72) !important;
+      color: rgba(255,255,255,0.76) !important;
       font-weight: 800 !important;
       font-size: 13px !important;
       line-height: 1 !important;
       letter-spacing: .1px !important;
-      padding: 8px 0 0 !important;
+      padding: 10px 0 2px !important;
       min-height: auto !important;
       border-radius: 0 !important;
       cursor: pointer !important;
@@ -170,22 +164,21 @@
 
     .coach-modal-header{
       display: grid !important;
-      gap: 12px !important;
+      justify-items: center !important;
+      text-align: center !important;
+      gap: 10px !important;
+      margin-bottom: 4px !important;
     }
 
-    .coach-modal-kicker{
-      display: inline-flex !important;
-      width: fit-content !important;
-      font-size: 10px !important;
-      font-weight: 900 !important;
-      letter-spacing: 2px !important;
-      text-transform: uppercase !important;
-      color: rgba(11,18,32,0.52) !important;
-      padding: 7px 10px !important;
+    .coach-modal-avatar{
+      width: 82px !important;
+      height: 82px !important;
       border-radius: 999px !important;
-      background: rgba(15,23,42,0.04) !important;
-      border: 1px solid rgba(15,23,42,0.06) !important;
-      margin-bottom: 2px !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      background: linear-gradient(180deg, rgba(63,102,150,0.12), rgba(15,23,42,0.04)) !important;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.08) !important;
+      padding: 12px !important;
+      object-fit: cover !important;
     }
 
     .coach-modal-name{
@@ -197,7 +190,7 @@
     }
 
     .coach-modal-role{
-      margin: -2px 0 0 !important;
+      margin: 0 !important;
       font-size: 15px !important;
       font-weight: 700 !important;
       color: rgba(11,18,32,0.62) !important;
@@ -310,11 +303,6 @@
     }
 
     @media (max-width: 520px){
-      .training-book-btn{
-        min-height: 50px !important;
-        font-size: 14px !important;
-      }
-
       .coach-profile-trigger{
         font-size: 12px !important;
       }
@@ -343,6 +331,11 @@
 
       .coach-modal-role{
         font-size: 14px !important;
+      }
+
+      .coach-modal-avatar{
+        width: 74px !important;
+        height: 74px !important;
       }
 
       .coach-modal-stats{
@@ -446,13 +439,7 @@
                       <li>Competitive training</li>
                     </ul>
 
-                    <div class="coach-price-row">
-                      <div class="coach-price">$40</div>
-                      <div class="coach-price-sub">/ session</div>
-                    </div>
-
                     <div class="coach-actions">
-                      <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
                       <button class="coach-link coach-profile-trigger" type="button" data-coach="karim">View Profile</button>
                     </div>
                   </div>
@@ -482,13 +469,7 @@
                       <li>Advanced tactical sessions</li>
                     </ul>
 
-                    <div class="coach-price-row">
-                      <div class="coach-price">$35</div>
-                      <div class="coach-price-sub">/ session</div>
-                    </div>
-
                     <div class="coach-actions">
-                      <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
                       <button class="coach-link coach-profile-trigger" type="button" data-coach="marc">View Profile</button>
                     </div>
                   </div>
@@ -518,13 +499,7 @@
                       <li>Kids confidence training</li>
                     </ul>
 
-                    <div class="coach-price-row">
-                      <div class="coach-price">$22</div>
-                      <div class="coach-price-sub">/ session</div>
-                    </div>
-
                     <div class="coach-actions">
-                      <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
                       <button class="coach-link coach-profile-trigger" type="button" data-coach="lara">View Profile</button>
                     </div>
                   </div>
@@ -554,13 +529,7 @@
                       <li>Tournament preparation</li>
                     </ul>
 
-                    <div class="coach-price-row">
-                      <div class="coach-price">$50</div>
-                      <div class="coach-price-sub">/ session</div>
-                    </div>
-
                     <div class="coach-actions">
-                      <button class="btn btn-primary training-book-btn" type="button">Book Session</button>
                       <button class="coach-link coach-profile-trigger" type="button" data-coach="jad">View Profile</button>
                     </div>
                   </div>
@@ -594,7 +563,12 @@
         <div class="coach-modal-content">
 
           <div class="coach-modal-header">
-            <div class="coach-modal-kicker" id="coachModalKicker">PADELIN COMPETITIVE</div>
+            <img
+              id="coachModalAvatar"
+              class="coach-modal-avatar"
+              alt="Coach profile avatar"
+              src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Ccircle cx='48' cy='48' r='48' fill='%23e9eef6'/%3E%3Ccircle cx='48' cy='36' r='16' fill='%233F6696' opacity='0.9'/%3E%3Cpath d='M22 78c4-13 15-20 26-20s22 7 26 20' fill='%233F6696' opacity='0.9'/%3E%3C/svg%3E"
+            />
             <h2 class="coach-modal-name" id="coachModalName">Karim Haddad</h2>
             <p class="coach-modal-role" id="coachModalRole">Competitive Coach</p>
           </div>
@@ -792,7 +766,6 @@
 
       const content = {
         karim: {
-          kicker: "PADELIN COMPETITIVE",
           name: "Karim Haddad",
           role: "Competitive Coach",
           certification: "ITF Certified",
@@ -813,7 +786,6 @@
           ]
         },
         marc: {
-          kicker: "PADELIN ADVANCED",
           name: "Marc Saliba",
           role: "Advanced Coach",
           certification: "Padel Pro Certified",
@@ -834,7 +806,6 @@
           ]
         },
         lara: {
-          kicker: "PADELIN YOUTH",
           name: "Lara Aoun",
           role: "Kids Coach",
           certification: "Youth Development Coach",
@@ -855,7 +826,6 @@
           ]
         },
         jad: {
-          kicker: "PADELIN ELITE",
           name: "Jad Khoury",
           role: "Elite Coach",
           certification: "High Performance Coach",
@@ -878,7 +848,6 @@
       };
 
       const els = {
-        kicker: document.getElementById("coachModalKicker"),
         name: document.getElementById("coachModalName"),
         role: document.getElementById("coachModalRole"),
         certification: document.getElementById("coachModalCertification"),
@@ -902,7 +871,6 @@
         const coach = content[key];
         if (!coach) return;
 
-        els.kicker.textContent = coach.kicker;
         els.name.textContent = coach.name;
         els.role.textContent = coach.role;
         els.certification.textContent = coach.certification;
