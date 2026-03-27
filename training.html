@@ -41,13 +41,11 @@
     .coach-modal-overlay{
       position: fixed !important;
       inset: 0 !important;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(63,102,150,0.12), transparent 36%),
-        rgba(7,12,24,0.72) !important;
-      backdrop-filter: blur(12px) saturate(118%) !important;
+      background: rgba(7,12,24,0.68) !important;
+      backdrop-filter: blur(10px) !important;
       opacity: 0 !important;
       pointer-events: none !important;
-      transition: opacity .42s ease !important;
+      transition: opacity .36s ease !important;
       z-index: 99997 !important;
     }
 
@@ -77,7 +75,7 @@
 
     .coach-modal-overlay.is-closing{
       opacity: 0 !important;
-      transition: opacity .28s ease !important;
+      transition: opacity .26s ease !important;
     }
 
     .coach-modal-dialog{
@@ -87,10 +85,9 @@
       overflow: hidden !important;
       border-radius: 28px !important;
       border: 1px solid rgba(15, 23, 42, 0.08) !important;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,252,255,0.98)) !important;
+      background: #ffffff !important;
       box-shadow:
-        0 44px 120px rgba(7,12,24,0.34),
+        0 40px 110px rgba(7,12,24,0.34),
         0 14px 34px rgba(15,23,42,0.10) !important;
       transform-origin: 50% 18% !important;
       opacity: 0 !important;
@@ -98,28 +95,16 @@
       will-change: transform, opacity !important;
     }
 
-    .coach-modal-dialog::before{
-      content: "" !important;
-      position: absolute !important;
-      inset: 0 !important;
-      background:
-        linear-gradient(135deg, rgba(63,102,150,0.10), transparent 40%),
-        radial-gradient(circle at 82% 16%, rgba(63,102,150,0.12), transparent 22%),
-        linear-gradient(transparent 96%, rgba(15,23,42,0.03) 96%);
-      background-size: auto, auto, 100% 30px !important;
-      pointer-events: none !important;
+    .coach-modal.is-open .coach-modal-dialog{
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) rotateX(0deg) !important;
+      animation: coachModalIn .62s cubic-bezier(.16,1,.22,1) forwards !important;
     }
 
-    .coach-modal.is-open .coach-modal-dialog{
-  opacity: 1 !important;
-  transform: translateY(0) scale(1) rotateX(0deg) !important;
-  animation: coachModalIn .62s cubic-bezier(.16,1,.22,1) forwards !important;
-}
-
     .coach-modal.is-closing .coach-modal-dialog{
-  opacity: 1 !important;
-  animation: coachModalOut .34s cubic-bezier(.64,0,.78,0) forwards !important;
-}
+      opacity: 1 !important;
+      animation: coachModalOut .34s cubic-bezier(.64,0,.78,0) forwards !important;
+    }
 
     @keyframes coachModalIn{
       0%{
@@ -179,9 +164,8 @@
     }
 
     .coach-modal-content{
-      position: relative !important;
       padding: 56px 18px 18px !important;
-      background: transparent !important;
+      background: #ffffff !important;
     }
 
     .coach-modal-header{
@@ -250,31 +234,31 @@
       line-height: 1.2 !important;
     }
 
-    .coach-modal-map{
+    .coach-modal-court{
       margin-top: 16px !important;
-      padding: 16px !important;
+      padding: 14px !important;
       border-radius: 22px !important;
-      border: 1px solid rgba(63,102,150,0.16) !important;
+      border: 1px solid rgba(63,102,150,0.12) !important;
       background:
-        linear-gradient(180deg, rgba(63,102,150,0.10), rgba(63,102,150,0.04)) !important;
+        linear-gradient(180deg, rgba(63,102,150,0.08), rgba(63,102,150,0.03)) !important;
     }
 
-    .coach-modal-map-head{
+    .coach-modal-court-head{
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
       gap: 10px !important;
-      margin-bottom: 14px !important;
+      margin-bottom: 12px !important;
     }
 
-    .coach-modal-map-title{
+    .coach-modal-court-title{
       font-size: 15px !important;
       font-weight: 900 !important;
       color: #0f172a !important;
       margin: 0 !important;
     }
 
-    .coach-modal-map-note{
+    .coach-modal-court-note{
       font-size: 11px !important;
       font-weight: 800 !important;
       color: rgba(11,18,32,0.50) !important;
@@ -283,37 +267,94 @@
       letter-spacing: 1px !important;
     }
 
-    .coach-orbit{
+    .padel-court{
       position: relative !important;
-      height: 190px !important;
-      border-radius: 22px !important;
-      border: 1px dashed rgba(63,102,150,0.22) !important;
+      height: 220px !important;
+      border-radius: 20px !important;
       background:
-        radial-gradient(circle at center, rgba(255,255,255,0.9) 0 58px, transparent 59px),
-        radial-gradient(circle at center, rgba(63,102,150,0.08) 0 82px, transparent 83px),
-        radial-gradient(circle at center, rgba(63,102,150,0.08) 0 110px, transparent 111px),
-        rgba(255,255,255,0.52) !important;
+        linear-gradient(180deg, rgba(255,255,255,0.80), rgba(255,255,255,0.92)) !important;
+      border: 2px solid rgba(63,102,150,0.18) !important;
       overflow: hidden !important;
     }
 
-    .coach-orbit-center{
+    .padel-court::before{
+      content: "" !important;
+      position: absolute !important;
+      inset: 14px !important;
+      border: 2px solid rgba(63,102,150,0.16) !important;
+      border-radius: 14px !important;
+      pointer-events: none !important;
+    }
+
+    .padel-court::after{
+      content: "" !important;
       position: absolute !important;
       top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: 118px !important;
-      min-height: 118px !important;
+      left: 14px !important;
+      right: 14px !important;
+      height: 2px !important;
+      background: rgba(63,102,150,0.16) !important;
+      transform: translateY(-50%) !important;
+      pointer-events: none !important;
+    }
+
+    .padel-net{
+      position: absolute !important;
+      top: 50% !important;
+      left: 14px !important;
+      right: 14px !important;
+      height: 10px !important;
+      transform: translateY(-50%) !important;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(63,102,150,0.20) 0 8px,
+          transparent 8px 14px
+        ) !important;
+      opacity: .7 !important;
+      pointer-events: none !important;
+    }
+
+    .court-zone{
+      position: absolute !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 34px !important;
+      padding: 0 12px !important;
       border-radius: 999px !important;
-      border: 1px solid rgba(63,102,150,0.22) !important;
-      background: #fff !important;
+      background: #ffffff !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      box-shadow: 0 8px 18px rgba(15,23,42,0.06) !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      color: #0f172a !important;
+      white-space: nowrap !important;
+    }
+
+    .zone-top-left{ top: 28px !important; left: 28px !important; }
+    .zone-top-right{ top: 28px !important; right: 28px !important; }
+    .zone-bottom-left{ bottom: 28px !important; left: 28px !important; }
+    .zone-bottom-right{ bottom: 28px !important; right: 28px !important; }
+
+    .court-core{
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 130px !important;
+      min-height: 130px !important;
+      border-radius: 999px !important;
+      background: #ffffff !important;
+      border: 2px solid rgba(63,102,150,0.16) !important;
+      box-shadow: 0 10px 28px rgba(15,23,42,0.08) !important;
       display: grid !important;
       place-items: center !important;
       text-align: center !important;
-      padding: 14px !important;
-      box-shadow: 0 10px 26px rgba(15,23,42,0.08) !important;
+      padding: 16px !important;
     }
 
-    .coach-orbit-center small{
+    .court-core small{
       display: block !important;
       font-size: 10px !important;
       font-weight: 900 !important;
@@ -323,34 +364,12 @@
       margin-bottom: 4px !important;
     }
 
-    .coach-orbit-center strong{
+    .court-core strong{
       display: block !important;
       font-size: 15px !important;
-      line-height: 1.25 !important;
+      line-height: 1.22 !important;
       color: #0f172a !important;
     }
-
-    .coach-orbit-node{
-      position: absolute !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      min-height: 38px !important;
-      padding: 0 12px !important;
-      border-radius: 999px !important;
-      border: 1px solid rgba(15,23,42,0.08) !important;
-      background: rgba(255,255,255,0.90) !important;
-      box-shadow: 0 8px 22px rgba(15,23,42,0.06) !important;
-      font-size: 12px !important;
-      font-weight: 800 !important;
-      color: #0f172a !important;
-      white-space: nowrap !important;
-    }
-
-    .coach-orbit-node.node-a{ top: 14px !important; left: 50% !important; transform: translateX(-50%) !important; }
-    .coach-orbit-node.node-b{ right: 16px !important; top: 50% !important; transform: translateY(-50%) !important; }
-    .coach-orbit-node.node-c{ bottom: 14px !important; left: 50% !important; transform: translateX(-50%) !important; }
-    .coach-orbit-node.node-d{ left: 16px !important; top: 50% !important; transform: translateY(-50%) !important; }
 
     .coach-modal-grid{
       display: grid !important;
@@ -439,34 +458,8 @@
     }
 
     .coach-modal-scroll > *{
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-    .coach-modal.is-closing .coach-modal-scroll > *{
-      animation: coachContentFall .18s ease forwards !important;
-    }
-
-    @keyframes coachContentRise{
-      0%{
-        opacity: 0;
-        transform: translateY(18px) scale(.98);
-      }
-      100%{
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes coachContentFall{
-      0%{
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      100%{
-        opacity: 0;
-        transform: translateY(10px) scale(.98);
-      }
+      opacity: 1 !important;
+      transform: none !important;
     }
 
     body.modal-open{
@@ -517,19 +510,24 @@
         grid-template-columns: 1fr !important;
       }
 
-      .coach-orbit{
-        height: 220px !important;
+      .padel-court{
+        height: 250px !important;
       }
 
-      .coach-orbit-center{
-        width: 112px !important;
-        min-height: 112px !important;
-      }
-
-      .coach-orbit-node{
+      .court-zone{
         font-size: 11px !important;
-        min-height: 34px !important;
+        min-height: 32px !important;
         padding: 0 10px !important;
+      }
+
+      .zone-top-left{ top: 24px !important; left: 20px !important; }
+      .zone-top-right{ top: 24px !important; right: 20px !important; }
+      .zone-bottom-left{ bottom: 24px !important; left: 20px !important; }
+      .zone-bottom-right{ bottom: 24px !important; right: 20px !important; }
+
+      .court-core{
+        width: 116px !important;
+        min-height: 116px !important;
       }
 
       .coach-modal-close{
@@ -793,24 +791,26 @@
             </div>
           </div>
 
-          <section class="coach-modal-map" aria-label="Coach profile map">
-            <div class="coach-modal-map-head">
-              <h3 class="coach-modal-map-title">Performance Map</h3>
-              <p class="coach-modal-map-note">Catchy summary</p>
+          <section class="coach-modal-court" aria-label="Padel court focus map">
+            <div class="coach-modal-court-head">
+              <h3 class="coach-modal-court-title">Padel Court Focus</h3>
+              <p class="coach-modal-court-note">Simple visual</p>
             </div>
 
-            <div class="coach-orbit">
-              <div class="coach-orbit-center">
+            <div class="padel-court">
+              <div class="padel-net"></div>
+
+              <div class="court-zone zone-top-left">Rhythm</div>
+              <div class="court-zone zone-top-right">Positioning</div>
+              <div class="court-zone zone-bottom-left">Pressure</div>
+              <div class="court-zone zone-bottom-right">Decision-Making</div>
+
+              <div class="court-core">
                 <div>
                   <small>Core Style</small>
                   <strong>Competitive Control</strong>
                 </div>
               </div>
-
-              <div class="coach-orbit-node node-a">Match Rhythm</div>
-              <div class="coach-orbit-node node-b">Decision Making</div>
-              <div class="coach-orbit-node node-c">Pressure Drills</div>
-              <div class="coach-orbit-node node-d">Court Positioning</div>
             </div>
 
             <div class="coach-focus-chips">
@@ -823,12 +823,12 @@
           <div class="coach-modal-grid">
             <section class="coach-mini-card">
               <h3>Why members like him</h3>
-              <p>Fast pace, sharp corrections, and training that feels serious without being overloaded.</p>
+              <p>Fast pace, sharp feedback, and sessions that feel serious without being overloaded.</p>
             </section>
 
             <section class="coach-mini-card">
               <h3>Best for</h3>
-              <p>Players who want cleaner decisions, stronger habits, and a more match-ready version of their game.</p>
+              <p>Players who want better choices, stronger habits, and more control in live points.</p>
             </section>
           </div>
 
