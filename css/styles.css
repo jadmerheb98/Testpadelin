@@ -5950,27 +5950,3 @@ body.modal-open{
     font-size: 28px;
   }
 }
-/* =========================================
-   Homepage sequential intro animation
-   ========================================= */
-.home-reveal {
-  opacity: 0;
-  transform: translateX(-60px);
-  transition:
-    opacity 800ms ease,
-    transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-
-.home-reveal.is-visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
