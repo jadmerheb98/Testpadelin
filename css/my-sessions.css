@@ -1,18 +1,42 @@
 /* ===========================
    My Sessions Page
-   Mirrors My Career spacing
    =========================== */
 
 .sessions-page{
-  padding: 0 0 54px;
+  padding: 34px 0 54px;
   background:
     radial-gradient(1200px 500px at 20% -10%, rgba(63,102,150,0.18), transparent 60%),
     radial-gradient(800px 400px at 90% 10%, rgba(15,23,42,0.10), transparent 60%),
     var(--light);
 }
 
+/* ===========================
+   Header Section
+   =========================== */
+
 .sessions-page-head{
+  margin: 10px 0 20px;
+}
+
+.sessions-page-kicker{
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: rgba(11,18,32,0.55);
+  margin-bottom: 10px;
+}
+
+.sessions-page-title{
+  margin: 0 0 6px;
+  font-size: 28px;
+  letter-spacing: .2px;
+  color: var(--text-dark);
+}
+
+.sessions-page-subtitle{
   margin: 0;
+  color: rgba(11,18,32,0.70);
 }
 
 /* ===========================
@@ -20,237 +44,120 @@
    =========================== */
 
 .sessions-overview-card{
-  position: relative;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   overflow: hidden;
-  border-radius: 32px;
-  padding: 28px;
-  margin-top: 0;
-  background:
-    radial-gradient(140% 180% at 0% 0%, #0d1530 0%, #09122a 42%, #08101d 100%);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow:
-    0 20px 48px rgba(8,16,29,0.16),
-    inset 0 1px 0 rgba(255,255,255,0.04);
-}
-
-.sessions-overview-card::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(420px 220px at 22% 22%, rgba(63,102,150,0.20), transparent 68%),
-    radial-gradient(340px 200px at 80% 18%, rgba(90,130,210,0.14), transparent 70%);
-  opacity: 0.95;
-}
-
-.sessions-overview-top{
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 18px;
-}
-
-.sessions-overview-heading{
-  text-align: center;
-}
-
-.sessions-overview-kicker{
-  color: #ffffff;
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-
-.sessions-overview-heading::after{
-  content: "";
-  display: block;
-  width: 78px;
-  height: 4px;
-  border-radius: 999px;
-  margin: 14px auto 0;
-  background: rgba(255,255,255,0.34);
+  margin-bottom: 20px;
 }
 
 .sessions-summary-grid{
-  position: relative;
-  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px;
 }
 
 .sessions-summary-box{
-  min-height: 136px;
-  border-radius: 28px;
-  padding: 22px 22px 20px;
-  background: rgba(18, 29, 56, 0.86);
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.05),
-    0 10px 30px rgba(0,0,0,0.10);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.sessions-summary-box-package,
-.sessions-summary-box-status{
-  min-height: 124px;
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 16px;
+  background: rgba(15,23,42,0.02);
+  padding: 14px;
 }
 
 .sessions-summary-label{
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.64);
-  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.60);
+  margin-bottom: 6px;
 }
 
 .sessions-summary-value{
-  font-size: 24px;
-  line-height: 1.14;
+  font-size: 20px;
   font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -0.02em;
+  color: var(--text-dark);
 }
 
-.sessions-status-badge{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 22px;
+/* ===========================
+   Status Badge Override
+   =========================== */
+
+.sessions-page .career-status-badge{
+  font-weight: 800;
+  padding: 6px 10px;
   border-radius: 999px;
-  background: #f1f4fa;
-  color: #334155;
-  font-size: 18px;
-  font-weight: 900;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.sessions-status-badge.is-active{
-  background: #f1f4fa;
-  color: #334155;
-}
-
-.sessions-status-badge.is-expired{
-  background: rgba(239,68,68,0.16);
-  color: #ffd1d1;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.sessions-status-badge.is-pending{
-  background: rgba(245,158,11,0.18);
-  color: #ffe6b0;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.sessions-status-badge.is-neutral{
-  background: rgba(255,255,255,0.10);
-  color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.08);
 }
 
 /* ===========================
    Details Section
    =========================== */
 
-.sessions-details-shell{
-  background: #ffffff;
-  border: 1px solid rgba(15,23,42,0.08);
-  border-radius: 28px;
-  box-shadow: 0 12px 30px rgba(15,23,42,0.06);
-  overflow: hidden;
+.sessions-section{
+  margin-top: 10px;
 }
 
-.sessions-details-grid{
-  display: grid;
-  gap: 14px;
-  padding: 16px;
+.sessions-card{
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
 }
 
-.sessions-detail-card{
-  border-radius: 22px;
-  border: 1px solid rgba(15,23,42,0.08);
-  background: rgba(15,23,42,0.02);
-  padding: 18px 18px 16px;
+.sessions-field{
+  margin-bottom: 16px;
 }
 
-.sessions-detail-card-notes{
-  min-height: 150px;
-}
-
-.sessions-detail-label{
+.sessions-label{
   font-size: 13px;
-  font-weight: 900;
-  color: rgba(11,18,32,0.62);
-  margin-bottom: 10px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.60);
+  margin-bottom: 6px;
 }
 
-.sessions-detail-value{
-  font-size: 18px;
-  line-height: 1.55;
-  font-weight: 800;
+.sessions-readonly{
+  min-height: 50px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(15,23,42,0.03);
   color: var(--text-dark);
-  white-space: pre-wrap;
-  word-break: break-word;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 /* ===========================
-   Mobile
+   Empty State
    =========================== */
 
-@media (max-width: 760px){
-  .sessions-overview-card{
-    border-radius: 28px;
-    padding: 20px;
-  }
+.sessions-empty{
+  text-align: center;
+  padding: 30px 20px;
+  color: rgba(11,18,32,0.6);
+  font-weight: 600;
+}
 
-  .sessions-overview-kicker{
-    font-size: 28px;
-  }
+/* ===========================
+   Responsive
+   =========================== */
 
+@media (max-width: 920px){
+  .sessions-summary-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 520px){
   .sessions-summary-grid{
     grid-template-columns: 1fr;
-    gap: 12px;
   }
 
-  .sessions-summary-box{
-    min-height: 118px;
-    border-radius: 24px;
-    padding: 18px 18px 16px;
+  .sessions-page-title{
+    font-size: 24px;
   }
 
-  .sessions-summary-label{
-    font-size: 12px;
-    margin-bottom: 8px;
-  }
-
-  .sessions-summary-value{
-    font-size: 20px;
-  }
-
-  .sessions-status-badge{
-    min-height: 44px;
-    font-size: 16px;
-    padding: 0 18px;
-  }
-
-  .sessions-details-shell{
-    border-radius: 24px;
-  }
-
-  .sessions-detail-card{
-    border-radius: 18px;
+  .sessions-card{
     padding: 16px;
-  }
-
-  .sessions-detail-value{
-    font-size: 16px;
   }
 }
