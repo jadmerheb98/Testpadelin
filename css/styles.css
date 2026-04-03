@@ -5950,3 +5950,101 @@ body.modal-open{
     font-size: 28px;
   }
 }
+/* ===========================
+   My Sessions page
+   =========================== */
+
+.sessions-page{
+  padding: 34px 0 54px;
+  background:
+    radial-gradient(1200px 500px at 20% -10%, rgba(63,102,150,0.18), transparent 60%),
+    radial-gradient(800px 400px at 90% 10%, rgba(15,23,42,0.10), transparent 60%),
+    var(--light);
+}
+
+.sessions-page-head{
+  margin: 10px 0 18px;
+}
+
+.sessions-page-kicker{
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: rgba(11,18,32,0.55);
+  margin-bottom: 10px;
+}
+
+.sessions-page-title{
+  margin: 0 0 6px;
+  font-size: 28px;
+  letter-spacing: .2px;
+}
+
+.sessions-page-subtitle{
+  margin: 0;
+  color: rgba(11,18,32,0.70);
+}
+
+.sessions-overview-card{
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.sessions-summary-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px;
+}
+
+.sessions-summary-box{
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 16px;
+  background: rgba(15,23,42,0.02);
+  padding: 14px;
+}
+
+.sessions-summary-label{
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(11,18,32,0.60);
+  margin-bottom: 6px;
+}
+
+.sessions-summary-value{
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
+.sessions-readonly{
+  min-height: 50px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(15,23,42,0.03);
+  color: var(--text-dark);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+@media (max-width: 920px){
+  .sessions-summary-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 520px){
+  .sessions-summary-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .sessions-page-title{
+    font-size: 24px;
+  }
+}
