@@ -481,7 +481,7 @@ function renderSignedOut() {
           </div>
         </a>
 
-        <a class="acc-link" href="training.html">
+        <a class="acc-link" href="my-sessions.html">
           <div>
             <div class="k">My Sessions</div>
             <span class="s">PT training sessions & schedule</span>
