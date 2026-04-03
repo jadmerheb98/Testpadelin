@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Sessions | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css?v=21" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+          <div class="hamburger-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
+      </div>
+
+      <div class="header-right">
+        <a class="icon-btn" href="contact.html" aria-label="Contact us">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
+          </svg>
+        </a>
+
+        <button class="icon-btn" type="button" aria-label="Account" data-auth-open>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="overlay" data-overlay></div>
+
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+    </div>
+
+    <div class="side-links">
+      <a href="membership.html">Membership</a>
+      <a href="training.html">Live Coaches</a>
+      <a href="tournaments.html">Tournaments</a>
+    </div>
+  </aside>
+
+  <main class="sessions-page">
+    <div class="container">
+
+      <section class="sessions-page-head">
+        <div class="sessions-page-kicker">MY SESSIONS</div>
+        <h1 class="sessions-page-title">Your Training Package</h1>
+        <p class="sessions-page-subtitle">View your package, remaining sessions, and coaches.</p>
+      </section>
+
+      <a href="index.html" class="career-home-link career-home-link-outside">← Back</a>
+
+      <section class="sessions-overview-card">
+        <div class="sessions-summary-grid">
+          <div class="sessions-summary-box">
+            <div class="sessions-summary-label">Package</div>
+            <div class="sessions-summary-value" id="sessionsPackageName">Loading...</div>
+          </div>
+
+          <div class="sessions-summary-box">
+            <div class="sessions-summary-label">Remaining</div>
+            <div class="sessions-summary-value" id="sessionsRemaining">—</div>
+          </div>
+
+          <div class="sessions-summary-box">
+            <div class="sessions-summary-label">Total</div>
+            <div class="sessions-summary-value" id="sessionsTotal">—</div>
+          </div>
+
+          <div class="sessions-summary-box">
+            <div class="sessions-summary-label">Status</div>
+            <div class="sessions-summary-value">
+              <span class="career-status-badge" id="sessionsStatus">Checking...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="career-section">
+        <div class="career-section-head">
+          <div class="career-section-title-row no-tag">
+            <div>
+              <h2>Session Details</h2>
+              <p>Your current training package info.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="auth-form-grid">
+            <div class="auth-row">
+              <label>Assigned Coaches</label>
+              <div class="sessions-readonly" id="sessionsCoaches">Loading...</div>
+            </div>
+
+            <div class="auth-row">
+              <label>Next Session</label>
+              <div class="sessions-readonly" id="sessionsNext">—</div>
+            </div>
+
+            <div class="auth-row">
+              <label>Package Period</label>
+              <div class="sessions-readonly" id="sessionsPeriod">—</div>
+            </div>
+
+            <div class="auth-row">
+              <label>Notes</label>
+              <div class="sessions-readonly" id="sessionsNotes">No notes yet.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+  </footer>
+
+  <div class="acc-overlay" data-acc-overlay></div>
+  <aside class="acc-drawer" data-acc-drawer aria-hidden="true" aria-label="Account">
+    <div class="acc-head">
+      <div class="acc-title">Account</div>
+      <button class="acc-close" type="button" aria-label="Close" data-acc-close>✕</button>
+    </div>
+    <div class="acc-body" id="accBody"></div>
+  </aside>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-init.js"></script>
+  <script src="js/main.js?v=21"></script>
+
+  <script>
+    (function mySessionsPageSetup() {
+      if (!window.padelinAuth || !window.padelinDB) return;
+
+      const auth = window.padelinAuth;
+      const db = window.padelinDB;
+
+      const packageEl = document.getElementById("sessionsPackageName");
+      const remainingEl = document.getElementById("sessionsRemaining");
+      const totalEl = document.getElementById("sessionsTotal");
+      const statusEl = document.getElementById("sessionsStatus");
+      const coachesEl = document.getElementById("sessionsCoaches");
+      const nextEl = document.getElementById("sessionsNext");
+      const periodEl = document.getElementById("sessionsPeriod");
+      const notesEl = document.getElementById("sessionsNotes");
+
+      function statusClass(status) {
+        const s = String(status || "").toLowerCase();
+        if (s === "active") return "is-active";
+        if (s === "expired") return "is-expired";
+        if (s === "pending") return "is-pending";
+        return "is-neutral";
+      }
+
+      function formatDate(value) {
+        if (!value) return "—";
+        if (/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) {
+          const [y, m, d] = value.split("-");
+          const dt = new Date(Number(y), Number(m) - 1, Number(d));
+          return dt.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+          });
+        }
+        return value;
+      }
+
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        try {
+          const doc = await db.collection("users").doc(user.uid).collection("training").doc("current").get();
+
+          if (!doc.exists) {
+            packageEl.textContent = "No active package";
+            remainingEl.textContent = "0";
+            totalEl.textContent = "0";
+            statusEl.textContent = "Inactive";
+            statusEl.className = "career-status-badge is-neutral";
+            coachesEl.textContent = "No coaches assigned yet.";
+            nextEl.textContent = "No upcoming session.";
+            periodEl.textContent = "—";
+            notesEl.textContent = "No notes yet.";
+            return;
+          }
+
+          const data = doc.data() || {};
+
+          packageEl.textContent = data.packageName || "Package";
+          remainingEl.textContent = String(data.sessionsRemaining ?? 0);
+          totalEl.textContent = String(data.totalSessions ?? 0);
+
+          const status = data.status || "Active";
+          statusEl.textContent = status;
+          statusEl.className = "career-status-badge " + statusClass(status);
+
+          const coaches = Array.isArray(data.assignedCoaches) ? data.assignedCoaches : [];
+          coachesEl.textContent = coaches.length ? coaches.join(", ") : "No coaches assigned yet.";
+
+          const nextDate = formatDate(data.nextSessionDate || "");
+          const nextTime = data.nextSessionTime || "";
+          nextEl.textContent = nextTime ? `${nextDate} • ${nextTime}` : nextDate;
+
+          const startDate = formatDate(data.startDate || "");
+          const endDate = formatDate(data.endDate || "");
+          periodEl.textContent = startDate !== "—" || endDate !== "—" ? `${startDate} → ${endDate}` : "—";
+
+          notesEl.textContent = data.notes || "No notes yet.";
+        } catch (err) {
+          console.error("Failed to load training package:", err);
+          packageEl.textContent = "Unable to load";
+          remainingEl.textContent = "—";
+          totalEl.textContent = "—";
+          statusEl.textContent = "Error";
+          statusEl.className = "career-status-badge is-neutral";
+          coachesEl.textContent = "Could not load coaches.";
+          nextEl.textContent = "Could not load next session.";
+          periodEl.textContent = "—";
+          notesEl.textContent = "Please try again later.";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
