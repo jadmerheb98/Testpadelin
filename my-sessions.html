@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>My Sessions | PADELIN</title>
   <link rel="stylesheet" href="css/styles.css?v=21" />
-  <link rel="stylesheet" href="css/my-sessions.css?v=1" />
+<link rel="stylesheet" href="css/my-sessions.css?v=1" />
 </head>
 <body>
 
@@ -46,33 +46,28 @@
       <div class="side-menu-title">Menu</div>
       <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
     </div>
+
     <div class="side-links">
-      <a href="./membership.html">Membership</a>
-      <a href="./training.html">Training</a>
-      <a href="./tournaments.html">Tournaments</a>
+      <a href="membership.html">Membership</a>
+      <a href="training.html">Live Coaches</a>
+      <a href="tournaments.html">Tournaments</a>
     </div>
   </aside>
 
   <main class="sessions-page">
     <div class="container">
 
-      <section class="career-page-head sessions-page-head">
-        <div class="career-page-kicker">MY SESSIONS</div>
-        <h1 class="career-page-title">Your Training Package</h1>
-        <p class="career-page-subtitle">View your package, remaining sessions, and coaches.</p>
+      <section class="sessions-page-head">
+        <div class="sessions-page-kicker">MY SESSIONS</div>
+        <h1 class="sessions-page-title">Your Training Package</h1>
+        <p class="sessions-page-subtitle">View your package, remaining sessions, and coaches.</p>
       </section>
 
       <a href="index.html" class="career-home-link career-home-link-outside">← Back</a>
 
       <section class="sessions-overview-card">
-        <div class="sessions-overview-top">
-          <div class="sessions-overview-heading">
-            <div class="sessions-overview-kicker">Sessions Overview</div>
-          </div>
-        </div>
-
         <div class="sessions-summary-grid">
-          <div class="sessions-summary-box sessions-summary-box-package">
+          <div class="sessions-summary-box">
             <div class="sessions-summary-label">Package</div>
             <div class="sessions-summary-value" id="sessionsPackageName">Loading...</div>
           </div>
@@ -87,10 +82,10 @@
             <div class="sessions-summary-value" id="sessionsTotal">—</div>
           </div>
 
-          <div class="sessions-summary-box sessions-summary-box-status">
+          <div class="sessions-summary-box">
             <div class="sessions-summary-label">Status</div>
             <div class="sessions-summary-value">
-              <span class="sessions-status-badge" id="sessionsStatus">Checking...</span>
+              <span class="career-status-badge" id="sessionsStatus">Checking...</span>
             </div>
           </div>
         </div>
@@ -106,29 +101,27 @@
           </div>
         </div>
 
-        <div class="sessions-details-shell">
-          <div class="sessions-details-grid">
-
-            <div class="sessions-detail-card">
-              <div class="sessions-detail-label">Assigned Coaches</div>
-              <div class="sessions-detail-value" id="sessionsCoaches">Loading...</div>
+        <div class="table-card">
+          <div class="auth-form-grid">
+            <div class="auth-row">
+              <label>Assigned Coaches</label>
+              <div class="sessions-readonly" id="sessionsCoaches">Loading...</div>
             </div>
 
-            <div class="sessions-detail-card">
-              <div class="sessions-detail-label">Next Session</div>
-              <div class="sessions-detail-value" id="sessionsNext">—</div>
+            <div class="auth-row">
+              <label>Next Session</label>
+              <div class="sessions-readonly" id="sessionsNext">—</div>
             </div>
 
-            <div class="sessions-detail-card">
-              <div class="sessions-detail-label">Package Period</div>
-              <div class="sessions-detail-value" id="sessionsPeriod">—</div>
+            <div class="auth-row">
+              <label>Package Period</label>
+              <div class="sessions-readonly" id="sessionsPeriod">—</div>
             </div>
 
-            <div class="sessions-detail-card sessions-detail-card-notes">
-              <div class="sessions-detail-label">Notes</div>
-              <div class="sessions-detail-value" id="sessionsNotes">No notes yet.</div>
+            <div class="auth-row">
+              <label>Notes</label>
+              <div class="sessions-readonly" id="sessionsNotes">No notes yet.</div>
             </div>
-
           </div>
         </div>
       </section>
@@ -141,13 +134,11 @@
   </footer>
 
   <div class="acc-overlay" data-acc-overlay></div>
-
   <aside class="acc-drawer" data-acc-drawer aria-hidden="true" aria-label="Account">
     <div class="acc-head">
       <div class="acc-title">Account</div>
       <button class="acc-close" type="button" aria-label="Close" data-acc-close>✕</button>
     </div>
-
     <div class="acc-body" id="accBody"></div>
   </aside>
 
@@ -158,7 +149,7 @@
   <script src="js/main.js?v=21"></script>
 
   <script>
-    (function sessionsPageSetup() {
+    (function mySessionsPageSetup() {
       if (!window.padelinAuth || !window.padelinDB) return;
 
       const auth = window.padelinAuth;
@@ -183,185 +174,74 @@
 
       function formatDate(value) {
         if (!value) return "—";
-
-        if (typeof value === "string") {
-          const clean = value.trim();
-
-          if (/^\d{4}-\d{2}-\d{2}$/.test(clean)) {
-            const parts = clean.split("-");
-            const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
-            if (!Number.isNaN(d.getTime())) {
-              return d.toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "short",
-                year: "numeric"
-              });
-            }
-          }
-
-          return clean;
-        }
-
-        if (value && typeof value.toDate === "function") {
-          const d = value.toDate();
-          return d.toLocaleDateString("en-GB", {
+        if (/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) {
+          const [y, m, d] = value.split("-");
+          const dt = new Date(Number(y), Number(m) - 1, Number(d));
+          return dt.toLocaleDateString("en-GB", {
             day: "numeric",
             month: "short",
             year: "numeric"
           });
         }
-
-        if (value && value.seconds) {
-          const d = new Date(value.seconds * 1000);
-          return d.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-          });
-        }
-
-        return "—";
+        return value;
       }
 
-      function setErrorState() {
-        packageEl.textContent = "Unable to load";
-        remainingEl.textContent = "—";
-        totalEl.textContent = "—";
-        statusEl.textContent = "Error";
-        statusEl.className = "sessions-status-badge is-neutral";
-        coachesEl.textContent = "Could not load coaches.";
-        nextEl.textContent = "Could not load next session.";
-        periodEl.textContent = "—";
-        notesEl.textContent = "Please try again later.";
-      }
-
-      function setEmptyState() {
-        packageEl.textContent = "No active package";
-        remainingEl.textContent = "0";
-        totalEl.textContent = "0";
-        statusEl.textContent = "Inactive";
-        statusEl.className = "sessions-status-badge is-neutral";
-        coachesEl.textContent = "No coaches assigned yet.";
-        nextEl.textContent = "No upcoming session.";
-        periodEl.textContent = "—";
-        notesEl.textContent = "No notes yet.";
-      }
-
-      async function loadSessions(user) {
-        try {
-          let userData = {};
-          const userDoc = await db.collection("users").doc(user.uid).get();
-
-          if (userDoc.exists) {
-            userData = userDoc.data() || {};
-          } else if (user.email) {
-            const byEmail = await db.collection("users")
-              .where("email", "==", user.email)
-              .limit(1)
-              .get();
-
-            if (!byEmail.empty) {
-              userData = byEmail.docs[0].data() || {};
-            }
-          }
-
-          let trainingData = null;
-
-          const nestedDoc = await db.collection("users")
-            .doc(user.uid)
-            .collection("training")
-            .doc("current")
-            .get();
-
-          if (nestedDoc.exists) {
-            trainingData = nestedDoc.data() || {};
-          } else {
-            const flatDoc = await db.collection("trainingPackages")
-              .doc(user.uid)
-              .get();
-
-            if (flatDoc.exists) {
-              trainingData = flatDoc.data() || {};
-            }
-          }
-
-          if (!trainingData) {
-            setEmptyState();
-            return;
-          }
-
-          const packageName =
-            trainingData.packageName ||
-            trainingData.package ||
-            "Training Package";
-
-          const sessionsRemaining = Number(
-            trainingData.sessionsRemaining ??
-            trainingData.remainingSessions ??
-            0
-          );
-
-          const totalSessions = Number(
-            trainingData.totalSessions ??
-            trainingData.sessionsTotal ??
-            trainingData.packageSize ??
-            0
-          );
-
-          const status =
-            trainingData.status ||
-            "Active";
-
-          const assignedCoaches = Array.isArray(trainingData.assignedCoaches)
-            ? trainingData.assignedCoaches
-            : Array.isArray(trainingData.coaches)
-            ? trainingData.coaches
-            : trainingData.coach
-            ? [trainingData.coach]
-            : [];
-
-          const startDate = formatDate(trainingData.startDate || trainingData.packageStart || "");
-          const endDate = formatDate(trainingData.endDate || trainingData.packageEnd || "");
-          const nextDate = formatDate(trainingData.nextSessionDate || "");
-          const nextTime = trainingData.nextSessionTime || "";
-          const notes = trainingData.notes || trainingData.comment || "No notes yet.";
-
-          packageEl.textContent = packageName;
-          remainingEl.textContent = String(sessionsRemaining);
-          totalEl.textContent = String(totalSessions);
-
-          statusEl.textContent = status;
-          statusEl.className = "sessions-status-badge " + statusClass(status);
-
-          coachesEl.textContent = assignedCoaches.length
-            ? assignedCoaches.join(", ")
-            : "No coaches assigned yet.";
-
-          nextEl.textContent = nextTime
-            ? `${nextDate} • ${nextTime}`
-            : nextDate !== "—"
-            ? nextDate
-            : "No upcoming session.";
-
-          periodEl.textContent =
-            startDate !== "—" || endDate !== "—"
-              ? `${startDate} → ${endDate}`
-              : "—";
-
-          notesEl.textContent = notes;
-        } catch (err) {
-          console.error("Failed to load sessions data:", err);
-          setErrorState();
-        }
-      }
-
-      auth.onAuthStateChanged((user) => {
+      auth.onAuthStateChanged(async (user) => {
         if (!user) {
           window.location.href = "login.html";
           return;
         }
 
-        loadSessions(user);
+        try {
+          const doc = await db.collection("users").doc(user.uid).collection("training").doc("current").get();
+
+          if (!doc.exists) {
+            packageEl.textContent = "No active package";
+            remainingEl.textContent = "0";
+            totalEl.textContent = "0";
+            statusEl.textContent = "Inactive";
+            statusEl.className = "career-status-badge is-neutral";
+            coachesEl.textContent = "No coaches assigned yet.";
+            nextEl.textContent = "No upcoming session.";
+            periodEl.textContent = "—";
+            notesEl.textContent = "No notes yet.";
+            return;
+          }
+
+          const data = doc.data() || {};
+
+          packageEl.textContent = data.packageName || "Package";
+          remainingEl.textContent = String(data.sessionsRemaining ?? 0);
+          totalEl.textContent = String(data.totalSessions ?? 0);
+
+          const status = data.status || "Active";
+          statusEl.textContent = status;
+          statusEl.className = "career-status-badge " + statusClass(status);
+
+          const coaches = Array.isArray(data.assignedCoaches) ? data.assignedCoaches : [];
+          coachesEl.textContent = coaches.length ? coaches.join(", ") : "No coaches assigned yet.";
+
+          const nextDate = formatDate(data.nextSessionDate || "");
+          const nextTime = data.nextSessionTime || "";
+          nextEl.textContent = nextTime ? `${nextDate} • ${nextTime}` : nextDate;
+
+          const startDate = formatDate(data.startDate || "");
+          const endDate = formatDate(data.endDate || "");
+          periodEl.textContent = startDate !== "—" || endDate !== "—" ? `${startDate} → ${endDate}` : "—";
+
+          notesEl.textContent = data.notes || "No notes yet.";
+        } catch (err) {
+          console.error("Failed to load training package:", err);
+          packageEl.textContent = "Unable to load";
+          remainingEl.textContent = "—";
+          totalEl.textContent = "—";
+          statusEl.textContent = "Error";
+          statusEl.className = "career-status-badge is-neutral";
+          coachesEl.textContent = "Could not load coaches.";
+          nextEl.textContent = "Could not load next session.";
+          periodEl.textContent = "—";
+          notesEl.textContent = "Please try again later.";
+        }
       });
     })();
   </script>
