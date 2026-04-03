@@ -1,21 +1,19 @@
 /* ===========================
-   My Sessions Page
+   MY SESSIONS PAGE
+   Matched to My Career spacing system
    =========================== */
 
 .sessions-page{
-  padding: 34px 0 54px;
+  padding: 26px 0 54px;
   background:
-    radial-gradient(1200px 500px at 20% -10%, rgba(63,102,150,0.18), transparent 60%),
-    radial-gradient(800px 400px at 90% 10%, rgba(15,23,42,0.10), transparent 60%),
+    radial-gradient(1200px 500px at 18% -10%, rgba(63,102,150,0.14), transparent 60%),
+    radial-gradient(900px 480px at 92% 14%, rgba(15,23,42,0.06), transparent 60%),
     var(--light);
 }
 
-/* ===========================
-   Header Section
-   =========================== */
-
+/* Page intro */
 .sessions-page-head{
-  margin: 10px 0 20px;
+  margin: 8px 0 12px;
 }
 
 .sessions-page-kicker{
@@ -25,159 +23,232 @@
   text-transform: uppercase;
   color: rgba(11,18,32,0.55);
   margin-bottom: 8px;
+  position: relative;
+  padding-left: 14px;
 }
 
-.sessions-page-kicker{
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 2.6px;
-  text-transform: uppercase;
-  color: rgba(11,18,32,0.55);
-  margin-bottom: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.sessions-page-kicker span{
-  width: 8px;
-  height: 8px;
+.sessions-page-kicker::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
   border-radius: 999px;
   background: rgba(63,102,150,0.75);
-  flex: 0 0 8px;
 }
 
 .sessions-page-title{
   margin: 0 0 6px;
-  font-size: 28px;
-  letter-spacing: .2px;
-  color: var(--text-dark);
+  font-size: 30px;
+  line-height: 1.04;
+  letter-spacing: -0.6px;
+  color: var(--navy);
 }
 
 .sessions-page-subtitle{
   margin: 0;
-  color: rgba(11,18,32,0.70);
+  font-size: 15px;
+  color: rgba(11,18,32,0.68);
 }
 
-/* ===========================
-   Overview Card
-   =========================== */
+/* Back button
+   Uses shared .career-home-link styles from global/career system,
+   here we only match spacing around it */
+.career-home-link-outside{
+  margin: 0 0 14px;
+}
 
+/* Overview card */
 .sessions-overview-card{
+  margin: 0 0 20px;
+  padding: 16px;
+  border-radius: 22px;
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: 0 12px 28px rgba(15,23,42,0.06);
   overflow: hidden;
-  margin-bottom: 20px;
 }
 
+/* Summary boxes */
 .sessions-summary-grid{
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  padding: 16px;
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:10px;
+}
+
+.sessions-summary-box:first-child{
+  grid-column: 1 / -1;
 }
 
 .sessions-summary-box{
-  border: 1px solid rgba(15,23,42,0.08);
-  border-radius: 16px;
+  padding:10px 12px;
+  border-radius:16px;
+  border:1px solid rgba(15,23,42,0.08);
   background: rgba(15,23,42,0.02);
-  padding: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.70);
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:82px;
+}
+
+.sessions-summary-box:first-child{
+  min-height:72px;
 }
 
 .sessions-summary-label{
-  font-size: 13px;
-  font-weight: 800;
+  font-size:11px;
+  font-weight:800;
   color: rgba(11,18,32,0.60);
-  margin-bottom: 6px;
+  margin-bottom:3px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  text-align:center;
 }
 
 .sessions-summary-value{
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--text-dark);
+  font-size:17px;
+  font-weight:900;
+  color: var(--navy);
+  text-align:center;
 }
-
-/* ===========================
-   Status Badge Override
-   =========================== */
 
 .sessions-page .career-status-badge{
-  font-weight: 800;
-  padding: 6px 10px;
-  border-radius: 999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:36px;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  margin: 0 auto;
 }
 
-/* ===========================
-   Details Section
-   =========================== */
-
-.sessions-section{
-  margin-top: 10px;
+/* Section spacing matches career */
+.career-section{
+  margin-top:24px;
 }
 
-.sessions-card{
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 18px;
+.career-section-head{
+  margin-bottom:14px;
+  padding-bottom:10px;
+  border-bottom: 1px solid rgba(15,23,42,0.08);
 }
 
-.sessions-field{
-  margin-bottom: 16px;
+.career-section-head h2{
+  margin:0 0 4px;
+  font-size:24px;
+  line-height:1.04;
+  color: var(--navy);
+  letter-spacing:-0.4px;
 }
 
-.sessions-label{
-  font-size: 13px;
-  font-weight: 800;
+.career-section-head p{
+  margin:0;
   color: rgba(11,18,32,0.60);
-  margin-bottom: 6px;
+  font-size:14px;
+  line-height:1.4;
 }
 
-.sessions-readonly{
-  min-height: 50px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: rgba(15,23,42,0.03);
+/* Details shell */
+.sessions-details-shell{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow: 0 12px 28px rgba(15,23,42,0.06);
+  padding:16px;
+}
+
+.sessions-details-grid{
+  display:grid;
+  gap:10px;
+}
+
+.sessions-detail-card{
+  border:1px solid rgba(15,23,42,0.08);
+  background: rgba(15,23,42,0.02);
+  border-radius:16px;
+  padding:14px;
+}
+
+.sessions-detail-label{
+  font-size:13px;
+  font-weight:800;
+  color: rgba(11,18,32,0.60);
+  margin-bottom:6px;
+}
+
+.sessions-detail-value{
+  font-size:15px;
+  line-height:1.5;
   color: var(--text-dark);
-  font-weight: 700;
-  line-height: 1.5;
+  font-weight:700;
+  word-break: break-word;
 }
 
-/* ===========================
-   Empty State
-   =========================== */
-
+/* Optional empty state */
 .sessions-empty{
-  text-align: center;
-  padding: 30px 20px;
-  color: rgba(11,18,32,0.6);
-  font-weight: 600;
+  text-align:center;
+  padding:18px;
+  border-radius:16px;
+  background: rgba(15,23,42,0.03);
+  color: rgba(11,18,32,0.60);
+  font-weight:700;
 }
 
-/* ===========================
-   Responsive
-   =========================== */
-
-@media (max-width: 920px){
-  .sessions-summary-grid{
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
+/* Mobile */
 @media (max-width: 520px){
-  .sessions-summary-grid{
-    grid-template-columns: 1fr;
+  .sessions-page{
+    padding: 22px 0 40px;
   }
 
   .sessions-page-title{
-    font-size: 24px;
+    font-size:26px;
   }
 
-  .sessions-card{
-    padding: 16px;
+  .sessions-page-subtitle{
+    font-size:14px;
+  }
+
+  .sessions-overview-card{
+    padding:14px;
+    border-radius:20px;
+  }
+
+  .sessions-summary-grid{
+    grid-template-columns: 1fr 1fr;
+    gap:8px;
+  }
+
+  .sessions-summary-box{
+    padding:10px;
+    border-radius:16px;
+    min-height:65px;
+  }
+
+  .sessions-summary-box:first-child{
+    min-height:72px;
+  }
+
+  .sessions-summary-value{
+    font-size:15px;
+  }
+
+  .career-section-head h2{
+    font-size:22px;
+  }
+
+  .career-section-head p{
+    font-size:13px;
+  }
+
+  .sessions-details-shell{
+    padding:14px;
+    border-radius:20px;
   }
 }
