@@ -168,6 +168,14 @@ if (dn !== "STAFF:ADMIN") {
 }
 
 // Normal login
+const postLoginRedirect = localStorage.getItem("padelinPostLoginRedirect");
+
+if (postLoginRedirect) {
+  localStorage.removeItem("padelinPostLoginRedirect");
+  window.location.href = postLoginRedirect;
+  return;
+}
+
 window.location.href = "index.html";
           } catch (err) {
 
@@ -284,7 +292,15 @@ await db.runTransaction(async (transaction) => {
 
             localStorage.setItem("padelinRewardPoints", localStorage.getItem("padelinRewardPoints") || "0");
 
-            window.location.href = "index.html";
+            const postLoginRedirect = localStorage.getItem("padelinPostLoginRedirect");
+
+if (postLoginRedirect) {
+  localStorage.removeItem("padelinPostLoginRedirect");
+  window.location.href = postLoginRedirect;
+  return;
+}
+
+window.location.href = "index.html";
           } catch (err) {
             alert(err.message);
           }
