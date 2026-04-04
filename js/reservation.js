@@ -481,16 +481,6 @@ if ((!bookingPhone || bookingPhone === "Unknown") && userUid && window.padelinDB
 bookingPhone = String(bookingPhone || "").trim();
 
   if (!user || (!user.uid && !user.email)) {
-  // Save where to come back after login
-  localStorage.setItem("padelinPostLoginRedirect", window.location.href);
-
-  // Open account drawer so they can sign in
-  document.querySelector("[data-auth-open]")?.click();
-
-  // Keep only the website red message
-  setStatus("error", "Please sign in before confirming your reservation.");
-  return;
-}
     alert("Please sign in before confirming your reservation.");
     // Optional: open the account drawer (helps them sign in)
     document.querySelector("[data-auth-open]")?.click();
