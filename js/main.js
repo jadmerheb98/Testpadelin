@@ -168,7 +168,14 @@ if (dn !== "STAFF:ADMIN") {
 }
 
 // Normal login
-window.location.href = "index.html";
+const postLoginRedirect = localStorage.getItem("padelinPostLoginRedirect");
+
+if (postLoginRedirect) {
+  localStorage.removeItem("padelinPostLoginRedirect");
+  window.location.href = postLoginRedirect;
+} else {
+  window.location.href = "index.html";
+}
           } catch (err) {
 
   let msg = "Unable to sign in. Please try again.";
@@ -284,7 +291,14 @@ await db.runTransaction(async (transaction) => {
 
             localStorage.setItem("padelinRewardPoints", localStorage.getItem("padelinRewardPoints") || "0");
 
-            window.location.href = "index.html";
+            const postLoginRedirect = localStorage.getItem("padelinPostLoginRedirect");
+
+if (postLoginRedirect) {
+  localStorage.removeItem("padelinPostLoginRedirect");
+  window.location.href = postLoginRedirect;
+} else {
+  window.location.href = "index.html";
+}
           } catch (err) {
             alert(err.message);
           }
