@@ -481,10 +481,11 @@ if ((!bookingPhone || bookingPhone === "Unknown") && userUid && window.padelinDB
 bookingPhone = String(bookingPhone || "").trim();
 
   if (!user || (!user.uid && !user.email)) {
-    document.querySelector("[data-auth-open]")?.click();
-    setStatus("error", "Please sign in before confirming your reservation.");
-    return;
-  }
+  localStorage.setItem("padelinPostLoginRedirect", "reservation.html");
+  document.querySelector("[data-auth-open]")?.click();
+  setStatus("error", "Please sign in before confirming your reservation.");
+  return;
+}
 
   const mins = selectedDurationMinutes();
   if (mins < MIN_BOOK_MINUTES) {
