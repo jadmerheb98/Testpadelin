@@ -370,42 +370,39 @@ const liveStatus = liveStatuses[liveKey] || null;
   }
 
   function syncUI() {
-    document.querySelectorAll(".slot.selected").forEach((el) => el.classList.remove("selected"));
+  document.querySelectorAll(".slot.selected").forEach((el) => el.classList.remove("selected"));
 
-    if (isAdmin) {
-      confirmBtn.disabled = true;
-      selectedText.textContent = "Admin Mode: Tap slots to toggle status";
-      return;
-    }
-
+  if (isAdmin) {
     confirmBtn.disabled = true;
-    selectedText.textContent = "No slot selected";
-
-    if (selected.size === 0) return;
-
-    for (const k of selected) {
-      const [timeRange, court] = k.split("|");
-      const rows = Array.from(tableBody.querySelectorAll("tr"));
-      const row = rows.find((r) => r.firstChild && r.firstChild.textContent === timeRange);
-      if (!row) continue;
-
-      const courtIndex = court === "court1" ? 1 : 2;
-      const slotEl = row.children[courtIndex]?.querySelector(".slot");
-      if (slotEl) slotEl.classList.add("selected");
-    }
-
-    const summary = selectionSummary();
-    if (!summary) return;
-
-    const mins = selectedDurationMinutes();
-
-    selectedText.innerHTML = `
-      <div style="white-space:nowrap;">${summary.start} → ${summary.end}</div>
-      <div style="margin-top:6px; font-weight:700;">${summary.courtLabel}</div>
-    `;
-
-    if (mins >= MIN_BOOK_MINUTES) confirmBtn.disabled = false;
+    selectedText.textContent = "Admin Mode: Tap slots to toggle status";
+    return;
   }
+
+  // Keep button always clickable for users
+  confirmBtn.disabled = false;
+  selectedText.textContent = "No slot selected";
+
+  if (selected.size === 0) return;
+
+  for (const k of selected) {
+    const [timeRange, court] = k.split("|");
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+    const row = rows.find((r) => r.firstChild && r.firstChild.textContent === timeRange);
+    if (!row) continue;
+
+    const courtIndex = court === "court1" ? 1 : 2;
+    const slotEl = row.children[courtIndex]?.querySelector(".slot");
+    if (slotEl) slotEl.classList.add("selected");
+  }
+
+  const summary = selectionSummary();
+  if (!summary) return;
+
+  selectedText.innerHTML = `
+    <div style="white-space:nowrap;">${summary.start} → ${summary.end}</div>
+    <div style="margin-top:6px; font-weight:700;">${summary.courtLabel}</div>
+  `;
+}
 
   // ---- WhatsApp message uses CURRENT selected date ----
   function buildWhatsAppMessage(summary) {
@@ -488,10 +485,10 @@ bookingPhone = String(bookingPhone || "").trim();
 }
 
   const mins = selectedDurationMinutes();
-  if (mins < MIN_BOOK_MINUTES) {
-    setStatus("error", "Please select at least 60 minutes (2 consecutive 30-min slots).");
-    return;
-  }
+if (mins < MIN_BOOK_MINUTES) {
+  setStatus("error", "Please select at least 1 hour to continue.");
+  return;
+}
 
   const summary = selectionSummary();
 if (!summary) return;
