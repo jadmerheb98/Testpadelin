@@ -7,186 +7,127 @@
   <link rel="stylesheet" href="css/styles.css" />
 
   <style>
-    .coaches-soon-page{
-      min-height: calc(100vh - 68px);
-      padding: 34px 0 56px;
+    .hold-page{
+      min-height: calc(100vh - 92px);
+      padding: 34px 0 54px;
       background:
-        radial-gradient(820px 420px at 12% 8%, rgba(63,102,150,0.18), transparent 60%),
-        radial-gradient(900px 500px at 88% 22%, rgba(15,23,42,0.12), transparent 60%),
-        linear-gradient(180deg, #f8fafc 0%, #eef4fb 100%);
+        radial-gradient(1000px 420px at 15% 0%, rgba(63,102,150,0.18), transparent 60%),
+        radial-gradient(900px 460px at 100% 20%, rgba(15,23,42,0.10), transparent 60%),
+        linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
     }
 
-    .coaches-shell{
-      max-width: 980px;
+    .hold-shell{
+      max-width: 860px;
       margin: 0 auto;
     }
 
-    .coaches-hero{
+    .hold-card{
       position: relative;
       overflow: hidden;
-      border-radius: 30px;
-      padding: 30px;
-      background: linear-gradient(135deg, rgba(10,18,34,0.98) 0%, rgba(28,50,88,0.96) 100%);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 26px 60px rgba(15,23,42,0.18);
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 28px;
+      box-shadow: 0 24px 70px rgba(15,23,42,0.10);
+      padding: 26px;
     }
 
-    .coaches-hero::before{
-      content: "";
-      position: absolute;
-      right: -60px;
-      top: -30px;
-      width: 240px;
-      height: 240px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 70%);
-      pointer-events: none;
+    .hold-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(300px 140px at 15% 12%, rgba(63,102,150,0.14), transparent 70%),
+        radial-gradient(300px 140px at 85% 0%, rgba(15,23,42,0.05), transparent 70%);
+      pointer-events:none;
     }
 
-    .coaches-badge{
-      display: inline-block;
-      margin-bottom: 12px;
-      padding: 8px 12px;
+    .hold-top{
+      position: relative;
+      z-index: 1;
+      display:grid;
+      gap:18px;
+      text-align:center;
+    }
+
+    .hold-kicker{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width: fit-content;
+      margin: 0 auto;
+      padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(63,102,150,0.10);
+      border: 1px solid rgba(63,102,150,0.18);
       font-size: 12px;
       font-weight: 900;
-      letter-spacing: 1.8px;
+      letter-spacing: 2px;
       text-transform: uppercase;
+      color: #3F6696;
     }
 
-    .coaches-title{
-      margin: 0;
-      font-size: clamp(34px, 6vw, 60px);
-      line-height: 0.98;
-      letter-spacing: -1.8px;
-      max-width: 10ch;
-    }
-
-    .coaches-sub{
-      margin: 14px 0 0;
-      max-width: 58ch;
-      color: rgba(255,255,255,0.80);
-      font-size: 15px;
-    }
-
-    .coaches-grid{
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .coaches-card{
-      background: rgba(255,255,255,0.95);
-      border: 1px solid rgba(15,23,42,0.08);
-      border-radius: 22px;
-      padding: 22px;
-      box-shadow: 0 14px 34px rgba(15,23,42,0.08);
-    }
-
-    .coaches-card h2,
-    .coaches-card h3{
-      margin: 0 0 10px;
+    .hold-title{
+      margin:0;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: .98;
+      letter-spacing: -1.6px;
       color: #0f172a;
     }
 
-    .coaches-copy{
-      color: rgba(15,23,42,0.70);
-      margin: 0;
-      font-size: 15px;
+    .hold-sub{
+      max-width: 650px;
+      margin: 0 auto;
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(15,23,42,0.72);
     }
 
-    .coaches-highlight{
-      margin-top: 14px;
-      padding: 16px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(63,102,150,0.10), rgba(15,23,42,0.04));
-      border: 1px solid rgba(63,102,150,0.14);
-      color: #183453;
-      font-weight: 700;
+    .hold-sub strong{
+      color:#0f172a;
     }
 
-    .coaches-list{
-      margin-top: 14px;
-      display: grid;
-      gap: 12px;
-    }
-
-    .coaches-item{
-      border-radius: 18px;
-      padding: 14px;
-      background: #fff;
-      border: 1px solid rgba(15,23,42,0.08);
-    }
-
-    .coaches-item strong{
-      display: block;
-      margin-bottom: 4px;
-      color: #0f172a;
-    }
-
-    .coaches-item span{
-      font-size: 14px;
-      color: rgba(15,23,42,0.66);
-    }
-
-    .coaches-actions{
+    .hold-note{
+      position: relative;
+      z-index: 1;
       margin-top: 18px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      text-align:center;
+      font-size: 13px;
+      color: rgba(15,23,42,0.55);
     }
 
-    .coaches-btn{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 18px;
+    .hold-actions{
+      position: relative;
+      z-index: 1;
+      margin-top: 24px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .hold-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width: 170px;
+      padding: 13px 18px;
       border-radius: 14px;
+      border: 1px solid rgba(63,102,150,0.24);
+      background: rgba(63,102,150,0.10);
+      color:#0f172a;
       font-weight: 800;
-      text-decoration: none;
-      border: 1px solid transparent;
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      transition: transform .18s ease, background .18s ease;
     }
 
-    .coaches-btn.primary{
-      background: #3F6696;
-      color: #fff;
-      box-shadow: 0 14px 28px rgba(63,102,150,0.24);
-    }
-
-    .coaches-btn.ghost{
-      background: rgba(15,23,42,0.05);
-      color: #0f172a;
-      border-color: rgba(15,23,42,0.10);
-    }
-
-    .coaches-btn:hover{
+    .hold-btn:hover{
       transform: translateY(-1px);
+      background: rgba(63,102,150,0.16);
     }
 
-    .side-links a.active{
-      color: var(--white);
-      background: rgba(63, 102, 150, 0.28);
-    }
-
-    @media (max-width: 780px){
-      .coaches-grid{
-        grid-template-columns: 1fr;
-      }
-
-      .coaches-hero{
-        padding: 22px;
-        border-radius: 24px;
-      }
-
-      .coaches-card{
-        border-radius: 20px;
-      }
+    @media (max-width: 760px){
+      .hold-card{ padding: 22px 16px; border-radius: 22px; }
+      .hold-sub{ font-size: 15px; }
     }
   </style>
 </head>
@@ -229,61 +170,34 @@
       <div class="side-menu-title">Menu</div>
       <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
     </div>
+
     <div class="side-links">
       <a href="membership.html">Membership</a>
       <a href="training.html" class="active">Live Coaches</a>
       <a href="tournaments.html">Tournaments</a>
     </div>
+
+    <a class="side-signin" href="./login.html">Sign in</a>
   </aside>
 
-  <main class="coaches-soon-page">
+  <main class="hold-page">
     <div class="container">
-      <div class="coaches-shell">
-        <section class="coaches-hero">
-          <div class="coaches-badge">Live Coaching</div>
-          <h1 class="coaches-title">Elite coaching is on its way.</h1>
-          <p class="coaches-sub">
-            We are building a live coaching experience that feels premium from the first session.
-            Not rushed. Not random. Just the right coaches, the right format, and the right energy.
-          </p>
-        </section>
-
-        <section class="coaches-grid">
-          <div class="coaches-card">
-            <h2>Coming soon</h2>
-            <p class="coaches-copy">
-              Live coaches will be available soon, with a sharper booking experience and a stronger standard from day one.
+      <div class="hold-shell">
+        <section class="hold-card">
+          <div class="hold-top">
+            <div class="hold-kicker">PADELIN Live Coaches</div>
+            <h1 class="hold-title">Coming Soon...</h1>
+            <p class="hold-sub">
+              We’re preparing a <strong>live coaching experience</strong> built with the right energy, the right coaches, and the right structure — so when it arrives, it feels truly worth it.
             </p>
-
-            <div class="coaches-highlight">
-              Live coaching sessions are being prepared just for you — focused, elevated, and worth the wait.
-            </div>
-
-            <div class="coaches-actions">
-              <a class="coaches-btn primary" href="reservation.html">Reserve a Court</a>
-              <a class="coaches-btn ghost" href="index.html">Back to Home</a>
-            </div>
           </div>
 
-          <div class="coaches-card">
-            <h3>What is being prepared</h3>
+          <div class="hold-note">
+            A sharper training experience is on the way.
+          </div>
 
-            <div class="coaches-list">
-              <div class="coaches-item">
-                <strong>Coach selection</strong>
-                <span>A curated lineup built around quality, not quantity.</span>
-              </div>
-
-              <div class="coaches-item">
-                <strong>Session structure</strong>
-                <span>Training that feels useful for beginners, regular players, and competitive profiles.</span>
-              </div>
-
-              <div class="coaches-item">
-                <strong>Smoother booking</strong>
-                <span>A clean page and flow once live coaching officially opens.</span>
-              </div>
-            </div>
+          <div class="hold-actions">
+            <a href="index.html" class="hold-btn">Back to Home</a>
           </div>
         </section>
       </div>
@@ -291,7 +205,7 @@
   </main>
 
   <footer class="footer">
-    <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
+    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
   </footer>
 
   <script src="js/main.js"></script>
