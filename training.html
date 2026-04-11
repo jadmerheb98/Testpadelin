@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Coaches | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    .coaches-soon-page{
+      min-height: calc(100vh - 68px);
+      padding: 34px 0 56px;
+      background:
+        radial-gradient(820px 420px at 12% 8%, rgba(63,102,150,0.18), transparent 60%),
+        radial-gradient(900px 500px at 88% 22%, rgba(15,23,42,0.12), transparent 60%),
+        linear-gradient(180deg, #f8fafc 0%, #eef4fb 100%);
+    }
+
+    .coaches-shell{
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .coaches-hero{
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(10,18,34,0.98) 0%, rgba(28,50,88,0.96) 100%);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 26px 60px rgba(15,23,42,0.18);
+    }
+
+    .coaches-hero::before{
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -30px;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 70%);
+      pointer-events: none;
+    }
+
+    .coaches-badge{
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .coaches-title{
+      margin: 0;
+      font-size: clamp(34px, 6vw, 60px);
+      line-height: 0.98;
+      letter-spacing: -1.8px;
+      max-width: 10ch;
+    }
+
+    .coaches-sub{
+      margin: 14px 0 0;
+      max-width: 58ch;
+      color: rgba(255,255,255,0.80);
+      font-size: 15px;
+    }
+
+    .coaches-grid{
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .coaches-card{
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 14px 34px rgba(15,23,42,0.08);
+    }
+
+    .coaches-card h2,
+    .coaches-card h3{
+      margin: 0 0 10px;
+      color: #0f172a;
+    }
+
+    .coaches-copy{
+      color: rgba(15,23,42,0.70);
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .coaches-highlight{
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(63,102,150,0.10), rgba(15,23,42,0.04));
+      border: 1px solid rgba(63,102,150,0.14);
+      color: #183453;
+      font-weight: 700;
+    }
+
+    .coaches-list{
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .coaches-item{
+      border-radius: 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid rgba(15,23,42,0.08);
+    }
+
+    .coaches-item strong{
+      display: block;
+      margin-bottom: 4px;
+      color: #0f172a;
+    }
+
+    .coaches-item span{
+      font-size: 14px;
+      color: rgba(15,23,42,0.66);
+    }
+
+    .coaches-actions{
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .coaches-btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .coaches-btn.primary{
+      background: #3F6696;
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(63,102,150,0.24);
+    }
+
+    .coaches-btn.ghost{
+      background: rgba(15,23,42,0.05);
+      color: #0f172a;
+      border-color: rgba(15,23,42,0.10);
+    }
+
+    .coaches-btn:hover{
+      transform: translateY(-1px);
+    }
+
+    .side-links a.active{
+      color: var(--white);
+      background: rgba(63, 102, 150, 0.28);
+    }
+
+    @media (max-width: 780px){
+      .coaches-grid{
+        grid-template-columns: 1fr;
+      }
+
+      .coaches-hero{
+        padding: 22px;
+        border-radius: 24px;
+      }
+
+      .coaches-card{
+        border-radius: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner header-gd">
+      <div class="header-left">
+        <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+          <div class="hamburger-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
+      </div>
+
+      <div class="header-right">
+        <a class="icon-btn" href="contact.html" aria-label="Contact us">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
+          </svg>
+        </a>
+
+        <button class="icon-btn" type="button" aria-label="Account" data-auth-open>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="overlay" data-overlay></div>
+
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+      <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+    </div>
+    <div class="side-links">
+      <a href="membership.html">Membership</a>
+      <a href="training.html" class="active">Live Coaches</a>
+      <a href="tournaments.html">Tournaments</a>
+    </div>
+  </aside>
+
+  <main class="coaches-soon-page">
+    <div class="container">
+      <div class="coaches-shell">
+        <section class="coaches-hero">
+          <div class="coaches-badge">Live Coaching</div>
+          <h1 class="coaches-title">Elite coaching is on its way.</h1>
+          <p class="coaches-sub">
+            We are building a live coaching experience that feels premium from the first session.
+            Not rushed. Not random. Just the right coaches, the right format, and the right energy.
+          </p>
+        </section>
+
+        <section class="coaches-grid">
+          <div class="coaches-card">
+            <h2>Coming soon</h2>
+            <p class="coaches-copy">
+              Live coaches will be available soon, with a sharper booking experience and a stronger standard from day one.
+            </p>
+
+            <div class="coaches-highlight">
+              Live coaching sessions are being prepared just for you — focused, elevated, and worth the wait.
+            </div>
+
+            <div class="coaches-actions">
+              <a class="coaches-btn primary" href="reservation.html">Reserve a Court</a>
+              <a class="coaches-btn ghost" href="index.html">Back to Home</a>
+            </div>
+          </div>
+
+          <div class="coaches-card">
+            <h3>What is being prepared</h3>
+
+            <div class="coaches-list">
+              <div class="coaches-item">
+                <strong>Coach selection</strong>
+                <span>A curated lineup built around quality, not quantity.</span>
+              </div>
+
+              <div class="coaches-item">
+                <strong>Session structure</strong>
+                <span>Training that feels useful for beginners, regular players, and competitive profiles.</span>
+              </div>
+
+              <div class="coaches-item">
+                <strong>Smoother booking</strong>
+                <span>A clean page and flow once live coaching officially opens.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 PADELIN | Byblos, Lebanon</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
