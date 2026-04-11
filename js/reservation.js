@@ -21,10 +21,11 @@
   const END_TIME = "24:00";
 
   const STEP_MINUTES = 30; // table divided every 30 mins
-  const MIN_BOOK_MINUTES = 60; // minimum selection 60 mins
+const MIN_BOOK_MINUTES = 60; // minimum selection 60 mins
 
-  // ✅ Taken slots stored per-day (so arrows actually matter)
-  const STORAGE_KEY = "padelin_taken_by_date_v1";
+// ✅ Taken slots stored per-day (so arrows actually matter)
+const STORAGE_KEY = "padelin_taken_by_date_v1";
+const PENDING_SELECTION_KEY = "padelinPendingReservation_v1";
 
   // ---- Date state (NEW) ----
   let currentDate = new Date();
@@ -157,19 +158,86 @@ let liveStatuses = {};
   }
 
   function rebuildSelectedSetForUI() {
-    selected.clear();
-    if (!selectedCourt || selectedStarts.length === 0) return;
-    selectedStarts.forEach((startM) => {
-      selected.add(keyOf(startMinutesToRange(startM), selectedCourt));
-    });
-  }
+  selected.clear();
+  if (!selectedCourt || selectedStarts.length === 0) return;
+  selectedStarts.forEach((startM) => {
+    selected.add(keyOf(startMinutesToRange(startM), selectedCourt));
+  });
+}
 
-  function clearSelection() {
-    selectedCourt = null;
-    selectedStarts = [];
-    selected.clear();
-    syncUI();
+function savePendingSelection() {
+  try {
+    const payload = {
+      dateISO: currentISO,
+      court: selectedCourt,
+      starts: Array.isArray(selectedStarts) ? [...selectedStarts] : []
+    };
+    localStorage.setItem(PENDING_SELECTION_KEY, JSON.stringify(payload));
+  } catch (err) {
+    console.error("Failed to save pending selection:", err);
   }
+}
+
+function clearPendingSelection() {
+  localStorage.removeItem(PENDING_SELECTION_KEY);
+}
+
+function restorePendingSelection() {
+  try {
+    const raw = localStorage.getItem(PENDING_SELECTION_KEY);
+    if (!raw) return false;
+
+    const saved = JSON.parse(raw);
+    if (!saved || !saved.dateISO || !saved.court || !Array.isArray(saved.starts)) {
+      clearPendingSelection();
+      return false;
+    }
+
+    if (saved.dateISO !== currentISO) return false;
+
+    const validStarts = saved.starts
+      .map((n) => Number(n))
+      .filter((n) => Number.isFinite(n))
+      .sort((a, b) => a - b);
+
+    if (validStarts.length === 0) {
+      clearPendingSelection();
+      return false;
+    }
+
+    // make sure the saved slots are still available
+    const hasBlockedSlot = validStarts.some((startM) => {
+      if (isTakenBlock(startM, saved.court)) return true;
+
+      const slotRange = `${minutesToTime(startM)} - ${minutesToTime(startM + STEP_MINUTES)}`;
+      const courtLabel = saved.court === "court1" ? "Court 1" : "Court 2";
+      const liveKey = `${courtLabel}|${slotRange}`;
+      return !!liveStatuses[liveKey];
+    });
+
+    if (hasBlockedSlot) {
+      clearPendingSelection();
+      return false;
+    }
+
+    selectedCourt = saved.court;
+    selectedStarts = validStarts;
+    rebuildSelectedSetForUI();
+    syncUI();
+    return true;
+  } catch (err) {
+    console.error("Failed to restore pending selection:", err);
+    clearPendingSelection();
+    return false;
+  }
+}
+
+function clearSelection() {
+  selectedCourt = null;
+  selectedStarts = [];
+  selected.clear();
+  syncUI();
+}
 
   function toggleSelect(timeRange, court) {
     const startM = timeRangeToStartMinutes(timeRange);
@@ -478,6 +546,7 @@ if ((!bookingPhone || bookingPhone === "Unknown") && userUid && window.padelinDB
 bookingPhone = String(bookingPhone || "").trim();
 
   if (!user || (!user.uid && !user.email)) {
+  savePendingSelection();
   localStorage.setItem("padelinPostLoginRedirect", window.location.pathname);
   document.querySelector("[data-auth-open]")?.click();
   setStatus("error", "Please sign in before confirming your reservation.");
@@ -541,15 +610,16 @@ try {
 );
 
   // Show selected slots as pending immediately
-  const courtLabel = summary.courtLabel;
-  selectedStarts.forEach((startM) => {
-    const slotRange = `${minutesToTime(startM)} - ${minutesToTime(startM + STEP_MINUTES)}`;
-    const slotKey = `${courtLabel}|${slotRange}`;
-    liveStatuses[slotKey] = "pending";
-  });
+const courtLabel = summary.courtLabel;
+selectedStarts.forEach((startM) => {
+  const slotRange = `${minutesToTime(startM)} - ${minutesToTime(startM + STEP_MINUTES)}`;
+  const slotKey = `${courtLabel}|${slotRange}`;
+  liveStatuses[slotKey] = "pending";
+});
 
-  clearSelection();
-  render();
+clearPendingSelection();
+clearSelection();
+render();
 
 } catch (err) {
   console.error(err);
@@ -559,13 +629,14 @@ try {
 
   // ---- Day navigation wiring (NEW) ----
   function changeDateTo(newDate) {
-    currentDate = newDate;
-    currentISO = getLocalISO(currentDate);
-    taken = new Set(Array.isArray(takenByDate[currentISO]) ? takenByDate[currentISO] : []);
-    clearSelection();
-    syncDayUI();
-    render();
-  }
+  currentDate = newDate;
+  currentISO = getLocalISO(currentDate);
+  taken = new Set(Array.isArray(takenByDate[currentISO]) ? takenByDate[currentISO] : []);
+  clearSelection();
+  clearPendingSelection();
+  syncDayUI();
+  render();
+}
 
   if (dayPrevBtn) dayPrevBtn.addEventListener("click", () => changeDateTo(addDays(currentDate, -1)));
   if (dayNextBtn) dayNextBtn.addEventListener("click", () => changeDateTo(addDays(currentDate, 1)));
@@ -593,6 +664,8 @@ try {
   }
 
   // Init
-  syncDayUI();
-  render();
+syncDayUI();
+render().then(() => {
+  restorePendingSelection();
+});
 })();
