@@ -1341,7 +1341,10 @@ if (activeDateFilter && !activeDateFilter.value) {
   activeDateFilter.value = toInputDateValue(new Date());
 }
 
-  const observer = new MutationObserver(() => {
+setupSubAccordions();
+startAutoRefresh();
+
+const observer = new MutationObserver(() => {
   const reservationsVisible = reservationsBox && reservationsBox.style.display !== "none";
   const pointsVisible = pointsBox && pointsBox.style.display !== "none";
 
