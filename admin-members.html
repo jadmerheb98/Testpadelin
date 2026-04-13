@@ -54,6 +54,12 @@
     </button>
   </div>
 
+<div style="margin-top:10px; display:flex; justify-content:center;">
+  <button id="viewAllMembersBtn" class="btn btn-ghost">
+    View All Members
+  </button>
+</div>          
+
   <div id="selectedMemberCard" style="display:none; margin-top:14px;"></div>
 
   <div id="membersResults" class="inbox-list" style="margin-top:14px;"></div>
@@ -88,6 +94,7 @@ const memberSearchBtn = document.getElementById("memberSearchBtn");
 const selectedMemberCard = document.getElementById("selectedMemberCard");
 const membersResults = document.getElementById("membersResults");
 const membersResultsEmpty = document.getElementById("membersResultsEmpty");
+const viewAllMembersBtn = document.getElementById("viewAllMembersBtn");
 
     let allMembers = [];
     let selectedMemberId = null;
@@ -411,6 +418,10 @@ if (memberSearchBtn) {
   memberSearchBtn.addEventListener("click", runMemberSearch);
 }
 
+if (viewAllMembersBtn) {
+  viewAllMembersBtn.addEventListener("click", showAllMembers);
+}    
+
 if (memberSearchInput) {
   memberSearchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
@@ -419,6 +430,20 @@ if (memberSearchInput) {
     }
   });
 }
+
+function showAllMembers() {
+  selectedMemberId = null;
+  renderSelectedMemberCard();
+
+  if (!allMembers.length) {
+    membersResults.innerHTML = "";
+    membersResultsEmpty.style.display = "block";
+    membersResultsEmpty.textContent = "No members found.";
+    return;
+  }
+
+  renderMembersResults(allMembers);
+}    
 
     async function loadMembers() {
   try {
