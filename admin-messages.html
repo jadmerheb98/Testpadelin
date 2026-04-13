@@ -89,22 +89,29 @@
   <div class="contact-card-body">
 
     <!-- ACTIVE -->
-    <section class="resdash-section">
+<section class="resdash-section">
   <button class="resdash-subtoggle" type="button" data-res-subtoggle aria-expanded="false">
     <span>Active</span>
     <span class="resdash-subicon">⌄</span>
   </button>
 
   <div class="resdash-subpanel">
-        <div class="resdash-head">
-          <p>Current pending and reserved bookings, including manual slot states.</p>
-        </div>
-        <div id="activeReservations" class="resdash-list"></div>
-        <div id="activeReservationsEmpty" class="form-note dash-note" style="display:none;">
-          No active reservations.
-        </div>
+    <div class="resdash-toolbar resdash-toolbar-centered" style="margin-bottom:12px;">
+      <div class="resdash-head">
+        <p>Current pending and reserved bookings, including manual slot states.</p>
       </div>
-    </section>
+
+      <div class="resdash-sort resdash-sort-centered">
+        <input id="activeDateFilter" type="date" class="resdash-date-input" />
+      </div>
+    </div>
+
+    <div id="activeReservations" class="resdash-list"></div>
+    <div id="activeReservationsEmpty" class="form-note dash-note" style="display:none;">
+      No active reservations.
+    </div>
+  </div>
+</section>
 
     <!-- HISTORY -->
     <section class="resdash-section" style="margin-top:18px;">
@@ -925,8 +932,9 @@ await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot
 
   <script>
 (function reservationsDashboardSetup(){
-  const activeBox = document.getElementById("activeReservations");
+const activeBox = document.getElementById("activeReservations");
 const activeEmpty = document.getElementById("activeReservationsEmpty");
+const activeDateFilter = document.getElementById("activeDateFilter");
 const historyBox = document.getElementById("historyReservations");
 const historyEmpty = document.getElementById("historyReservationsEmpty");
 const reservationsBox = document.getElementById("reservationsBox");
@@ -978,9 +986,40 @@ function getStartOfCurrentWeek() {
   return new Date(now.getFullYear(), now.getMonth(), now.getDate() + diffToMonday);
 }
 
-function getEndOfCurrentWeek() {
-  const start = getStartOfCurrentWeek();
-  return new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6);
+function isSameDay(a, b) {
+  return a.getFullYear() === b.getFullYear()
+    && a.getMonth() === b.getMonth()
+    && a.getDate() === b.getDate();
+}
+
+function filterActiveToSelectedDate(items, selectedDateValue) {
+  if (!Array.isArray(items)) return [];
+
+  if (!selectedDateValue) {
+    return items.filter(item => isTodayOrFutureReservation(item.date));
+  }
+
+  const selectedDate = new Date(`${selectedDateValue}T00:00:00`);
+  if (Number.isNaN(selectedDate.getTime())) return [];
+
+  return items.filter(item => {
+    if (!item?.date) return false;
+
+    const match = String(item.date).match(/^[A-Za-z]{3},\s([A-Za-z]{3})\s(\d{1,2}),\s(\d{4})$/);
+    if (!match) return false;
+
+    const [, monStr, dayStr, yearStr] = match;
+
+    const months = {
+      Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+      Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
+    };
+
+    const itemDate = new Date(Number(yearStr), months[monStr], Number(dayStr));
+    if (Number.isNaN(itemDate.getTime())) return false;
+
+    return isSameDay(itemDate, selectedDate);
+  });
 }
 
 function isSameDay(a, b) {
@@ -1058,37 +1097,54 @@ function filterHistoryToCurrentWeekOrSelectedDate(items, selectedDateValue) {
     return `<span class="resdash-badge ${cls}">${esc(status || "Unknown")}</span>`;
   }
 
-  function renderActive(items) {
+function renderActive(items) {
   activeBox.innerHTML = "";
 
-  const filteredItems = items.filter(item => isTodayOrFutureReservation(item.date));
+  const filteredItems = filterActiveToSelectedDate(
+    items,
+    activeDateFilter?.value || ""
+  );
 
-  activeEmpty.style.display = filteredItems.length ? "none" : "block";
+  const sortedItems = [...filteredItems].sort((a, b) => {
+    const aDate = new Date(a.timestamp || 0).getTime();
+    const bDate = new Date(b.timestamp || 0).getTime();
 
-  filteredItems.forEach(item => {
-      const row = document.createElement("article");
-      row.className = "resdash-item";
+    if (!Number.isNaN(aDate) && !Number.isNaN(bDate) && aDate !== bDate) {
+      return aDate - bDate;
+    }
 
-      row.innerHTML = `
-        <div class="resdash-item-top">
-          <div class="resdash-item-title">${esc(item.name || "Reservation")}</div>
-          <div>${makeStatusBadge(item.status)}</div>
-        </div>
+    const aStart = String(a.start || "");
+    const bStart = String(b.start || "");
+    return aStart.localeCompare(bStart);
+  });
 
-       <div class="resdash-grid">
-  <div><strong>Phone:</strong> ${esc(item.phone || "—")}</div>
-  <div><strong>Name:</strong> ${esc(item.name || "—")}</div>
-  <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
-  <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
-  <div><strong>Status:</strong> ${esc(item.status || "—")}</div>
-  <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
-  <div><strong>Updated by:</strong> ${esc(item.actor || "—")}</div>
-</div>
-      `;
+  activeEmpty.style.display = sortedItems.length ? "none" : "block";
 
-      activeBox.appendChild(row);
-    });
-  }
+  sortedItems.forEach(item => {
+    const row = document.createElement("article");
+    row.className = "resdash-item";
+
+    row.innerHTML = `
+      <div class="resdash-item-top">
+        <div class="resdash-item-title">${esc(item.name || "Reservation")}</div>
+        <div>${makeStatusBadge(item.status)}</div>
+      </div>
+
+      <div class="resdash-grid">
+        <div><strong>Phone:</strong> ${esc(item.phone || "—")}</div>
+        <div><strong>Name:</strong> ${esc(item.name || "—")}</div>
+        <div><strong>Court:</strong> ${esc(item.court || "-")}</div>
+        <div><strong>Date:</strong> ${esc(item.date || "-")}</div>
+        <div><strong>Status:</strong> ${esc(item.status || "—")}</div>
+        <div><strong>Time:</strong> ${esc(item.start || "-")} - ${esc(item.end || "-")}</div>
+        <div><strong>Updated by:</strong> ${esc(item.actor || "—")}</div>
+        <div><strong>Created:</strong> ${esc(prettyDateTime(item.timestamp))}</div>
+      </div>
+    `;
+
+    activeBox.appendChild(row);
+  });
+}
 
   function sortHistory(items) {
     const mode = historySort?.value || "newest";
@@ -1280,8 +1336,12 @@ async function loadReservationsDashboard() {
   });
 }
 
-  if (historySort) {
+if (historySort) {
   historySort.addEventListener("change", applyDashboardRender);
+}
+
+if (activeDateFilter) {
+  activeDateFilter.addEventListener("change", applyDashboardRender);
 }
 
 if (historyDateFilter) {
@@ -1290,6 +1350,10 @@ if (historyDateFilter) {
 
 if (pointsHistoryDateFilter) {
   pointsHistoryDateFilter.addEventListener("change", applyDashboardRender);
+}
+
+if (activeDateFilter && !activeDateFilter.value) {
+  activeDateFilter.value = toInputDateValue(new Date());
 }
 
   setupSubAccordions();
