@@ -1105,18 +1105,34 @@ function renderActive(items) {
     activeDateFilter?.value || ""
   );
 
-  const sortedItems = [...filteredItems].sort((a, b) => {
-    const aDate = new Date(a.timestamp || 0).getTime();
-    const bDate = new Date(b.timestamp || 0).getTime();
+  function parseStartTimeToMinutes(timeStr) {
+  const str = String(timeStr || "").trim();
+  const match = str.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
 
-    if (!Number.isNaN(aDate) && !Number.isNaN(bDate) && aDate !== bDate) {
-      return aDate - bDate;
-    }
+  if (!match) return Number.MAX_SAFE_INTEGER;
 
-    const aStart = String(a.start || "");
-    const bStart = String(b.start || "");
-    return aStart.localeCompare(bStart);
-  });
+  let hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  const period = match[3].toUpperCase();
+
+  if (period === "AM" && hours === 12) hours = 0;
+  if (period === "PM" && hours !== 12) hours += 12;
+
+  return hours * 60 + minutes;
+}
+
+const sortedItems = [...filteredItems].sort((a, b) => {
+  const aStartMinutes = parseStartTimeToMinutes(a.start);
+  const bStartMinutes = parseStartTimeToMinutes(b.start);
+
+  if (aStartMinutes !== bStartMinutes) {
+    return aStartMinutes - bStartMinutes;
+  }
+
+  const aName = String(a.name || "");
+  const bName = String(b.name || "");
+  return aName.localeCompare(bName);
+});
 
   activeEmpty.style.display = sortedItems.length ? "none" : "block";
 
