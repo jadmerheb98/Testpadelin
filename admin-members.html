@@ -449,9 +449,13 @@ function showAllMembers() {
   try {
     const snap = await db.collection("users").get();
 
-    allMembers = snap.docs
-      .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
-      .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+allMembers = snap.docs
+  .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+  .sort((a, b) => {
+    const nameA = String(a.name || a.email || "").toLowerCase();
+    const nameB = String(b.name || b.email || "").toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
   } catch (err) {
     console.error("Failed to load members:", err);
     membersResultsEmpty.style.display = "block";
