@@ -1337,10 +1337,6 @@ if (pointsHistoryDateFilter) {
   pointsHistoryDateFilter.addEventListener("change", applyDashboardRender);
 }
 
-if (activeDateFilter && !activeDateFilter.value) {
-  activeDateFilter.value = toInputDateValue(new Date());
-}
-
 setupSubAccordions();
 startAutoRefresh();
 
