@@ -361,15 +361,44 @@
       </table>
     </div>
 
+    <div class="auth-row">
+    <label for="editorCustomerName">Customer Name</label>
+    <input id="editorCustomerName" type="text" placeholder="Full name" autocomplete="off" />
+  </div>
+
   <div class="auth-row">
-      <label for="editorCustomerName">Customer Name</label>
-      <input id="editorCustomerName" type="text" placeholder="Full name" autocomplete="off" />
+    <label for="editorCustomerPhone">Phone Number</label>
+    <input id="editorCustomerPhone" type="tel" placeholder="+961..." autocomplete="off" />
+  </div>
+
+  <div class="dashboard-actions" style="margin-top:10px;">
+    <button class="btn btn-ghost" type="button" id="attachMemberBtn">Attach Member</button>
+  </div>
+
+  <div id="attachMemberBox" style="display:none; margin-top:12px;">
+    <div class="auth-row">
+      <label for="memberSearchInput">Search Member</label>
+      <input
+        id="memberSearchInput"
+        type="text"
+        placeholder="Search by name or phone"
+        autocomplete="off"
+      />
     </div>
 
-    <div class="auth-row">
-      <label for="editorCustomerPhone">Phone Number</label>
-      <input id="editorCustomerPhone" type="tel" placeholder="+961..." autocomplete="off" />
+    <div
+      id="memberSearchResults"
+      style="display:grid; gap:8px; margin-top:10px; max-height:220px; overflow:auto;"
+    ></div>
+
+    <div
+      id="memberSearchEmpty"
+      class="form-note"
+      style="display:none; margin-top:8px;"
+    >
+      No matching members found.
     </div>
+  </div>
     
     <div class="dashboard-actions" style="margin-top:14px;">
       <button class="btn btn-primary" type="button" id="saveTableEditorBtn">Save Changes</button>
@@ -677,18 +706,131 @@ if (pointsBox) pointsBox.style.display = isStaff ? "block" : "none";
   const dateInput = document.getElementById("editorDate");
 const customerNameInput = document.getElementById("editorCustomerName");
 const customerPhoneInput = document.getElementById("editorCustomerPhone");
+const attachMemberBtn = document.getElementById("attachMemberBtn");
+const attachMemberBox = document.getElementById("attachMemberBox");
+const memberSearchInput = document.getElementById("memberSearchInput");
+const memberSearchResults = document.getElementById("memberSearchResults");
+const memberSearchEmpty = document.getElementById("memberSearchEmpty");
 const tableBody = document.getElementById("editorTableBody");
 const saveBtn = document.getElementById("saveTableEditorBtn");
 const msg = document.getElementById("tableEditorMsg");
 
-  if (!openBtn || !closeBtn || !overlay || !drawer || !dateInput || !customerNameInput || !customerPhoneInput || !tableBody || !saveBtn) return;
+  if (
+  !openBtn ||
+  !closeBtn ||
+  !overlay ||
+  !drawer ||
+  !dateInput ||
+  !customerNameInput ||
+  !customerPhoneInput ||
+  !attachMemberBtn ||
+  !attachMemberBox ||
+  !memberSearchInput ||
+  !memberSearchResults ||
+  !memberSearchEmpty ||
+  !tableBody ||
+  !saveBtn
+) return;
 
   const START_TIME = "10:00";
   const END_TIME = "24:00";
   const STEP_MINUTES = 30;
 
-  let liveStatuses = {};
-  let changedStatuses = {};
+    let attachedMembers = [];
+  let membersLoaded = false;
+
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function normalizePhone(phone) {
+    return String(phone || "")
+      .replace(/\s+/g, "")
+      .replace(/^\+961/, "")
+      .replace(/^961/, "")
+      .replace(/\D+/g, "");
+  }
+
+  async function loadMembersForAttach() {
+    if (membersLoaded) return;
+
+    if (!window.padelinDB) {
+      throw new Error("Members database is not available.");
+    }
+
+    const snap = await window.padelinDB.collection("users").get();
+
+    attachedMembers = snap.docs.map((doc) => {
+      const data = doc.data() || {};
+      return {
+        id: doc.id,
+        name: String(data.name || data.displayName || data.email || "").trim(),
+        phone: String(data.phone || "").trim(),
+        phoneNormalized: normalizePhone(data.phone || ""),
+        email: String(data.email || "").trim()
+      };
+    }).filter((member) => member.name || member.phone || member.email);
+
+    membersLoaded = true;
+  }
+
+  function renderMemberResults(list) {
+    memberSearchResults.innerHTML = "";
+    memberSearchEmpty.style.display = list.length ? "none" : "block";
+
+    list.forEach((member) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn btn-ghost";
+      btn.style.textAlign = "left";
+      btn.style.justifyContent = "flex-start";
+      btn.style.padding = "12px";
+      btn.style.width = "100%";
+
+      btn.innerHTML = `
+        <div style="display:grid; gap:4px;">
+          <div style="font-weight:800;">${esc(member.name || "Unnamed Member")}</div>
+          <div style="font-size:13px; opacity:.8;">${esc(member.phone || "No phone")}</div>
+        </div>
+      `;
+
+      btn.addEventListener("click", () => {
+        customerNameInput.value = member.name || "";
+        customerPhoneInput.value = member.phone || "";
+        attachMemberBox.style.display = "none";
+        memberSearchInput.value = "";
+        memberSearchResults.innerHTML = "";
+        memberSearchEmpty.style.display = "none";
+        setMsg("Member attached.", true);
+      });
+
+      memberSearchResults.appendChild(btn);
+    });
+  }
+
+  function runMemberSearch() {
+    const q = String(memberSearchInput.value || "").trim().toLowerCase();
+    const qPhone = normalizePhone(q);
+
+    if (!q) {
+      memberSearchResults.innerHTML = "";
+      memberSearchEmpty.style.display = "none";
+      return;
+    }
+
+    const matches = attachedMembers.filter((member) => {
+      const byName = String(member.name || "").toLowerCase().includes(q);
+      const byPhone = qPhone && member.phoneNormalized.includes(qPhone);
+      return byName || byPhone;
+    }).slice(0, 20);
+
+    renderMemberResults(matches);
+  }
 
   function setMsg(text, ok=null){
     msg.textContent = text || "";
@@ -918,10 +1060,37 @@ await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot
 
   dateInput.value = getLocalISO(new Date());
 
-  openBtn.addEventListener("click", async () => {
+    openBtn.addEventListener("click", async () => {
     openDrawer();
+    attachMemberBox.style.display = "none";
+    memberSearchInput.value = "";
+    memberSearchResults.innerHTML = "";
+    memberSearchEmpty.style.display = "none";
     await initEditor();
   });
+
+  attachMemberBtn.addEventListener("click", async () => {
+    try {
+      if (attachMemberBox.style.display === "none") {
+        setMsg("Loading members...");
+        await loadMembersForAttach();
+        attachMemberBox.style.display = "block";
+        memberSearchInput.focus();
+        setMsg("");
+      } else {
+        attachMemberBox.style.display = "none";
+        memberSearchInput.value = "";
+        memberSearchResults.innerHTML = "";
+        memberSearchEmpty.style.display = "none";
+        setMsg("");
+      }
+    } catch (e) {
+      console.error(e);
+      setMsg("Failed to load members.", false);
+    }
+  });
+
+  memberSearchInput.addEventListener("input", runMemberSearch);
 
   closeBtn.addEventListener("click", closeDrawer);
   overlay.addEventListener("click", closeDrawer);
