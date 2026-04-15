@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Collect Points</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #22c55e;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Collect Points</h2>
+
+  <input id="phone" placeholder="Enter your phone number" />
+
+  <button onclick="collectPoints()">Collect</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+async function collectPoints() {
+  const phone = document.getElementById("phone").value.trim();
+  const resultBox = document.getElementById("result");
+
+  if (!phone) {
+    resultBox.innerText = "Please enter your phone number";
+    return;
+  }
+
+  resultBox.innerText = "Checking...";
+
+  const date = new Date().toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
+
+  try {
+    const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/qr/validate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ phone, date })
+    });
+
+    const data = await res.json();
+
+    if (data.status === "collected") {
+      resultBox.innerText = `✅ Points collected: +${data.points}`;
+    } else if (data.status === "waiting") {
+      resultBox.innerText = "⏳ Waiting for staff confirmation";
+    } else if (data.status === "no_show") {
+      resultBox.innerText = "❌ No show - points not available";
+    } else if (data.status === "already_collected") {
+      resultBox.innerText = "ℹ️ Points already collected";
+    } else {
+      resultBox.innerText = "No reservation found";
+    }
+
+  } catch (e) {
+    console.error(e);
+    resultBox.innerText = "Error connecting to server";
+  }
+}
+</script>
+
+</body>
+</html>
