@@ -956,6 +956,64 @@ const msg = document.getElementById("tableEditorMsg");
     return changedStatuses[key] ?? liveStatuses[key] ?? "available";
   }
 
+    function rangeStartMinutes(timeRange) {
+    const [start] = String(timeRange).split(" - ");
+    return parseTimeToMinutes(start);
+  }
+
+  function rangeEndMinutes(timeRange) {
+    const [, end] = String(timeRange).split(" - ");
+    return parseTimeToMinutes(end);
+  }
+
+  function groupChangedEntries(entries) {
+    const normalized = entries.map(([key, status]) => {
+      const [court, timeRange] = key.split("|");
+      return {
+        court,
+        status,
+        timeRange,
+        start: rangeStartMinutes(timeRange),
+        end: rangeEndMinutes(timeRange)
+      };
+    });
+
+    normalized.sort((a, b) => {
+      if (a.court !== b.court) return a.court.localeCompare(b.court);
+      if (a.status !== b.status) return a.status.localeCompare(b.status);
+      return a.start - b.start;
+    });
+
+    const grouped = [];
+
+    for (const item of normalized) {
+      const last = grouped[grouped.length - 1];
+
+      if (
+        last &&
+        last.court === item.court &&
+        last.status === item.status &&
+        last.end === item.start
+      ) {
+        last.end = item.end;
+      } else {
+        grouped.push({
+          court: item.court,
+          status: item.status,
+          start: item.start,
+          end: item.end
+        });
+      }
+    }
+
+    return grouped.map((item) => ({
+      court: item.court,
+      status: item.status,
+      start: minutesToTime(item.start),
+      end: minutesToTime(item.end)
+    }));
+  }
+
   function renderTable(){
     tableBody.innerHTML = "";
 
@@ -1019,30 +1077,29 @@ const msg = document.getElementById("tableEditorMsg");
       return;
     }
 
-    for (const [key, status] of entries) {
-      const [court, timeRange] = key.split("|");
-      const [start, end] = timeRange.split(" - ");
+        const groupedEntries = groupChangedEntries(entries);
 
-      const currentUser = window.padelinAuth?.currentUser;
-const token = currentUser ? await currentUser.getIdToken() : "";
+    const currentUser = window.padelinAuth?.currentUser;
+    const token = currentUser ? await currentUser.getIdToken() : "";
 
-await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`
-  },
-  body: JSON.stringify({
-    date: dateLabel,
-    court,
-    start,
-    end,
-    status,
-    updatedBy: role,
-    customerName: status === "available" ? "" : customerName,
-    customerPhone: status === "available" ? "" : customerPhone
-  })
-});
+    for (const entry of groupedEntries) {
+      await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          date: dateLabel,
+          court: entry.court,
+          start: entry.start,
+          end: entry.end,
+          status: entry.status,
+          updatedBy: role,
+          customerName: entry.status === "available" ? "" : customerName,
+          customerPhone: entry.status === "available" ? "" : customerPhone
+        })
+      });
     }
 
     setMsg("Changes saved.", true);
