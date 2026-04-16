@@ -2,144 +2,466 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Collect Points</title>
-</head>
 
-<body style="margin:0; font-family:Arial; background:#0f172a; color:white;">
+  <style>
+    :root{
+      --navy:#081433;
+      --navy-2:#0f1d47;
+      --accent:#3F6696;
+      --white:#ffffff;
+      --muted:rgba(255,255,255,0.72);
+      --soft:rgba(255,255,255,0.08);
+      --soft-2:rgba(255,255,255,0.12);
+      --success:#16a34a;
+      --warning:#f59e0b;
+      --error:#ef4444;
+      --info:#60a5fa;
+    }
 
-<div style="
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-">
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  <div style="width:100%; max-width:360px; text-align:center;">
+    html, body{
+      margin:0;
+      min-height:100%;
+      font-family: Arial, sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x:hidden;
+    }
 
-    <!-- LOGO -->
-    <img src="assets/img/logo.png" style="height:55px; margin-bottom:20px;" />
+    body{
+      position:relative;
+    }
 
-    <!-- TITLE -->
-    <h2 style="margin:0 0 10px; font-size:24px;">Collect Your Points</h2>
+    .bg{
+      position:fixed;
+      inset:0;
+      overflow:hidden;
+      pointer-events:none;
+      z-index:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(63,102,150,0.22), transparent 28%),
+        radial-gradient(circle at 80% 18%, rgba(63,102,150,0.18), transparent 24%),
+        radial-gradient(circle at 50% 85%, rgba(63,102,150,0.10), transparent 30%),
+        linear-gradient(180deg, #07122e 0%, #081433 45%, #09163b 100%);
+    }
 
-    <!-- SUBTEXT -->
-    <p style="margin:0 0 20px; font-size:14px; opacity:0.7;">
-      After your match, enter your phone number to receive your rewards.
-    </p>
+    .orb{
+      position:absolute;
+      border-radius:50%;
+      filter: blur(20px);
+      opacity:.35;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
 
-    <!-- INPUT -->
-    <input id="phone" placeholder="Enter your phone number" style="
-      width:100%;
-      padding:14px;
-      border-radius:10px;
-      border:none;
-      margin-bottom:12px;
-      font-size:15px;
+    .orb.one{
+      width:180px;
+      height:180px;
+      background: rgba(63,102,150,0.30);
+      top:8%;
+      left:-40px;
+    }
+
+    .orb.two{
+      width:220px;
+      height:220px;
+      background: rgba(63,102,150,0.22);
+      right:-70px;
+      top:24%;
+      animation-delay:1.8s;
+    }
+
+    .orb.three{
+      width:160px;
+      height:160px;
+      background: rgba(255,255,255,0.10);
+      bottom:10%;
+      left:8%;
+      animation-delay:3.2s;
+    }
+
+    @keyframes floatOrb{
+      0%,100%{ transform: translateY(0px) translateX(0px) scale(1); }
+      50%{ transform: translateY(-18px) translateX(8px) scale(1.05); }
+    }
+
+    .page{
+      position:relative;
+      z-index:1;
+      min-height:100dvh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:
+        calc(env(safe-area-inset-top) + 22px)
+        22px
+        calc(env(safe-area-inset-bottom) + 22px);
+    }
+
+    .shell{
+      width:min(100%, 430px);
+      margin:auto;
+      animation: fadeUp .7s ease;
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform: translateY(24px);
+      }
+      to{
+        opacity:1;
+        transform: translateY(0);
+      }
+    }
+
+    .top{
       text-align:center;
-      outline:none;
-    " />
+      margin-bottom:20px;
+      animation: softFloat 5s ease-in-out infinite;
+    }
 
-    <!-- BUTTON -->
-    <button onclick="collectPoints()" id="btn" style="
+    @keyframes softFloat{
+      0%,100%{ transform:translateY(0); }
+      50%{ transform:translateY(-6px); }
+    }
+
+    .logo-wrap{
+      width:110px;
+      height:110px;
+      margin:0 auto 16px;
+      border-radius:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-wrap img{
+      width:72px;
+      height:auto;
+      display:block;
+    }
+
+    .title{
+      margin:0;
+      font-size:40px;
+      line-height:1;
+      font-weight:800;
+      letter-spacing:-1px;
+    }
+
+    .subtitle{
+      margin:12px auto 0;
+      max-width:320px;
+      font-size:16px;
+      line-height:1.5;
+      color: var(--muted);
+    }
+
+    .card{
+      padding:18px;
+      border-radius:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border:1px solid rgba(255,255,255,0.10);
+      box-shadow:
+        0 25px 60px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+    }
+
+    .label{
+      display:block;
+      text-align:left;
+      font-size:13px;
+      font-weight:700;
+      color: rgba(255,255,255,0.82);
+      margin-bottom:10px;
+      padding-left:4px;
+    }
+
+    .field{
+      position:relative;
+      margin-bottom:14px;
+    }
+
+    .input{
       width:100%;
-      padding:14px;
-      border-radius:10px;
+      height:60px;
       border:none;
-      background:#3F6696;
-      color:white;
-      font-size:15px;
-      font-weight:bold;
+      outline:none;
+      border-radius:18px;
+      background:#ffffff;
+      color:#0f172a;
+      font-size:20px;
+      text-align:center;
+      padding:0 16px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+
+    .input:focus{
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 0 3px rgba(96,165,250,0.28),
+        inset 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .btn{
+      width:100%;
+      height:60px;
+      border:none;
+      border-radius:18px;
+      background: linear-gradient(180deg, #4c79b0 0%, #3F6696 100%);
+      color:#fff;
+      font-size:22px;
+      font-weight:800;
       cursor:pointer;
-    ">
-      Collect Points
-    </button>
+      box-shadow: 0 18px 35px rgba(63,102,150,0.32);
+      transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease;
+    }
 
-    <!-- RESULT -->
-    <div id="result" style="
-      margin-top:20px;
-      padding:14px;
-      border-radius:10px;
-      font-size:14px;
-      background:rgba(255,255,255,0.08);
-    ">
-      Ready to scan
-    </div>
+    .btn:active{
+      transform: scale(0.985);
+    }
 
+    .btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+    }
+
+    .helper{
+      margin:14px 0 0;
+      text-align:center;
+      font-size:13px;
+      color: rgba(255,255,255,0.62);
+      line-height:1.45;
+    }
+
+    .result{
+      margin-top:18px;
+      min-height:76px;
+      padding:16px 14px;
+      border-radius:20px;
+      background: rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-size:16px;
+      line-height:1.45;
+      color:#fff;
+      transition: all .22s ease;
+    }
+
+    .result.ready{
+      color: rgba(255,255,255,0.88);
+    }
+
+    .result.success{
+      background: rgba(22,163,74,0.20);
+      border-color: rgba(22,163,74,0.34);
+      color: #dcfce7;
+      box-shadow: 0 12px 28px rgba(22,163,74,0.16);
+    }
+
+    .result.warning{
+      background: rgba(245,158,11,0.18);
+      border-color: rgba(245,158,11,0.30);
+      color: #fef3c7;
+      box-shadow: 0 12px 28px rgba(245,158,11,0.14);
+    }
+
+    .result.error{
+      background: rgba(239,68,68,0.18);
+      border-color: rgba(239,68,68,0.30);
+      color: #fee2e2;
+      box-shadow: 0 12px 28px rgba(239,68,68,0.14);
+    }
+
+    .result.info{
+      background: rgba(96,165,250,0.18);
+      border-color: rgba(96,165,250,0.30);
+      color: #dbeafe;
+      box-shadow: 0 12px 28px rgba(96,165,250,0.14);
+    }
+
+    .mini{
+      margin-top:16px;
+      text-align:center;
+      font-size:12px;
+      color: rgba(255,255,255,0.48);
+      letter-spacing:.2px;
+    }
+
+    @media (max-width: 430px){
+      .page{
+        padding:
+          calc(env(safe-area-inset-top) + 18px)
+          16px
+          calc(env(safe-area-inset-bottom) + 18px);
+      }
+
+      .logo-wrap{
+        width:96px;
+        height:96px;
+        border-radius:24px;
+      }
+
+      .logo-wrap img{
+        width:66px;
+      }
+
+      .title{
+        font-size:34px;
+      }
+
+      .subtitle{
+        font-size:15px;
+      }
+
+      .card{
+        padding:16px;
+        border-radius:24px;
+      }
+
+      .input, .btn{
+        height:58px;
+        font-size:20px;
+      }
+
+      .result{
+        min-height:72px;
+        font-size:15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
   </div>
-</div>
 
-<script>
-async function collectPoints() {
-  const phone = document.getElementById("phone").value.trim();
-  const resultBox = document.getElementById("result");
-  const btn = document.getElementById("btn");
+  <main class="page">
+    <div class="shell">
+      <div class="top">
+        <div class="logo-wrap">
+          <img src="assets/img/logo.png" alt="PADELIN Logo">
+        </div>
 
-  if (!phone) {
-    resultBox.style.background = "rgba(239,68,68,0.2)";
-    resultBox.innerText = "Please enter your phone number";
-    return;
-  }
+        <h1 class="title">Collect Points</h1>
+        <p class="subtitle">
+          Enter the phone number linked to your match and receive your rewards instantly.
+        </p>
+      </div>
 
-  btn.disabled = true;
-  btn.innerText = "Checking...";
-  resultBox.style.background = "rgba(255,255,255,0.08)";
-  resultBox.innerText = "Checking your reservation...";
+      <section class="card">
+        <label class="label" for="phone">Phone Number</label>
 
-  const date = new Date().toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric"
-  });
+        <div class="field">
+          <input
+            id="phone"
+            class="input"
+            placeholder="Enter your phone number"
+            inputmode="tel"
+            autocomplete="tel"
+          />
+        </div>
 
-  try {
-    const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/qr/validate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ phone, date })
+        <button id="btn" class="btn" onclick="collectPoints()">
+          Collect Points
+        </button>
+
+        <div id="result" class="result ready">
+          Ready to scan
+        </div>
+
+        <div class="helper">
+          Available after your match and once your booking is confirmed by staff.
+        </div>
+      </section>
+
+      <div class="mini">PADELIN Rewards</div>
+    </div>
+  </main>
+
+  <script>
+    async function collectPoints() {
+      const phone = document.getElementById("phone").value.trim();
+      const resultBox = document.getElementById("result");
+      const btn = document.getElementById("btn");
+
+      function setResult(message, type) {
+        resultBox.className = "result " + type;
+        resultBox.innerText = message;
+      }
+
+      if (!phone) {
+        setResult("Please enter your phone number first.", "error");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Checking...";
+      setResult("Checking your reservation...", "info");
+
+      const date = new Date().toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      });
+
+      try {
+        const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/qr/validate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ phone, date })
+        });
+
+        const data = await res.json();
+
+        if (data.status === "collected") {
+          setResult(`Points collected successfully 🎉  +${data.points}`, "success");
+        } else if (data.status === "waiting") {
+          setResult("Waiting for staff confirmation. Please check with reception.", "warning");
+        } else if (data.status === "no_show") {
+          setResult("This reservation was marked as no show.", "error");
+        } else if (data.status === "already_collected") {
+          setResult("Points were already collected for this reservation.", "info");
+        } else {
+          setResult("No reservation was found for today.", "error");
+        }
+
+      } catch (e) {
+        console.error(e);
+        setResult("Connection error. Please try again.", "error");
+      }
+
+      btn.disabled = false;
+      btn.innerText = "Collect Points";
+    }
+
+    document.getElementById("phone").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        collectPoints();
+      }
     });
-
-    const data = await res.json();
-
-    if (data.status === "collected") {
-      resultBox.style.background = "rgba(16,185,129,0.25)";
-      resultBox.innerText = `Points collected successfully 🎉 +${data.points}`;
-    }
-
-    else if (data.status === "waiting") {
-      resultBox.style.background = "rgba(245,158,11,0.25)";
-      resultBox.innerText = "Waiting for staff confirmation. Please check with reception.";
-    }
-
-    else if (data.status === "no_show") {
-      resultBox.style.background = "rgba(239,68,68,0.25)";
-      resultBox.innerText = "This reservation was marked as no show.";
-    }
-
-    else if (data.status === "already_collected") {
-      resultBox.style.background = "rgba(59,130,246,0.25)";
-      resultBox.innerText = "Points already collected for this reservation.";
-    }
-
-    else {
-      resultBox.style.background = "rgba(239,68,68,0.25)";
-      resultBox.innerText = "No reservation found for today.";
-    }
-
-  } catch (e) {
-    console.error(e);
-    resultBox.style.background = "rgba(239,68,68,0.25)";
-    resultBox.innerText = "Connection error. Try again.";
-  }
-
-  btn.disabled = false;
-  btn.innerText = "Collect Points";
-}
-</script>
-
+  </script>
 </body>
 </html>
