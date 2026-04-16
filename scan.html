@@ -3,317 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Collect Points | PADELIN</title>
-
-  <link rel="stylesheet" href="css/styles.css" />
-
-  <style>
-    .scan-page{
-      min-height: calc(100vh - 68px - 73px);
-      padding: 34px 0 54px;
-      background:
-        radial-gradient(1200px 500px at 18% -10%, rgba(63,102,150,0.18), transparent 60%),
-        radial-gradient(900px 480px at 92% 14%, rgba(15,23,42,0.10), transparent 60%),
-        var(--light);
-      display: flex;
-      align-items: center;
-    }
-
-    .scan-shell{
-      width: min(100%, 520px);
-      margin: 0 auto;
-    }
-
-    .scan-card{
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .scan-card-head{
-      padding: 18px 18px 12px;
-      border-bottom: 1px solid rgba(15,23,42,0.08);
-      background: rgba(15,23,42,0.02);
-      text-align: center;
-    }
-
-    .scan-eyebrow{
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 2.4px;
-      text-transform: uppercase;
-      color: rgba(11,18,32,0.55);
-      margin-bottom: 8px;
-    }
-
-    .scan-title{
-      margin: 0;
-      font-size: 30px;
-      font-weight: 900;
-      color: var(--navy);
-      letter-spacing: .2px;
-    }
-
-    .scan-sub{
-      margin: 8px 0 0;
-      color: rgba(11,18,32,0.68);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .scan-card-body{
-      padding: 18px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .scan-icon-wrap{
-      width: 68px;
-      height: 68px;
-      margin: 0 auto 2px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      background: rgba(63,102,150,0.10);
-      border: 1px solid rgba(63,102,150,0.22);
-      color: var(--navy);
-    }
-
-    .scan-label{
-      display: block;
-      font-size: 13px;
-      font-weight: 800;
-      color: rgba(11,18,32,0.82);
-      margin-bottom: 8px;
-    }
-
-    .scan-input{
-      width: 100%;
-      height: 52px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text-dark);
-      padding: 0 14px;
-      outline: none;
-      font: inherit;
-      transition: border 160ms ease, box-shadow 160ms ease;
-    }
-
-    .scan-input:focus{
-      border-color: rgba(63, 102, 150, 0.65);
-      box-shadow: 0 0 0 3px rgba(63, 102, 150, 0.14);
-    }
-
-    .scan-btn{
-      width: 100%;
-      height: 52px;
-      border-radius: 14px;
-      font-size: 16px;
-      justify-content: center;
-    }
-
-    .scan-help{
-      text-align: center;
-      font-size: 13px;
-      color: rgba(11,18,32,0.60);
-      margin-top: -2px;
-    }
-
-    .scan-result{
-      margin-top: 2px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(15,23,42,0.10);
-      background: rgba(15,23,42,0.02);
-      text-align: center;
-      font-weight: 700;
-      color: rgba(11,18,32,0.78);
-      min-height: 54px;
-      display: grid;
-      place-items: center;
-    }
-
-    .scan-result.is-success{
-      background: rgba(16,185,129,0.10);
-      border-color: rgba(16,185,129,0.30);
-      color: #059669;
-    }
-
-    .scan-result.is-waiting{
-      background: rgba(245,158,11,0.10);
-      border-color: rgba(245,158,11,0.30);
-      color: #b45309;
-    }
-
-    .scan-result.is-error{
-      background: rgba(239,68,68,0.10);
-      border-color: rgba(239,68,68,0.30);
-      color: #dc2626;
-    }
-
-    .scan-result.is-info{
-      background: rgba(63,102,150,0.08);
-      border-color: rgba(63,102,150,0.22);
-      color: var(--accent);
-    }
-
-    @media (max-width: 520px){
-      .scan-page{
-        padding: 22px 0 36px;
-      }
-
-      .scan-title{
-        font-size: 26px;
-      }
-
-      .scan-card-head,
-      .scan-card-body{
-        padding: 14px;
-      }
-
-      .scan-icon-wrap{
-        width: 60px;
-        height: 60px;
-        border-radius: 18px;
-      }
-    }
-  </style>
+  <title>Collect Points</title>
 </head>
-<body>
 
-  <header class="header">
-    <div class="container header-inner header-gd">
-      <div class="header-left">
-        <a class="brand" href="index.html" aria-label="PADELIN Home">
-          <img src="assets/img/logo.png" alt="PADELIN Logo" />
-        </a>
-      </div>
+<body style="margin:0; font-family:Arial; background:#0f172a; color:white;">
 
-      <div class="header-right">
-        <nav class="nav" aria-label="Primary navigation">
-          <a href="index.html">Home</a>
-          <a href="reservation.html">Reserve</a>
-        </nav>
-      </div>
+<div style="
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+">
+
+  <div style="width:100%; max-width:360px; text-align:center;">
+
+    <!-- LOGO -->
+    <img src="assets/img/logo.png" style="height:55px; margin-bottom:20px;" />
+
+    <!-- TITLE -->
+    <h2 style="margin:0 0 10px; font-size:24px;">Collect Your Points</h2>
+
+    <!-- SUBTEXT -->
+    <p style="margin:0 0 20px; font-size:14px; opacity:0.7;">
+      After your match, enter your phone number to receive your rewards.
+    </p>
+
+    <!-- INPUT -->
+    <input id="phone" placeholder="Enter your phone number" style="
+      width:100%;
+      padding:14px;
+      border-radius:10px;
+      border:none;
+      margin-bottom:12px;
+      font-size:15px;
+      text-align:center;
+      outline:none;
+    " />
+
+    <!-- BUTTON -->
+    <button onclick="collectPoints()" id="btn" style="
+      width:100%;
+      padding:14px;
+      border-radius:10px;
+      border:none;
+      background:#3F6696;
+      color:white;
+      font-size:15px;
+      font-weight:bold;
+      cursor:pointer;
+    ">
+      Collect Points
+    </button>
+
+    <!-- RESULT -->
+    <div id="result" style="
+      margin-top:20px;
+      padding:14px;
+      border-radius:10px;
+      font-size:14px;
+      background:rgba(255,255,255,0.08);
+    ">
+      Ready to scan
     </div>
-  </header>
 
-  <main class="scan-page">
-    <div class="container">
-      <div class="scan-shell">
-        <section class="scan-card">
-          <div class="scan-card-head">
-            <div class="scan-eyebrow">PADELIN Rewards</div>
-            <h1 class="scan-title">Collect Points</h1>
-            <p class="scan-sub">
-              Enter the phone number linked to your reservation and collect your points after your match.
-            </p>
-          </div>
+  </div>
+</div>
 
-          <div class="scan-card-body">
-            <div class="scan-icon-wrap" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 16.8 6.4 19.2l1.1-6.2L3 8.6l6.2-.9L12 2z"/>
-              </svg>
-            </div>
+<script>
+async function collectPoints() {
+  const phone = document.getElementById("phone").value.trim();
+  const resultBox = document.getElementById("result");
+  const btn = document.getElementById("btn");
 
-            <div>
-              <label class="scan-label" for="phone">Phone Number</label>
-              <input id="phone" class="scan-input" placeholder="Enter your phone number" autocomplete="tel" />
-            </div>
+  if (!phone) {
+    resultBox.style.background = "rgba(239,68,68,0.2)";
+    resultBox.innerText = "Please enter your phone number";
+    return;
+  }
 
-            <button id="collectBtn" class="btn btn-primary scan-btn" type="button">
-              Collect Points
-            </button>
+  btn.disabled = true;
+  btn.innerText = "Checking...";
+  resultBox.style.background = "rgba(255,255,255,0.08)";
+  resultBox.innerText = "Checking your reservation...";
 
-            <div class="scan-help">
-              Valid after your match and after staff confirmation.
-            </div>
+  const date = new Date().toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
 
-            <div class="scan-result" id="result">
-              Ready to check your reservation
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
-  </footer>
-
-  <script>
-    const phoneInput = document.getElementById("phone");
-    const collectBtn = document.getElementById("collectBtn");
-    const resultBox = document.getElementById("result");
-
-    function setResult(message, type = "") {
-      resultBox.className = "scan-result";
-      if (type) resultBox.classList.add(type);
-      resultBox.textContent = message;
-    }
-
-    async function collectPoints() {
-      const phone = phoneInput.value.trim();
-
-      if (!phone) {
-        setResult("Please enter your phone number.", "is-error");
-        return;
-      }
-
-      collectBtn.disabled = true;
-      collectBtn.textContent = "Checking...";
-      setResult("Checking your reservation...", "is-info");
-
-      const date = new Date().toLocaleDateString("en-US", {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric"
-      });
-
-      try {
-        const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/qr/validate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ phone, date })
-        });
-
-        const data = await res.json();
-
-        if (data.status === "collected") {
-          setResult(`✅ Points collected: +${data.points}`, "is-success");
-        } else if (data.status === "waiting") {
-          setResult("⏳ Waiting for staff confirmation.", "is-waiting");
-        } else if (data.status === "no_show") {
-          setResult("❌ No show — points are not available.", "is-error");
-        } else if (data.status === "already_collected") {
-          setResult("ℹ️ Points already collected.", "is-info");
-        } else {
-          setResult("No reservation found for today.", "is-error");
-        }
-      } catch (e) {
-        console.error(e);
-        setResult("Error connecting to server.", "is-error");
-      } finally {
-        collectBtn.disabled = false;
-        collectBtn.textContent = "Collect Points";
-      }
-    }
-
-    collectBtn.addEventListener("click", collectPoints);
-
-    phoneInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        collectPoints();
-      }
+  try {
+    const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/qr/validate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ phone, date })
     });
-  </script>
+
+    const data = await res.json();
+
+    if (data.status === "collected") {
+      resultBox.style.background = "rgba(16,185,129,0.25)";
+      resultBox.innerText = `Points collected successfully 🎉 +${data.points}`;
+    }
+
+    else if (data.status === "waiting") {
+      resultBox.style.background = "rgba(245,158,11,0.25)";
+      resultBox.innerText = "Waiting for staff confirmation. Please check with reception.";
+    }
+
+    else if (data.status === "no_show") {
+      resultBox.style.background = "rgba(239,68,68,0.25)";
+      resultBox.innerText = "This reservation was marked as no show.";
+    }
+
+    else if (data.status === "already_collected") {
+      resultBox.style.background = "rgba(59,130,246,0.25)";
+      resultBox.innerText = "Points already collected for this reservation.";
+    }
+
+    else {
+      resultBox.style.background = "rgba(239,68,68,0.25)";
+      resultBox.innerText = "No reservation found for today.";
+    }
+
+  } catch (e) {
+    console.error(e);
+    resultBox.style.background = "rgba(239,68,68,0.25)";
+    resultBox.innerText = "Connection error. Try again.";
+  }
+
+  btn.disabled = false;
+  btn.innerText = "Collect Points";
+}
+</script>
+
 </body>
 </html>
