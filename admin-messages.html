@@ -967,53 +967,54 @@ const msg = document.getElementById("tableEditorMsg");
   }
 
   function groupChangedEntries(entries) {
-    const normalized = entries.map(([key, status]) => {
-      const [court, timeRange] = key.split("|");
-      return {
-        court,
-        status,
-        timeRange,
-        start: rangeStartMinutes(timeRange),
-        end: rangeEndMinutes(timeRange)
-      };
-    });
+  const normalized = entries.map(([key, status]) => {
+    const [court, timeRange] = key.split("|");
+    return {
+      court,
+      status,
+      timeRange,
+      start: rangeStartMinutes(timeRange),
+      end: rangeEndMinutes(timeRange)
+    };
+  });
 
-    normalized.sort((a, b) => {
-      if (a.court !== b.court) return a.court.localeCompare(b.court);
-      if (a.status !== b.status) return a.status.localeCompare(b.status);
-      return a.start - b.start;
-    });
+  normalized.sort((a, b) => {
+    if (a.court !== b.court) return a.court.localeCompare(b.court);
+    if (a.status !== b.status) return a.status.localeCompare(b.status);
+    return a.start - b.start;
+  });
 
-    const grouped = [];
+  const grouped = [];
 
-    for (const item of normalized) {
-      const last = grouped[grouped.length - 1];
+  for (const item of normalized) {
+    const canMergeThisStatus = item.status === "pending" || item.status === "reserved";
+    const last = grouped[grouped.length - 1];
 
-      if (
-        last &&
-        last.court === item.court &&
-        last.status === item.status &&
-        last.end === item.start
-      ) {
-        last.end = item.end;
-      } else {
-        grouped.push({
-          court: item.court,
-          status: item.status,
-          start: item.start,
-          end: item.end
-        });
-      }
+    if (
+      canMergeThisStatus &&
+      last &&
+      last.court === item.court &&
+      last.status === item.status &&
+      last.end === item.start
+    ) {
+      last.end = item.end;
+    } else {
+      grouped.push({
+        court: item.court,
+        status: item.status,
+        start: item.start,
+        end: item.end
+      });
     }
-
-    return grouped.map((item) => ({
-      court: item.court,
-      status: item.status,
-      start: minutesToTime(item.start),
-      end: minutesToTime(item.end)
-    }));
   }
 
+  return grouped.map((item) => ({
+    court: item.court,
+    status: item.status,
+    start: minutesToTime(item.start),
+    end: minutesToTime(item.end)
+  }));
+}
   function renderTable(){
     tableBody.innerHTML = "";
 
