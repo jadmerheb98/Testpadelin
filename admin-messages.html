@@ -966,7 +966,7 @@ const msg = document.getElementById("tableEditorMsg");
     return parseTimeToMinutes(end);
   }
 
-    function groupChangedEntries(entries) {
+  function groupChangedEntries(entries) {
     const normalized = entries.map(([key, status]) => {
       const [court, timeRange] = key.split("|");
       return {
@@ -987,13 +987,9 @@ const msg = document.getElementById("tableEditorMsg");
     const grouped = [];
 
     for (const item of normalized) {
-      const canMergeThisStatus =
-        item.status === "pending" || item.status === "reserved";
-
       const last = grouped[grouped.length - 1];
 
       if (
-        canMergeThisStatus &&
         last &&
         last.court === item.court &&
         last.status === item.status &&
@@ -1008,15 +1004,6 @@ const msg = document.getElementById("tableEditorMsg");
           end: item.end
         });
       }
-    }
-
-    return grouped.map((item) => ({
-      court: item.court,
-      status: item.status,
-      start: minutesToTime(item.start),
-      end: minutesToTime(item.end)
-    }));
-  }
     }
 
     return grouped.map((item) => ({
