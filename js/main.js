@@ -302,6 +302,36 @@ await db.runTransaction(async (transaction) => {
     transaction.set(counterRef, { lastId: nextId }, { merge: true });
   }
 
+  transaction.set(userRef,
+    uid: cred.user.uid,
+    customId: customIdToUse,
+    name: name || "",
+    email: email || "",
+    phone: phone || "",
+    points: mergedPoints,
+    source: existingPhoneDoc ? "website_signup_merged" : "website_signup",
+    profileType: "registered",
+    registrationStatus: "registered",
+    isMerged: false,
+    mergedIntoUid: "",
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    createdAt: createdAtToUse,
+  }, { merge: true });
+});
+  if (!customIdToUse) {
+    const counterDoc = await transaction.get(counterRef);
+
+    nextId = 20260001;
+
+    if (counterDoc.exists) {
+      const data = counterDoc.data() || {};
+      nextId = Number(data.lastId || 20260000) + 1;
+    }
+
+    customIdToUse = String(nextId);
+    transaction.set(counterRef, { lastId: nextId }, { merge: true });
+  }
+
   transaction.set(userRef, {
     uid: cred.user.uid,
     customId: customIdToUse,
