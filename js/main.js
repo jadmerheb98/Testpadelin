@@ -257,28 +257,65 @@ if (!db) {
 const counterRef = db.collection("system").doc("memberCounter");
 const userRef = db.collection("users").doc(cred.user.uid);
 
+const existingPhoneSnap = await db.collection("users")
+  .where("phone", "==", phone)
+  .get();
+
+const existingPhoneDoc = existingPhoneSnap.docs.find(doc => {
+  const data = doc.data() || {};
+  return doc.id !== cred.user.uid && data.isMerged !== true;
+});
+
 await db.runTransaction(async (transaction) => {
-  const counterDoc = await transaction.get(counterRef);
+  let nextId = null;
+  let mergedPoints = 0;
+  let customIdToUse = "";
+  let createdAtToUse = firebase.firestore.FieldValue.serverTimestamp();
 
-  let nextId = 20260001;
+  if (existingPhoneDoc) {
+    const existingDocSnap = await transaction.get(existingPhoneDoc.ref);
+    const existingData = existingDocSnap.data() || {};
 
-  if (counterDoc.exists) {
-    const data = counterDoc.data() || {};
-    nextId = Number(data.lastId || 20260000) + 1;
+    mergedPoints = Number(existingData.points || 0);
+    customIdToUse = String(existingData.customId || "");
+    createdAtToUse = existingData.createdAt || firebase.firestore.FieldValue.serverTimestamp();
+
+    transaction.set(existingPhoneDoc.ref, {
+      isMerged: true,
+      mergedIntoUid: cred.user.uid,
+      mergedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
   }
 
-  transaction.set(counterRef, { lastId: nextId }, { merge: true });
+  if (!customIdToUse) {
+    const counterDoc = await transaction.get(counterRef);
+
+    nextId = 20260001;
+
+    if (counterDoc.exists) {
+      const data = counterDoc.data() || {};
+      nextId = Number(data.lastId || 20260000) + 1;
+    }
+
+    customIdToUse = String(nextId);
+    transaction.set(counterRef, { lastId: nextId }, { merge: true });
+  }
 
   transaction.set(userRef, {
     uid: cred.user.uid,
-    customId: String(nextId),
+    customId: customIdToUse,
     name: name || "",
     email: email || "",
     phone: phone || "",
-    points: 0,
-    source: "website_signup",
+    points: mergedPoints,
+    source: existingPhoneDoc ? "website_signup_merged" : "website_signup",
+    profileType: "registered",
+    registrationStatus: "registered",
+    isMerged: false,
+    mergedIntoUid: "",
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    createdAt: createdAtToUse,
   }, { merge: true });
 });
             
