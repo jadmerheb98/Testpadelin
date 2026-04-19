@@ -772,9 +772,12 @@ const msg = document.getElementById("tableEditorMsg");
         name: String(data.name || data.displayName || data.email || "").trim(),
         phone: String(data.phone || "").trim(),
         phoneNormalized: normalizePhone(data.phone || ""),
-        email: String(data.email || "").trim()
+        email: String(data.email || "").trim(),
+        isMerged: data.isMerged === true
       };
-    }).filter((member) => member.name || member.phone || member.email);
+    })
+    .filter((member) => !member.isMerged)
+    .filter((member) => member.name || member.phone || member.email);
 
     membersLoaded = true;
   }
@@ -837,6 +840,82 @@ const msg = document.getElementById("tableEditorMsg");
     msg.classList.remove("is-success", "is-error");
     if (ok === true) msg.classList.add("is-success");
     if (ok === false) msg.classList.add("is-error");
+  }
+
+    async function ensureInternalMemberProfile(name, phone) {
+    if (!window.padelinDB || !window.firebase) {
+      throw new Error("Members database is not available.");
+    }
+
+    const cleanName = String(name || "").trim();
+    const normalized = normalizePhone(phone || "");
+
+    if (!cleanName || !normalized) {
+      throw new Error("Name and phone are required.");
+    }
+
+    const existingSnap = await window.padelinDB
+      .collection("users")
+      .where("phone", "==", normalized)
+      .get();
+
+    const activeExisting = existingSnap.docs.find((doc) => {
+      const data = doc.data() || {};
+      return data.isMerged !== true;
+    });
+
+    if (activeExisting) {
+      const data = activeExisting.data() || {};
+      const nextName = String(data.name || "").trim() || cleanName;
+
+      await activeExisting.ref.set({
+        name: nextName,
+        phone: normalized,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+
+      return {
+        id: activeExisting.id,
+        created: false
+      };
+    }
+
+    const counterRef = window.padelinDB.collection("system").doc("memberCounter");
+    const newUserRef = window.padelinDB.collection("users").doc();
+
+    await window.padelinDB.runTransaction(async (transaction) => {
+      const counterDoc = await transaction.get(counterRef);
+
+      let nextId = 20260001;
+
+      if (counterDoc.exists) {
+        const counterData = counterDoc.data() || {};
+        nextId = Number(counterData.lastId || 20260000) + 1;
+      }
+
+      transaction.set(counterRef, { lastId: nextId }, { merge: true });
+
+      transaction.set(newUserRef, {
+        uid: "",
+        customId: String(nextId),
+        name: cleanName,
+        email: "",
+        phone: normalized,
+        points: 0,
+        source: "manual_admin",
+        profileType: "internal",
+        registrationStatus: "internal",
+        isMerged: false,
+        mergedIntoUid: "",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+    });
+
+    return {
+      id: newUserRef.id,
+      created: true
+    };
   }
 
   function openDrawer(){
@@ -1076,12 +1155,23 @@ const msg = document.getElementById("tableEditorMsg");
 
     const needsCustomerInfo = entries.some(([, status]) => status === "pending" || status === "reserved");
 
-    if (needsCustomerInfo && (!customerName || !customerPhone)) {
+        if (needsCustomerInfo && (!customerName || !customerPhone)) {
       setMsg("Enter customer name and phone number for manual pending/reserved slots.", false);
       return;
     }
 
-        const groupedEntries = groupChangedEntries(entries);
+    if (needsCustomerInfo) {
+      const memberProfile = await ensureInternalMemberProfile(customerName, customerPhone);
+      membersLoaded = false;
+
+      setMsg(
+        memberProfile.created
+          ? "Member profile created. Saving reservation..."
+          : "Member profile found. Saving reservation..."
+      );
+    }
+
+    const groupedEntries = groupChangedEntries(entries);
 
     const currentUser = window.padelinAuth?.currentUser;
     const token = currentUser ? await currentUser.getIdToken() : "";
