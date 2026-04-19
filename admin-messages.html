@@ -898,10 +898,11 @@ const msg = document.getElementById("tableEditorMsg");
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
 
-    return {
+        return {
       id: newUserRef.id,
       created: true
     };
+  }
 
   function openDrawer(){
     overlay.classList.add("open");
