@@ -1163,7 +1163,7 @@ const msg = document.getElementById("tableEditorMsg");
     const token = currentUser ? await currentUser.getIdToken() : "";
 
     for (const entry of groupedEntries) {
-      await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
+      const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/set-slot", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1180,6 +1180,15 @@ const msg = document.getElementById("tableEditorMsg");
           customerPhone: entry.status === "available" ? "" : customerPhone
         })
       });
+
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {}
+
+      if (!res.ok || data.ok === false) {
+        throw new Error(data.error || `Save failed (${res.status})`);
+      }
     }
 
     setMsg("Changes saved.", true);
