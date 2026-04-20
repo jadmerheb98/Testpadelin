@@ -76,8 +76,23 @@
     localStorage.setItem("padelinUser", JSON.stringify(payload));
   }
 
-  auth.onAuthStateChanged((user) => {
+  auth.onAuthStateChanged(async (user) => {
     setLocalUser(user);
+
+     if (user && db) {
+      try {
+        const userDoc = await db.collection("users").doc(user.uid).get();
+        const userData = userDoc.exists ? (userDoc.data() || {}) : {};
+
+        if (userData.disabled === true) {
+          await auth.signOut();
+          alert("Your account has been disabled. Please contact Padelin.");
+          return;
+        }
+      } catch (err) {
+        console.error("Failed to verify account status:", err);
+      }
+    }   
 
     // ---------- Login page ----------
     const path = window.location.pathname.toLowerCase();
@@ -116,6 +131,19 @@ if (isNormalLogin && eVal === "admin@admin.com" && pVal === "admin@admin.com") {
           try {
             await auth.signInWithEmailAndPassword(email, password);
 
+const signedInUser = auth.currentUser;
+
+if (db && signedInUser?.uid) {
+  const userDoc = await db.collection("users").doc(signedInUser.uid).get();
+  const userData = userDoc.exists ? (userDoc.data() || {}) : {};
+
+  if (userData.disabled === true) {
+    await auth.signOut();
+    alert("Your account has been disabled. Please contact Padelin.");
+    return;
+  }
+}
+            
 // ✅ Bootstrap: YOUR email becomes Admin one-time (sets staff marker)
 const BOOTSTRAP_ADMIN_EMAIL = "padelin.admin@hotmail.com";
 const u = auth.currentUser;
