@@ -259,12 +259,14 @@ const userRef = db.collection("users").doc(cred.user.uid);
 
 const existingPhoneSnap = await db.collection("users")
   .where("phone", "==", phone)
+  .where("profileType", "==", "internal")
+  .where("isMerged", "==", false)
+  .limit(1)
   .get();
 
-const existingPhoneDoc = existingPhoneSnap.docs.find(doc => {
-  const data = doc.data() || {};
-  return doc.id !== cred.user.uid && data.isMerged !== true;
-});
+const existingPhoneDoc = existingPhoneSnap.empty
+  ? null
+  : existingPhoneSnap.docs[0];
 
 await db.runTransaction(async (transaction) => {
   let nextId = null;
