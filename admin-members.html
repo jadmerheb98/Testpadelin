@@ -180,7 +180,10 @@ const uid = user.uid || user.id || "—";
     <div class="member-profile-head">
       <div>
         <div class="member-profile-name">${esc(user.name || user.email || "Member")}</div>
-        <div class="member-profile-sub">${esc(user.phone || "—")}</div>
+                <div class="member-profile-sub">
+          ${esc(user.phone || "—")}
+          ${user.disabled === true ? ' • Disabled' : ''}
+        </div>
       </div>
       <div class="member-profile-points">${esc(String(Number(user.points || 0)))} pts</div>
     </div>
@@ -223,6 +226,12 @@ const uid = user.uid || user.id || "—";
 
         <div class="member-detail-actions">
   <button class="member-mini-btn member-mini-btn-ghost" type="button" id="clearSelectedMemberBtn">Back</button>
+  <button class="member-mini-btn member-mini-btn-ghost" type="button" id="toggleMemberStatusBtn">
+    ${user.disabled === true ? "Enable Member" : "Disable Member"}
+  </button>
+  <button class="member-mini-btn member-mini-btn-ghost" type="button" id="deleteMemberBtn">
+    Delete Member
+  </button>
   <button class="member-mini-btn member-mini-btn-primary" type="button" id="saveMemberBtn">Save Changes</button>
 </div>
       </article>
@@ -233,7 +242,10 @@ const uid = user.uid || user.id || "—";
     <div class="member-profile-head">
       <div>
         <div class="member-profile-name">${esc(user.name || user.email || "Member")}</div>
-        <div class="member-profile-sub">${esc(user.phone || "—")}</div>
+                <div class="member-profile-sub">
+          ${esc(user.phone || "—")}
+          ${user.disabled === true ? ' • Disabled' : ''}
+        </div>
       </div>
       <div class="member-profile-points">${esc(String(Number(user.points || 0)))} pts</div>
     </div>
@@ -363,6 +375,62 @@ const uid = user.uid || user.id || "—";
       alert(e.message || "Failed to save member.");
     }
   });
+
+  document.getElementById("toggleMemberStatusBtn")?.addEventListener("click", async () => {
+    const nextDisabled = user.disabled !== true;
+
+    const ok = confirm(
+      nextDisabled
+        ? "Disable this member from website access?"
+        : "Enable this member again?"
+    );
+    if (!ok) return;
+
+    try {
+      await db.collection("users").doc(user.id).set({
+        disabled: nextDisabled,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
+
+      allMembers = allMembers.map(m =>
+        m.id === user.id
+          ? { ...m, disabled: nextDisabled }
+          : m
+      );
+
+      renderSelectedMemberCard();
+      alert(nextDisabled ? "Member disabled." : "Member enabled.");
+    } catch (e) {
+      console.error(e);
+      alert(e.message || "Failed to update member status.");
+    }
+  });
+
+  document.getElementById("deleteMemberBtn")?.addEventListener("click", async () => {
+    const ok = confirm(
+      "Delete this member profile? This cannot be undone from the website."
+    );
+    if (!ok) return;
+
+    try {
+      await db.collection("users").doc(user.id).delete();
+
+      allMembers = allMembers.filter(m => m.id !== user.id);
+      selectedMemberId = null;
+      selectedMemberCard.style.display = "none";
+      selectedMemberCard.innerHTML = "";
+
+      membersResults.innerHTML = "";
+      membersResultsEmpty.style.display = "block";
+      membersResultsEmpty.textContent = "Member deleted.";
+
+      alert("Member deleted.");
+    } catch (e) {
+      console.error(e);
+      alert(e.message || "Failed to delete member.");
+    }
+  });
+      
 }
     function renderMembersResults(list) {
   membersResults.innerHTML = "";
