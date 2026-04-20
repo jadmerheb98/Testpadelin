@@ -341,7 +341,24 @@ if (postLoginRedirect) {
 
 window.location.href = "index.html";
           } catch (err) {
-            alert(err.message);
+            let msg = "Something went wrong while creating your account. Please try again.";
+
+            if (err.code === "auth/email-already-in-use") {
+              msg = "This email is already registered. Please sign in instead, or use a different email.";
+            } else if (err.code === "auth/invalid-email") {
+              msg = "Please enter a valid email address.";
+            } else if (err.code === "auth/weak-password") {
+              msg = "Your password is too weak. Please choose a stronger password.";
+            } else if (err.code === "auth/network-request-failed") {
+              msg = "Network error. Please check your connection and try again.";
+            } else if (
+              err.code === "permission-denied" ||
+              String(err.message || "").toLowerCase().includes("permission")
+            ) {
+              msg = "We couldn’t complete your account setup right now. Please try again shortly.";
+            }
+
+            alert(msg);
           }
         });
       }
