@@ -665,7 +665,14 @@ render();
 
   // Init
 syncDayUI();
-render().then(() => {
+
+async function refreshReservationTable() {
+  await render();
   restorePendingSelection();
-});
+}
+
+refreshReservationTable();
+
+// Auto-refresh every 3 seconds
+setInterval(refreshReservationTable, 3000);
 })();
