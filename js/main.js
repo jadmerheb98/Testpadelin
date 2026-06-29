@@ -38,10 +38,7 @@
   const PADELIN_SUPABASE_URL = "https://bmhcncvfmgolqjupcpyv.supabase.co";
 const PADELIN_SUPABASE_ANON_KEY = "sb_publishable_PvGD1fxnGKiN8lhwNivvmQ_cghzUzMu";
 
-const padelinSupabase =
-  window.supabase
-    ? window.supabase.createClient(PADELIN_SUPABASE_URL, PADELIN_SUPABASE_ANON_KEY)
-    : null;
+const padelinSupabase = window.padelinSupabase || null;
 
 function normalizeCustomerPhone(value) {
   return String(value || "")
