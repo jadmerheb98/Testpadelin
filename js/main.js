@@ -112,6 +112,14 @@ const isStaffLoginPage =
       if (form) {
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
+          const submitBtn = form.querySelector('button[type="submit"]');
+
+if (submitBtn?.disabled) return;
+
+if (submitBtn) {
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Creating...";
+}
 
           const email = (form.querySelector("#email")?.value || "").trim();
           const password = form.querySelector("#password")?.value || "";
