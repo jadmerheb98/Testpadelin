@@ -374,6 +374,8 @@ function makeSlotEl(timeRange, court) {
     div.className = "slot";
     div.setAttribute("role", "button");
     div.setAttribute("tabindex", "0");
+  div.dataset.timeRange = timeRange;
+div.dataset.court = court;
 
     const k = keyOf(timeRange, court);
 const isTaken = taken.has(k);
@@ -427,6 +429,36 @@ const liveStatus = liveStatuses[liveKey] || null;
 
     return div;
   }
+
+  function updateVisibleSlotsOnly() {
+  document.querySelectorAll(".slot").forEach((slotEl) => {
+    const timeRange = slotEl.dataset.timeRange;
+    const court = slotEl.dataset.court;
+
+    if (!timeRange || !court) return;
+
+    const courtLabel = court === "court1" ? "Court 1" : "Court 2";
+    const liveKey = `${courtLabel}|${timeRange}`;
+    const liveStatus = liveStatuses[liveKey] || null;
+
+    slotEl.classList.remove("reserved", "pending", "taken");
+
+    if (liveStatus === "reserved") {
+      slotEl.classList.add("reserved");
+      slotEl.textContent = "Reserved";
+      slotEl.setAttribute("aria-disabled", "true");
+    } else if (liveStatus === "pending") {
+      slotEl.classList.add("pending");
+      slotEl.textContent = "Pending";
+      slotEl.setAttribute("aria-disabled", "true");
+    } else {
+      slotEl.textContent = "Available";
+      slotEl.removeAttribute("aria-disabled");
+    }
+  });
+
+  syncUI();
+}
 
   async function render() {
     tableBody.innerHTML = "";
@@ -689,4 +721,18 @@ async function refreshReservationTable() {
 }
 
 refreshReservationTable();
+  if (window.padelinSupabase) {
+  window.padelinSupabase
+    .channel("website-bookings-realtime")
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "bookings",
+      },
+      scheduleRealtimeRefresh
+    )
+    .subscribe();
+}
 })();
