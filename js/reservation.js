@@ -672,7 +672,4 @@ async function refreshReservationTable() {
 }
 
 refreshReservationTable();
-
-// Auto-refresh every 3 seconds
-setInterval(refreshReservationTable, 3000);
 })();
