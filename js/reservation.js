@@ -87,6 +87,16 @@ const PENDING_SELECTION_KEY = "padelinPendingReservation_v1";
 let currentISO = getLocalISO(currentDate);
 let taken = new Set(Array.isArray(takenByDate[currentISO]) ? takenByDate[currentISO] : []);
 let liveStatuses = {};
+  let realtimeRefreshTimer = null;
+
+function scheduleRealtimeRefresh() {
+  clearTimeout(realtimeRefreshTimer);
+
+  realtimeRefreshTimer = setTimeout(async () => {
+    await loadLiveStatuses();
+    updateVisibleSlotsOnly();
+  }, 300);
+}
 
   // ---- Your existing selection engine (kept) ----
   const selected = new Set(); // `${timeRange}|${court}`
