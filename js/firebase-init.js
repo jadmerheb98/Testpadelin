@@ -18,3 +18,10 @@ firebase.initializeApp(firebaseConfig);
 window.padelinAuth = firebase.auth();
 
 window.padelinDB = firebase.firestore();
+const supabaseUrl = "https://bmhcncvfmgolqjupcpyv.supabase.co";
+const supabaseAnonKey = "sb_publishable_PvGD1fxnGKiN8lhwNivvmQ_cghzUzMu";
+
+window.padelinSupabase = supabase.createClient(
+  supabaseUrl,
+  supabaseAnonKey
+);
