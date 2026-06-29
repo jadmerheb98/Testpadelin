@@ -35,75 +35,6 @@
 
   const auth = window.padelinAuth;
   const db = window.padelinDB; // Firestore (for staff enable/disable)
-  const PADELIN_SUPABASE_URL = "https://bmhcncvfmgolqjupcpyv.supabase.co";
-const PADELIN_SUPABASE_ANON_KEY = "sb_publishable_PvGD1fxnGKiN8lhwNivvmQ_cghzUzMu";
-
-const padelinSupabase = window.padelinSupabase || null;
-
-function normalizeCustomerPhone(value) {
-  return String(value || "")
-    .trim()
-    .replace(/\s+/g, "")
-    .replace(/^\+961/, "")
-    .replace(/^961/, "");
-}
-
-async function syncWebsiteCustomerToSupabase(customer) {
-  if (!padelinSupabase) return;
-
-  const fullName = String(customer.name || "").trim();
-  const email = String(customer.email || "").trim().toLowerCase();
-  const phone = normalizeCustomerPhone(customer.phone || "");
-
-  if (!phone) return;
-
-  const { data: existingCustomers, error: findError } = await padelinSupabase
-    .from("customers")
-    .select("id")
-    .eq("phone", phone)
-    .limit(1);
-
-  if (findError) throw findError;
-
-  const existingCustomer = existingCustomers && existingCustomers.length
-    ? existingCustomers[0]
-    : null;
-
-  if (existingCustomer) {
-    const { error: updateError } = await padelinSupabase
-      .from("customers")
-      .update({
-        full_name: fullName || "Website Customer",
-        email: email || null,
-        phone,
-        is_active: true,
-        is_deleted: false,
-      })
-      .eq("id", existingCustomer.id);
-
-    if (updateError) throw updateError;
-    return;
-  }
-
-  const { error: insertError } = await padelinSupabase
-    .from("customers")
-    .insert([
-      {
-        full_name: fullName || "Website Customer",
-        phone,
-        email: email || null,
-        membership_type: "member",
-        total_visits: 0,
-        lifetime_spend: 0,
-        notes: "Created from website signup",
-        is_active: true,
-        is_deleted: false,
-        deleted_at: null,
-      },
-    ]);
-
-  if (insertError) throw insertError;
-}
 
   async function generateNextCustomId() {
   if (!db) return "20260001";
@@ -417,12 +348,7 @@ await db.runTransaction(async (transaction) => {
     createdAt: createdAtToUse,
   }, { merge: true });
 });
-
- await syncWebsiteCustomerToSupabase({
-  name,
-  email,
-  phone,
-});           
+          
             
             localStorage.setItem("padelinUser", JSON.stringify({
               uid: cred.user.uid,
