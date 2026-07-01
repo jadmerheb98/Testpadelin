@@ -398,6 +398,21 @@ const uid = user.uid || user.id || "—";
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       }, { merge: true });
 
+      await syncSingleMemberToPOS({
+  ...user,
+  uid: user.uid || user.id,
+  disabled: nextDisabled
+}, "upsert");
+
+      await syncSingleMemberToPOS({
+  ...user,
+  uid: user.uid || user.id,
+  name: nextName,
+  phone: nextPhone,
+  email: nextEmail,
+  disabled: user.disabled === true
+}, "upsert");
+
       allMembers = allMembers.map(m =>
         m.id === user.id
           ? { ...m, disabled: nextDisabled }
@@ -419,7 +434,17 @@ const uid = user.uid || user.id || "—";
     if (!ok) return;
 
     try {
-      await db.collection("users").doc(user.id).delete();
+      await db.collection("users").doc(user.id).set({
+  disabled: true,
+  deletedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+}, { merge: true });
+
+await syncSingleMemberToPOS({
+  ...user,
+  uid: user.uid || user.id,
+  disabled: true
+}, "delete");
 
       allMembers = allMembers.filter(m => m.id !== user.id);
       selectedMemberId = null;
@@ -559,6 +584,35 @@ if (memberSearchInput) {
     alert(err.message || "Sync failed.");
   }
 }
+
+async function syncSingleMemberToPOS(member, action = "upsert") {
+  const currentUser = auth?.currentUser;
+  const token = currentUser ? await currentUser.getIdToken() : "";
+
+  const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/account/sync-customer", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      uid: member.uid || member.id,
+      name: member.name || "",
+      email: member.email || "",
+      phone: member.phone || "",
+      disabled: member.disabled === true,
+      action
+    })
+  });
+
+  const result = await res.json().catch(() => null);
+
+  if (!res.ok || !result?.ok) {
+    throw new Error(result?.error || "POS sync failed.");
+  }
+
+  return result;
+}    
     
 function showAllMembers() {
   selectedMemberId = null;
