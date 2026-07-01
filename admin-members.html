@@ -314,119 +314,118 @@ const uid = user.uid || user.id || "—";
   });
 
   document.getElementById("saveMemberBtn")?.addEventListener("click", async () => {
-    const nextName = (document.getElementById("editMemberName")?.value || "").trim();
-    const nextPhone = (document.getElementById("editMemberPhone")?.value || "").trim();
-    const nextEmail = (document.getElementById("editMemberEmail")?.value || "").trim().toLowerCase();
-    const nextPoints = Number(document.getElementById("editMemberPoints")?.value || 0);
+  const nextName = (document.getElementById("editMemberName")?.value || "").trim();
+  const nextPhone = (document.getElementById("editMemberPhone")?.value || "").trim();
+  const nextEmail = (document.getElementById("editMemberEmail")?.value || "").trim().toLowerCase();
+  const nextPoints = Number(document.getElementById("editMemberPoints")?.value || 0);
 
-    if (!nextName || !nextPhone || !nextEmail) {
-      alert("Name, phone, and email are required.");
-      return;
+  if (!nextName || !nextPhone || !nextEmail) {
+    alert("Name, phone, and email are required.");
+    return;
+  }
+
+  if (!Number.isFinite(nextPoints) || nextPoints < 0) {
+    alert("Points must be a valid number.");
+    return;
+  }
+
+  try {
+    const previousPoints = Number(user.points || 0);
+
+    await db.collection("users").doc(user.id).set({
+      name: nextName,
+      phone: nextPhone,
+      email: nextEmail,
+      points: nextPoints,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true });
+
+    if (previousPoints !== nextPoints) {
+      const currentUser = auth?.currentUser;
+      const token = currentUser ? await currentUser.getIdToken() : "";
+
+      await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          memberId: user.id,
+          memberName: nextName,
+          memberEmail: nextEmail,
+          memberPhone: nextPhone,
+          previousPoints,
+          nextPoints,
+          actor: "admin"
+        })
+      });
     }
 
-    if (!Number.isFinite(nextPoints) || nextPoints < 0) {
-      alert("Points must be a valid number.");
-      return;
-    }
+    await syncSingleMemberToPOS({
+      ...user,
+      uid: user.uid || user.id,
+      name: nextName,
+      phone: nextPhone,
+      email: nextEmail,
+      disabled: user.disabled === true
+    }, "upsert");
 
-    try {
-      const previousPoints = Number(user.points || 0);
+    allMembers = allMembers.map(m =>
+      m.id === user.id
+        ? {
+            ...m,
+            name: nextName,
+            phone: nextPhone,
+            email: nextEmail,
+            points: nextPoints
+          }
+        : m
+    );
 
-      await db.collection("users").doc(user.id).set({
-        name: nextName,
-        phone: nextPhone,
-        email: nextEmail,
-        points: nextPoints,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      }, { merge: true });
-
-      if (previousPoints !== nextPoints) {
-        const currentUser = auth?.currentUser;
-        const token = currentUser ? await currentUser.getIdToken() : "";
-
-        await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/update-member-points", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            memberId: user.id,
-            memberName: nextName,
-            memberEmail: nextEmail,
-            memberPhone: nextPhone,
-            previousPoints,
-            nextPoints,
-            actor: "admin"
-          })
-        });
-      }
-
-
-      allMembers = allMembers.map(m =>
-        m.id === user.id
-          ? {
-              ...m,
-              name: nextName,
-              phone: nextPhone,
-              email: nextEmail,
-              points: nextPoints
-            }
-          : m
-      );
-
-      renderSelectedMemberCard();
-      alert("Member updated.");
-    } catch (e) {
-      console.error(e);
-      alert(e.message || "Failed to save member.");
-    }
-  });
+    renderSelectedMemberCard();
+    alert("Member updated.");
+  } catch (e) {
+    console.error(e);
+    alert(e.message || "Failed to save member.");
+  }
+});
 
   document.getElementById("toggleMemberStatusBtn")?.addEventListener("click", async () => {
-    const nextDisabled = user.disabled !== true;
+  const nextDisabled = user.disabled !== true;
 
-    const ok = confirm(
-      nextDisabled
-        ? "Disable this member from website access?"
-        : "Enable this member again?"
+  const ok = confirm(
+    nextDisabled
+      ? "Disable this member from website access?"
+      : "Enable this member again?"
+  );
+  if (!ok) return;
+
+  try {
+    await db.collection("users").doc(user.id).set({
+      disabled: nextDisabled,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true });
+
+    await syncSingleMemberToPOS({
+      ...user,
+      uid: user.uid || user.id,
+      disabled: nextDisabled
+    }, "upsert");
+
+    allMembers = allMembers.map(m =>
+      m.id === user.id
+        ? { ...m, disabled: nextDisabled }
+        : m
     );
-    if (!ok) return;
 
-    try {
-      await db.collection("users").doc(user.id).set({
-        disabled: nextDisabled,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      }, { merge: true });
-
-      await syncSingleMemberToPOS({
-  ...user,
-  uid: user.uid || user.id,
-  disabled: nextDisabled
-}, "upsert");
-
-      await syncSingleMemberToPOS({
-  ...user,
-  uid: user.uid || user.id,
-  name: nextName,
-  phone: nextPhone,
-  email: nextEmail,
-  disabled: user.disabled === true
-}, "upsert");
-
-      allMembers = allMembers.map(m =>
-        m.id === user.id
-          ? { ...m, disabled: nextDisabled }
-          : m
-      );
-
-      renderSelectedMemberCard();
-      alert(nextDisabled ? "Member disabled." : "Member enabled.");
-    } catch (e) {
-      console.error(e);
-      alert(e.message || "Failed to update member status.");
-    }
-  });
+    renderSelectedMemberCard();
+    alert(nextDisabled ? "Member disabled." : "Member enabled.");
+  } catch (e) {
+    console.error(e);
+    alert(e.message || "Failed to update member status.");
+  }
+});
 
   document.getElementById("deleteMemberBtn")?.addEventListener("click", async () => {
     const ok = confirm(
