@@ -290,6 +290,7 @@ if (!db) {
   throw new Error("Firestore is not loaded on signup page.");
 }
 
+const WORKER_BASE = "https://solitary-morning-9ea4.padelin-lb.workers.dev";            
 const counterRef = db.collection("system").doc("memberCounter");
 const userRef = db.collection("users").doc(cred.user.uid);
 
@@ -356,6 +357,25 @@ await db.runTransaction(async (transaction) => {
     createdAt: createdAtToUse,
   }, { merge: true });
 });
+
+try {
+  const token = await cred.user.getIdToken();
+
+  await fetch(`${WORKER_BASE}/account/sync-customer`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      name,
+      email,
+      phone
+    })
+  });
+} catch (syncErr) {
+  console.error("Customer sync failed:", syncErr);
+}    
           
             
             localStorage.setItem("padelinUser", JSON.stringify({
