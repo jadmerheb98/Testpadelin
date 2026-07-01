@@ -95,8 +95,7 @@ const memberSearchBtn = document.getElementById("memberSearchBtn");
 const selectedMemberCard = document.getElementById("selectedMemberCard");
 const membersResults = document.getElementById("membersResults");
 const membersResultsEmpty = document.getElementById("membersResultsEmpty");
-const viewAllMembersBtn = document.getElementById("viewAllMembersBtn");
-const syncMembersBtn = document.getElementById("syncMembersBtn");    
+const viewAllMembersBtn = document.getElementById("viewAllMembersBtn");  
 
     let allMembers = [];
     let selectedMemberId = null;
@@ -515,11 +514,7 @@ if (memberSearchBtn) {
 
 if (viewAllMembersBtn) {
   viewAllMembersBtn.addEventListener("click", showAllMembers);
-} 
-
-if (syncMembersBtn) {
-  syncMembersBtn.addEventListener("click", syncMembersToPOS);
-}    
+}     
 
 if (memberSearchInput) {
   memberSearchInput.addEventListener("keydown", (e) => {
@@ -530,56 +525,6 @@ if (memberSearchInput) {
   });
 }
 
-    async function syncMembersToPOS() {
-  if (!isAdmin) {
-    alert("Admin only.");
-    return;
-  }
-
-  if (!allMembers.length) {
-    alert("No members loaded.");
-    return;
-  }
-
-  const ok = confirm(`Sync ${allMembers.length} members to POS customers?`);
-  if (!ok) return;
-
-  try {
-    const currentUser = auth?.currentUser;
-    const token = currentUser ? await currentUser.getIdToken() : "";
-
-    const res = await fetch("https://solitary-morning-9ea4.padelin-lb.workers.dev/admin/sync-members-to-supabase", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        members: allMembers.map(member => ({
-          id: member.id,
-          uid: member.uid || member.id,
-          name: member.name || "",
-          email: member.email || "",
-          phone: member.phone || "",
-          disabled: member.disabled === true
-        }))
-      })
-    });
-
-    const result = await res.json().catch(() => null);
-
-    if (!res.ok || !result?.ok) {
-      throw new Error(result?.error || "Sync failed.");
-    }
-
-    alert(
-      `Sync complete.\n\nScanned: ${result.scanned}\nCreated: ${result.created}\nUpdated: ${result.updated}\nSkipped: ${result.skipped}`
-    );
-  } catch (err) {
-    console.error(err);
-    alert(err.message || "Sync failed.");
-  }
-}
 
 async function syncSingleMemberToPOS(member, action = "upsert") {
   const currentUser = auth?.currentUser;
