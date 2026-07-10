@@ -1,0 +1,762 @@
+:root {
+  --bg: #020610;
+  --panel: #08111f;
+  --panel-2: #0b1628;
+  --text: #f7f9ff;
+  --muted: #8895aa;
+  --line: rgba(93, 145, 255, 0.18);
+  --blue: #4a9dff;
+  --green: #35dc87;
+  --violet: #a568ff;
+  --orange: #ff9b45;
+  --shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(34, 108, 228, 0.11), transparent 28%),
+    radial-gradient(circle at 10% 60%, rgba(28, 96, 210, 0.08), transparent 26%),
+    var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Segoe UI",
+    sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+.dashboard {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  padding:
+    calc(18px + env(safe-area-inset-top))
+    18px
+    calc(28px + env(safe-area-inset-bottom));
+}
+
+.topbar {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(74, 157, 255, 0.35);
+  border-radius: 13px;
+  background: linear-gradient(145deg, rgba(74, 157, 255, 0.18), rgba(74, 157, 255, 0.04));
+  color: var(--blue);
+  font-size: 22px;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.brand-name {
+  font-size: 15px;
+  font-weight: 850;
+  letter-spacing: 0.18em;
+}
+
+.brand-sub {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 1px solid rgba(53, 220, 135, 0.22);
+  border-radius: 999px;
+  background: rgba(53, 220, 135, 0.08);
+  color: #86f0b4;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 5px rgba(53, 220, 135, 0.09);
+  animation: pulse 1.7s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+}
+
+.refresh-button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--blue);
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.overview-card {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 28px;
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(10, 26, 50, 0.98), rgba(5, 13, 27, 0.98));
+  box-shadow: var(--shadow);
+}
+
+.overview-copy {
+  position: relative;
+  z-index: 3;
+  width: min(62%, 700px);
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+}
+
+.overview-card h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.overview-subtitle {
+  margin-top: 12px;
+  color: #a3afc2;
+  font-size: 16px;
+}
+
+.date-row {
+  margin-top: 22px;
+  color: #c3ccda;
+  font-size: 13px;
+}
+
+.separator {
+  margin: 0 7px;
+  color: #536177;
+}
+
+.overview-visual {
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: 42%;
+  height: 68%;
+}
+
+.floating-ball {
+  position: absolute;
+  right: 15%;
+  top: 19%;
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 25%, #e7ff70 0%, #bef016 34%, #75a800 78%, #456100 100%);
+  box-shadow:
+    0 0 44px rgba(187, 255, 35, 0.2),
+    0 22px 50px rgba(0, 0, 0, 0.36);
+}
+
+.floating-ball::before,
+.floating-ball::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  width: 84%;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.floating-ball::before {
+  top: 35%;
+  transform: rotate(17deg);
+}
+
+.floating-ball::after {
+  bottom: 35%;
+  transform: rotate(-16deg);
+}
+
+.court-orbit {
+  position: absolute;
+  right: -8%;
+  border: 1px solid rgba(74, 157, 255, 0.13);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+}
+
+.orbit-one {
+  top: -30%;
+  width: 420px;
+  height: 250px;
+}
+
+.orbit-two {
+  top: 5%;
+  width: 340px;
+  height: 210px;
+}
+
+.kpi-strip {
+  position: relative;
+  z-index: 3;
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(12px);
+}
+
+.kpi-item {
+  min-height: 92px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kpi-item + .kpi-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.kpi-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 800;
+}
+
+.kpi-icon.blue { color: var(--blue); }
+.kpi-icon.green { color: var(--green); }
+.kpi-icon.violet { color: var(--violet); }
+.kpi-icon.orange { color: var(--orange); }
+
+.kpi-item p {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.kpi-item strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--text);
+  font-size: 24px;
+  letter-spacing: -0.035em;
+}
+
+.section-header {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.section-header h2 {
+  font-size: 27px;
+  letter-spacing: -0.035em;
+}
+
+.updated-text {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.courts-grid {
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.court-card {
+  overflow: hidden;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    linear-gradient(160deg, rgba(10, 24, 45, 0.97), rgba(5, 13, 27, 0.97));
+  box-shadow: var(--shadow);
+}
+
+.court-card.is-live {
+  border-color: rgba(53, 220, 135, 0.38);
+}
+
+.court-card.is-free {
+  border-color: rgba(74, 157, 255, 0.38);
+}
+
+.court-card.is-pending {
+  border-color: rgba(255, 155, 69, 0.46);
+}
+
+.court-card-top {
+  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.court-label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.court-card-top h3 {
+  margin-top: 4px;
+  font-size: 21px;
+}
+
+.court-badge {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(74, 157, 255, 0.14);
+  color: #9acaff;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.court-badge.live {
+  background: rgba(53, 220, 135, 0.13);
+  color: #8af1b7;
+}
+
+.court-badge.pending {
+  background: rgba(255, 155, 69, 0.15);
+  color: #ffbc80;
+}
+
+.mini-court {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.7 / 1;
+  overflow: hidden;
+  border: 2px solid rgba(234, 242, 255, 0.88);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(51, 130, 255, 0.2), rgba(20, 87, 199, 0.32)),
+    #0b51bc;
+  box-shadow:
+    inset 0 0 34px rgba(0, 0, 0, 0.16),
+    0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+.court-line,
+.court-net {
+  position: absolute;
+  display: block;
+}
+
+.court-line {
+  background: rgba(244, 248, 255, 0.92);
+}
+
+.line-center {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+}
+
+.service-top {
+  top: 24%;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.service-bottom {
+  bottom: 24%;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.court-net {
+  top: 50%;
+  left: -1%;
+  right: -1%;
+  height: 4px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.96) 0 9px,
+      transparent 9px 13px
+    );
+}
+
+.court-details {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(72%, 310px);
+  transform: translate(-50%, -50%);
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 13px;
+  background: rgba(2, 9, 21, 0.84);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.34);
+}
+
+.court-details strong {
+  display: block;
+  color: #fff;
+  font-size: 17px;
+}
+
+.court-details span {
+  display: block;
+  margin-top: 7px;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.court-card-bottom {
+  padding-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.court-card-bottom strong {
+  color: var(--blue);
+}
+
+.bottom-panel {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    linear-gradient(150deg, rgba(10, 24, 45, 0.97), rgba(5, 13, 27, 0.97));
+  box-shadow: var(--shadow);
+}
+
+.next-booking-block,
+.system-status-block {
+  padding: 24px;
+}
+
+.system-status-block {
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.next-booking-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.next-booking-main h2 {
+  font-size: 38px;
+  letter-spacing: -0.045em;
+}
+
+.countdown-pill {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(74, 157, 255, 0.14);
+  color: #9acaff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.next-booking-details {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.next-booking-details strong {
+  color: var(--blue);
+  font-size: 25px;
+}
+
+.next-booking-details span {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.next-booking-details small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.system-status-block {
+  display: grid;
+  align-content: center;
+  gap: 15px;
+}
+
+.system-line {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.system-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.system-dot.green { background: var(--green); }
+.system-dot.blue { background: var(--blue); }
+.system-dot.violet { background: var(--violet); }
+
+.system-line strong {
+  display: block;
+  font-size: 12px;
+}
+
+.system-line small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.footer {
+  padding: 20px 2px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #687487;
+  font-size: 10px;
+}
+
+@media (max-width: 760px) {
+  .overview-card {
+    padding: 25px 20px 20px;
+  }
+
+  .overview-copy {
+    width: 100%;
+    padding-right: 72px;
+  }
+
+  .overview-card h1 {
+    font-size: 34px;
+  }
+
+  .overview-subtitle {
+    font-size: 14px;
+  }
+
+  .overview-visual {
+    width: 48%;
+    height: 52%;
+  }
+
+  .floating-ball {
+    width: 78px;
+    height: 78px;
+    right: 10%;
+    top: 18%;
+  }
+
+  .court-orbit {
+    display: none;
+  }
+
+  .kpi-strip {
+    margin-top: 28px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kpi-item {
+    min-height: 78px;
+    padding: 14px;
+  }
+
+  .kpi-item:nth-child(3),
+  .kpi-item:nth-child(4) {
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+  }
+
+  .kpi-item:nth-child(3) {
+    border-left: 0;
+  }
+
+  .kpi-item strong {
+    font-size: 21px;
+  }
+
+  .courts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .court-card {
+    padding: 11px;
+    border-radius: 17px;
+  }
+
+  .court-card-top h3 {
+    font-size: 15px;
+  }
+
+  .court-badge {
+    padding: 6px 8px;
+    font-size: 8px;
+  }
+
+  .mini-court {
+    aspect-ratio: 1 / 1.35;
+  }
+
+  .court-details {
+    width: 82%;
+    padding: 10px 7px;
+  }
+
+  .court-details strong {
+    font-size: 12px;
+  }
+
+  .court-details span {
+    margin-top: 5px;
+    font-size: 9px;
+  }
+
+  .court-card-bottom {
+    gap: 6px;
+    font-size: 8px;
+  }
+
+  .court-card-bottom strong {
+    text-align: right;
+  }
+
+  .bottom-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .system-status-block {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .system-line {
+    align-items: flex-start;
+  }
+
+  .footer {
+    gap: 8px;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 390px) {
+  .dashboard {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  .brand-sub {
+    display: none;
+  }
+
+  .overview-copy {
+    padding-right: 58px;
+  }
+
+  .overview-card h1 {
+    font-size: 30px;
+  }
+
+  .floating-ball {
+    width: 66px;
+    height: 66px;
+    right: 6%;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .system-status-block {
+    gap: 10px;
+  }
+
+  .system-line {
+    gap: 7px;
+  }
+}
