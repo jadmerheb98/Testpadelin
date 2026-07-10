@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#020610" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <title>Padelin Live</title>
+
+  <link rel="icon" href="apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="css/live.css?v=40" />
+</head>
+
+<body>
+  <main class="dashboard">
+
+    <header class="topbar">
+      <div class="brand-block">
+        <span class="brand-mark">P</span>
+        <div>
+          <p class="brand-name">PADELIN</p>
+          <p class="brand-sub">LIVE CONTROL CENTER</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <span class="live-pill"><span class="live-dot"></span> LIVE</span>
+        <button class="refresh-button" id="refreshButton" type="button" aria-label="Refresh">↻</button>
+      </div>
+    </header>
+
+    <section class="overview-card">
+      <div class="overview-copy">
+        <p class="eyebrow">TODAY AT PADELIN</p>
+        <h1 id="welcomeTitle">Good afternoon, Jad</h1>
+        <p class="overview-subtitle">A clear live view of your club operations.</p>
+
+        <div class="date-row">
+          <span id="currentDate">Loading date...</span>
+          <span class="separator">•</span>
+          <span id="topTime">--:--</span>
+        </div>
+      </div>
+
+      <div class="overview-visual" aria-hidden="true">
+        <div class="court-orbit orbit-one"></div>
+        <div class="court-orbit orbit-two"></div>
+        <div class="floating-ball"></div>
+      </div>
+
+      <div class="kpi-strip">
+        <article class="kpi-item">
+          <div class="kpi-icon blue">□</div>
+          <div>
+            <p>Reservations</p>
+            <strong id="reservationsToday">—</strong>
+          </div>
+        </article>
+
+        <article class="kpi-item">
+          <div class="kpi-icon green">$</div>
+          <div>
+            <p>Revenue</p>
+            <strong id="revenueToday">$—</strong>
+          </div>
+        </article>
+
+        <article class="kpi-item">
+          <div class="kpi-icon violet">◉</div>
+          <div>
+            <p>Members</p>
+            <strong id="totalMembers">—</strong>
+          </div>
+        </article>
+
+        <article class="kpi-item">
+          <div class="kpi-icon orange">◷</div>
+          <div>
+            <p>Pending</p>
+            <strong id="pendingBookings">—</strong>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-header">
+      <div>
+        <p class="eyebrow">LIVE COURTS</p>
+        <h2>Current court status</h2>
+      </div>
+
+      <p class="updated-text">Updated <span id="courtsUpdated">—</span></p>
+    </section>
+
+    <section class="courts-grid">
+      <article class="court-card" id="court1Card">
+        <div class="court-card-top">
+          <div>
+            <p class="court-label">COURT 1</p>
+            <h3 id="court1Status">Checking...</h3>
+          </div>
+          <span class="court-badge" id="court1Badge">Checking</span>
+        </div>
+
+        <div class="mini-court">
+          <span class="court-line line-center"></span>
+          <span class="court-line service-top"></span>
+          <span class="court-line service-bottom"></span>
+          <span class="court-net"></span>
+
+          <div class="court-details">
+            <strong id="court1Customer">Loading reservation</strong>
+            <span id="court1Time">—</span>
+          </div>
+        </div>
+
+        <div class="court-card-bottom">
+          <span id="court1FooterLeft">Live status</span>
+          <strong id="court1FooterRight">—</strong>
+        </div>
+      </article>
+
+      <article class="court-card" id="court2Card">
+        <div class="court-card-top">
+          <div>
+            <p class="court-label">COURT 2</p>
+            <h3 id="court2Status">Checking...</h3>
+          </div>
+          <span class="court-badge" id="court2Badge">Checking</span>
+        </div>
+
+        <div class="mini-court">
+          <span class="court-line line-center"></span>
+          <span class="court-line service-top"></span>
+          <span class="court-line service-bottom"></span>
+          <span class="court-net"></span>
+
+          <div class="court-details">
+            <strong id="court2Customer">Loading reservation</strong>
+            <span id="court2Time">—</span>
+          </div>
+        </div>
+
+        <div class="court-card-bottom">
+          <span id="court2FooterLeft">Live status</span>
+          <strong id="court2FooterRight">—</strong>
+        </div>
+      </article>
+    </section>
+
+    <section class="bottom-panel">
+      <div class="next-booking-block">
+        <div>
+          <p class="eyebrow">NEXT BOOKING</p>
+          <div class="next-booking-main">
+            <h2 id="nextBookingTime">—</h2>
+            <span class="countdown-pill" id="nextBookingCountdown">Today</span>
+          </div>
+        </div>
+
+        <div class="next-booking-details">
+          <strong id="nextBookingCourt">—</strong>
+          <span id="nextBookingCustomer">No upcoming booking</span>
+          <small id="nextBookingMeta">The next confirmed reservation will appear here.</small>
+        </div>
+      </div>
+
+      <div class="system-status-block">
+        <div class="system-line">
+          <span class="system-dot green"></span>
+          <div>
+            <strong>Bookings live</strong>
+            <small>Worker connected</small>
+          </div>
+        </div>
+
+        <div class="system-line">
+          <span class="system-dot blue"></span>
+          <div>
+            <strong>Auto refresh</strong>
+            <small>Every 3 seconds</small>
+          </div>
+        </div>
+
+        <div class="system-line">
+          <span class="system-dot violet"></span>
+          <div>
+            <strong>Members database</strong>
+            <small>Firebase online</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Padelin Club · Byblos, Lebanon</span>
+      <span>Last updated <strong id="lastUpdated">—</strong></span>
+    </footer>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+  <script src="js/firebase-init.js"></script>
+  <script src="js/live.js?v=40"></script>
+</body>
+</html>
