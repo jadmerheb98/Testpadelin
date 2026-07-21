@@ -10,7 +10,31 @@
 
   <style>
     .tour-page{background:#eef3f8;min-height:calc(100vh - 68px)}
-    .tour-hero{padding:42px 0 68px;color:#fff;background:radial-gradient(700px 360px at 88% 20%,rgba(95,149,255,.25),transparent 65%),linear-gradient(135deg,#07101f,#0f172a 60%,#17345f)}
+
+    .tour-hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(rgba(7,16,31,.55), rgba(7,16,31,.55)),
+        radial-gradient(circle at 85% 20%, rgba(74,124,255,.18), transparent 45%);
+    z-index:0;
+}
+
+.tour-hero > *{
+    position:relative;
+    z-index:1;
+}
+    .tour-hero{
+    position:relative;
+    overflow:hidden;
+    padding:42px 0 68px;
+    color:#fff;
+    background-image:url("assets/img/event-live-bg.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+}
     .tour-hero-inner{display:flex;justify-content:space-between;align-items:end;gap:26px}
     .tour-badge{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);color:#8bb5ff;font-size:11px;font-weight:900;letter-spacing:1.7px;text-transform:uppercase}
     .tour-title{margin:16px 0 10px;font-size:clamp(42px,7vw,76px);line-height:.95;letter-spacing:-3px}
