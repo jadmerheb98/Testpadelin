@@ -5,10 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Win iPhone 18 Pro | PADELIN</title>
   <link rel="stylesheet" href="css/styles.css?v=23" />
+
   <style>
-    :root{--phone-lime:#d8f000;--phone-blue:#3f6696;--phone-dark:#07101f;}
-    body{background:#f8fafc;}
+    :root{
+      --phone-lime:#d8f000;
+      --phone-blue:#3f6696;
+      --phone-blue-2:#5f95ff;
+      --phone-dark:#07101f;
+      --phone-navy:#0f172a;
+      --phone-bg:#f8fafc;
+    }
+
+    body{background:var(--phone-bg);}
     .phone-page{background:linear-gradient(180deg,#07101f 0,#0b1730 38%,#f8fafc 38%);}
+
+    /* HERO */
     .phone-hero{padding:28px 0 34px;color:#fff;}
     .phone-hero-grid{display:grid;grid-template-columns:1fr .82fr;gap:28px;align-items:center;}
     .phone-kicker{font-weight:900;letter-spacing:2.5px;color:var(--phone-lime);font-size:13px;margin-bottom:10px;}
@@ -21,122 +32,314 @@
     .phone-pill strong{color:var(--phone-lime);}
     .phone-img-wrap{display:flex;justify-content:center;align-items:center;}
     .phone-img{width:min(380px,88%);max-height:520px;object-fit:contain;filter:drop-shadow(0 28px 45px rgba(0,0,0,.45));}
+
+    /* CONTENT */
     .phone-content{padding:34px 0 50px;}
-    .phone-section{max-width:900px;margin:0 auto 32px;}
-    .phone-section h2{text-align:center;margin:0 0 16px;font-size:28px;color:#0f172a;}
-    .phone-section .sub{text-align:center;color:rgba(15,23,42,.65);margin:-6px auto 18px;max-width:640px;}
-    .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-    .how-card,.ticket-card,.bonus-card,.rule-card{background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:18px;box-shadow:0 10px 28px rgba(15,23,42,.06);}
-    .how-card{padding:20px;text-align:center;}
-    .how-num{width:40px;height:40px;margin:0 auto 10px;border-radius:12px;display:grid;place-items:center;background:rgba(63,102,150,.12);color:#0f172a;font-weight:950;}
-    .how-card h3{margin:0 0 5px;font-size:17px}.how-card p{margin:0;color:rgba(15,23,42,.66);font-size:14px;}
-    .ticket-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-    .ticket-card{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-    .ticket-card b{font-size:14px;color:#0f172a}.ticket-card span{font-weight:950;color:var(--phone-blue);white-space:nowrap;}
+    .phone-section{max-width:920px;margin:0 auto 30px;}
+    .phone-section h2{text-align:center;margin:0 0 8px;font-size:28px;color:#0f172a;}
+    .phone-section .sub{text-align:center;color:rgba(15,23,42,.64);margin:0 auto 18px;max-width:680px;}
+
+    /* QUICK EXPLAINER */
+    .quick-guide{background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:22px;box-shadow:0 12px 32px rgba(15,23,42,.07);padding:22px;}
+    .quick-guide-top{text-align:center;margin-bottom:18px;}
+    .quick-guide-top strong{display:block;font-size:22px;color:#0f172a;margin-bottom:4px;}
+    .quick-guide-top span{color:rgba(15,23,42,.64);font-size:14px;}
+    .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+    .how-card{padding:18px;text-align:center;background:#f8fafc;border:1px solid rgba(15,23,42,.07);border-radius:16px;}
+    .how-num{width:40px;height:40px;margin:0 auto 9px;border-radius:12px;display:grid;place-items:center;background:rgba(63,102,150,.13);color:#0f172a;font-weight:950;}
+    .how-card h3{margin:0 0 4px;font-size:16px;color:#0f172a;}
+    .how-card p{margin:0;color:rgba(15,23,42,.64);font-size:13px;}
+
+    /* TICKET SYSTEM */
+    .ticket-system{background:#0f172a;border-radius:24px;padding:22px;color:#fff;box-shadow:0 16px 36px rgba(15,23,42,.16);}
+    .ticket-system-head{text-align:center;margin-bottom:16px;}
+    .ticket-system-head h2{color:#fff;margin-bottom:4px;}
+    .ticket-system-head p{margin:0;color:rgba(255,255,255,.68);font-size:14px;}
+    .ticket-list{display:grid;gap:9px;}
+    .ticket-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:13px 14px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);}
+    .ticket-label{font-weight:800;font-size:14px;}
+    .ticket-note{display:block;margin-top:2px;color:rgba(255,255,255,.56);font-weight:500;font-size:12px;}
+    .ticket-value{min-width:82px;text-align:center;padding:8px 10px;border-radius:11px;background:var(--phone-lime);color:#07101f;font-weight:950;font-size:13px;}
+
+    .ticket-group-title{margin:17px 0 8px;font-size:12px;letter-spacing:1.8px;font-weight:950;color:#8db5ff;text-transform:uppercase;}
+
+    /* BONUSES */
     .bonus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-    .bonus-card{padding:16px;text-align:center}.bonus-card strong{display:block;margin-bottom:4px}.bonus-card small{color:rgba(15,23,42,.65);}
-    .rule-card{padding:18px 20px;}
-    .rule-card ul{margin:0;padding-left:20px;color:rgba(15,23,42,.72);display:grid;gap:7px;font-size:14px;}
+    .bonus-card{background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:18px;padding:17px;text-align:center;box-shadow:0 8px 24px rgba(15,23,42,.05);}
+    .bonus-icon{font-size:24px;line-height:1;margin-bottom:8px;}
+    .bonus-card strong{display:block;margin-bottom:4px;color:#0f172a;}
+    .bonus-card small{color:rgba(15,23,42,.64);line-height:1.45;display:block;}
+
+    /* RULES */
+    .rules-simple{display:grid;gap:9px;}
+    .rule-row{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:14px;padding:13px 14px;}
+    .rule-check{width:25px;height:25px;flex:0 0 25px;border-radius:8px;display:grid;place-items:center;background:rgba(63,102,150,.13);font-weight:950;color:#0f172a;}
+    .rule-row p{margin:1px 0 0;color:rgba(15,23,42,.72);font-size:13px;}
+
     .phone-cta{background:#0f172a;color:#fff;border-radius:22px;padding:24px;text-align:center;}
-    .phone-cta h2{color:#fff;margin-bottom:7px}.phone-cta p{margin:0 0 16px;color:rgba(255,255,255,.72)}
+    .phone-cta h2{color:#fff;margin-bottom:7px;}
+    .phone-cta p{margin:0 0 16px;color:rgba(255,255,255,.72);}
     .phone-cta .btn{min-width:220px;}
     .phone-note{text-align:center;margin-top:12px;font-size:12px;color:rgba(15,23,42,.55);}
+
     @media(max-width:760px){
       .phone-page{background:linear-gradient(180deg,#07101f 0,#0b1730 33%,#f8fafc 33%);}
-      .phone-hero{padding:22px 0 28px}.phone-hero-grid{grid-template-columns:1fr;text-align:center;gap:12px}.phone-lead{margin-left:auto;margin-right:auto}.phone-mini{justify-content:center}
-      .phone-img{width:min(270px,72vw);max-height:360px}.phone-title{font-size:54px}.phone-tagline{font-size:18px}
-      .how-grid,.bonus-grid{grid-template-columns:1fr}.ticket-grid{grid-template-columns:1fr}.phone-content{padding-top:28px}.phone-section{margin-bottom:26px}
+      .phone-hero{padding:22px 0 28px;}
+      .phone-hero-grid{grid-template-columns:1fr;text-align:center;gap:12px;}
+      .phone-lead{margin-left:auto;margin-right:auto;}
+      .phone-mini{justify-content:center;}
+      .phone-img{width:min(270px,72vw);max-height:360px;}
+      .phone-title{font-size:54px;}
+      .phone-tagline{font-size:18px;}
+      .phone-content{padding-top:28px;}
+      .phone-section{margin-bottom:24px;}
+      .how-grid,.bonus-grid{grid-template-columns:1fr;}
+      .quick-guide,.ticket-system{padding:16px;}
+      .ticket-row{padding:12px;}
+      .ticket-label{font-size:13px;}
+      .ticket-value{min-width:76px;font-size:12px;}
     }
   </style>
 </head>
 <body>
+
 <header class="header">
   <div class="container header-inner header-gd">
     <div class="header-left">
-      <button class="hamburger" type="button" aria-label="Open menu" data-hamburger><div class="hamburger-lines"><span></span><span></span><span></span></div></button>
-      <a class="brand" href="index.html" aria-label="PADELIN Home"><img src="assets/img/logo.png" alt="PADELIN Logo" /></a>
+      <button class="hamburger" type="button" aria-label="Open menu" data-hamburger>
+        <div class="hamburger-lines"><span></span><span></span><span></span></div>
+      </button>
+      <a class="brand" href="index.html" aria-label="PADELIN Home">
+        <img src="assets/img/logo.png" alt="PADELIN Logo" />
+      </a>
     </div>
+
     <div class="header-right">
-      <a class="icon-btn" href="contact.html" aria-label="Contact us"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/></svg></a>
-      <button class="icon-btn" type="button" aria-label="Account" data-auth-open><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/></svg></button>
+      <a class="icon-btn" href="contact.html" aria-label="Contact us">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path fill="currentColor" d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"/>
+        </svg>
+      </a>
+
+      <button class="icon-btn" type="button" aria-label="Account" data-auth-open>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path fill="currentColor" d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"/>
+        </svg>
+      </button>
     </div>
   </div>
 </header>
+
 <div class="overlay" data-overlay></div>
-<aside class="side-menu" data-side-menu aria-label="Mobile menu"><div class="side-menu-header"><div class="side-menu-title">Menu</div><button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button></div><div class="side-links"><a href="membership.html">Membership</a><a href="training.html">Live Coaches</a><a href="tournaments.html">Tournaments</a></div></aside>
+<aside class="side-menu" data-side-menu aria-label="Mobile menu">
+  <div class="side-menu-header">
+    <div class="side-menu-title">Menu</div>
+    <button class="side-menu-close" type="button" aria-label="Close menu" data-side-close>✕</button>
+  </div>
+  <div class="side-links">
+    <a href="membership.html">Membership</a>
+    <a href="training.html">Live Coaches</a>
+    <a href="tournaments.html">Tournaments</a>
+  </div>
+</aside>
 
 <main class="phone-page">
+
+  <!-- HERO -->
   <section class="phone-hero">
     <div class="container phone-hero-grid">
       <div>
-        <div class="phone-kicker">PADELIN SUMMER CHALLENGE</div>
+        <div class="phone-kicker">PADELIN CHALLENGE</div>
         <h1 class="phone-title">WIN<br>iPHONE <span>18 PRO</span></h1>
         <div class="phone-tagline">PLAY. EARN TICKETS. WIN.</div>
-        <p class="phone-lead">Every ticket gives you one entry in the final draw. Play more, complete challenges and increase your chances.</p>
-        <div class="phone-mini"><div class="phone-pill"><strong>1 ticket</strong> = 1 entry</div><div class="phone-pill">Final draw: <strong>November 2026</strong></div></div>
+        <p class="phone-lead">
+          Every ticket gives you one entry in the final draw. Play, earn more tickets and increase your chances.
+        </p>
+
+        <div class="phone-mini">
+          <div class="phone-pill"><strong>1 ticket</strong> = 1 entry</div>
+          <div class="phone-pill">Final draw: <strong>November 2026</strong></div>
+        </div>
+
         <a class="btn btn-primary" href="reservation.html">Book & Start Earning →</a>
       </div>
-      <div class="phone-img-wrap"><img class="phone-img" src="assets/img/iphone18pro.jpg" alt="iPhone 18 Pro prize" /></div>
+
+      <div class="phone-img-wrap">
+        <img class="phone-img" src="assets/img/iphone18pro.jpg" alt="iPhone 18 Pro prize" />
+      </div>
     </div>
   </section>
 
   <section class="phone-content">
     <div class="container">
+
+      <!-- HOW IT WORKS -->
       <div class="phone-section">
-        <h2>How It Works</h2>
-        <div class="how-grid">
-          <div class="how-card"><div class="how-num">1</div><h3>Play</h3><p>Book and complete your games.</p></div>
-          <div class="how-card"><div class="how-num">2</div><h3>Earn</h3><p>Collect tickets from bookings and challenges.</p></div>
-          <div class="how-card"><div class="how-num">3</div><h3>Win</h3><p>Every ticket enters the November draw.</p></div>
+        <div class="quick-guide">
+          <div class="quick-guide-top">
+            <strong>How do I enter?</strong>
+            <span>It’s simple. You earn tickets while playing at Padelin.</span>
+          </div>
+
+          <div class="how-grid">
+            <div class="how-card">
+              <div class="how-num">1</div>
+              <h3>Play</h3>
+              <p>Complete eligible bookings and activities.</p>
+            </div>
+            <div class="how-card">
+              <div class="how-num">2</div>
+              <h3>Collect Tickets</h3>
+              <p>Each activity gives you a set number of tickets.</p>
+            </div>
+            <div class="how-card">
+              <div class="how-num">3</div>
+              <h3>Enter the Draw</h3>
+              <p>Every ticket = one chance to win the iPhone.</p>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- TICKET SYSTEM -->
       <div class="phone-section">
-        <h2>Earn Tickets</h2>
-        <p class="sub">The main ways to build your entries.</p>
-        <div class="ticket-grid">
-          <div class="ticket-card"><b>Off-Peak Booking</b><span>5 tickets</span></div>
-          <div class="ticket-card"><b>Peak Booking</b><span>3 tickets</span></div>
-          <div class="ticket-card"><b>Refer a New Player</b><span>15 tickets</span></div>
-          <div class="ticket-card"><b>Join a Tournament</b><span>15 tickets</span></div>
-          <div class="ticket-card"><b>Win a Tournament</b><span>+25 tickets</span></div>
-          <div class="ticket-card"><b>10-Session Package</b><span>25 tickets</span></div>
-          <div class="ticket-card"><b>Instagram Reel + Tag</b><span>10 tickets</span></div>
-          <div class="ticket-card"><b>Attend a Padelin Event</b><span>5 tickets</span></div>
+        <div class="ticket-system">
+          <div class="ticket-system-head">
+            <h2>Your Ticket Guide</h2>
+            <p>Here’s exactly how many tickets you earn.</p>
+          </div>
+
+          <div class="ticket-group-title">Bookings</div>
+          <div class="ticket-list">
+            <div class="ticket-row">
+              <div class="ticket-label">Off-Peak Booking<span class="ticket-note">10:00 AM – 4:00 PM</span></div>
+              <div class="ticket-value">5 tickets</div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket-label">Peak Booking<span class="ticket-note">4:00 PM – 12:00 AM</span></div>
+              <div class="ticket-value">3 tickets</div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket-label">New Player – First Booking</div>
+              <div class="ticket-value">5 tickets</div>
+            </div>
+          </div>
+
+          <div class="ticket-group-title">Bring People & Compete</div>
+          <div class="ticket-list">
+            <div class="ticket-row">
+              <div class="ticket-label">Refer a New Player<span class="ticket-note">After their first completed paid booking</span></div>
+              <div class="ticket-value">15 tickets</div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket-label">Join a Padelin Tournament</div>
+              <div class="ticket-value">15 tickets</div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket-label">Win a Tournament</div>
+              <div class="ticket-value">+25 tickets</div>
+            </div>
+          </div>
+
+          <div class="ticket-group-title">Training, Packages & Social</div>
+          <div class="ticket-list">
+            <div class="ticket-row">
+              <div class="ticket-label">Coaching Session</div>
+              <div class="ticket-value">3 tickets</div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket-label">Buy a 10-Session Package</div>
+              <div class="ticket-value">25 tickets</div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket-label">Instagram Story + @padelin.lb<span class="ticket-note">Maximum 1 rewarded Story per day</span></div>
+              <div class="ticket-value">1 ticket</div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket-label">Instagram Reel + @padelin.lb</div>
+              <div class="ticket-value">10 tickets</div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket-label">Attend a Padelin Event</div>
+              <div class="ticket-value">5 tickets</div>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- BONUS -->
       <div class="phone-section">
-        <h2>Bonus Chances</h2>
+        <h2>Earn Even More</h2>
+        <p class="sub">Extra ticket opportunities will appear throughout the campaign.</p>
+
         <div class="bonus-grid">
-          <div class="bonus-card"><strong>Weekly Missions</strong><small>Fresh challenges every week.</small></div>
-          <div class="bonus-card"><strong>Play Streaks</strong><small>Keep playing weekly for extra tickets.</small></div>
-          <div class="bonus-card"><strong>2X / 3X Drops</strong><small>Watch our Stories for surprise boosts.</small></div>
+          <div class="bonus-card">
+            <div class="bonus-icon">🎯</div>
+            <strong>Weekly Missions</strong>
+            <small>Complete special weekly challenges for bonus tickets.</small>
+          </div>
+
+          <div class="bonus-card">
+            <div class="bonus-icon">🔥</div>
+            <strong>Play Streaks</strong>
+            <small>Keep playing week after week and unlock extra tickets.</small>
+          </div>
+
+          <div class="bonus-card">
+            <div class="bonus-icon">⚡</div>
+            <strong>2X / 3X Ticket Drops</strong>
+            <small>Watch @padelin.lb Stories for surprise ticket boosts.</small>
+          </div>
         </div>
       </div>
 
+      <!-- IMPORTANT RULES -->
       <div class="phone-section">
         <h2>Important Rules</h2>
-        <div class="rule-card"><ul><li>Tickets are awarded only after completed and paid activities.</li><li>Cancelled or no-show bookings do not earn tickets.</li><li>Referral tickets count after the new player completes their first paid booking.</li><li>One ticket = one entry in the final random draw.</li><li>Padelin may verify or correct ticket totals when required.</li></ul></div>
+        <p class="sub">Just the essentials.</p>
+
+        <div class="rules-simple">
+          <div class="rule-row"><div class="rule-check">✓</div><p>Tickets are added only after the activity or booking is completed and paid.</p></div>
+          <div class="rule-row"><div class="rule-check">✓</div><p>Cancelled bookings and no-shows do not earn tickets.</p></div>
+          <div class="rule-row"><div class="rule-check">✓</div><p>Referral tickets are added after the referred player completes their first paid booking.</p></div>
+          <div class="rule-row"><div class="rule-check">✓</div><p>1 ticket = 1 entry in the final random draw.</p></div>
+          <div class="rule-row"><div class="rule-check">✓</div><p>Padelin may verify ticket activity and correct invalid or duplicate entries.</p></div>
+        </div>
       </div>
 
+      <!-- CTA -->
       <div class="phone-section phone-cta">
         <h2>Ready to Start?</h2>
-        <p>Your next booking could be your next winning ticket.</p>
+        <p>Book your next game and start collecting tickets.</p>
         <a class="btn btn-primary" href="reservation.html">Reserve Now</a>
       </div>
-      <div class="phone-note">Final draw planned for November 2026. Full campaign terms may be updated by Padelin before the draw.</div>
+
+      <div class="phone-note">
+        Final draw planned for November 2026. Campaign terms may be updated by Padelin before the draw.
+      </div>
+
     </div>
   </section>
 </main>
 
-<footer class="footer"><div class="container">© 2026 Padelin | Byblos, Lebanon</div></footer>
+<footer class="footer">
+  <div class="container">© 2026 Padelin | Byblos, Lebanon</div>
+</footer>
+
 <div class="acc-overlay" data-acc-overlay></div>
-<aside class="acc-drawer" data-acc-drawer aria-hidden="true" aria-label="Account"><div class="acc-head"><div class="acc-title">Account</div><button class="acc-close" type="button" aria-label="Close" data-acc-close>✕</button></div><div class="acc-body" id="accBody"></div></aside>
+<aside class="acc-drawer" data-acc-drawer aria-hidden="true" aria-label="Account">
+  <div class="acc-head">
+    <div class="acc-title">Account</div>
+    <button class="acc-close" type="button" aria-label="Close" data-acc-close>✕</button>
+  </div>
+  <div class="acc-body" id="accBody"></div>
+</aside>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script src="js/firebase-init.js"></script>
 <script src="js/main.js?v=23"></script>
+
 </body>
 </html>
