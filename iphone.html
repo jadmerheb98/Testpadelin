@@ -1,0 +1,1538 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Win iPhone 18 Pro | PADELIN</title>
+  <link rel="stylesheet" href="css/styles.css?v=23" />
+
+  <style>
+    :root{
+      --lime:#d8f000;
+      --blue:#2f6bd8;
+      --blue2:#76a6ff;
+      --ink:#07101f;
+      --navy:#0c162a;
+      --paper:#f4f7fb;
+      --muted:#687386;
+      --red1:#7d191d;
+      --red2:#3a090c;
+    }
+
+    *{box-sizing:border-box}
+    body{background:var(--paper)}
+
+    .phone-page{
+      overflow:hidden;
+      background:linear-gradient(180deg,#07101f 0,#0b1730 30%,var(--paper) 30%);
+    }
+
+    /* =========================
+       HERO
+       ========================= */
+    .iphone-hero{
+      position:relative;
+      color:#fff;
+      padding:30px 0 42px;
+      isolation:isolate;
+    }
+
+    .iphone-hero:before{
+      content:"";
+      position:absolute;
+      inset:auto -20% -45% 28%;
+      height:540px;
+      z-index:-1;
+      background:radial-gradient(circle,rgba(47,107,216,.28),transparent 62%);
+      pointer-events:none;
+    }
+
+    .iphone-hero-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      align-items:center;
+      gap:24px;
+    }
+
+    .eyebrow{
+      font-size:12px;
+      font-weight:950;
+      letter-spacing:2.4px;
+      color:var(--lime);
+      margin-bottom:10px;
+    }
+
+    .iphone-title{
+      font-size:clamp(50px,8vw,88px);
+      line-height:.91;
+      letter-spacing:-3px;
+      margin:0;
+      font-weight:950;
+    }
+
+    .iphone-title span{color:var(--lime)}
+
+    .hero-sub{
+      font-size:19px;
+      font-weight:900;
+      color:#9ec0ff;
+      margin:15px 0 7px;
+    }
+
+    .hero-copy{
+      max-width:520px;
+      margin:0;
+      color:rgba(255,255,255,.72);
+      font-size:15px;
+      line-height:1.55;
+    }
+
+    .hero-badges{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      margin:18px 0 22px;
+    }
+
+    .hero-badge{
+      padding:8px 11px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.13);
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      font-weight:850;
+    }
+
+    .hero-badge b{color:var(--lime)}
+
+    /* =========================
+       ANIMATED PHONE
+       ========================= */
+    .phone-stage{
+      position:relative;
+      height:500px;
+      display:grid;
+      place-items:center;
+      perspective:1000px;
+    }
+
+    .phone-orbit{
+      position:absolute;
+      width:380px;
+      height:380px;
+      border:2px solid rgba(216,240,0,.28);
+      border-radius:50%;
+      transform:rotateX(68deg) rotateZ(-14deg);
+      animation:orbitPulse 4s ease-in-out infinite;
+    }
+
+    .phone-orbit:after{
+      content:"";
+      position:absolute;
+      width:13px;
+      height:13px;
+      border-radius:50%;
+      background:var(--lime);
+      left:26px;
+      top:74px;
+      box-shadow:0 0 24px var(--lime);
+    }
+
+    .css-phone{
+      width:235px;
+      height:465px;
+      border-radius:42px;
+      position:relative;
+      background:linear-gradient(145deg,#9a292d 0%,#5d1115 42%,#2d0709 100%);
+      border:3px solid #ad4b4e;
+      box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,.08),
+        inset -20px -20px 45px rgba(0,0,0,.28),
+        0 34px 60px rgba(0,0,0,.45);
+      transform-style:preserve-3d;
+      animation:phoneFloat 5.5s ease-in-out infinite;
+    }
+
+    .css-phone:before{
+      content:"";
+      position:absolute;
+      inset:6px;
+      border-radius:36px;
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    .camera-deck{
+      position:absolute;
+      left:16px;
+      right:16px;
+      top:15px;
+      height:118px;
+      border-radius:30px;
+      background:linear-gradient(145deg,#7d1b20,#3c090c);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 20px rgba(0,0,0,.22);
+    }
+
+    .lens{
+      position:absolute;
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      background:radial-gradient(
+        circle at 42% 38%,
+        #244a79 0 5%,
+        #07111f 11%,
+        #02050a 43%,
+        #151515 46%,
+        #020205 66%
+      );
+      border:4px solid #17171a;
+      box-shadow:0 0 0 2px #9b3437,0 5px 10px rgba(0,0,0,.35);
+    }
+
+    .l1{left:13px;top:10px}
+    .l2{left:82px;top:36px}
+    .l3{left:13px;top:68px}
+
+    .flash{
+      position:absolute;
+      right:18px;
+      top:15px;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:radial-gradient(circle,#fff,#d8d8d8 55%,#b0b0b0 58%);
+    }
+
+    .sensor{
+      position:absolute;
+      right:22px;
+      top:72px;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:#16191e;
+    }
+
+    .apple-mark{
+      position:absolute;
+      left:50%;
+      top:58%;
+      transform:translate(-50%,-50%);
+      font-size:55px;
+      line-height:1;
+      color:rgba(20,0,0,.48);
+      font-family:Arial,sans-serif;
+      font-weight:900;
+    }
+
+    .phone-glow{
+      position:absolute;
+      width:280px;
+      height:80px;
+      border-radius:50%;
+      background:rgba(0,0,0,.4);
+      filter:blur(18px);
+      bottom:15px;
+      animation:shadowPulse 5.5s ease-in-out infinite;
+    }
+
+    @keyframes phoneFloat{
+      0%,100%{transform:translateY(0) rotateY(-10deg) rotateX(2deg) rotateZ(-1deg)}
+      50%{transform:translateY(-18px) rotateY(8deg) rotateX(-1deg) rotateZ(1deg)}
+    }
+
+    @keyframes shadowPulse{
+      0%,100%{transform:scale(.88);opacity:.55}
+      50%{transform:scale(1.03);opacity:.32}
+    }
+
+    @keyframes orbitPulse{
+      0%,100%{
+        opacity:.45;
+        transform:rotateX(68deg) rotateZ(-14deg) scale(.96);
+      }
+      50%{
+        opacity:.8;
+        transform:rotateX(68deg) rotateZ(6deg) scale(1.04);
+      }
+    }
+
+    /* =========================
+       MAIN
+       ========================= */
+    .campaign-body{padding:0 0 50px}
+
+    .campaign-shell{
+      max-width:900px;
+      margin:0 auto;
+    }
+
+    .entry-strip{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1px;
+      background:#dce3ed;
+      border:1px solid #dce3ed;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 12px 30px rgba(15,23,42,.08);
+      margin-bottom:22px;
+    }
+
+    .entry-step{
+      background:#fff;
+      padding:16px 12px;
+      text-align:center;
+    }
+
+    .entry-step b{
+      display:block;
+      color:var(--ink);
+      font-size:14px;
+      margin-bottom:2px;
+    }
+
+    .entry-step span{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .entry-icon{
+      width:30px;
+      height:30px;
+      border-radius:9px;
+      background:var(--lime);
+      display:grid;
+      place-items:center;
+      margin:0 auto 7px;
+      font-size:13px;
+      font-weight:950;
+      color:var(--ink);
+    }
+
+    /* =========================
+       TICKET GUIDE
+       ========================= */
+    .guide{
+      background:var(--navy);
+      color:#fff;
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 18px 40px rgba(15,23,42,.15);
+    }
+
+    .guide-head{
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .guide-head h2{
+      margin:0 0 4px;
+      color:#fff;
+      font-size:28px;
+    }
+
+    .guide-head p{
+      margin:0;
+      color:rgba(255,255,255,.62);
+      font-size:13px;
+    }
+
+    .guide-section{margin-top:18px}
+
+    .guide-label{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      color:#9fc0ff;
+      margin:0 0 8px;
+    }
+
+    .guide-label .category-icon{
+      font-size:17px;
+      letter-spacing:0;
+    }
+
+    .ticket-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:9px;
+    }
+
+    .ticket-card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:13px 14px;
+      background:rgba(255,255,255,.065);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+    }
+
+    .ticket-card strong{
+      font-size:13px;
+      line-height:1.25;
+    }
+
+    .ticket-card small{
+      display:block;
+      margin-top:2px;
+      color:rgba(255,255,255,.48);
+      font-size:10px;
+      font-weight:500;
+    }
+
+    .points{
+      white-space:nowrap;
+      background:var(--lime);
+      color:var(--ink);
+      font-weight:950;
+      font-size:12px;
+      padding:7px 9px;
+      border-radius:9px;
+    }
+
+    /* FEATURED COMBO */
+    .combo-card{
+      margin-top:10px;
+      padding:14px;
+      border:1px solid rgba(216,240,0,.28);
+      border-radius:14px;
+      background:rgba(216,240,0,.07);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .combo-card strong{
+      display:block;
+      color:#fff;
+      font-size:13px;
+    }
+
+    .combo-card small{
+      display:block;
+      color:rgba(255,255,255,.55);
+      font-size:10px;
+      margin-top:3px;
+    }
+
+    /* =========================
+       BONUS FEATURES
+       ========================= */
+    .bonus-bar{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:22px;
+    }
+
+    .bonus{
+      background:#fff;
+      border:1px solid #e2e8f0;
+      border-radius:16px;
+      padding:15px;
+      text-align:center;
+    }
+
+    .bonus i{
+      font-style:normal;
+      font-size:21px;
+    }
+
+    .bonus b{
+      display:block;
+      font-size:13px;
+      color:var(--ink);
+      margin:5px 0 2px;
+    }
+
+    .bonus span{
+      font-size:10px;
+      line-height:1.35;
+      color:var(--muted);
+    }
+
+    /* =========================
+       DRAW ANIMATION
+       ========================= */
+    .draw-section{
+      margin-top:22px;
+      border-radius:24px;
+      background:linear-gradient(135deg,#081224,#10254a);
+      color:#fff;
+      padding:26px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .draw-section:before{
+      content:"";
+      position:absolute;
+      width:320px;
+      height:320px;
+      right:-100px;
+      bottom:-170px;
+      border-radius:50%;
+      background:rgba(47,107,216,.22);
+      filter:blur(10px);
+    }
+
+    .draw-grid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      gap:25px;
+    }
+
+    .draw-eyebrow{
+      color:var(--lime);
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:2px;
+      margin-bottom:7px;
+    }
+
+    .draw-copy h2{
+      color:#fff;
+      margin:0 0 8px;
+      font-size:30px;
+      line-height:1.05;
+    }
+
+    .draw-copy p{
+      margin:0;
+      max-width:390px;
+      color:rgba(255,255,255,.63);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .draw-date{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      margin-top:15px;
+      padding:9px 12px;
+      border-radius:10px;
+      background:var(--lime);
+      color:var(--ink);
+      font-size:12px;
+      font-weight:950;
+    }
+
+    /* transparent raffle box */
+    .raffle-stage{
+      height:250px;
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
+
+    .raffle-shadow{
+      position:absolute;
+      bottom:14px;
+      width:220px;
+      height:35px;
+      border-radius:50%;
+      background:rgba(0,0,0,.4);
+      filter:blur(13px);
+      animation:raffleShadow 3.5s ease-in-out infinite;
+    }
+
+    .raffle-box{
+      position:relative;
+      width:210px;
+      height:170px;
+      border:3px solid rgba(255,255,255,.78);
+      border-radius:12px 12px 20px 20px;
+      background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.13),
+        rgba(255,255,255,.035)
+      );
+      box-shadow:
+        inset 0 0 25px rgba(118,166,255,.1),
+        0 20px 40px rgba(0,0,0,.25);
+      backdrop-filter:blur(2px);
+      animation:raffleFloat 3.5s ease-in-out infinite;
+      overflow:hidden;
+    }
+
+    .raffle-box:before{
+      content:"";
+      position:absolute;
+      left:-7px;
+      right:-7px;
+      top:-12px;
+      height:20px;
+      border-radius:8px;
+      background:#e8edf5;
+      border:2px solid #fff;
+      box-shadow:0 4px 8px rgba(0,0,0,.18);
+      z-index:5;
+    }
+
+    .raffle-slot{
+      position:absolute;
+      width:80px;
+      height:6px;
+      border-radius:10px;
+      background:#07101f;
+      left:50%;
+      top:-5px;
+      transform:translateX(-50%);
+      z-index:6;
+    }
+
+    .raffle-label{
+      position:absolute;
+      left:50%;
+      top:44%;
+      transform:translate(-50%,-50%);
+      z-index:4;
+      background:#fff;
+      color:var(--ink);
+      padding:7px 12px;
+      border-radius:8px;
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:1px;
+      white-space:nowrap;
+      box-shadow:0 5px 15px rgba(0,0,0,.15);
+    }
+
+    .paper{
+      position:absolute;
+      width:37px;
+      height:23px;
+      border-radius:3px;
+      background:#fff;
+      border:1px solid #dbe2eb;
+      box-shadow:0 2px 5px rgba(0,0,0,.14);
+    }
+
+    .paper:after{
+      content:"";
+      position:absolute;
+      left:7px;
+      right:7px;
+      top:7px;
+      height:2px;
+      background:#a9b4c4;
+      box-shadow:0 5px 0 #c2cad5;
+    }
+
+    .p1{left:13px;bottom:13px;transform:rotate(11deg);animation:paper1 2.7s ease-in-out infinite}
+    .p2{left:49px;bottom:20px;transform:rotate(-15deg);animation:paper2 3.1s ease-in-out infinite}
+    .p3{left:85px;bottom:10px;transform:rotate(8deg);animation:paper3 2.4s ease-in-out infinite}
+    .p4{left:122px;bottom:22px;transform:rotate(-8deg);animation:paper1 3.3s ease-in-out infinite}
+    .p5{left:158px;bottom:12px;transform:rotate(15deg);animation:paper2 2.6s ease-in-out infinite}
+    .p6{left:27px;bottom:48px;transform:rotate(-6deg);animation:paper3 3s ease-in-out infinite}
+    .p7{left:68px;bottom:52px;transform:rotate(14deg);animation:paper1 2.5s ease-in-out infinite}
+    .p8{left:111px;bottom:49px;transform:rotate(-13deg);animation:paper2 2.9s ease-in-out infinite}
+    .p9{left:149px;bottom:51px;transform:rotate(5deg);animation:paper3 3.4s ease-in-out infinite}
+    .p10{left:47px;bottom:81px;transform:rotate(8deg);animation:paper2 3.2s ease-in-out infinite}
+    .p11{left:94px;bottom:78px;transform:rotate(-10deg);animation:paper1 2.8s ease-in-out infinite}
+    .p12{left:137px;bottom:82px;transform:rotate(13deg);animation:paper3 2.7s ease-in-out infinite}
+
+    @keyframes raffleFloat{
+      0%,100%{transform:translateY(4px) rotate(-1deg)}
+      50%{transform:translateY(-5px) rotate(1deg)}
+    }
+
+    @keyframes raffleShadow{
+      0%,100%{transform:scale(.92);opacity:.5}
+      50%{transform:scale(1.05);opacity:.3}
+    }
+
+    @keyframes paper1{
+      0%,100%{translate:0 0}
+      50%{translate:4px -7px}
+    }
+
+    @keyframes paper2{
+      0%,100%{translate:0 0}
+      50%{translate:-5px -5px}
+    }
+
+    @keyframes paper3{
+      0%,100%{translate:0 0}
+      50%{translate:3px -9px}
+    }
+
+    /* =========================
+       RULES
+       ========================= */
+    .rules-box{
+      margin-top:22px;
+      background:#fff;
+      border:1px solid #e2e8f0;
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .rules-box h2{
+      font-size:20px;
+      margin:0 0 10px;
+      color:var(--ink);
+    }
+
+    .rule-list{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px 18px;
+    }
+
+    .rule{
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      font-size:12px;
+      color:#5e697a;
+      line-height:1.4;
+    }
+
+    .check{
+      width:20px;
+      height:20px;
+      flex:0 0 20px;
+      border-radius:7px;
+      background:#eaf0fa;
+      color:#2456a6;
+      display:grid;
+      place-items:center;
+      font-weight:950;
+    }
+
+    /* =========================
+       CTA
+       ========================= */
+    .final-cta{
+      margin-top:22px;
+      border-radius:20px;
+      padding:22px;
+      background:linear-gradient(135deg,#0c162a,#15356a);
+      color:#fff;
+      text-align:center;
+    }
+
+    .final-cta h2{
+      color:#fff;
+      margin:0 0 5px;
+      font-size:24px;
+    }
+
+    .final-cta p{
+      margin:0 0 14px;
+      color:rgba(255,255,255,.66);
+      font-size:13px;
+    }
+
+    .legal-note{
+      text-align:center;
+      font-size:10px;
+      color:#8791a0;
+      margin:12px 0 0;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+    @media(max-width:760px){
+
+      .phone-page{
+        background:linear-gradient(180deg,#07101f 0,#0b1730 28%,var(--paper) 28%);
+      }
+
+      .iphone-hero{padding:20px 0 32px}
+
+      .iphone-hero-grid{
+        grid-template-columns:1fr;
+        text-align:center;
+        gap:5px;
+      }
+
+      .iphone-title{
+        font-size:52px;
+        letter-spacing:-2px;
+      }
+
+      .hero-sub{
+        font-size:17px;
+        margin-top:12px;
+      }
+
+      .hero-copy{
+        font-size:13px;
+        margin:auto;
+      }
+
+      .hero-badges{
+        justify-content:center;
+        margin:14px 0 16px;
+      }
+
+      .phone-stage{height:335px}
+
+      .css-phone{
+        width:158px;
+        height:313px;
+        border-radius:29px;
+      }
+
+      .css-phone:before{border-radius:24px}
+
+      .camera-deck{
+        left:10px;
+        right:10px;
+        top:10px;
+        height:80px;
+        border-radius:20px;
+      }
+
+      .lens{
+        width:39px;
+        height:39px;
+        border-width:3px;
+      }
+
+      .l1{left:9px;top:7px}
+      .l2{left:55px;top:24px}
+      .l3{left:9px;top:45px}
+
+      .flash{
+        right:12px;
+        top:10px;
+        width:16px;
+        height:16px;
+      }
+
+      .sensor{
+        right:14px;
+        top:48px;
+        width:14px;
+        height:14px;
+      }
+
+      .apple-mark{font-size:38px}
+
+      .phone-orbit{
+        width:260px;
+        height:260px;
+      }
+
+      .phone-glow{
+        width:190px;
+        height:55px;
+        bottom:6px;
+      }
+
+      .campaign-body{padding-bottom:34px}
+
+      .entry-strip{
+        margin-bottom:16px;
+        border-radius:14px;
+      }
+
+      .entry-step{padding:12px 5px}
+
+      .entry-icon{
+        width:26px;
+        height:26px;
+        margin-bottom:5px;
+      }
+
+      .entry-step b{font-size:11px}
+      .entry-step span{display:none}
+
+      .guide{
+        padding:16px;
+        border-radius:19px;
+      }
+
+      .guide-head h2{font-size:23px}
+
+      .ticket-grid{grid-template-columns:1fr}
+
+      .ticket-card{padding:11px 12px}
+
+      .guide-section{margin-top:15px}
+
+      .bonus-bar{
+        grid-template-columns:repeat(3,1fr);
+        gap:7px;
+        margin-top:16px;
+      }
+
+      .bonus{
+        padding:11px 5px;
+        border-radius:13px;
+      }
+
+      .bonus i{font-size:18px}
+      .bonus b{font-size:10px}
+      .bonus span{display:none}
+
+      .draw-section{
+        margin-top:16px;
+        padding:20px 16px;
+        text-align:center;
+      }
+
+      .draw-grid{
+        grid-template-columns:1fr;
+        gap:8px;
+      }
+
+      .draw-copy h2{font-size:25px}
+
+      .draw-copy p{
+        margin:auto;
+        font-size:12px;
+      }
+
+      .draw-date{margin-top:12px}
+
+      .raffle-stage{height:225px}
+
+      .raffle-box{
+        transform-origin:center;
+      }
+
+      .rules-box{
+        padding:15px;
+        margin-top:16px;
+      }
+
+      .rule-list{
+        grid-template-columns:1fr;
+        gap:7px;
+      }
+
+      .final-cta{
+        margin-top:16px;
+        padding:18px;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      .css-phone,
+      .phone-glow,
+      .phone-orbit,
+      .raffle-box,
+      .raffle-shadow,
+      .paper{
+        animation:none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner header-gd">
+
+      <div class="header-left">
+        <button
+          class="hamburger"
+          type="button"
+          aria-label="Open menu"
+          data-hamburger
+        >
+          <div class="hamburger-lines" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+
+        <a class="brand" href="index.html" aria-label="PADELIN Home">
+          <img src="assets/img/logo.png" alt="PADELIN Logo" />
+        </a>
+      </div>
+
+      <div class="header-right">
+
+        <a class="icon-btn" href="contact.html" aria-label="Contact us">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M6.6 10.8c1.5 3 3.6 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1l-2 2.8z"
+            />
+          </svg>
+        </a>
+
+        <button
+          class="icon-btn"
+          type="button"
+          aria-label="Account"
+          data-auth-open
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v1c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-1c0-2.8-3.6-5-8-5z"
+            />
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDE MENU -->
+  <div class="overlay" data-overlay></div>
+
+  <aside class="side-menu" data-side-menu aria-label="Mobile menu">
+    <div class="side-menu-header">
+      <div class="side-menu-title">Menu</div>
+
+      <button
+        class="side-menu-close"
+        type="button"
+        aria-label="Close menu"
+        data-side-close
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="side-links">
+      <a href="membership.html">Membership</a>
+      <a href="training.html">Live Coaches</a>
+      <a href="tournaments.html">Tournaments</a>
+    </div>
+  </aside>
+
+  <!-- PAGE -->
+  <main class="phone-page">
+
+    <!-- HERO -->
+    <section class="iphone-hero">
+      <div class="container iphone-hero-grid">
+
+        <div>
+          <div class="eyebrow">PADELIN CHALLENGE</div>
+
+          <h1 class="iphone-title">
+            WIN<br>
+            iPHONE <span>18 PRO</span>
+          </h1>
+
+          <div class="hero-sub">
+            PLAY. EARN TICKETS. WIN.
+          </div>
+
+          <p class="hero-copy">
+            Play at Padelin, collect tickets and increase your chances
+            of winning the grand prize.
+          </p>
+
+          <div class="hero-badges">
+            <div class="hero-badge">
+              <b>1 ticket</b> = 1 entry
+            </div>
+
+            <div class="hero-badge">
+              Draw: <b>November 2026</b>
+            </div>
+          </div>
+
+          <a class="btn btn-primary" href="reservation.html">
+            Book &amp; Start Earning →
+          </a>
+        </div>
+
+        <div
+          class="phone-stage"
+          aria-label="Animated iPhone 18 Pro prize illustration"
+        >
+          <div class="phone-orbit"></div>
+          <div class="phone-glow"></div>
+
+          <div class="css-phone" aria-hidden="true">
+            <div class="camera-deck">
+              <span class="lens l1"></span>
+              <span class="lens l2"></span>
+              <span class="lens l3"></span>
+              <span class="flash"></span>
+              <span class="sensor"></span>
+            </div>
+
+            <div class="apple-mark">●</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TICKET SYSTEM -->
+    <section class="campaign-body">
+      <div class="container campaign-shell">
+
+        <!-- 3 STEPS -->
+        <div class="entry-strip">
+
+          <div class="entry-step">
+            <div class="entry-icon">1</div>
+            <b>Play</b>
+            <span>Play, shop &amp; participate</span>
+          </div>
+
+          <div class="entry-step">
+            <div class="entry-icon">2</div>
+            <b>Earn Tickets</b>
+            <span>Collect tickets automatically</span>
+          </div>
+
+          <div class="entry-step">
+            <div class="entry-icon">3</div>
+            <b>Win</b>
+            <span>Every ticket enters the draw</span>
+          </div>
+
+        </div>
+
+        <!-- GUIDE -->
+        <div class="guide">
+
+          <div class="guide-head">
+            <h2>Your Ticket Guide</h2>
+            <p>Play, shop, grab a coffee &amp; complete challenges.</p>
+          </div>
+
+          <!-- PLAY -->
+          <div class="guide-section">
+
+            <div class="guide-label">
+              <span class="category-icon">🎾</span>
+              Play
+            </div>
+
+            <div class="ticket-grid">
+
+              <div class="ticket-card">
+                <strong>
+                  Off-Peak Booking
+                  <small>10 AM – 4 PM</small>
+                </strong>
+                <span class="points">5 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>
+                  Peak Booking
+                  <small>4 PM – 12 AM</small>
+                </strong>
+                <span class="points">3 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>New Player – First Booking</strong>
+                <span class="points">5 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>Coaching Session</strong>
+                <span class="points">3 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>10-Session Package</strong>
+                <span class="points">25 tickets</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SHOP -->
+          <div class="guide-section">
+
+            <div class="guide-label">
+              <span class="category-icon">🛍️</span>
+              Shop at Padelin
+            </div>
+
+            <div class="ticket-grid">
+
+              <div class="ticket-card">
+                <strong>
+                  Ball Tube
+                  <small>$8 tube</small>
+                </strong>
+                <span class="points">2 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>
+                  Premium Ball Tube
+                  <small>$12 tube</small>
+                </strong>
+                <span class="points">3 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>
+                  Buy a Grip
+                </strong>
+                <span class="points">1 ticket</span>
+              </div>
+
+            </div>
+
+            <div class="combo-card">
+              <div>
+                <strong>🎾 Play + Shop Bonus</strong>
+                <small>
+                  Play a match and buy balls or grips during the same visit.
+                </small>
+              </div>
+
+              <span class="points">+2 tickets</span>
+            </div>
+
+          </div>
+
+          <!-- COFFEE -->
+          <div class="guide-section">
+
+            <div class="guide-label">
+              <span class="category-icon">☕</span>
+              Coffee Shop
+            </div>
+
+            <div class="ticket-grid">
+
+              <div class="ticket-card">
+                <strong>Spend $5+</strong>
+                <span class="points">1 ticket</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>Spend $10+</strong>
+                <span class="points">3 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>Spend $20+</strong>
+                <span class="points">7 tickets</span>
+              </div>
+
+            </div>
+
+            <div class="combo-card">
+              <div>
+                <strong>☕ Match + Coffee Bonus</strong>
+                <small>
+                  Play and spend $10+ at the coffee shop during the same visit.
+                </small>
+              </div>
+
+              <span class="points">+2 tickets</span>
+            </div>
+
+          </div>
+
+          <!-- REFER / COMPETE -->
+          <div class="guide-section">
+
+            <div class="guide-label">
+              <span class="category-icon">🏆</span>
+              Refer &amp; Compete
+            </div>
+
+            <div class="ticket-grid">
+
+              <div class="ticket-card">
+                <strong>
+                  Refer a New Player
+                  <small>After their first paid booking</small>
+                </strong>
+                <span class="points">15 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>
+                  Bring 3 New Players
+                  <small>They complete their first game</small>
+                </strong>
+                <span class="points">25 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>Join a Tournament</strong>
+                <span class="points">15 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>Win a Tournament</strong>
+                <span class="points">+25 tickets</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>Attend a Padelin Event</strong>
+                <span class="points">5 tickets</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SOCIAL -->
+          <div class="guide-section">
+
+            <div class="guide-label">
+              <span class="category-icon">📲</span>
+              Social &amp; Bonus
+            </div>
+
+            <div class="ticket-grid">
+
+              <div class="ticket-card">
+                <strong>
+                  Instagram Story + @padelin.lb
+                  <small>Max. 1 rewarded Story/day</small>
+                </strong>
+                <span class="points">1 ticket</span>
+              </div>
+
+              <div class="ticket-card">
+                <strong>
+                  Instagram Reel + @padelin.lb
+                </strong>
+                <span class="points">10 tickets</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BONUS -->
+        <div class="bonus-bar">
+
+          <div class="bonus">
+            <i>🎯</i>
+            <b>Weekly Missions</b>
+            <span>Complete challenges for bonus tickets.</span>
+          </div>
+
+          <div class="bonus">
+            <i>🔥</i>
+            <b>Play Streaks</b>
+            <span>Keep playing and unlock extras.</span>
+          </div>
+
+          <div class="bonus">
+            <i>⚡</i>
+            <b>2X Ticket Drops</b>
+            <span>Special days announced on Instagram.</span>
+          </div>
+
+        </div>
+
+        <!-- DRAW -->
+        <div class="draw-section">
+
+          <div class="draw-grid">
+
+            <div class="draw-copy">
+
+              <div class="draw-eyebrow">
+                THE GRAND DRAW
+              </div>
+
+              <h2>
+                Every Ticket Goes Into the Draw
+              </h2>
+
+              <p>
+                Every valid ticket you collect gives you one entry.
+                The more tickets you earn, the more chances you have
+                to win the iPhone 18 Pro.
+              </p>
+
+              <div class="draw-date">
+                📅 NOVEMBER 2026
+              </div>
+
+            </div>
+
+            <!-- Animated raffle box -->
+            <div
+              class="raffle-stage"
+              aria-label="Animated Padelin ticket draw box"
+            >
+
+              <div class="raffle-shadow"></div>
+
+              <div class="raffle-box">
+
+                <div class="raffle-slot"></div>
+
+                <span class="paper p1"></span>
+                <span class="paper p2"></span>
+                <span class="paper p3"></span>
+                <span class="paper p4"></span>
+                <span class="paper p5"></span>
+                <span class="paper p6"></span>
+                <span class="paper p7"></span>
+                <span class="paper p8"></span>
+                <span class="paper p9"></span>
+                <span class="paper p10"></span>
+                <span class="paper p11"></span>
+                <span class="paper p12"></span>
+
+                <div class="raffle-label">
+                  PADELIN DRAW
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RULES -->
+        <div class="rules-box">
+
+          <h2>Quick Rules</h2>
+
+          <div class="rule-list">
+
+            <div class="rule">
+              <span class="check">✓</span>
+              <span>
+                <b>1 ticket = 1 entry</b> in the final draw.
+              </span>
+            </div>
+
+            <div class="rule">
+              <span class="check">✓</span>
+              <span>
+                Tickets are credited only after eligible purchases,
+                bookings or activities are completed and paid.
+              </span>
+            </div>
+
+            <div class="rule">
+              <span class="check">✓</span>
+              <span>
+                Cancelled bookings, refunded purchases and no-shows
+                earn no tickets.
+              </span>
+            </div>
+
+            <div class="rule">
+              <span class="check">✓</span>
+              <span>
+                Referral rewards apply after the new player completes
+                their first paid booking.
+              </span>
+            </div>
+
+            <div class="rule">
+              <span class="check">✓</span>
+              <span>
+                Coffee and shop rewards require a valid purchase
+                at Padelin.
+              </span>
+            </div>
+
+            <div class="rule">
+              <span class="check">✓</span>
+              <span>
+                Bonus missions and multiplier days may have their own
+                announced conditions.
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="final-cta">
+
+          <h2>Ready to Collect Tickets?</h2>
+
+          <p>
+            Play more. Earn more. Every ticket is another chance to win.
+          </p>
+
+          <a class="btn btn-primary" href="reservation.html">
+            Reserve Now
+          </a>
+
+        </div>
+
+        <p class="legal-note">
+          Final draw planned for November 2026.
+          Padelin may verify entries and correct invalid, refunded,
+          fraudulent or duplicate ticket activity.
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      © 2026 Padelin | Byblos, Lebanon
+    </div>
+  </footer>
+
+  <!-- ACCOUNT DRAWER -->
+  <div class="acc-overlay" data-acc-overlay></div>
+
+  <aside
+    class="acc-drawer"
+    data-acc-drawer
+    aria-hidden="true"
+    aria-label="Account"
+  >
+    <div class="acc-head">
+
+      <div class="acc-title">
+        Account
+      </div>
+
+      <button
+        class="acc-close"
+        type="button"
+        aria-label="Close"
+        data-acc-close
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <div class="acc-body" id="accBody">
+      <!-- injected by main.js -->
+    </div>
+  </aside>
+
+  <!-- EXISTING SITE SCRIPTS -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+  <script src="js/firebase-init.js"></script>
+  <script src="js/main.js?v=23"></script>
+
+</body>
+</html>
